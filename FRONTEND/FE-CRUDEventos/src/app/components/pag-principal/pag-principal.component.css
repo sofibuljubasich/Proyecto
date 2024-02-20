@@ -1,0 +1,85 @@
+body {
+    font-family: sans-serif;
+  }
+  .container {
+    width: 100%;
+    /*max-width: 1200px;*/
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+
+  
+  .buscador {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  
+  .buscador input {
+    width: 50%;
+    height: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .buscador button {
+    background-color: #370057;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    height: 41px;
+  }
+  
+  .eventos {
+    margin-top: 20px;
+  }
+  
+  .eventos h2 {
+    font-size: 18px;
+  }
+  
+  .eventos ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .eventos li {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .eventos li img {
+    width: 150px;
+  }
+  
+  .eventos li h3 {
+    font-size: 16px;
+  }
+  
+  .eventos li p {
+    font-size: 14px;
+  }
+  
+  .eventos li button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+.event-list{
+  display: flex;
+  flex-direction: row;
+
+}
+
