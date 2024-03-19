@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BE.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,11 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 builder.Services.AddScoped<IInscripcionRepository, InscripcionRepository>();
 
+builder.Services.AddScoped<ITareaRepository, TareaRepository>();    
+builder.Services.AddScoped<ICorredorRepository, CorredorRepository>();
+builder.Services.AddScoped<IComentarioRepository, ComentarioRepository>();
+builder.Services.AddScoped<IVoluntarioRepository, VoluntarioRepository>();  
+builder.Services.AddScoped<IEventoDistanciaRepository, EventoDistanciaRepository>();    
 builder.Services.AddEndpointsApiExplorer();
 
 // jwt
@@ -83,6 +89,7 @@ builder.Services.AddSwaggerGen(setupAction =>
                 }, new List<string>() }
     });
 });
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDevClient",

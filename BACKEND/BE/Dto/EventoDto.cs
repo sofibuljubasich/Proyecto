@@ -19,12 +19,7 @@ namespace BE.Dto
 
         public byte[]? Imagen { get; set; }
 
-        //public string? requisitos { get; set; }
 
-        public List<Distancia>? Distancias { get; }
-
-        public List<Categoria>? Categorias { get; }
-        public int TipoID { get; set; }
 
         public virtual TipoEvento Tipo { get; set; }
 

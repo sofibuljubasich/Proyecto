@@ -1,4 +1,5 @@
 ﻿using Azure;
+using System.Text.Json.Serialization;
 
 namespace BE.Models
 {
@@ -8,9 +9,10 @@ namespace BE.Models
 
         public int KM { get; set; }
 
-        public List<Evento>? Eventos { get; }
 
+        public virtual ICollection<EventoDistancia> EventoDistancias { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Inscripcion> Inscripciones { get; set; } 
     }
 }

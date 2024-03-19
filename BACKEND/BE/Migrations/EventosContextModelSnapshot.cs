@@ -123,6 +123,32 @@ namespace BE.Migrations
                     b.ToTable("Eventos");
                 });
 
+            modelBuilder.Entity("BE.Models.EventoDistancia", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("DistanciaID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventoID")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("DistanciaID");
+
+                    b.HasIndex("EventoID");
+
+                    b.ToTable("EventoDistancia");
+                });
+
             modelBuilder.Entity("BE.Models.Inscripcion", b =>
                 {
                     b.Property<int>("ID")
@@ -299,21 +325,6 @@ namespace BE.Migrations
                     b.ToTable("CategoriaEvento");
                 });
 
-            modelBuilder.Entity("DistanciaEvento", b =>
-                {
-                    b.Property<int>("DistanciasID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventosID")
-                        .HasColumnType("int");
-
-                    b.HasKey("DistanciasID", "EventosID");
-
-                    b.HasIndex("EventosID");
-
-                    b.ToTable("DistanciaEvento");
-                });
-
             modelBuilder.Entity("TareaVoluntario", b =>
                 {
                     b.Property<int>("TareasID")
@@ -392,6 +403,23 @@ namespace BE.Migrations
                     b.Navigation("Tipo");
                 });
 
+            modelBuilder.Entity("BE.Models.EventoDistancia", b =>
+                {
+                    b.HasOne("BE.Models.Distancia", "Distancia")
+                        .WithMany("EventoDistancias")
+                        .HasForeignKey("DistanciaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BE.Models.Evento", null)
+                        .WithMany("EventoDistancias")
+                        .HasForeignKey("EventoID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Distancia");
+                });
+
             modelBuilder.Entity("BE.Models.Inscripcion", b =>
                 {
                     b.HasOne("BE.Models.Distancia", "Distancia")
@@ -456,21 +484,6 @@ namespace BE.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DistanciaEvento", b =>
-                {
-                    b.HasOne("BE.Models.Distancia", null)
-                        .WithMany()
-                        .HasForeignKey("DistanciasID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BE.Models.Evento", null)
-                        .WithMany()
-                        .HasForeignKey("EventosID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TareaVoluntario", b =>
                 {
                     b.HasOne("BE.Models.Tarea", null)
@@ -488,12 +501,16 @@ namespace BE.Migrations
 
             modelBuilder.Entity("BE.Models.Distancia", b =>
                 {
+                    b.Navigation("EventoDistancias");
+
                     b.Navigation("Inscripciones");
                 });
 
             modelBuilder.Entity("BE.Models.Evento", b =>
                 {
                     b.Navigation("Comentarios");
+
+                    b.Navigation("EventoDistancias");
 
                     b.Navigation("Inscripciones");
                 });

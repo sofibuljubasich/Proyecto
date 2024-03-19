@@ -64,14 +64,14 @@ namespace BE.Controllers
             }
         }
 
-        [HttpGet("{eventoID}")]
+        [HttpGet, Route("evento/{eventoID}")]
         public async Task<IActionResult> GetCategoriasByEvento(int eventoID)
         {
             try 
             { 
                 var categorias = await _categoriaRepository.GetCategoriasByEvento(eventoID);   
                 
-                var categoriasDto = _mapper.Map<CategoriaDto>(categorias);  
+                var categoriasDto = _mapper.Map<IEnumerable<CategoriaDto>>(categorias);  
 
                 return Ok(categoriasDto);  
             }
@@ -104,13 +104,11 @@ namespace BE.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CategoriaDto categoriaDto)
+        public async Task<IActionResult> Create(CategoriaCreateUpdateDto categoriaDto)
         {
             try
             {
                 var categoria = _mapper.Map<Categoria>(categoriaDto);
-
-                //mascota.FechaCreacion = DateTime.Now;
 
                 categoria = await _categoriaRepository.Create(categoria);
 
@@ -126,7 +124,7 @@ namespace BE.Controllers
 
         //ACOMODAR
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, CategoriaDto categoriaDto)
+        public async Task<IActionResult> Update(int id, CategoriaCreateUpdateDto categoriaDto)
         {
             try
             {

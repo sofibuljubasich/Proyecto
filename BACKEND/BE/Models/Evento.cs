@@ -21,13 +21,11 @@ namespace BE.Models
 
         public byte[]? Imagen { get; set; }
 
-        //public string? requisitos { get; set; }
 
-        public List<Distancia>? Distancias { get; set; }
-        public List<Categoria>? Categorias { get; set; }
+        public ICollection<Categoria> Categorias { get; set; }
 
 
-        //public virtual ICollection<Distancia> Distancias { get; set; }
+        public virtual ICollection<EventoDistancia> EventoDistancias { get; set; }
 
 
 

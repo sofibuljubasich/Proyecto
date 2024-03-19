@@ -3,6 +3,7 @@ using BE.Dto;
 using BE.Interfaces;
 using BE.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace BE.Controllers
 {
@@ -13,12 +14,19 @@ namespace BE.Controllers
 
         private readonly IMapper _mapper;
         private readonly IEventoRepository _eventoRepository;
+        private readonly ICategoriaRepository _categoriaRepository;
+        private readonly IDistanciaRepository _distanciaRepository;
+        private readonly IEventoDistanciaRepository _eventoDistanciaRepository; 
 
-        public EventoController(IMapper mapper, IEventoRepository eventoRepository)
+        public EventoController(IMapper mapper, IEventoRepository eventoRepository,ICategoriaRepository categoriaRepository,IDistanciaRepository distanciaRepository,
+                IEventoDistanciaRepository eventoDistanciaRepository)
         {
             _mapper = mapper;
             _eventoRepository = eventoRepository;
-        }
+            _categoriaRepository = categoriaRepository;
+            _distanciaRepository = distanciaRepository;
+            _eventoDistanciaRepository = eventoDistanciaRepository;
+        }   
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -29,7 +37,45 @@ namespace BE.Controllers
 
                 var listEventosDto = _mapper.Map<IEnumerable<EventoDto>>(listEventos);
 
-                return Ok(listEventosDto);
+
+                var eventosRtaDto = new List<EventoRespuestaDto>();
+
+                foreach (var evento in listEventosDto) 
+                {
+                    var categorias = await _categoriaRepository.GetCategoriasByEvento(evento.ID);
+                    var distancias = await _eventoDistanciaRepository.GetDistanciasByEvento(evento.ID);
+
+                    var categoriasDto = _mapper.Map<IEnumerable<CategoriaDto>>(categorias);
+                    //var distanciasDto = _mapper.Map<IEnumerable<EventoDistanciaDto>>(distancias);
+
+                    var distanciasDto = new List<EventoDistanciaDto>();  
+                    foreach (var distancia in distancias)
+                    {
+                        var dist = new EventoDistanciaDto
+                        {
+                            ID = distancia.ID,
+                            DistanciaID = distancia.Distancia.ID,
+                            KM = distancia.Distancia.KM,
+                            Precio = distancia.Precio
+
+                        };
+                        distanciasDto.Add(dist);
+                    }
+
+                    var eventoRta = new EventoRespuestaDto 
+                    { 
+                        Evento = evento,
+                        Distancias = distanciasDto,
+                        Categorias = categoriasDto
+                    
+                    };
+
+                    eventosRtaDto.Add(eventoRta);
+
+                }
+
+
+                return Ok(eventosRtaDto);
             }
             catch (Exception ex)
             {
@@ -46,14 +92,46 @@ namespace BE.Controllers
             {
                 var evento = await _eventoRepository.GetEvento(eventoID);
 
+                var eventoDto = _mapper.Map<EventoDto>(evento);
+
                 if (evento == null)
                 {
                     return NotFound();
                 }
 
-                var eventoDto = _mapper.Map<EventoDto>(evento);
 
-                return Ok(eventoDto);
+                var categorias = await _categoriaRepository.GetCategoriasByEvento(evento.ID);
+
+                var categoriasDto = _mapper.Map<IEnumerable<CategoriaDto>>(categorias);
+
+                var distancias = await _eventoDistanciaRepository.GetDistanciasByEvento(evento.ID);
+                var distanciasDto = new List<EventoDistanciaDto>();
+                foreach (var distancia in distancias)
+                {
+                    var dist = new EventoDistanciaDto
+                    {
+                        ID = distancia.ID,
+                        DistanciaID = distancia.Distancia.ID,
+                        KM = distancia.Distancia.KM,
+                        Precio = distancia.Precio
+
+                    };
+                    distanciasDto.Add(dist);
+                }
+
+
+
+                var respuestaDto = new EventoRespuestaDto
+                {
+                    Evento = eventoDto,
+                    Categorias = categoriasDto,
+                    Distancias = distanciasDto
+                };
+
+
+
+
+                return Ok(respuestaDto);
 
             }
             catch (Exception ex)
@@ -108,16 +186,19 @@ namespace BE.Controllers
         {
             try
             {
-                var evento = await _eventoRepository.GetEvento(id);
+                var eventodto = await _eventoRepository.GetEvento(id);
 
-                if (evento == null)
+                if (eventodto == null)
                 {
                     return NotFound();
                 }
 
+                var evento = 
+                  _mapper.Map<Evento>(eventodto);
+
                 await _eventoRepository.Delete(evento);
 
-                return NoContent();
+                return Ok("Evento Eliminado");
             }
             catch (Exception ex)
             {
@@ -127,18 +208,49 @@ namespace BE.Controllers
 
         //Por Rol
         [HttpPost]
-        public async Task<IActionResult> Create(EventoCreateUpdateDto eventoDto)
+        public async Task<IActionResult> Create([FromBody]EventoCreateDto eventoDto)
         {
             try
             {
-                var evento = _mapper.Map<Evento>(eventoDto);
+                var distancias = eventoDto.EventoDistancias;
+
+                var newEvento = new Evento() 
+                {
+                    Nombre = eventoDto.Nombre,
+                    Lugar = eventoDto.Lugar,
+                    Fecha = eventoDto.Fecha,
+                   // Imagen = eventoDto.Imagen,
+                    Estado = eventoDto.Estado,
+                    TipoID = eventoDto.TipoID
+                };
+                //var evento = _mapper.Map<Evento>(eventoDto);
 
 
 
-                evento = await _eventoRepository.Create(evento);
+                newEvento = await _eventoRepository.Create(newEvento);
+
+                // CREAR EVENTO-DISTANCIA-PRECIO
 
 
-                return CreatedAtAction("Get", new { id = evento.ID });
+                foreach (var eventoDistancia in distancias)
+                {
+                    var newDistancia = await _distanciaRepository.GetDistancia(eventoDistancia.DistanciaID);
+
+                    var newEventoDistancia = new EventoDistancia()
+                    {
+                        EventoID = newEvento.ID,
+                        Distancia = newDistancia,
+                        Precio = eventoDistancia.Precio
+
+                    };
+                    await _eventoDistanciaRepository.Create(newEventoDistancia);
+
+
+                }
+
+
+
+                return Ok("Evento creado");
 
             }
             catch (Exception ex)
@@ -149,29 +261,21 @@ namespace BE.Controllers
 
         //Por Rol
         //ACOMODAR
-        [HttpPut("{id}")]
+        [HttpPut("{eventoID}")]
 
-        public async Task<IActionResult> Update(int id, EventoCreateUpdateDto eventoDto)
+        public async Task<IActionResult> Update(int eventoID, EventoUpdateDto eventoDto)
         {
             try
             {
-                var evento = _mapper.Map<Evento>(eventoDto);
 
-                if (id != evento.ID)
-                {
-                    return BadRequest();
-                }
-
-                var eventoItem = await _eventoRepository.GetEvento(id);
-
-                if (eventoItem == null)
-                {
-                    return NotFound();
-                }
-
-                await _eventoRepository.Update(evento);
-
-                return NoContent();
+                     
+                var edlist = _mapper.Map<ICollection<EventoDistancia>>(eventoDto.EventoDistancias);
+                
+                await _eventoRepository.Update(eventoID, eventoDto);
+                
+                //Actualiza evento-distancia
+                await _eventoDistanciaRepository.Update(eventoID,edlist);
+                return Ok("Evento actualizado");
 
             }
             catch (Exception ex)
@@ -188,7 +292,7 @@ namespace BE.Controllers
             {
                 var evento = await _eventoRepository.GetEvento(eventoID);
 
-                if (evento.Estado == "Activo") 
+                if (evento.Estado=="Activo") 
                 {
                     return BadRequest("Evento No Finalizado ");                
                 }
@@ -205,6 +309,24 @@ namespace BE.Controllers
             {
                 return BadRequest(ex.Message);
             }   
+        }
+
+        [HttpPut, Route("UpdateEstado/{eventoID}")]
+        public async Task<IActionResult> UpdateStatus(int eventoID) 
+        {
+            try
+            {
+                var evento = _eventoRepository.GetEvento(eventoID);
+                if (evento is null)
+                    return NotFound();
+
+                //await _eventoRepository.UpdateStatus
+                return NoContent();
+            }
+            catch(Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }

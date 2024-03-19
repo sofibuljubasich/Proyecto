@@ -9,20 +9,31 @@ namespace BE.Profiles
         public MappingProfiles()
         {
             CreateMap<Evento, EventoDto>().ReverseMap();
-            CreateMap<Evento, EventoCreateUpdateDto>().ReverseMap();
+            CreateMap<Evento, EventoCreateDto>().ReverseMap();
+            CreateMap<Evento, EventoRespuestaDto>().ReverseMap();
 
             CreateMap<Usuario, LoginDto>().ReverseMap();
-            CreateMap<Usuario, RegisterDto>().ReverseMap();
-            CreateMap<Usuario, VoluntarioDto>().ReverseMap();
+            CreateMap<Corredor, RegisterDto>().ReverseMap();
+            CreateMap<Voluntario, VoluntarioDto>().ReverseMap();
 
             CreateMap<Categoria, CategoriaDto>().ReverseMap();
+            CreateMap<Categoria, CategoriaCreateUpdateDto>().ReverseMap();  
+
             CreateMap<Distancia, DistanciaDto>().ReverseMap();
+            CreateMap<Distancia,DistanciaCreateUpdateDto>().ReverseMap();
+            CreateMap<EventoDistancia,DistanciaDto>().ReverseMap(); 
+
+            CreateMap<EventoDistancia,EventoDistanciaDto>().ReverseMap();   
+            CreateMap<EventoDistancia,EventoDistanciaUpdateDto>().ReverseMap();
 
             CreateMap<Inscripcion, ResultadoDto>().ReverseMap();    
             CreateMap<Inscripcion, InscripcionCreateDto>().ReverseMap();       
             
             CreateMap<Comentario,ComentarioCreateDto>().ReverseMap();
             CreateMap<Comentario, ComentarioDto>().ReverseMap();
+
+            CreateMap<Tarea,TareaCreateUpdateDto>().ReverseMap();
+            CreateMap<Tarea, TareaDto>().ReverseMap();
             
 
 

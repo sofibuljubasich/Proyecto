@@ -2,6 +2,7 @@
 using BE.Dto;
 using BE.Interfaces;
 using BE.Models;
+using BE.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BE.Controllers
@@ -12,10 +13,12 @@ namespace BE.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ITareaRepository _tareaRepository;
-        public TareaController(IMapper mapper, ITareaRepository tareaRepository)
+        private readonly IVoluntarioRepository _voluntarioRepository;   
+        public TareaController(IMapper mapper, ITareaRepository tareaRepository,IVoluntarioRepository voluntarioRepository)
         {
             _mapper = mapper;   
             _tareaRepository = tareaRepository; 
+            _voluntarioRepository = voluntarioRepository;
             
         }
 
@@ -29,7 +32,19 @@ namespace BE.Controllers
                 if (tarea == null)
                     return NotFound();
 
-                return Ok(tarea);
+                var voluntarios = tarea.Voluntarios;
+
+                var tareaDto = new TareaDto
+                {
+                    Descripcion = tarea.Descripcion,
+                    FechaHora = tarea.FechaHora,
+                    Ubicacion = tarea.Ubicacion,
+                    EventoID = tarea.EventoID,
+                    Voluntarios = _mapper.Map<ICollection<VoluntarioDto>>(voluntarios)
+
+                };
+
+                return Ok(tareaDto);
             }
             catch(Exception ex) 
             {
@@ -38,15 +53,20 @@ namespace BE.Controllers
         
         }
 
-        /// VER SI VALIDAR EL EVETNO
-        [HttpGet("{eventoID}")]
+        
+        [HttpGet, Route("evento/{eventoID}")]
         public async Task<IActionResult> GetByEvento(int eventoID)
         {
             try
             {
+
+
                 var listTareas = await _tareaRepository.GetTareasByEvento(eventoID);
 
-                return Ok(listTareas);
+                var listTareasDto = _mapper.Map<List<TareaDto>>(listTareas);  
+                
+
+                return Ok(listTareasDto);
             }
             catch (Exception ex)
             {
@@ -55,35 +75,33 @@ namespace BE.Controllers
 
         }
 
-        [HttpGet("{voluntarioID}")]
-        public async Task<IActionResult> GetByVoluntario(int voluntarioID)
-        {
-            try
-            {
-                var listTareas = await _tareaRepository.GetTareasByVoluntario(voluntarioID);
-
-                return Ok(listTareas);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
-
+       
         [HttpPost]
-        public async Task<IActionResult> Create(TareaCreateUpdateDto tareaDto)
+        public async Task<IActionResult> Create([FromBody]TareaCreateUpdateDto tareaDto)
         {
             try
             {
-                var tarea = _mapper.Map<Tarea>(tareaDto);
+              
+
+                    var tarea = new Tarea
+                    {
+                        Descripcion = tareaDto.Descripcion,
+                        FechaHora = tareaDto.FechaHora,
+                        Ubicacion = tareaDto.Ubicacion,
+                        EventoID = tareaDto.EventoID,
+
+                    };
+                if (tareaDto.VoluntariosID != null && tareaDto.VoluntariosID.Any())
+                {
+                    tarea.Voluntarios = await _voluntarioRepository.GetVoluntarios(tareaDto.VoluntariosID);
+                }
 
 
 
                 tarea = await _tareaRepository.Create(tarea);
 
 
-                return CreatedAtAction("Get", new { id = tarea.ID });
+                return Ok("Tarea creada");
 
             }
             catch (Exception ex)
@@ -91,33 +109,38 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        //Task<List<Tarea>> GetTareas();
 
 
 
 
         [HttpPut("{tareaID}")]
-        public async Task<IActionResult> Update(int tareaID, TareaCreateUpdateDto tareaDto)
+        public async Task<IActionResult> Update(int tareaID, [FromBody]TareaCreateUpdateDto tareaDto)
         {
             try
             {
-                var tarea = _mapper.Map<Tarea>(tareaDto);
+               // var tarea = _mapper.Map<Tarea>(tareaDto);
 
-                if (tareaID != tareaID)
-                {
-                    return BadRequest();
-                }
+              
 
-                var tareaItem = await _tareaRepository.GetTarea(tareaID);
+                var tarea = await _tareaRepository.GetTarea(tareaID);
 
-                if (tareaItem == null)
+                if (tarea == null)
                 {
                     return NotFound();
                 }
 
+                tarea.Descripcion = tareaDto.Descripcion;
+                tarea.EventoID = tareaDto.EventoID;
+                tarea.FechaHora = tareaDto.FechaHora;
+                tarea.Ubicacion = tareaDto.Ubicacion;
+
+               
+                 tarea.Voluntarios = await _voluntarioRepository.GetVoluntarios(tareaDto.VoluntariosID);
+                
+
                 await _tareaRepository.Update(tarea);
 
-                return NoContent();
+                return Ok("Tarea actualizada");
 
             }
             catch (Exception ex)
@@ -140,7 +163,7 @@ namespace BE.Controllers
 
                 await _tareaRepository.Delete(tarea);
 
-                return NoContent();
+                return Ok("Tarea eliminada");
             }
             catch (Exception ex)
             {

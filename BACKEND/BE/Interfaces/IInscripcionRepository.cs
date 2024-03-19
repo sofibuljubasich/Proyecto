@@ -7,7 +7,7 @@ namespace BE.Interfaces
 
         Task<Inscripcion> GetInscripcion(int id);
       
-
+        //Task UpdatePayment();
         Task<Inscripcion> CreateInscripcion(Inscripcion inscripcion);
 
         Task UpdateInscripcion(Inscripcion inscripcion);

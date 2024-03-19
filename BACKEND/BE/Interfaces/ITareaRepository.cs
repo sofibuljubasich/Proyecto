@@ -18,7 +18,8 @@ namespace BE.Interfaces
 
         Task<List<Tarea>> GetTareasByEvento(int eventoID);
 
-        Task<List<Tarea>> GetTareasByVoluntario(int voluntarioID);      
+
+        Task<List<Voluntario>> GetVoluntariosByTarea(int tareaID);
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BE.Interfaces;
 using BE.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace BE.Repository
 {
@@ -29,7 +30,9 @@ namespace BE.Repository
 
         public async Task<Tarea> GetTarea(int tareaID)
         {
-            return await _context.Tareas.FindAsync(tareaID);
+            return  await _context.Tareas
+           .Include(t => t.Voluntarios)
+           .FirstOrDefaultAsync(t => t.ID == tareaID);
         }
 
         public async Task<List<Tarea>> GetTareas()
@@ -39,7 +42,7 @@ namespace BE.Repository
 
         public async Task<List<Tarea>> GetTareasByEvento(int eventoID)
         {
-            return await _context.Tareas.Where(t => t.EventoID == eventoID).ToListAsync();
+            return await _context.Tareas.Where(t => t.EventoID == eventoID).Include(t=>t.Voluntarios).ToListAsync();
         }
 
         public Task<List<Tarea>> GetTareasByVoluntario(int voluntarioID)
@@ -54,19 +57,25 @@ namespace BE.Repository
 
         public async Task Update(Tarea tarea)
         {
-            Tarea? t = await _context.Tareas.SingleOrDefaultAsync(t => t.ID == tarea.ID);
+             _context.Update(tarea);
+            await _context.SaveChangesAsync();
+            
 
-            if (t !=  null)
+        }
+
+        public async Task<List<Voluntario>> GetVoluntariosByTarea(int tareaID) 
+        {
+            var tarea = await _context.Tareas
+           .Include(t => t.Voluntarios)
+           .FirstOrDefaultAsync(t => t.ID == tareaID);
+
+            if (tarea == null)
             {
-                t.Descripcion = tarea.Descripcion;
-                t.Ubicacion = tarea.Ubicacion;
-                t.FechaHora = tarea.FechaHora;
-               // t.UsuarioID = tarea.UsuarioID;
-                t.EventoID = tarea.EventoID;
-
-                await _context.SaveChangesAsync();
-
+                return null; // O manejar de acuerdo a tus necesidades
             }
+
+            // Devolver la colección de voluntarios asignados a la tarea
+            return tarea.Voluntarios.ToList();
         }
     }
 }

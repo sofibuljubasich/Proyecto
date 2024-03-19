@@ -15,21 +15,29 @@ namespace BE.Controllers
 
             private readonly IMapper _mapper;
             private readonly IDistanciaRepository _distanciaRepository;
-
-            public DistanciaController(IMapper mapper, IDistanciaRepository distanciaRepository)
+            private readonly IEventoRepository _eventoRepository;   
+            public DistanciaController(IMapper mapper, IDistanciaRepository distanciaRepository,IEventoRepository eventoRepository)
             {
                 _mapper = mapper;
                 _distanciaRepository = distanciaRepository;
+                _eventoRepository = eventoRepository;   
             }
 
-            [HttpGet("{eventoID}")]
-            public async Task<IActionResult> GetDistanciasByEvento(int eventoID)
+        [HttpGet, Route("evento/{eventoID}")]
+
+        public async Task<IActionResult> GetDistanciasByEvento(int eventoID)
             {
                 try
                 {
-                    var distancias = await _distanciaRepository.GetDistanciasByEvento(eventoID);
+                    var evento = await _eventoRepository.GetEvento(eventoID);
 
-                    var distanciasDto = _mapper.Map<DistanciaDto>(distancias);
+                    if (evento == null)
+                        return NotFound();  
+             
+
+                var distancias = await _distanciaRepository.GetDistanciasByEvento(eventoID);
+
+                    var distanciasDto = _mapper.Map<IEnumerable<EventoDistanciaDto>>(distancias);
 
                     return Ok(distanciasDto);
                 }
@@ -46,9 +54,9 @@ namespace BE.Controllers
                 {
                     var listDistancias = await _distanciaRepository.GetDistancias();
                     
+                    var listDistanciasDto = _mapper.Map<IEnumerable<DistanciaDto>>(listDistancias); 
 
-
-                    return Ok(listDistancias);
+                    return Ok(listDistanciasDto);
                 }
                 catch (Exception ex)
                 {
@@ -70,8 +78,8 @@ namespace BE.Controllers
                         return NotFound();
                     }
 
-
-                    return Ok(distancia);
+                    var distanciaDto = _mapper.Map<DistanciaDto>(distancia);
+                    return Ok(distanciaDto);
 
                 }
                 catch (Exception ex)
@@ -104,7 +112,7 @@ namespace BE.Controllers
             }
 
             [HttpPost]
-            public async Task<IActionResult> Create(DistanciaDto distanciaDto)
+            public async Task<IActionResult> Create(DistanciaCreateUpdateDto distanciaDto)
             {
                 try
                 {
@@ -113,6 +121,8 @@ namespace BE.Controllers
                 //mascota.FechaCreacion = DateTime.Now;
 
                 distancia = await _distanciaRepository.Create(distancia);
+                
+                
 
 
                     return CreatedAtAction("Get", new { id = distancia.ID }, distancia);

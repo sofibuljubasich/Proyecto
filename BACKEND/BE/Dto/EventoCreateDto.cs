@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BE.Dto
 {
-    public class EventoCreateUpdateDto
+    public class EventoCreateDto
     {
 
         public string Nombre { get; set; }
@@ -16,9 +16,9 @@ namespace BE.Dto
 
         public string Estado { get; set; }
 
-        public byte[]? Imagen { get; set; }
+        //public byte[]? Imagen { get; set; }
 
-        public List<Distancia>? Distancias { get; }
+        public virtual ICollection<EventoDistanciaCreateDto> EventoDistancias { get; set; }
         public int TipoID { get; set; }
 
 

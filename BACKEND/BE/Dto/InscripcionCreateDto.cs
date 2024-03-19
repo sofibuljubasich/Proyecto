@@ -8,9 +8,7 @@ namespace BE.Dto
     {
        
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime Fecha { get; set; }
+        
 
 
         public string? Remera { get; set; }

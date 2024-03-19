@@ -13,35 +13,48 @@ namespace BE.Repository
         }    
         public async Task<Distancia> Create(Distancia distancia)
         {
-            throw new NotImplementedException();
+
+            _context.Add(distancia);
+
+            await _context.SaveChangesAsync();
+            return distancia;
         }
 
         public async Task Delete(Distancia distancia)
         {
-            throw new NotImplementedException();
+            _context.Remove(distancia);
+            await _context.SaveChangesAsync();  
         }
 
         public async Task<Distancia> GetDistancia(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Distancias.FindAsync(id);
         }
 
         public async Task<List<Distancia>> GetDistancias()
         {
-            throw new NotImplementedException();
+            return await _context.Distancias.ToListAsync(); 
         }
 
-        public async Task<List<Distancia>> GetDistanciasByEvento(int eventoID)
+        public async Task<List<EventoDistancia>> GetDistanciasByEvento(int eventoID)
         {
-          
 
-                return await _context.Distancias.Where(d => d.Eventos.Any(e => e.ID == eventoID)).ToListAsync();
+            return await _context.EventoDistancia.Where(ed => ed.EventoID == eventoID).ToListAsync();
+            //return await _context.Distancias.Where(d => d.EventoDistancias.Any(e => e.EventoID == eventoID)).ToListAsync();
             
         }
 
         public async Task Update(Distancia distancia)
         {
-            throw new NotImplementedException();
+
+            var distanciaItem = await _context.Distancias.FirstOrDefaultAsync(x => x.ID == distancia.ID);
+
+            if (distanciaItem != null)
+            {
+                distanciaItem.KM = distancia.KM;
+
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

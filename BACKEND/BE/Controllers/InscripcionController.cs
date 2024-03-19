@@ -21,12 +21,13 @@ namespace BE.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(InscripcionCreateDto inscripcionDto)
+        public async Task<IActionResult> Create([FromBody] InscripcionCreateDto inscripcionDto)
         {
             try
             {
                 var inscrip = _mapper.Map<Inscripcion>(inscripcionDto);
 
+                inscrip.Fecha = DateTime.Now;
                 var inscripByUser =await  _inscripcionRepository.CheckIfExists(inscripcionDto.UsuarioID, inscripcionDto.EventoID);
 
                 if (inscripByUser != null) 
@@ -46,6 +47,26 @@ namespace BE.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet("inscripcionID")]
+        public async Task<IActionResult> Get(int inscripcionID)
+        {
+            try
+            {
+                var inscripcion = await _inscripcionRepository.GetInscripcion(inscripcionID);
+
+
+                return Ok(inscripcion);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+
+
         }
 
 

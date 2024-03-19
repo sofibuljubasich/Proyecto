@@ -7,7 +7,7 @@ namespace BE.Interfaces
 
         Task<List<Distancia>> GetDistancias();
 
-        Task<List<Distancia>> GetDistanciasByEvento(int eventoID); 
+        Task<List<EventoDistancia>> GetDistanciasByEvento(int eventoID); 
         Task<Distancia> GetDistancia(int id);
         Task Delete(Distancia distancia);
         Task<Distancia> Create(Distancia distancia);

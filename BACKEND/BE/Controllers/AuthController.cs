@@ -2,6 +2,7 @@
 using BE.Dto;
 using BE.Interfaces;
 using BE.Models;
+using BE.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,13 +17,15 @@ namespace BE.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IUsuarioRepository _userRepository;
+        private readonly ICorredorRepository _corredorRepository;  
         private readonly IMapper _mapper;
 
 
 
-        public AuthController(IUsuarioRepository userRepository, IConfiguration config,IMapper mapper)
+        public AuthController(IUsuarioRepository userRepository,ICorredorRepository corredorRepository, IConfiguration config,IMapper mapper)
         {
             _userRepository = userRepository;
+            _corredorRepository = corredorRepository;   
             _config = config;
             _mapper = mapper;
         }
@@ -68,7 +71,7 @@ namespace BE.Controllers
 
         //Register. VER COMO PASAR LOS DATOS DEL USER. SI HACER OTRO EP APARTE
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterDto request)
+        public async Task<IActionResult> RegisterCorredor([FromBody] RegisterDto request)
         {
             try
             {
@@ -79,7 +82,7 @@ namespace BE.Controllers
 
                 //ver si validar algo mas del usuario
 
-                var user = _mapper.Map<Usuario>(request);
+                var user = _mapper.Map<Corredor>(request);
 
 
 
@@ -87,9 +90,9 @@ namespace BE.Controllers
 
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
                 user.RolID = 1; // ROL USUARIO
-                var result = await _userRepository.CreateUsuario(user);
+                var result = await _corredorRepository.CreateCorredor(user);    
 
-                return Ok(result);
+                return Ok(result.ID);
             }
             catch (Exception ex) 
             {

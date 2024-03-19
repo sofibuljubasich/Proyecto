@@ -24,6 +24,7 @@ namespace BE.Repository
 
         public async Task<List<Usuario>> GetUsuarios()
         {
+            
             return await _context.Usuarios.ToListAsync();
         }
 
@@ -33,28 +34,40 @@ namespace BE.Repository
            
         }
 
-        public async Task<Usuario> CreateUsuario(Usuario usuario)
-        {
-            _context.Add(usuario);
+     
 
+        public async Task UpdateUsuario(Usuario usuario)
+        {
+            var usuarioItem = await _context.Usuarios.FirstOrDefaultAsync(x => x.ID == usuario.ID);
+
+            if (usuarioItem != null)
+            {
+                usuarioItem.Nombre = usuario.Nombre;
+                usuarioItem.Apellido = usuario.Apellido;
+                usuarioItem.Email = usuario.Email;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteUsuario(Usuario usuario)
+        {
+            _context.Remove(usuario);
             await _context.SaveChangesAsync();
-            return usuario;
-        }
-
-        public Task UpdateUsuario(Usuario usuario)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteInscripcion(Usuario usuario)
-        {
-            throw new NotImplementedException();
+           
         }
 
         public Usuario? Validate(string userEmail, string password)
         {
             return _context.Usuarios.SingleOrDefault(x => x.Email == userEmail && x.Password == password);
 
+        }
+
+        public async Task<Usuario> CreateUsuario(Usuario usuario)
+        {
+            _context.Usuarios.Add(usuario);
+
+            await _context.SaveChangesAsync();
+            return usuario;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace BE.Dto
         public int ID { get; set; }
         public string Email { get; set; }
 
-        public string Password { get; set; }
+      
 
         public string Nombre { get; set; }
 
@@ -21,8 +21,6 @@ namespace BE.Dto
 
      
 
-        [ForeignKey("Rol")]
-        public int RolID { get; set; }
-        public virtual Rol? Rol { get; set; }
+      
     }
 }

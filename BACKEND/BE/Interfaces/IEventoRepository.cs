@@ -1,12 +1,12 @@
 ﻿using BE.Models;
-using Microsoft.Extensions.Logging;
+using BE.Dto;
 
 namespace BE.Interfaces
 {
     public interface IEventoRepository
     {
       
-
+            //activar/desactivar evento
     
             Task<List<Evento>> GetEventos();
 
@@ -16,7 +16,8 @@ namespace BE.Interfaces
 
             Task<Evento> Create(Evento evento);
 
-            Task Update(Evento evento);
+        Task Update(int eventoID, EventoUpdateDto evento);
+
 
 
             Task<List<Inscripcion>> GetInscripcionesByEvento(int idEvento);

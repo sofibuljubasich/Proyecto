@@ -1,4 +1,6 @@
-﻿namespace BE.Models
+﻿using System.Text.Json.Serialization;
+
+namespace BE.Models
 {
     public class Categoria
     {
@@ -8,6 +10,7 @@
 
         public int EdadFin { get; set; }
 
+        [JsonIgnore]
         public ICollection<Evento> Eventos { get; set; }
     }
 }

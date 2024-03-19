@@ -1,5 +1,4 @@
 ﻿using BE.Models;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BE.Dto
 {
@@ -11,9 +10,9 @@ namespace BE.Dto
 
         public string Ubicacion { get; set; } = null!;
 
+        public virtual ICollection<int>? VoluntariosID { get; set; }
 
 
-        public int UsuarioID { get; set; }
         public int EventoID { get; set; }
     }
 }
