@@ -11,10 +11,14 @@
   align-items: center;
 }
 
-.navegacion nav ul li a:hover,
-.navegacion nav ul li a.active  {
+nav ul li a:hover,
+nav ul li a.active  {
   background-color: #419197;
   color: #fffcfc;
+  border-color: 2px #fffcfc;
+  
+  
+
 }
 nav{
 max-width: 53%;
@@ -34,24 +38,26 @@ ul{
   display: flex; 
   justify-content: center;
   padding: 0px 2px;
-  /* max-width: 60%; */
+  max-width: 60%;
  
   position: relative; 
 }
 ul > li > a{
   
   display: block;
-  padding: 1px 92px;
+  padding: 1px 35px;
   color: #419197;
   background-color: rgb(235, 234, 247);
   position: relative;
-  top: -13px;
-  height: 32px;
+  top: -15px;
+  height: 34px;
   /* line-height: 50px; */
   margin: 0px 2px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   text-decoration: none;
+  width: 190px;
+  text-align: center;
 }
 a{
   align-content: space-around;

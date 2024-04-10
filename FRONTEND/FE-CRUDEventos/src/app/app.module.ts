@@ -9,17 +9,12 @@ import { AgregarEditarEventoComponent } from './components/agregar-editar-evento
 import { ListadoEventoComponent } from './components/listado-evento/listado-evento.component';
 import { VerEventoComponent } from './components/ver-evento/ver-evento.component';
 import { PagPrincipalComponent } from './components/pag-principal/pag-principal.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EventoCardComponent } from './components/evento-card/evento-card.component';
+import { CarruselComponent } from './components/carrusel/carrusel.component';
+import { ToolbarBasicExample } from './components/toolbar/toolbar.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
-import { ToolbarBasicExample } from './components/toolbar/toolbar.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { EventoCardComponent } from './components/evento-card/evento-card.component';
-import { MatCardModule } from '@angular/material/card';
-import { CarruselComponent } from './components/carrusel/carrusel.component';
 
 @NgModule({
   declarations: [
@@ -32,16 +27,7 @@ import { CarruselComponent } from './components/carrusel/carrusel.component';
     EventoCardComponent,
     CarruselComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    SharedModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-  ],
+  imports: [BrowserModule, AppRoutingModule, SharedModule],
   providers: [],
   bootstrap: [AppComponent],
 })
