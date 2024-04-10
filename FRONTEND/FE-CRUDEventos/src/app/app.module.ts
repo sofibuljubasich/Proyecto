@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { EventoCardComponent } from './components/evento-card/evento-card.component';
 import { MatCardModule } from '@angular/material/card';
+import { CarruselComponent } from './components/carrusel/carrusel.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MatCardModule } from '@angular/material/card';
     PagPrincipalComponent,
     ToolbarBasicExample,
     EventoCardComponent,
+    CarruselComponent,
   ],
   imports: [
     BrowserModule,

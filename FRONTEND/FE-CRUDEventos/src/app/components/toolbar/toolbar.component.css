@@ -1,45 +1,58 @@
 .example-spacer {
-    flex: 1 1 auto;
-  }
+  flex: 1 1 auto;
+}
 
- .mat {
-    background-color: #419197;
-    color: #002717;
-    padding: 20px;
-  }
-.navegacion {
-    float: right;
- 
-  }
-  
-.navegacion a {
-    margin-right: 10px;
-    text-decoration: none;
-    color: #419197;
-  }
-.navegacion a:hover {
+.mat {
+  background-color: #419197;
+  color: #002717;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navegacion nav ul li a:hover,
+.navegacion nav ul li a.active  {
   background-color: #419197;
   color: #fffcfc;
-  }
-  nav ul {
-    display: flex;
-    justify-content: space-evenly;
-  }
+}
+nav{
+max-width: 53%;
+max-height: 37px;
+margin: auto;
+background-color: #419197;
+margin-top: 0px; 
+display: flex; 
+justify-content: center;
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+width: 100%;
+
+}
+ul{
+  list-style-type: none;
+  display: flex; 
+  justify-content: center;
+  padding: 0px 2px;
+  /* max-width: 60%; */
+ 
+  position: relative; 
+}
+ul > li > a{
   
-  nav li {
-    display: inline-block;
-    margin-right: 20px;
-  }
-  
-  nav a {
-    text-decoration: none;
-    color: #8b4848;
-    font-weight: bold;
-    font-size: 16px;
-  }
-  
-  /* Estilo para la pestaña activa */
-  .navegacion .active  {
-    background-color: #419197;
-    color: #fffcfc;
-  }
+  display: block;
+  padding: 1px 92px;
+  color: #419197;
+  background-color: rgb(235, 234, 247);
+  position: relative;
+  top: -13px;
+  height: 32px;
+  /* line-height: 50px; */
+  margin: 0px 2px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  text-decoration: none;
+}
+a{
+  align-content: space-around;
+}
