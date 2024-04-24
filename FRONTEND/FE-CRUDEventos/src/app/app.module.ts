@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { ToolbarBasicExample } from './components/toolbar/toolbar.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,13 @@ import { SharedModule } from './shared/shared.module';
     EventoCardComponent,
     CarruselComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, SharedModule],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    SharedModule,
+    CarouselModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
