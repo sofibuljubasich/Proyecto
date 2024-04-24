@@ -1,5 +1,7 @@
 export interface Evento {
-    id:number,
-    nombre:string,
-    fecha: Date
+  id: number;
+  imagen: ImageData;
+  nombre: string;
+  descripcion: string;
+  fecha: Date;
 }
