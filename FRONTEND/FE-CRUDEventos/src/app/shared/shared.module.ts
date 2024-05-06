@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 //Angular material
 import { MatTableModule } from '@angular/material/table';
@@ -21,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatIconModule,
     MatCardModule,
     BrowserAnimationsModule,
+    CarouselModule,
   ],
   exports: [
     MatTableModule,
@@ -30,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatIconModule,
     MatCardModule,
     BrowserAnimationsModule,
+    CarouselModule,
   ],
 })
 export class SharedModule {}

@@ -16,7 +16,6 @@ import { ToolbarBasicExample } from './components/toolbar/toolbar.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -34,7 +33,6 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    CarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

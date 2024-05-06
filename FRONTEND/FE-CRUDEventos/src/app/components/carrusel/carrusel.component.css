@@ -1,3 +1,44 @@
 .carousel-item{
     justify-content: center;
 }
+.containers{
+    width: 95%;
+    margin: 0 auto;
+
+}
+.row{
+    display: flex;
+    width: 100%;
+    
+}
+.col-md-2{
+    flex-grow: 1;
+    width: 100%;
+}
+.partners .carousel-item{
+    transition: all .3s ease;
+}
+
+.owl-nav .owl-prev{
+    top:calc(50% - 20px);
+    left: 0;
+    position: absolute;
+}
+
+.owl-nav .owl-next{
+    /* right: 0;
+    position: absolute;
+    top:calc(50% - 20px);
+    font-size: 50px; */
+    color: black;
+}
+/* .owl-nav{
+ position: absolute;
+ z-index: 1;
+ top: 50%;
+ transform: translateY(-50%);
+ width: 100%;
+}
+.owl-carousel{
+    position: relative;
+} */

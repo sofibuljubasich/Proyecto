@@ -1,4 +1,4 @@
-<div id="carouselExampleIndicators" class="carousel slide">
+<!-- <div id="carouselExampleIndicators" class="carousel slide">
 
     <div class="carousel-inner">
       <div class="carousel-item active" style="color: aqua; display: flex;">
@@ -7,4 +7,10 @@
         <evento-card></evento-card>
       </div>
 
-  </div>
+  </div> -->
+  <owl-carousel-o [options]="customOptions">
+    <ng-template carouselSlide><evento-card></evento-card></ng-template>  
+    <ng-template carouselSlide><evento-card></evento-card></ng-template>  
+    <ng-template carouselSlide><evento-card></evento-card></ng-template>  
+    <ng-template carouselSlide><evento-card></evento-card></ng-template>  
+  </owl-carousel-o>

@@ -1,17 +1,17 @@
 .example-card {
-    max-width: 400px;
-    margin: 2rem;
-    justify-content: center;
+    width: 80%;
+    /* margin: 20px 10px 10px 100px; */
+    margin-top: 15px;
+    margin-left: 10%;
+    margin-bottom: 15px;
+    flex-grow: 1;
+    flex-basis: 200;
+    display: flex;
+    padding: 2%;
+    /* justify-content: center; */
 }
-  
-.example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
-}
 
-
-
- /* Rules for sizing the icon. */
+/* Rules for sizing the icon. */
  .material-icons.md-18 { font-size: 18px; }
  .material-icons.md-24 { font-size: 24px; }
  .material-icons.md-36 { font-size: 36px; }

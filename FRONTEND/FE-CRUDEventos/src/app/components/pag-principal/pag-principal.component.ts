@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-pag-principal',
   templateUrl: './pag-principal.component.html',
-  styleUrls: ['./pag-principal.component.css']
+  styleUrls: ['./pag-principal.component.css'],
 })
-export class PagPrincipalComponent {
-
-}
+export class PagPrincipalComponent {}
