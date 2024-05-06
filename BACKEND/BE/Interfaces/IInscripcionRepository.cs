@@ -7,10 +7,11 @@ namespace BE.Interfaces
 
         Task<Inscripcion> GetInscripcion(int id);
       
-        //Task UpdatePayment();
+        Task UpdatePayment(int inscID, string estadoPago);
         Task<Inscripcion> CreateInscripcion(Inscripcion inscripcion);
 
-        Task UpdateInscripcion(Inscripcion inscripcion);
+        Task Acreditar(int inscID, Boolean estado);    
+        Task UpdateInscripcion(Inscripcion inscripcion, int ID);
 
         Task DeleteInscripcion(Inscripcion inscripcion);
         Task<Inscripcion> CheckIfExists(int usuarioID, int eventoID);

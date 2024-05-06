@@ -10,8 +10,7 @@ namespace BE.Dto
 
         public string Contenido { get; set; } = null!;
 
-        public virtual Usuario Corredor { get; set; }
-
+        public string NombreCorredor { get; set; } = null!; 
 
         [ForeignKey("Corredor")]
         public int CorredorID { get; set; }

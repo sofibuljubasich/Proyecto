@@ -14,6 +14,18 @@ namespace BE.Repository
             _context = context;        
         }
 
+        public async Task Acreditar(int inscID, Boolean estado)
+        {
+            Inscripcion? inscrip = await _context.Inscripciones.FindAsync(inscID);
+
+            if (inscrip is not null)
+            {
+                inscrip.Acreditado = estado;
+                await _context.SaveChangesAsync();
+            }
+            
+        }
+
         public async Task<Inscripcion> CheckIfExists(int usuarioID, int eventoID)
         {
             var inscripcion = await _context.Inscripciones.Where(i => i.EventoID == eventoID && i.UsuarioID == usuarioID).FirstOrDefaultAsync();
@@ -43,9 +55,32 @@ namespace BE.Repository
        
        
 
-        public Task UpdateInscripcion(Inscripcion inscripcion)
+        public async Task UpdateInscripcion(Inscripcion inscripcion, int ID)
         {
-            throw new NotImplementedException();
+            Inscripcion? dbInscrip = _context.Inscripciones.First(i=>i.ID == ID);   
+            
+
+            if (dbInscrip is not null)
+            {
+                dbInscrip.Remera = inscripcion.Remera;
+                //  dbEvento.EventoDistancias = evento.EventoDistancias;
+                //  _context.Update(evento);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdatePayment(int inscID, string estadoPago)
+        {
+
+            Inscripcion? dbInscrip = await _context.Inscripciones.FindAsync(inscID);
+
+           if(dbInscrip is not null)
+            { 
+                
+                dbInscrip.EstadoPago = estadoPago;
+
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

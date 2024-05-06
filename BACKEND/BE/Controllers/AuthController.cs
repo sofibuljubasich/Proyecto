@@ -50,7 +50,8 @@ namespace BE.Controllers
                 new Claim("id", user.ID.ToString()),
                 new Claim("email", user.Email),
                 new Claim("fullname", $"{user.Nombre} {user.Apellido}"),
-                new Claim("rol",user.Rol.Descripcion)
+                new Claim("rol", 
+                                user.Rol.Descripcion)
                
                  
              };
