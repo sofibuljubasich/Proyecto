@@ -14,16 +14,17 @@ namespace BE.Controllers
         private readonly IMapper _mapper;
         private readonly IComentarioRepository _comentarioRepository;   
         private readonly IInscripcionRepository _inscripcionRepository;
-
-        public ComentarioController(IMapper mapper, IComentarioRepository comentarioRepository, IInscripcionRepository inscripcionRepository)
+        private readonly ICorredorRepository _corredorRepository;
+        public ComentarioController(IMapper mapper, IComentarioRepository comentarioRepository, IInscripcionRepository inscripcionRepository, ICorredorRepository corredorRepository)
         {
             _mapper = mapper;
             _comentarioRepository = comentarioRepository;
             _inscripcionRepository = inscripcionRepository; 
+            _corredorRepository = corredorRepository;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ComentarioCreateDto comentarioDto)
+        public async Task<IActionResult> Create([FromBody]ComentarioCreateDto comentarioDto)
         {
             try
             {
@@ -41,7 +42,7 @@ namespace BE.Controllers
                 var new_comentario = await _comentarioRepository.Create(comentario);
 
 
-                return CreatedAtAction("Get", new { id = new_comentario.ID });
+                return Ok("Comentario creado");
 
             }
             catch (Exception ex)
@@ -60,7 +61,13 @@ namespace BE.Controllers
 
                 var listComentariosDto = _mapper.Map<IEnumerable<ComentarioDto>>(listComentarios);
 
-                return Ok(listComentariosDto);
+                foreach (var comentario in listComentariosDto)
+                {
+                    var corredor = await _corredorRepository.GetCorredor(comentario.CorredorID);
+
+                    comentario.NombreCorredor = corredor.Nombre + " " + corredor.Apellido;
+                }
+                    return Ok(listComentariosDto);
             }
             catch(Exception ex) 
             {

@@ -36,6 +36,8 @@ namespace BE.Models
 
         [ForeignKey("Evento")]
         public int EventoID { get; set; }
-        public virtual Evento Evento { get; set; } 
+        public virtual Evento Evento { get; set; }
+
+        public Boolean Acreditado { get; set; } = false;
     }
 }

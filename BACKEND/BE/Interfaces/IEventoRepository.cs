@@ -18,7 +18,7 @@ namespace BE.Interfaces
 
         Task Update(int eventoID, EventoUpdateDto evento);
 
-
+        Task UpdateStatus(int eventoID, string estado);
 
             Task<List<Inscripcion>> GetInscripcionesByEvento(int idEvento);
 

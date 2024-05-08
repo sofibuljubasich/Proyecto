@@ -14,6 +14,7 @@ namespace BE.Profiles
 
             CreateMap<Usuario, LoginDto>().ReverseMap();
             CreateMap<Corredor, RegisterDto>().ReverseMap();
+            CreateMap<Corredor, CorredorGetDto>().ReverseMap();
             CreateMap<Voluntario, VoluntarioDto>().ReverseMap();
 
             CreateMap<Categoria, CategoriaDto>().ReverseMap();
@@ -27,8 +28,9 @@ namespace BE.Profiles
             CreateMap<EventoDistancia,EventoDistanciaUpdateDto>().ReverseMap();
 
             CreateMap<Inscripcion, ResultadoDto>().ReverseMap();    
-            CreateMap<Inscripcion, InscripcionCreateDto>().ReverseMap();       
-            
+            CreateMap<Inscripcion, InscripcionCreateDto>().ReverseMap();
+            CreateMap<Inscripcion, InscripcionDto>().ReverseMap();
+
             CreateMap<Comentario,ComentarioCreateDto>().ReverseMap();
             CreateMap<Comentario, ComentarioDto>().ReverseMap();
 

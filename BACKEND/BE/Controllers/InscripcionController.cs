@@ -56,7 +56,7 @@ namespace BE.Controllers
             {
                 var inscripcion = await _inscripcionRepository.GetInscripcion(inscripcionID);
 
-
+                var inscripcionDto = _mapper.Map<InscripcionDto>(inscripcion);
                 return Ok(inscripcion);
             }
             catch (Exception ex)
@@ -68,6 +68,29 @@ namespace BE.Controllers
 
 
         }
+
+        [HttpPatch, Route("acreditar/{inscripcionID}")]
+        public async Task<IActionResult> Acreditar(int inscripcionID, [FromBody] Boolean estado) 
+        {
+            try {
+
+                var inscripcion = await _inscripcionRepository.GetInscripcion(inscripcionID);
+
+                if (inscripcion == null) 
+                {
+                    return NotFound();  
+                }
+
+                await _inscripcionRepository.Acreditar(inscripcionID, estado);
+
+                return Ok("Actualizado");    
+            } 
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }    
+        }
+
 
 
     }

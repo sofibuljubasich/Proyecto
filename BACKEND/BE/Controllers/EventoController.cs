@@ -2,6 +2,7 @@
 using BE.Dto;
 using BE.Interfaces;
 using BE.Models;
+using BE.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -16,16 +17,18 @@ namespace BE.Controllers
         private readonly IEventoRepository _eventoRepository;
         private readonly ICategoriaRepository _categoriaRepository;
         private readonly IDistanciaRepository _distanciaRepository;
-        private readonly IEventoDistanciaRepository _eventoDistanciaRepository; 
+        private readonly IEventoDistanciaRepository _eventoDistanciaRepository;
+        private readonly ICorredorRepository _corredorRepository;
 
         public EventoController(IMapper mapper, IEventoRepository eventoRepository,ICategoriaRepository categoriaRepository,IDistanciaRepository distanciaRepository,
-                IEventoDistanciaRepository eventoDistanciaRepository)
+                IEventoDistanciaRepository eventoDistanciaRepository, ICorredorRepository corredorRepository)
         {
             _mapper = mapper;
             _eventoRepository = eventoRepository;
             _categoriaRepository = categoriaRepository;
             _distanciaRepository = distanciaRepository;
             _eventoDistanciaRepository = eventoDistanciaRepository;
+            _corredorRepository = corredorRepository;
         }   
 
         [HttpGet]
@@ -148,11 +151,42 @@ namespace BE.Controllers
         {
             try
             {
-                var listEventos = await _eventoRepository.GetInscripcionesByEvento(eventoID);
+                var listInscrips = await _eventoRepository.GetInscripcionesByEvento(eventoID);
 
-                var listEventosDto = _mapper.Map<IEnumerable<EventoDto>>(listEventos);
+                //var listEventosDto = _mapper.Map<IEnumerable<EventoDto>>(listEventos);
 
-                return Ok(listEventosDto);
+                var inscripciones = new List<InscripcionDto>();
+                foreach (var inscripcion in listInscrips)
+                {
+                    //buscar corredor y distancia 
+                    Distancia distancia = await _distanciaRepository.GetDistancia(inscripcion.DistanciaID);
+                    DistanciaDto distanciaDto = _mapper.Map<DistanciaDto>(distancia);
+
+                    Corredor corredor = await _corredorRepository.GetCorredor(inscripcion.UsuarioID);
+                    CorredorGetDto corredorDto = _mapper.Map<CorredorGetDto>(corredor);
+
+                    var insc = new InscripcionDto
+                    {
+                        ID = inscripcion.ID,
+                        Fecha = inscripcion.Fecha,
+
+                        Corredor = corredorDto,
+                        Distancia = distanciaDto,
+                        Remera = inscripcion.Remera,
+                        FormaPago = inscripcion.FormaPago,
+                        EstadoPago = inscripcion.EstadoPago,
+                        Dorsal = inscripcion.Dorsal,
+                        Acreditado = inscripcion.Acreditado
+
+                        
+                       
+                    };
+                    
+                    inscripciones.Add(insc);
+                }
+
+
+                return Ok(inscripciones);
 
             }
             catch (Exception ex)
@@ -161,7 +195,7 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet,Route("voluntarios/{eventoID}")]
+       /*[HttpGet,Route("voluntarios/{eventoID}")]
         public async Task<IActionResult> GetVoluntarios(int eventoID)
         {
             try
@@ -178,7 +212,7 @@ namespace BE.Controllers
 
                 return BadRequest(ex.Message);
             }
-        }
+        }*/
 
         //Por Rol
         [HttpDelete("{id}")]
@@ -284,7 +318,6 @@ namespace BE.Controllers
             }
         }
 
-        //[Route("resultados")]
         [HttpGet, Route("resultados/{eventoID}")]
         public async Task<IActionResult> GetResultados(int eventoID)
         {
@@ -312,15 +345,17 @@ namespace BE.Controllers
         }
 
         [HttpPut, Route("UpdateEstado/{eventoID}")]
-        public async Task<IActionResult> UpdateStatus(int eventoID) 
+        public async Task<IActionResult> UpdateStatus(int eventoID, bool estado) 
         {
             try
             {
-                var evento = _eventoRepository.GetEvento(eventoID);
+                var evento = await _eventoRepository.GetEvento(eventoID);
                 if (evento is null)
                     return NotFound();
 
-                //await _eventoRepository.UpdateStatus
+                string estadoEvento = estado ? "Activo" : "Inactivo";
+
+                await _eventoRepository.UpdateStatus(eventoID, estadoEvento);
                 return NoContent();
             }
             catch(Exception ex) 

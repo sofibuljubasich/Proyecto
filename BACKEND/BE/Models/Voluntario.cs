@@ -3,7 +3,7 @@
     public class Voluntario: Usuario
     {
 
-        public virtual ICollection<Tarea> Tareas { get; set; }  
+        public virtual ICollection<Tarea>? Tareas { get; set; }  
 
     }
 }

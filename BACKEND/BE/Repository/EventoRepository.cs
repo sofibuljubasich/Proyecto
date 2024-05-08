@@ -76,9 +76,10 @@ namespace BE.Repository
 
         public async Task<List<Inscripcion>> GetInscripcionesByEvento(int eventoID)
         {
-            return await _context.Inscripciones.Where(i => i.EventoID == eventoID).ToListAsync();
+            var ins = await _context.Inscripciones.Where(i=> i.EventoID == eventoID).ToListAsync();  
+            return ins;
         }
-
+        //No es necesario
         public Task<List<Usuario>> GetVoluntariosByEvento(int eventoID)
         {
             throw new NotImplementedException();
@@ -87,6 +88,18 @@ namespace BE.Repository
         public Task<List<Inscripcion>> GetResultados(int idEvento)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task UpdateStatus(int eventoID, string estado)
+        {
+            Evento? dbEvento = _context.Eventos.First(e => e.ID == eventoID);
+
+            if (dbEvento is not null)
+            {
+               
+                dbEvento.Estado = estado;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
