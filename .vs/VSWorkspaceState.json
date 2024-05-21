@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\BACKEND",
+    "\\BACKEND\\BE",
+    "\\BACKEND\\BE\\Interfaces"
   ],
-  "SelectedNode": "\\BE.sln",
+  "SelectedNode": "\\BACKEND\\BE\\Interfaces\\IEventoRepository.cs",
   "PreviewInSolutionExplorer": false
 }

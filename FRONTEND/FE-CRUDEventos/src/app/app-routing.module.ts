@@ -8,6 +8,7 @@ import { PagPrincipalComponent } from './components/pag-principal/pag-principal.
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
   { path: 'inicio', component: PagPrincipalComponent },
+  // { path: 'verEvento', component: VerEventoComponent },
   { path: 'verEvento/:id', component: VerEventoComponent },
   // { path: 'eventos-proximos', component: EventosProximosComponent },
   // { path: 'resultados', component: ResultadosComponent },

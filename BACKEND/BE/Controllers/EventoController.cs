@@ -5,6 +5,7 @@ using BE.Models;
 using BE.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace BE.Controllers
 {

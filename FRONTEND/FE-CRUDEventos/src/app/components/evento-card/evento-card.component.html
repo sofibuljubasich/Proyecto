@@ -1,13 +1,15 @@
 
-  <mat-card class="example-card">
+  <!-- <mat-card class="example-card">
 
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" class="imagen">
+    <img mat-card-image [src]="eventoResp.evento.imagen" class="imagen" alt="Event Image">
+    <div class="card-date">{{eventoResp.evento.fecha}}</div>
+     <img mat-card-image src="../../../images/carrera3.jpg" class="imagen" alt="Event Image"> 
     <mat-card-content>
-      <p style="color: black;">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-        of type and scrambled it to make a type specimen book.
-      </p>
+      <div>
+        <h1 style="color: black;">{{eventoResp.evento.nombre}}</h1>
+      </div>
+      <h1 style="color: black;">{{evento.nombre}}</h1>
+      <h5 style="color: black;">MARATON</h5>
     </mat-card-content>
     <mat-card-actions>
       <button mat-icon-button style="transform: scale(2);">
@@ -15,4 +17,20 @@
       </button>
       <button mat-raised-button color="primary" style="margin-left: 20%; width: 200px;">Inscribirse</button>
     </mat-card-actions>
-  </mat-card>
+  </mat-card> -->
+
+  <div class="card">
+    <div class="card-image-container">
+      <img [src]="eventoResp.evento.imagen" alt="Event Image" class="card-image">
+      <div class="card-date">{{ formattedDate }}</div>
+    </div>
+    <div class="card-content">
+      <h2 class="card-title">{{formattedName}}</h2>
+      <div class="card-actions">
+        <button mat-icon-button style="transform: scale(2);" routerLink="/verEvento/{{eventoResp.evento.id}}">
+          <mat-icon  style="color: rgb(0, 0, 0); margin-inline-start: 0px;">info</mat-icon>
+        </button>
+        <button class="signup-button" >Inscribirse</button>
+      </div>
+    </div>
+  </div>

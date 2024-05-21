@@ -4,3 +4,21 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+/* Estilos para los botones de navegación del carrusel */
+.owl-nav button.owl-prev,
+.owl-nav button.owl-next {
+  background: none;
+  border: none;
+  color: black; /* Cambia el color del texto a negro */
+  font-size: 2em; /* Ajusta el tamaño de la fuente según sea necesario */
+  cursor: pointer;
+  outline: none;
+}
+
+.owl-nav button.owl-prev:hover,
+.owl-nav button.owl-next:hover {
+  color: gray; /* Cambia el color al pasar el ratón */
+}

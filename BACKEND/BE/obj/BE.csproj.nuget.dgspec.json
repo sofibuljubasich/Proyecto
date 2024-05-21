@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Docs\\Proyecto\\BACKEND\\BE\\BE.csproj": {}
+    "D:\\FACULTAD\\proyecto\\Proyecto\\BACKEND\\BE\\BE.csproj": {}
   },
   "projects": {
-    "D:\\Docs\\Proyecto\\BACKEND\\BE\\BE.csproj": {
+    "D:\\FACULTAD\\proyecto\\Proyecto\\BACKEND\\BE\\BE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Docs\\Proyecto\\BACKEND\\BE\\BE.csproj",
+        "projectUniqueName": "D:\\FACULTAD\\proyecto\\Proyecto\\BACKEND\\BE\\BE.csproj",
         "projectName": "BE",
-        "projectPath": "D:\\Docs\\Proyecto\\BACKEND\\BE\\BE.csproj",
-        "packagesPath": "C:\\Users\\Sofia\\.nuget\\packages\\",
-        "outputPath": "D:\\Docs\\Proyecto\\BACKEND\\BE\\obj\\",
+        "projectPath": "D:\\FACULTAD\\proyecto\\Proyecto\\BACKEND\\BE\\BE.csproj",
+        "packagesPath": "C:\\Users\\Anto\\.nuget\\packages\\",
+        "outputPath": "D:\\FACULTAD\\proyecto\\Proyecto\\BACKEND\\BE\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Sofia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Anto\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

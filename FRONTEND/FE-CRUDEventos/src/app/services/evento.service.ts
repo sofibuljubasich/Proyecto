@@ -2,17 +2,21 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Evento, EventoResponse } from '../interfaces/evento';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EventoService {
-  myAppUrl: string = environment.endpoint;
-  myApiUrl: string = 'api/Evento/'
+  private myAppUrl: string = environment.endpoint;
+  private myApiUrl: string = 'api/Evento/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getEventos(): Observable<any> {
-    return this.http.get(`${this.myAppUrl}${this.myApiUrl}`)
+  getEventos(): Observable<EventoResponse[]> {
+    return this.http.get<EventoResponse[]>(`${this.myAppUrl}${this.myApiUrl}`);
+  }
+  agregarEvento(eventoData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, eventoData);
   }
 }

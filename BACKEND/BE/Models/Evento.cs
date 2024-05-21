@@ -19,7 +19,7 @@ namespace BE.Models
 
         public string Estado { get; set; } 
 
-        public byte[]? Imagen { get; set; }
+        public string? Imagen { get; set; }
 
 
         public ICollection<Categoria> Categorias { get; set; }

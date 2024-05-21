@@ -13,6 +13,7 @@ import { PagPrincipalComponent } from './components/pag-principal/pag-principal.
 import { EventoCardComponent } from './components/evento-card/evento-card.component';
 import { CarruselComponent } from './components/carrusel/carrusel.component';
 import { ToolbarBasicExample } from './components/toolbar/toolbar.component';
+import { HeaderComponent } from './components/header/header.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -27,14 +28,15 @@ import { SharedModule } from './shared/shared.module';
     ToolbarBasicExample,
     EventoCardComponent,
     CarruselComponent,
+    HeaderComponent,
   ],
+  providers: [],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

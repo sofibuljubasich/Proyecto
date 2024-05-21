@@ -105,8 +105,10 @@ namespace BE.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte[]>("Imagen")
-                        .HasColumnType("varbinary(max)");
+//                    b.Property<byte[]>("Imagen")
+//                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Imagen")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lugar")
                         .IsRequired()
@@ -284,8 +286,10 @@ namespace BE.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Imagen")
-                        .HasColumnType("varbinary(max)");
+//                    b.Property<byte[]>("Imagen")
+//                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Imagen")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()

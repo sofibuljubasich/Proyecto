@@ -20,9 +20,11 @@
 }
 
 .owl-nav .owl-prev{
-    top:calc(50% - 20px);
+    /* top:calc(50% - 20px);
     left: 0;
-    position: absolute;
+    position: absolute; */
+    color: black !important;
+    background-color: #e9b6b6 !important;
 }
 
 .owl-nav .owl-next{
@@ -30,9 +32,11 @@
     position: absolute;
     top:calc(50% - 20px);
     font-size: 50px; */
-    color: black;
+    color: black !important;
+    background-color: #e9b6b6 !important;
 }
-/* .owl-nav{
+
+.owl-nav{
  position: absolute;
  z-index: 1;
  top: 50%;
@@ -41,5 +45,5 @@
 }
 .owl-carousel{
     position: relative;
-} */
+}
 

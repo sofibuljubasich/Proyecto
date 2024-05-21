@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Evento } from 'src/app/interfaces/evento';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
-const ELEMENT_DATA: Event[] = [];
-
 @Component({
   selector: 'app-carrusel',
   templateUrl: './carrusel.component.html',
@@ -11,13 +9,13 @@ const ELEMENT_DATA: Event[] = [];
 })
 export class CarruselComponent {
   customOptions: OwlOptions = {
-    loop: true,
+    loop: false,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
     dots: false,
-    navText: ['Previo', 'Proximo'],
-    // navClass: ['owl-prev', 'owl-next'],
+    items: 3,
+    navText: ['<<<', '>>>'],
     navSpeed: 700,
     responsive: {
       0: {
