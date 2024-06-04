@@ -19,4 +19,9 @@ export class EventoService {
   agregarEvento(eventoData: FormData): Observable<any> {
     return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, eventoData);
   }
+  getEvento(id: number): Observable<EventoResponse> {
+    return this.http.get<EventoResponse>(
+      `${this.myAppUrl}${this.myApiUrl}${id}`
+    );
+  }
 }

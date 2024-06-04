@@ -17,6 +17,7 @@ import { HeaderComponent } from './components/header/header.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { SharedModule } from './shared/shared.module';
     CarruselComponent,
     HeaderComponent,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
   imports: [
     BrowserModule,

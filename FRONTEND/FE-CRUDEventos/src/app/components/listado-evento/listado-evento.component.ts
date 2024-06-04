@@ -26,9 +26,7 @@ export class ListadoEventoComponent implements OnInit {
 
   obtenerEvento(): void {
     this._eventoService.getEventos().subscribe((data) => {
-      // let a=data;
       this.eventosData = data;
-      console.log(this.eventosData[0].evento);
       // this.eventos = data;
     });
   }

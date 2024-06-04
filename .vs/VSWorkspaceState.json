@@ -3,8 +3,9 @@
     "",
     "\\BACKEND",
     "\\BACKEND\\BE",
-    "\\BACKEND\\BE\\Interfaces"
+    "\\BACKEND\\BE\\Interfaces",
+    "\\BACKEND\\BE\\Models"
   ],
-  "SelectedNode": "\\BACKEND\\BE\\Interfaces\\IEventoRepository.cs",
+  "SelectedNode": "\\BACKEND\\BE\\Models\\TipoEvento.cs",
   "PreviewInSolutionExplorer": false
 }

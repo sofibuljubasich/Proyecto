@@ -11,7 +11,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [],
@@ -25,7 +28,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatCardModule,
     BrowserAnimationsModule,
     CarouselModule,
-    HttpClientModule
+    HttpClientModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    DatePipe,
   ],
   exports: [
     MatTableModule,
@@ -36,7 +43,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatCardModule,
     BrowserAnimationsModule,
     CarouselModule,
-    HttpClientModule
+    HttpClientModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    DatePipe,
   ],
 })
 export class SharedModule {}

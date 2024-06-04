@@ -12,11 +12,41 @@
 </div> -->
 
 <body>
-    
+    <app-header></app-header>
     <div class="container">
-        <!-- <app-header></app-header> -->
-        <toolbar></toolbar>
-        <img src="../../../images/bici2.jpg" alt="Descripción de la imagen" class="imagen">
-      <div class="titulo">Título del Evento</div>
-    </div>
-  </body>
+        <img [src]="eventoData.evento.imagen" alt="Descripción de la imagen" class="imagen">
+        <div class="content">
+            <div class="titulo">{{eventoData.evento.nombre}}</div>
+          <div class="datos">
+            <div class="dato">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="calendar_month"></mat-icon>
+              <p class="label">Fecha:</p>
+              <p class="date">{{ getFormattedDate(eventoData.evento.fecha) }}</p>
+            </div>
+            <div class="dato">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="location_on"></mat-icon>
+              <p class="label">Localización:</p>
+              <p class="date">{{ eventoData.evento.lugar }}</p>
+            </div>
+            <div class="dato">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="directions_run"></mat-icon>
+              <p class="label">Tipo de evento:</p>
+              <p class="date">{{ eventoData.evento.lugar }}</p>
+            </div>
+            <div class="dato">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="flag"></mat-icon>
+              <p class="label">Distancias asociadas:</p>
+            </div>
+            <div class="distancias">
+              <p *ngFor="let distancia of eventoData.distancias" class="distancia-item">{{ distancia.kilometros }}</p>
+            </div>
+            <!-- <div class="dato">Descripción del evento...</div>
+            <div class="dato">Otra información relevante...</div>
+            <p class="fecha">Fecha del Evento: 20 de marzo de 2024</p>
+            <p class="lugar">Lugar: Estancia</p>
+            <p class="descripcion">Descripción del evento...</p> -->
+          </div>
+        </div>
+      </div>
+
+</body>

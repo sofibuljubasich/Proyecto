@@ -5,7 +5,6 @@ export interface Evento {
   lugar: string;
   estado: string;
   imagen?: string;
-  imgb64?: string;
 }
 // Definición de la interfaz para la respuesta completa
 export interface EventoResponse {
