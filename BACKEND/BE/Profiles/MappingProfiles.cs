@@ -12,10 +12,14 @@ namespace BE.Profiles
             CreateMap<Evento, EventoCreateDto>().ReverseMap();
             CreateMap<Evento, EventoRespuestaDto>().ReverseMap();
 
+            CreateMap<TipoEvento, TipoEventoCreateUpdateDto>().ReverseMap();
+            CreateMap<TipoEvento, TipoEventoDto>().ReverseMap();
+
             CreateMap<Usuario, LoginDto>().ReverseMap();
             CreateMap<Corredor, RegisterDto>().ReverseMap();
             CreateMap<Corredor, CorredorGetDto>().ReverseMap();
             CreateMap<Voluntario, VoluntarioDto>().ReverseMap();
+            CreateMap<Usuario, RegisterDto>().ReverseMap();     
 
             CreateMap<Categoria, CategoriaDto>().ReverseMap();
             CreateMap<Categoria, CategoriaCreateUpdateDto>().ReverseMap();  

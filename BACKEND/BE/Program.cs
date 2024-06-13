@@ -45,7 +45,9 @@ builder.Services.AddScoped<IInscripcionRepository, InscripcionRepository>();
 builder.Services.AddScoped<ITareaRepository, TareaRepository>();    
 builder.Services.AddScoped<ICorredorRepository, CorredorRepository>();
 builder.Services.AddScoped<IComentarioRepository, ComentarioRepository>();
-builder.Services.AddScoped<IVoluntarioRepository, VoluntarioRepository>();  
+builder.Services.AddScoped<IVoluntarioRepository, VoluntarioRepository>();
+builder.Services.AddScoped<IRolRepository, RolRepository>();
+builder.Services.AddScoped<ITipoEventoRepository, TipoEventoRepository>() ;
 builder.Services.AddScoped<IEventoDistanciaRepository, EventoDistanciaRepository>();    
 builder.Services.AddEndpointsApiExplorer();
 
