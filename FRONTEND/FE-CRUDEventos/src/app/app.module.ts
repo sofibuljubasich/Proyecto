@@ -14,6 +14,8 @@ import { EventoCardComponent } from './components/evento-card/evento-card.compon
 import { CarruselComponent } from './components/carrusel/carrusel.component';
 import { ToolbarBasicExample } from './components/toolbar/toolbar.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -30,6 +32,8 @@ import { DatePipe } from '@angular/common';
     EventoCardComponent,
     CarruselComponent,
     HeaderComponent,
+    LoginComponent,
+    SignUpComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

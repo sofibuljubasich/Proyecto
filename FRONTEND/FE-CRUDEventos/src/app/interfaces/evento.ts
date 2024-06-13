@@ -16,11 +16,14 @@ export interface EventoResponse {
 // Definición de la interfaz Categoria (asumiendo que tiene estas propiedades)
 export interface Categoria {
   id: number;
-  nombre: string;
+  edadInicio: number;
+  edadFin: number;
 }
 
 // Definición de la interfaz Distancia (asumiendo que tiene estas propiedades)
 export interface Distancia {
   id: number;
-  kilometros: number;
+  distanciaid: number;
+  km: number;
+  precio: number;
 }

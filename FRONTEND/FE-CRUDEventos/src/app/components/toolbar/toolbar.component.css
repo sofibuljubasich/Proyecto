@@ -13,7 +13,7 @@ nav ul li a.active  {
 }
 nav{
 max-width: 50%;
-max-height: 37px;
+max-height: 40px;
 margin: auto;
 background-color: #419197;
 margin-top:60px; 
@@ -31,7 +31,7 @@ ul{
   justify-content: center;
   padding: 0px 2px; 
   /* max-width: 60%; */
- 
+  font-size: 18px;
   position: relative; 
 }
 

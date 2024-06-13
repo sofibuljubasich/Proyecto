@@ -26,7 +26,12 @@ export class ListadoEventoComponent implements OnInit {
 
   obtenerEvento(): void {
     this._eventoService.getEventos().subscribe((data) => {
-      this.eventosData = data;
+      // this.eventosData = data;
+      this.eventosData = data.sort(
+        (a, b) =>
+          new Date(a.evento.fecha).getTime() -
+          new Date(b.evento.fecha).getTime()
+      );
       // this.eventos = data;
     });
   }

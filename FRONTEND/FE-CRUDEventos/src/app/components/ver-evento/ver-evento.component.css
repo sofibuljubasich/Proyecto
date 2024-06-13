@@ -10,13 +10,14 @@ body {
 }
 
 .container {
-  padding: 8% 5%;
+  padding: 8% 3%;
   margin: 0;
   display: grid;
   grid-template-columns: 3fr 4fr; /* Define dos columnas, una para la imagen y otra para el contenido */
-  gap: 20px; /* Espacio entre las columnas */
+  gap: 16px; /* Espacio entre las columnas */
   /* margin: 5% 5%; Ajusta los márgenes según tus necesidades */
   align-items: start; /* Alinea el contenido al inicio */
+  justify-items: center;
 }
 
 .imagen {
@@ -30,7 +31,7 @@ border: 3px solid white; /* Añade un borde blanco más grueso */
 .content {
   display: grid;
   grid-template-rows: auto auto; /* Dos filas: una para el título y otra para los datos */
-  gap: 10px; /* Espacio entre las filas */
+  gap-: 10px; /* Espacio entre las filas */
 
 }
 
@@ -40,17 +41,47 @@ border: 3px solid white; /* Añade un borde blanco más grueso */
   font-weight: bold;
   color: white;
 }
-
+.second{
+  padding: 20px 30px;
+  margin-bottom: 9%;
+  margin-top: -20px;
+}
 .datos {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Dos columnas para los datos */
-  gap: 10px; /* Espacio entre las columnas */
-  padding: 20px 40px;
+  gap: 5px; /* Espacio entre las columnas */
+  padding: 20px 30px;
 }
 .distancias {
   margin-left: 2.5rem; /* Añade margen izquierdo para alinear con la etiqueta */
 }
+.distancias {
+  margin-top: 20px;
+}
 
+table {
+  width: 40%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  /* align-items: center; */
+}
+
+th, td {
+  border: 1px solid #0c0c0c;
+  text-align: left;
+  padding: 8px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+th {
+  background-color: #858585;
+  color: black;
+}
+
+.distancia-item {
+  background-color: #ffffff;
+}
 .dato {
   color: white;
   font-size: 16px;
@@ -67,7 +98,14 @@ border: 3px solid white; /* Añade un borde blanco más grueso */
   width: 50px;
   height: auto;
 }
-
+.tipo{
+  color: white;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  height: max-content;
+  margin-bottom: 15px;
+}
 .label {
   margin: 0; /* Quita el margen predeterminado del <p> */
   font-weight: 500; /* Hace el texto "Fecha:" en negrita */
@@ -85,23 +123,16 @@ border: 3px solid white; /* Añade un borde blanco más grueso */
   color: white;
   font-size: 16px;
 }
-/* .container {
-  display: grid;
-  padding: 8% 5%;
-  margin: 0;
-  align-items: flex-start;
-} */
+.opciones{
+  margin-top: -150px;
+  justify-items: space-evenly;
+}
+button{
+  margin: 0px 10px;
 
-
-  /* .imagen {
-    width: 40%; 
-    height: auto;
-    margin-right: 20px; 
-  }
-  
-  .titulo {
-    justify-content: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: antiquewhite;
-  } */
+  border: none;
+  margin-left: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
