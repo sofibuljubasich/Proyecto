@@ -22,7 +22,7 @@ namespace BE.Dto
 
 
 
-        public virtual TipoEvento Tipo { get; set; }
+        public TipoEventoDto Tipo { get; set; }
 
     }
 }
