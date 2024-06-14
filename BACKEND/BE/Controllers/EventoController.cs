@@ -20,9 +20,9 @@ namespace BE.Controllers
         private readonly IDistanciaRepository _distanciaRepository;
         private readonly IEventoDistanciaRepository _eventoDistanciaRepository;
         private readonly ICorredorRepository _corredorRepository;
-
+        private readonly ITipoEventoRepository _tipoRepository;
         public EventoController(IMapper mapper, IEventoRepository eventoRepository,ICategoriaRepository categoriaRepository,IDistanciaRepository distanciaRepository,
-                IEventoDistanciaRepository eventoDistanciaRepository, ICorredorRepository corredorRepository)
+                IEventoDistanciaRepository eventoDistanciaRepository, ICorredorRepository corredorRepository, ITipoEventoRepository tipoRepository)
         {
             _mapper = mapper;
             _eventoRepository = eventoRepository;
@@ -30,6 +30,7 @@ namespace BE.Controllers
             _distanciaRepository = distanciaRepository;
             _eventoDistanciaRepository = eventoDistanciaRepository;
             _corredorRepository = corredorRepository;
+            _tipoRepository = tipoRepository;
         }   
 
         [HttpGet]
@@ -39,13 +40,23 @@ namespace BE.Controllers
             {
                 var listEventos = await _eventoRepository.GetEventos();
 
-                var listEventosDto = _mapper.Map<IEnumerable<EventoDto>>(listEventos);
+               // var listEventosDto = _mapper.Map<IEnumerable<EventoDto>>(listEventos);
 
 
                 var eventosRtaDto = new List<EventoRespuestaDto>();
 
-                foreach (var evento in listEventosDto) 
+                //foreach (var evento in listEventosDto) 
+                foreach (var evento in listEventos)
+
                 {
+
+                    EventoDto eventoDto= _mapper.Map<EventoDto>(evento);
+                     
+                    var tipo = await _tipoRepository.GetTipoEvento(evento.TipoID);
+                    var tipoDto = _mapper.Map<TipoEventoDto>(tipo);
+
+                    eventoDto.Tipo = tipoDto;
+
                     var categorias = await _categoriaRepository.GetCategoriasByEvento(evento.ID);
                     var distancias = await _eventoDistanciaRepository.GetDistanciasByEvento(evento.ID);
 
@@ -68,7 +79,7 @@ namespace BE.Controllers
 
                     var eventoRta = new EventoRespuestaDto 
                     { 
-                        Evento = evento,
+                        Evento = eventoDto,
                         Distancias = distanciasDto,
                         Categorias = categoriasDto
                     
@@ -103,6 +114,10 @@ namespace BE.Controllers
                     return NotFound();
                 }
 
+                var tipo = await _tipoRepository.GetTipoEvento(evento.TipoID);
+                var tipoDto = _mapper.Map<TipoEventoDto>(tipo);
+
+                eventoDto.Tipo = tipoDto;
 
                 var categorias = await _categoriaRepository.GetCategoriasByEvento(evento.ID);
 
