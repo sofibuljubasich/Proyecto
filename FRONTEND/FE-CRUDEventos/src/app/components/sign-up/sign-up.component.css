@@ -25,6 +25,7 @@ label{
 .signup-container {
 
     width: 60%;
+    height: 430px;
     margin-top: -100px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -174,3 +175,8 @@ label{
     outline: none; /* Elimina el borde del foco por defecto */
     color: #f7f7f7;
   }  
+.data{
+  padding: 10px 30px;
+  position: relative;
+  height: 65px;
+}

@@ -114,10 +114,32 @@ export class SignUpComponent implements OnInit {
       console.log(this.showSecondStep);
       this.signupFormPart1.markAllAsTouched();
     }
+    this.showSecondStep = true;
   }
 
   onSubmit() {
     if (this.signupFormPart3.valid) {
+      const usuarioData = {
+        nombre: this.signupFormPart1.value.nombre,
+        apellido: this.signupFormPart1.value.apellido,
+        telefono: this.signupFormPart1.value.telefono,
+        genero: this.signupFormPart1.value.genero,
+        localidad: this.signupFormPart1.value.localidad,
+        dni: this.signupFormPart1.value.dni,
+        fechaNacimiento: this.signupFormPart1.value.fechaNacimiento,
+        obraSocial: this.signupFormPart1.value.obraSocial,
+        email: this.signupFormPart3.value.email,
+        password: this.signupFormPart3.value.password,
+      };
+      this.authService.register(usuarioData).subscribe(
+        (response) => {
+          console.log('User registered successfully', response);
+          //this.router.navigate(['/login']); // Redirigir al login después del registro exitoso
+        },
+        (error) => {
+          console.error('Error registering user', error);
+        }
+      );
       // Aquí puedes enviar los datos del formulario completo
       console.log('Formulario completo:', {
         ...this.signupFormPart1.value,
