@@ -34,7 +34,8 @@ namespace BE.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            var user = await _userRepository.GetUsuario(loginDto.UserEmail);
+
+            var user = await _userRepository.GetUsuarioByEmail(loginDto.UserEmail);
 
             if ( user == null)
             {
@@ -50,8 +51,7 @@ namespace BE.Controllers
                 new Claim("id", user.ID.ToString()),
                 new Claim("email", user.Email),
                 new Claim("fullname", $"{user.Nombre} {user.Apellido}"),
-                new Claim("rol", 
-                                user.Rol.Descripcion)
+               // new Claim("rol", user.Rol.Descripcion)
                
                  
              };

@@ -39,6 +39,33 @@ namespace BE.Controllers
 
         }
 
+        [HttpGet("{usuarioID}")]
+        public async Task<IActionResult> Get(int usuarioID)
+        {
+            try
+            {
+                var usario = await _usuarioRepository.GetUsuario(usuarioID);
+
+                if (usario == null)
+                {
+                    return NotFound();
+                }
+
+                var usuarioDto = _mapper.Map<UsuarioDto>(usario);
+
+                
+
+                return Ok(usuarioDto);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+
         [HttpPost("register")]
         public async Task<IActionResult> CrearUsuario([FromBody] RegisterDto request)
         {

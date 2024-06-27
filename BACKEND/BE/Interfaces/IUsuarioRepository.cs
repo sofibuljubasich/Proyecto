@@ -6,7 +6,9 @@ namespace BE.Interfaces
     {
         Task<List<Usuario>> GetUsuarios(); // SOLO LOS ADMIN ACCEDEN
 
-        Task<Usuario> GetUsuario(string email);
+        Task<Usuario> GetUsuarioByEmail(string email);
+
+        Task<Usuario> GetUsuario(int usuarioID);
 
         Task<Usuario> CreateUsuario(Usuario usuario); 
 

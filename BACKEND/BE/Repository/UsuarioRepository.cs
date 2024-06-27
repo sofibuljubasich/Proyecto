@@ -28,7 +28,7 @@ namespace BE.Repository
             return await _context.Usuarios.ToListAsync();
         }
 
-        public async Task<Usuario> GetUsuario(string email)
+        public async Task<Usuario> GetUsuarioByEmail(string email)
         {
             return await _context.Usuarios.SingleOrDefaultAsync(x => x.Email == email);
            
@@ -69,5 +69,13 @@ namespace BE.Repository
             await _context.SaveChangesAsync();
             return usuario;
         }
+
+       
+
+        public async Task<Usuario> GetUsuario(int usuarioID)
+        {
+            return await _context.Usuarios.FirstOrDefaultAsync(x=>x.ID == usuarioID);
+        }
+        
     }
 }
