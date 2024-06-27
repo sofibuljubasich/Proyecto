@@ -5,12 +5,18 @@ export interface Evento {
   lugar: string;
   estado: string;
   imagen?: string;
+  tipo: Tipo;
 }
 // Definición de la interfaz para la respuesta completa
 export interface EventoResponse {
   evento: Evento;
   categorias: Categoria[];
   distancias: Distancia[];
+}
+
+export interface Tipo {
+  id: number;
+  descripcion: string;
 }
 
 // Definición de la interfaz Categoria (asumiendo que tiene estas propiedades)

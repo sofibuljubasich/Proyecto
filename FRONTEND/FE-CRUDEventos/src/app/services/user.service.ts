@@ -1,16 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { environment } from '../environments/environment';
+import { Usuario } from '../interfaces/usuario';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserService {
   constructor(private http: HttpClient) {}
   private myAppUrl: string = environment.endpoint;
-  private myApiUrl: string = 'api/Usuario/';
+  private myApiUrl: string = 'api/Usuario/register';
 
-  agregarUsuarios(userData: FormData): Observable<any> {
-    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, userData);
+  // agregarUsuarios(userData: Usuario): Observable<Usuario> {
+  //   return this.http.post<Usuario>(
+  //     `${this.myAppUrl}${this.myApiUrl}`,
+  //     userData
+  //   );
+  // }
+  agregarUsuarios(userData: Usuario) {
+    this.http
+      .post<Usuario>(`${this.myAppUrl}${this.myApiUrl}`, userData)
+      .subscribe(
+        (response) => {
+          console.log('User registered successfully', response);
+          //this.router.navigate(['/login']); // Redirigir al login después del registro exitoso
+        },
+        (error) => {
+          console.error('Error registering user', error);
+        }
+      );
   }
 }

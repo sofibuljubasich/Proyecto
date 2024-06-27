@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -15,11 +24,14 @@ export class SignUpComponent implements OnInit {
   signupFormPart3!: FormGroup;
   showSecondStep: boolean = false;
   signupForm!: FormGroup;
+  errorMessage: string | null = null;
+  showError: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
+    private _authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     // this.signupForm = this.fb.group(
     //   {
@@ -72,7 +84,7 @@ export class SignUpComponent implements OnInit {
         confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       },
       {
-        validator: this.passwordMatchValidator,
+        validator: this.passwordsMatch('password', 'confirmPassword'),
       }
     );
   }
@@ -82,16 +94,44 @@ export class SignUpComponent implements OnInit {
   //     ? null
   //     : { mismatch: true };
   // }
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password')!.value;
-    const confirmPassword = form.get('confirmPassword')!.value;
 
-    if (password !== confirmPassword) {
-      form.get('confirmPassword')!.setErrors({ mismatch: true });
-    } else {
-      form.get('confirmPassword')!.setErrors(null);
-    }
+  passwordsMatch(password: string, confirmPassword: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const passwordControl = control.get(password);
+      const confirmPasswordControl = control.get(confirmPassword);
+
+      if (!passwordControl || !confirmPasswordControl) {
+        return null;
+      }
+
+      if (
+        confirmPasswordControl.errors &&
+        !confirmPasswordControl.errors['passwordsMismatch']
+      ) {
+        return null;
+      }
+
+      if (passwordControl.value !== confirmPasswordControl.value) {
+        confirmPasswordControl.setErrors({ passwordsMismatch: true });
+      } else {
+        confirmPasswordControl.setErrors(null);
+      }
+
+      return null;
+    };
   }
+
+  // passwordMatchValidator(form: FormGroup) {
+  //   const password = form.get('password')!.value;
+  //   const confirmPassword = form.get('confirmPassword')!.value;
+
+  //   if (password !== confirmPassword) {
+  //     form.get('confirmPassword')!.setErrors({ mismatch: true });
+  //   } else {
+  //     form.get('confirmPassword')!.setErrors(null);
+  //   }
+  // }
+
   // passwordMatchValidator(control: AbstractControl) {
   //   const password = control.get('password');
   //   const confirmPassword = control.get('confirmPassword');
@@ -105,21 +145,15 @@ export class SignUpComponent implements OnInit {
   // }
   onNext() {
     if (this.signupFormPart1.valid) {
-      console.log(this.showSecondStep);
-      console.log('Formulario completo:', {
-        ...this.signupFormPart1.value,
-      });
       this.showSecondStep = true;
     } else {
-      console.log(this.showSecondStep);
       this.signupFormPart1.markAllAsTouched();
     }
-    this.showSecondStep = true;
   }
 
   onSubmit() {
     if (this.signupFormPart3.valid) {
-      const usuarioData = {
+      const usuarioData: Usuario = {
         nombre: this.signupFormPart1.value.nombre,
         apellido: this.signupFormPart1.value.apellido,
         telefono: this.signupFormPart1.value.telefono,
@@ -131,20 +165,30 @@ export class SignUpComponent implements OnInit {
         email: this.signupFormPart3.value.email,
         password: this.signupFormPart3.value.password,
       };
-      this.authService.register(usuarioData).subscribe(
+      console.log(usuarioData);
+      this._authService.register(usuarioData).subscribe(
         (response) => {
-          console.log('User registered successfully', response);
-          //this.router.navigate(['/login']); // Redirigir al login después del registro exitoso
+          console.log('Autenticado con éxito:', response);
+          this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {
+            duration: 3000,
+          });
+          this.errorMessage = null;
+          this.router.navigate(['/login']);
         },
         (error) => {
-          console.error('Error registering user', error);
+          console.error('Error en la autenticación:', error);
+          this.errorMessage = error;
+          this.showError = true;
+          setTimeout(() => {
+            this.showError = false;
+          }, 3000);
         }
       );
       // Aquí puedes enviar los datos del formulario completo
-      console.log('Formulario completo:', {
-        ...this.signupFormPart1.value,
-        ...this.signupFormPart3.value,
-      });
+      // console.log('Formulario completo:', {
+      //   ...this.signupFormPart1.value,
+      //   ...this.signupFormPart3.value,
+      // });
     } else {
       this.signupFormPart3.markAllAsTouched();
     }

@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'inicio', component: PagPrincipalComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
+  { path: 'login', component: LoginComponent },
   // { path: 'verEvento', component: VerEventoComponent },
   { path: 'verEvento/:id', component: VerEventoComponent },
   // { path: 'eventos-proximos', component: EventosProximosComponent },

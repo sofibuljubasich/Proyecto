@@ -1,0 +1,140 @@
+.mat {
+    background-color: #419197;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    height: auto;
+    top: 0px;
+    left: 0px;
+  }
+
+.background {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #78D6C6;
+  }
+
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: solid;
+    font-size: 25px;
+    font-weight: 600;
+    color: aliceblue;
+}
+label{
+    color: aliceblue;
+    justify-content: center;
+}
+.signup-container {
+
+    width: 60%;
+    height: 350px;
+    justify-content: center;
+    /* margin-top: -100px; */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    position: relative;
+    background: #04364A;  /* fallback for old browsers */
+  /* background: -webkit-linear-gradient(to right, #0b1536, #148cc3);  
+  background: linear-gradient(to right, #20126e, #2b79a7);  */
+  box-shadow: 0px 0px 30px #f7f7f7;
+  }
+
+  .datos {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas para los datos */
+    gap: 5px; /* Espacio entre las columnas */
+    padding: 0px 30px;
+  }
+  .data{
+    padding: 10px 30px;
+    position: relative;
+    height: 65px;
+    justify-content: center;
+    align-content: center;
+  }
+  .email{
+    font-size: 14px;
+    padding: 0px 30px;
+    margin-top: -5px;
+    padding-bottom: 15px;
+    height: 65px;
+  }
+  .signup-container div {
+    margin-bottom: 5px;
+    position: relative;
+  }
+  
+  .signup-container label {
+    display: block;
+    margin-bottom: 0px;
+    white-space: nowrap;
+  }
+  
+  .signup-container input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 3px solid #419197; /* Borde negro */
+    border-radius: 5px; /* Puntas redondeadas */
+    background: transparent; /* Sin relleno */
+    outline: none; /* Elimina el borde del foco por defecto */
+    color: #f7f7f7;
+  }
+  .signup-container input:focus {
+    border-color: #5cb85c; /* Cambia el color del borde al enfocarse */
+    color: #f7f7f7;
+    background: transparent;
+  }
+  .button-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+  }
+  .signup-container button {
+    width: 40%;
+    padding: 10px;
+    background-color:#419197;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .error-message {
+    color: red;
+  font-size: 12px;
+  position: absolute;
+  }
+
+  
+  .signup-container select {
+
+    background: transparent;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px; /* Espacio para el icono */
+    width: 100%;
+    /* padding: 8px; */
+    box-sizing: border-box;
+    border: 0px solid #419197; /* Borde negro */
+    outline: none; /* Elimina el borde del foco por defecto */
+    color: #f7f7f7;
+  } 
+
+  p{
+    color: aliceblue;
+    
+  }

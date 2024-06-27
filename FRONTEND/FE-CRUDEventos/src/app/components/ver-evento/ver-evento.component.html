@@ -28,21 +28,15 @@
               <p class="label">Localización:</p>
               <p class="date">{{ eventoData.evento.lugar }}</p>
             </div>
-
-
-
-            <!-- <div class="dato">Descripción del evento...</div>
-            <div class="dato">Otra información relevante...</div>
-            <p class="fecha">Fecha del Evento: 20 de marzo de 2024</p>
-            <p class="lugar">Lugar: Estancia</p>
-            <p class="descripcion">Descripción del evento...</p> -->
           </div>
           <div class="second">
             <div class="tipo">
               <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="directions_run"></mat-icon>
               <p class="label">Tipo de evento:</p>
-              <p class="date">{{ eventoData.evento.lugar }}</p>
+              <p class="date">{{ eventoData.evento.tipo.descripcion }}</p>
             </div>
+          </div>
+          <div class="datos">
             <div class="dato">
               <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="flag"></mat-icon>
               <p class="label">Distancias asociadas:</p>
@@ -65,10 +59,10 @@
             </div>
           </div>
         </div>
-        <div class="opciones">
-          <button routerLink="inicio" style="border: none; text-decoration: underline;background:none;">Regresar</button>
-          <button  mat-raised-button color="primary">Inscribirse</button>
-        </div>
+      </div>
+      <div class="opciones">
+        <button routerLink="inicio" style="border: none; text-decoration: underline;background:none;"> <- Regresar</button>
+        <button  mat-raised-button color="primary">Inscribirse</button>
       </div>
 
 </body>

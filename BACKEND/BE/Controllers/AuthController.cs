@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using BE.Dto;
 using BE.Interfaces;
 using BE.Models;
@@ -40,6 +40,7 @@ namespace BE.Controllers
             if ( user == null)
             {
                 return BadRequest("Email inexistente");
+
             }
 
             if (!BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))

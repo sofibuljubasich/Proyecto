@@ -25,7 +25,7 @@ label{
 .signup-container {
 
     width: 60%;
-    height: 430px;
+    height: 480px;
     margin-top: -100px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -150,9 +150,9 @@ label{
   }
   
   /* Asegúrate de que el placeholder se oculte cuando hay un valor ingresado */
-  .signup-container input:not(:placeholder-shown) {
-    /* border-color: #5cb85c;  */
-  }
+  /* .signup-container input:not(:placeholder-shown) {
+     border-color: #5cb85c;  
+  } */
 
   .error-message {
     color: red;
