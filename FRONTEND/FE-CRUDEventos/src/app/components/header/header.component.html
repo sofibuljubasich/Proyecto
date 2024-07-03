@@ -1,7 +1,20 @@
-<mat-toolbar class="mat">
+<mat-toolbar id="mat">
     <img src="images/Logo2.gif" alt="Logo" class="logo" height="50" width="150" routerLink='./inicio'>
-    <span class="example-spacer"></span>
-    <button routerLink='/sign-up' mat-raised-button>Crear cuenta</button>
-    <button routerLink='/login' mat-raised-button color="primary">Inicia sesión</button>
+    <!-- <span class="example-spacer"></span> -->
+    <ng-container *ngIf="!isAuthenticated">
+        <span class="example-spacer"></span>
+        <button routerLink='/sign-up' mat-raised-button>Crear cuenta</button>
+        <button routerLink='/login' mat-raised-button color="primary">Inicia sesión</button>
+    </ng-container>
+    <ng-container *ngIf="isAuthenticated">
+        <div class="derecha">
+            <button style="padding: 2px;margin: 10px;" (click)="logout()">Cerrar sesión</button>
+            <div>
+                <span style="color: aliceblue;">{{ currentUser?.fullname }}</span>
+                <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="account_circle"></mat-icon>
+            </div>
+        </div>
+        <!-- <button (click)="logout()">Cerrar sesión</button> -->
+      </ng-container>
     <!-- <button mat-raised-button style="background-color: #370057; color: aliceblue;">Inicia sesión</button> -->
 </mat-toolbar>

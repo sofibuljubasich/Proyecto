@@ -1,15 +1,4 @@
-<!-- <div class="container">
-    <toolbar></toolbar>
 
-    <div class="primero">
-        <div class="imagen-contenedor">
-            <img src="../../../images/bici2.jpg" alt="Descripción de la imagen" class="imagen">
-        </div>
-       
-        <h1 class="titulo">Nombre del evento</h1>
-    </div> 
-
-</div> -->
 
 <body>
     <app-header></app-header>
@@ -62,7 +51,7 @@
       </div>
       <div class="opciones">
         <button routerLink="inicio" style="border: none; text-decoration: underline;background:none;"> <- Regresar</button>
-        <button  mat-raised-button color="primary">Inscribirse</button>
+        <button  mat-raised-button (click)="onInscribirse()" color="primary">Inscribirse</button>
       </div>
 
 </body>

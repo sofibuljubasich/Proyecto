@@ -6,16 +6,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 //Components
-import { AgregarEditarEventoComponent } from './components/agregar-editar-evento/agregar-editar-evento.component';
+import { AgregarEditarEventoComponent } from './pages/agregar-editar-evento/agregar-editar-evento.component';
 import { ListadoEventoComponent } from './components/listado-evento/listado-evento.component';
-import { VerEventoComponent } from './components/ver-evento/ver-evento.component';
-import { PagPrincipalComponent } from './components/pag-principal/pag-principal.component';
+import { VerEventoComponent } from './pages/corredor/ver-evento/ver-evento.component';
+import { PagPrincipalComponent } from './pages/corredor/pag-principal/pag-principal.component';
 import { EventoCardComponent } from './components/evento-card/evento-card.component';
 import { CarruselComponent } from './components/carrusel/carrusel.component';
 import { ToolbarBasicExample } from './components/toolbar/toolbar.component';
 import { HeaderComponent } from './components/header/header.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { ResultadosComponent } from './pages/corredor/resultados/resultados.component';
+import { ProximosEventosComponent } from './pages/corredor/proximos-eventos/proximos-eventos.component';
+import { InscripcionComponent } from './pages/corredor/inscripcion/inscripcion.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -34,6 +37,9 @@ import { DatePipe } from '@angular/common';
     HeaderComponent,
     LoginComponent,
     SignUpComponent,
+    ResultadosComponent,
+    ProximosEventosComponent,
+    InscripcionComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

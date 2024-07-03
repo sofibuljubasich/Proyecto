@@ -1,23 +1,29 @@
 
 <div class="fixed">
-  <!-- <app-header></app-header> -->
-  
   <div class="header">
     <app-header></app-header>
-    <!-- <mat-toolbar class="mat">
-      <img src="images/Logo2.gif" alt="Logo" class="logo" height="50" width="150" routerLink='/inicio'>
-      <span class="example-spacer"></span>
-      <button mat-raised-button>Crear cuenta</button>
-      <button mat-raised-button color="primary">Inicia sesión</button>
-  </mat-toolbar> -->
   </div>
-  <div>
-          <nav>
-              <ul>
-                <li><a href="#" class="active">Inicio</a></li>
-                <li><a href="#">Próximos Eventos</a></li>
-                <li><a href="#">Resultados</a></li>
-              </ul>
-          </nav>
-  </div>
+  <nav>
+    <ng-container *ngIf="userRole === 'usuario'">
+      <ul>
+        <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">Inicio</li>
+        <li (click)="navegar('proximos-eventos')" [ngClass]="{seleccionado: seleccionado[1]}">Próximos Eventos</li>
+        <li (click)="navegar('resultados')"[ngClass]="{seleccionado: seleccionado[2]}">Resultados</li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="userRole === 'voluntario'">
+      <ul>
+        <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">Eventos</li>
+        <li (click)="navegar('proximos-eventos')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="userRole === 'admin'">
+      <ul>
+        <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">ABM Eventos</li>
+        <li (click)="navegar('proximos-eventos')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>
+        <li (click)="navegar('resultados')"[ngClass]="{seleccionado: seleccionado[2]}">ABM Colaboradores</li>
+        <li (click)="navegar('resultados')"[ngClass]="{seleccionado: seleccionado[3]}">Vista Tareas</li>
+      </ul>
+    </ng-container>
+  </nav>
 </div>

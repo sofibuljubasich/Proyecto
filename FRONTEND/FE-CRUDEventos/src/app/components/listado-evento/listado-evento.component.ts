@@ -13,6 +13,7 @@ const listEventos: Evento[] = [];
 export class ListadoEventoComponent implements OnInit {
   // eventos: Evento[] = [];
   eventosData: EventoResponse[] | null = null;
+  filtrados: EventoResponse[] | null = null;
 
   constructor(private _eventoService: EventoService) {}
 
@@ -26,8 +27,11 @@ export class ListadoEventoComponent implements OnInit {
 
   obtenerEvento(): void {
     this._eventoService.getEventos().subscribe((data) => {
-      // this.eventosData = data;
-      this.eventosData = data.sort(
+      this.filtrados = data.filter(
+        (evento) =>
+          evento.evento.estado === 'activo' || evento.evento.estado === 'Activo'
+      );
+      this.eventosData = this.filtrados.sort(
         (a, b) =>
           new Date(a.evento.fecha).getTime() -
           new Date(b.evento.fecha).getTime()

@@ -19,17 +19,14 @@ export interface Tipo {
   descripcion: string;
 }
 
-// Definición de la interfaz Categoria (asumiendo que tiene estas propiedades)
 export interface Categoria {
   id: number;
   edadInicio: number;
   edadFin: number;
 }
 
-// Definición de la interfaz Distancia (asumiendo que tiene estas propiedades)
 export interface Distancia {
   id: number;
-  distanciaid: number;
   km: number;
   precio: number;
 }

@@ -65,8 +65,6 @@ export class LoginComponent {
         next: (response) => {
           console.log('Autenticado con éxito:', response);
           this.clearErrorMessage();
-          // Guarda el token y redirige según sea necesario
-          localStorage.setItem('token', response);
           this.router.navigate(['/inicio']);
         }, // Redirige a la página de inicio o dashboard},
         error: (error) => {

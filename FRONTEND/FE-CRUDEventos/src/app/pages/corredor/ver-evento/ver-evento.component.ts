@@ -1,7 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventoResponse } from 'src/app/interfaces/evento';
+import { AuthService } from 'src/app/services/auth.service';
 import { EventoService } from 'src/app/services/evento.service';
 
 @Component({
@@ -17,7 +18,9 @@ export class VerEventoComponent implements OnInit {
   constructor(
     private _eventoService: EventoService,
     private aRoute: ActivatedRoute,
-    private datePipe: DatePipe
+    private router: Router,
+    private datePipe: DatePipe,
+    private _authService: AuthService
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
@@ -40,5 +43,13 @@ export class VerEventoComponent implements OnInit {
   }
   getFormattedDate(date: string | Date): string | null {
     return this.datePipe.transform(date, 'dd/MM/yyyy');
+  }
+
+  onInscribirse(): void {
+    if (this._authService.isAuthenticated()) {
+      this.router.navigate([`/inscribirse/${this.eventoData.evento.id}`]);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }

@@ -16,7 +16,7 @@ body {
     width: 100%;
     height: 2000px;
     /* height: 100%; */
-    background-image: url(../../../images/bici2.jpg);
+    background-image: url(../../../../images/bici2.jpg);
     background-size: cover;
     background-attachment: fixed;
     filter: blur(2px); /* Aplica un desenfoque de 5 píxeles al pseudo-elemento */

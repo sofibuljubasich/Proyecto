@@ -1,0 +1,80 @@
+<body>
+    <app-header></app-header>
+    <div class="container">
+        <img [src]="eventoData.evento.imagen" alt="Descripción de la imagen" class="imagen">
+        <div class="content">
+            <div style="width: 100%;padding-left: 10px;" class="titulo">{{eventoData.evento.nombre}}</div>
+            <label for="categoria">Categoría:</label>
+            <input type="text" id="categoria" [value]="category" readonly>
+
+            <!-- <label for="talle">Talle remera:</label> -->
+            <mat-form-field>
+                <mat-label>Talle remera:</mat-label>
+                <mat-select [(ngModel)]="talleSelect" name="talle">
+                @for (talle of talles; track talles) {
+                    <mat-option [value]="talle.value">{{talle.viewValue}}</mat-option>
+                }
+                </mat-select>
+            </mat-form-field>
+            
+            <!-- <div *ngIf="inscripcionForm.get('talleRemera').invalid && inscripcionForm.get('talleRemera').touched">
+                Seleccionar un talle de remera es obligatorio.
+              </div> -->
+            <mat-form-field>
+                <mat-label>Distancia:</mat-label>
+                <mat-select [(ngModel)]="distanciaSelect" name="distancia">
+                @for (dist of eventoData.distancias; track eventoData.distancias) {
+                    <mat-option [value]="dist.km">{{dist.km}} km  -  ${{dist.precio}}</mat-option>
+                }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <!-- <label for="pago">Método de pago:</label> -->
+                <mat-label>Método de pago*: </mat-label>
+                <mat-select [(ngModel)]="pagoSelect" name="metodoPago">
+                    @for (pago of metodosPago; track metodosPago) {
+                        <mat-option [value]="pago.value">{{pago.viewValue}}</mat-option>
+                    }
+                    </mat-select>
+                </mat-form-field>
+            <div style="color: rgb(15, 2, 49); background-color: rgba(122, 255, 211, 0.521); display: flex; align-items: center;">
+                <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="report"></mat-icon>
+                <p style="margin: 0;">Se abona presencialmente el día anterior al evento durante la entrega de kits</p>
+            </div>
+            <div *ngIf="errorMessage" style="color: red;display: flex; margin-left: 10%;margin-top: 33%;position: absolute;">{{ errorMessage }}</div>
+                <!-- <mat-select [(ngModel)]="pagoSelect" name="pago">
+                @for (met of metodos; track metodos) {
+                    <mat-option [value]="met.value">{{met.value}}</mat-option>
+                }
+                </mat-select>
+            </mat-form-field> -->
+
+        </div>
+          
+        <div class="datos">
+            <div class="dato">
+            <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="calendar_month"></mat-icon>
+            <p class="label">Fecha:</p>
+            <p class="date">{{ getFormattedDate(eventoData.evento.fecha) }}</p>
+            </div>
+            <div class="dato">
+            <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="location_on"></mat-icon>
+            <p class="label">Localización:</p>
+            <p class="date">{{ eventoData.evento.lugar }}</p>
+            </div>
+            <div class="dato">
+                <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="directions_run"></mat-icon>
+                <p class="label">Tipo de evento:</p>
+                <p class="date">{{ eventoData.evento.tipo.descripcion }}</p>
+            </div>
+        </div> 
+
+        <div class="opciones">
+            <button routerLink="inicio" style="border: none; text-decoration: underline;background:none;width: 40%;"> <- Regresar</button>
+            <button  mat-raised-button (click)="onInscribirse()" color="primary">Inscribirse</button>
+            
+        </div> 
+    </div>
+
+
+</body>

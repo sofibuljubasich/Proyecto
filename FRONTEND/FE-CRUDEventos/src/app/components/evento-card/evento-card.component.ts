@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Evento, EventoResponse } from 'src/app/interfaces/evento';
+import { AuthService } from 'src/app/services/auth.service';
 
 /**
  * @title Card with multiple sections
@@ -47,5 +49,12 @@ export class EventoCardComponent implements OnInit {
     if (!text) return '';
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   }
-  constructor() {}
+  constructor(private _authService: AuthService, private router: Router) {}
+  onInscribirse(): void {
+    if (this._authService.isAuthenticated()) {
+      this.router.navigate([`/inscribirse/${this.eventoResp.evento.id}`]);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
 }
