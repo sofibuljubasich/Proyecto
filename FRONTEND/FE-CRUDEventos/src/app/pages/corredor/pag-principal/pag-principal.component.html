@@ -1,7 +1,4 @@
 <div class="container">
-
-    <toolbar></toolbar>
-  
     <main class="main">
       <section class="buscador">      
           <input type="text" placeholder="Buscar evento">
@@ -11,16 +8,15 @@
       <section class="eventos">
         <h2>Eventos próximos activos</h2>
         <div class="event-list">
-          <!-- <app-carrusel></app-carrusel> -->
-          <app-listado-evento></app-listado-evento>
+          <app-listado-evento [eventos]="eventosActivos"></app-listado-evento>
         </div>
     </section>
-   <!-- <section class="eventos">
-        <h2 style="color: black;">Eventos finalizados</h2>
+   <section class="eventos">
+        <h2>Eventos finalizados</h2>
         <div class="event-list">
-          <app-carrusel></app-carrusel> 
+          <app-listado-evento [eventos]="eventosInactivos"></app-listado-evento> 
         </div>
-      </section> -->
+      </section>
      <section>
         <div class="sobre-nosotros" style="background-color: #04364A; height: 100px; justify-content: center; align-items: center;">
           <div class="redes-sociales" style="width: 10%;">

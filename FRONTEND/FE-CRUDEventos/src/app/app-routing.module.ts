@@ -19,6 +19,8 @@ const routes: Routes = [
   { path: 'proximos-eventos', component: ProximosEventosComponent },
   { path: 'resultados', component: ResultadosComponent },
   { path: 'inscribirse/:id', component: InscripcionComponent },
+  // { path: 'ver-resultados/:id', component: ResultadosComponent },
+
   // { path: 'verEvento', component: VerEventoComponent },
   { path: 'verEvento/:id', component: VerEventoComponent },
   // { path: 'eventos-proximos', component: EventosProximosComponent },

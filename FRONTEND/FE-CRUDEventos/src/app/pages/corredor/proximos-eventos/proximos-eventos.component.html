@@ -1,1 +1,15 @@
-<toolbar></toolbar>
+<div class="container">
+    <main class="main">
+      <section class="buscador">      
+          <input type="text" placeholder="Buscar evento">
+          <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
+      </section>
+      <section class="eventos">
+        <h2>Próximos eventos:</h2>
+        <div class="event-list">
+          <app-listado-evento [eventos]="eventosActivos"></app-listado-evento>
+        </div>
+    </section>
+   
+    </main>
+  </div>

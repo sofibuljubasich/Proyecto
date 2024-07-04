@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { EventoService } from '../../services/evento.service';
 import { Evento, EventoResponse } from 'src/app/interfaces/evento';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -11,34 +17,23 @@ const listEventos: Evento[] = [];
   styleUrls: ['./listado-evento.component.css'],
 })
 export class ListadoEventoComponent implements OnInit {
-  // eventos: Evento[] = [];
-  eventosData: EventoResponse[] | null = null;
+  @Input() eventos: EventoResponse[] | null = null;
   filtrados: EventoResponse[] | null = null;
 
-  constructor(private _eventoService: EventoService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.obtenerEvento();
-  }
-
-  ngAfterViewInit(): void {
-    // throw new Error('Method not implemented.');
-  }
-
-  obtenerEvento(): void {
-    this._eventoService.getEventos().subscribe((data) => {
-      this.filtrados = data.filter(
-        (evento) =>
-          evento.evento.estado === 'activo' || evento.evento.estado === 'Activo'
-      );
-      this.eventosData = this.filtrados.sort(
+    if (this.eventos) {
+      this.filtrados = this.eventos.sort(
         (a, b) =>
           new Date(a.evento.fecha).getTime() -
           new Date(b.evento.fecha).getTime()
       );
-      // this.eventos = data;
-    });
+    }
   }
+
+  ngAfterViewInit(): void {}
+
   customOptions: OwlOptions = {
     loop: false,
     mouseDrag: true,

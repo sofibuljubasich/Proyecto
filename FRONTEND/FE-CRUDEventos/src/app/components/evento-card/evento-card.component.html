@@ -26,11 +26,18 @@
     </div>
     <div class="card-content">
       <h2 class="card-title">{{formattedName}}</h2>
-      <div class="card-actions">
-        <button mat-icon-button style="transform: scale(2);" routerLink="/verEvento/{{eventoResp.evento.id}}">
-          <mat-icon  style="color: rgb(0, 0, 0); margin-inline-start: 0px;">info</mat-icon>
-        </button>
-        <button (click)="onInscribirse()" class="signup-button" >Inscribirse</button>
-      </div>
+      <ng-container *ngIf="eventoResp.evento.estado !== 'Inactivo'">
+        <div class="card-actions">
+          <button mat-icon-button style="transform: scale(2);" routerLink="/verEvento/{{eventoResp.evento.id}}">
+            <mat-icon  style="color: rgb(0, 0, 0); margin-inline-start: 0px;">info</mat-icon>
+          </button>
+          <button (click)="onInscribirse()" class="signup-button" >Inscribirse</button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="eventoResp.evento.estado === 'Inactivo'">
+        <div class="card-actions">
+          <button routerLink="/verResultados/{{eventoResp.evento.id}}" class="signup-button" >Ver Resultados</button>
+        </div>
+      </ng-container>
     </div>
   </div>

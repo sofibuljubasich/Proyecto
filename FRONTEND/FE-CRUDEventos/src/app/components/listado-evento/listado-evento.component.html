@@ -12,7 +12,7 @@
 </owl-carousel-o> -->
   
 <owl-carousel-o [options]="customOptions">
-  <ng-container *ngFor= "let eventoResp of eventosData">
+  <ng-container *ngFor= "let eventoResp of eventos">
     <ng-template carouselSlide>
       <evento-card [eventoResp]="eventoResp"></evento-card>
     </ng-template>
