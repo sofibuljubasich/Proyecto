@@ -101,6 +101,11 @@ namespace BE.Repository
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<List<string>> GetLugares() 
+        {
+            return await _context.Eventos.Select(e =>e.Lugar).Distinct().ToListAsync();
+        }
     }
 }
 

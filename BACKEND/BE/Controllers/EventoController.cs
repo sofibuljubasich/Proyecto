@@ -270,7 +270,7 @@ namespace BE.Controllers
                     Lugar = eventoDto.Lugar,
                     Fecha = eventoDto.Fecha,
                    // Imagen = eventoDto.Imagen,
-                    Estado = eventoDto.Estado,
+                    Estado = "Activo",
                     TipoID = eventoDto.TipoID
                 };
                 //var evento = _mapper.Map<Evento>(eventoDto);
@@ -378,6 +378,23 @@ namespace BE.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet, Route("Lugares")]
+        public async Task<IActionResult> GetLugares() 
+        {
+            try 
+            {
+                var lugaresList = await _eventoRepository.GetLugares();
+
+                if (lugaresList == null) 
+                {
+                    return NotFound("No existen lugares con eventos");
+                }
+                return Ok(lugaresList);
+        
+            }catch(Exception ex) { return BadRequest(ex.Message); }
+        
         }
 
     }

@@ -14,7 +14,7 @@ namespace BE.Dto
 
         public string Lugar { get; set; }
 
-        public string Estado { get; set; }
+        //public string Estado { get; set; }
 
         //public byte[]? Imagen { get; set; }
 

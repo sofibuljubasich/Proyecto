@@ -18,6 +18,8 @@ namespace BE.Interfaces
 
         Task Update(int eventoID, EventoUpdateDto evento);
 
+        Task<List<string>> GetLugares();
+
         Task UpdateStatus(int eventoID, string estado);
 
             Task<List<Inscripcion>> GetInscripcionesByEvento(int idEvento);
@@ -25,6 +27,7 @@ namespace BE.Interfaces
             Task<List<Usuario>> GetVoluntariosByEvento(int eventoID);
 
         Task<List<Inscripcion>> GetResultados(int idEvento);
+
 
 
 

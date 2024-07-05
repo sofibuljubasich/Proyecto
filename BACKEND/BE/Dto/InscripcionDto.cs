@@ -24,6 +24,8 @@ namespace BE.Dto
 
         public int? Tiempo { get; set; }
 
+        public decimal Precio { get; set; } 
+
         //[ForeignKey("Distancia")]
 
         //  public int DistanciaID { get; set; }

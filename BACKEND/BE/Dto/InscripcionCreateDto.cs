@@ -27,7 +27,7 @@ namespace BE.Dto
 
         public int UsuarioID { get; set; }
   
-
+        public decimal Precio { get; set; } 
         public int EventoID { get; set; }
 
     }
