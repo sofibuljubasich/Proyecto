@@ -9,6 +9,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ProximosEventosComponent } from './pages/corredor/proximos-eventos/proximos-eventos.component';
 import { ResultadosComponent } from './pages/corredor/resultados/resultados.component';
 import { InscripcionComponent } from './pages/corredor/inscripcion/inscripcion.component';
+import { VerResultadosComponent } from './pages/corredor/ver-resultados/ver-resultados.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
@@ -19,7 +20,7 @@ const routes: Routes = [
   { path: 'proximos-eventos', component: ProximosEventosComponent },
   { path: 'resultados', component: ResultadosComponent },
   { path: 'inscribirse/:id', component: InscripcionComponent },
-  // { path: 'ver-resultados/:id', component: ResultadosComponent },
+  { path: 'verResultados/:id', component: VerResultadosComponent },
 
   // { path: 'verEvento', component: VerEventoComponent },
   { path: 'verEvento/:id', component: VerEventoComponent },

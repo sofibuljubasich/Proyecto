@@ -19,6 +19,7 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { ResultadosComponent } from './pages/corredor/resultados/resultados.component';
 import { ProximosEventosComponent } from './pages/corredor/proximos-eventos/proximos-eventos.component';
 import { InscripcionComponent } from './pages/corredor/inscripcion/inscripcion.component';
+import { VerResultadosComponent } from './pages/corredor/ver-resultados/ver-resultados.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -40,6 +41,7 @@ import { DatePipe } from '@angular/common';
     ResultadosComponent,
     ProximosEventosComponent,
     InscripcionComponent,
+    VerResultadosComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
