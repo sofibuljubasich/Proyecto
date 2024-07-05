@@ -74,7 +74,6 @@ export class InscripcionComponent {
   obtenerEvento(): void {
     this._eventoService.getEvento(this.id).subscribe((data) => {
       this.eventoData = data;
-      console.log(this.eventoData);
       this.eventoData.evento.nombre = this.capitalizeFirstLetter(
         data.evento.nombre
       );
@@ -108,10 +107,8 @@ export class InscripcionComponent {
       usuarioID: 10,
       eventoID: this.eventoData.evento.id,
     };
-    console.log(inscripcionData);
     this._inscripcionService.inscribir(inscripcionData).subscribe(
       (response) => {
-        console.log('Inscripción exitosa', response);
         this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {
           duration: 3000,
         });

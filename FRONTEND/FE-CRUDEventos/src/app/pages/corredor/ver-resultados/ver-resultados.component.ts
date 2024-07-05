@@ -2,11 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-ver-resultados',
-  standalone: true,
-  imports: [],
+  standalone: false,
   templateUrl: './ver-resultados.component.html',
-  styleUrl: './ver-resultados.component.css'
+  styleUrl: './ver-resultados.component.css',
 })
-export class VerResultadosComponent {
-
-}
+export class VerResultadosComponent {}
