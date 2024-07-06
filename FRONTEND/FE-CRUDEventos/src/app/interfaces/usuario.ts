@@ -9,4 +9,5 @@ export interface Usuario {
   telefono: string;
   genero: string;
   obraSocial: string;
+  imagen: string;
 }

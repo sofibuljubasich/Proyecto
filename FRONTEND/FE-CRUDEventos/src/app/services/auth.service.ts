@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { Usuario } from '../interfaces/usuario';
-import { jwtDecode } from 'jwt-decode';
+// import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -16,15 +16,15 @@ import { jwtDecode } from 'jwt-decode';
 export class AuthService {
   private myAppUrl: string = environment.endpoint;
   private myApiUrl: string = 'api/Auth';
-  private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<
+  private userIdSubject: BehaviorSubject<string | null> = new BehaviorSubject<
     string | null
   >(null);
-  public token$: Observable<string | null> = this.tokenSubject.asObservable();
+  public userId$: Observable<string | null> = this.userIdSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    const savedToken = localStorage.getItem('token');
-    if (savedToken) {
-      this.tokenSubject.next(savedToken);
+    const savedUserId = localStorage.getItem('userId');
+    if (savedUserId) {
+      this.userIdSubject.next(savedUserId);
     }
   }
 
@@ -36,33 +36,41 @@ export class AuthService {
         responseType: 'text',
       })
       .pipe(
-        tap((response: any) => this.setSession(response)),
+        tap((response: string) => this.setSession(response)),
         catchError(this.handleError)
       );
   }
 
-  private setSession(authResult: any): void {
-    const token = authResult as string;
-    this.tokenSubject.next(token);
-    localStorage.setItem('token', token);
+  private setSession(userId: string): void {
+    this.userIdSubject.next(userId);
+    localStorage.setItem('userId', userId);
   }
 
   logout(): void {
-    this.tokenSubject.next(null);
-    localStorage.removeItem('token');
+    this.userIdSubject.next(null);
+    localStorage.removeItem('userId');
   }
 
-  getToken(): string | null {
-    return this.tokenSubject.value;
+  getUserId(): string | null {
+    return this.userIdSubject.value;
   }
+
   isAuthenticated(): boolean {
-    return this.tokenSubject.value !== null;
+    return this.userIdSubject.value !== null;
   }
 
   register(userData: Usuario) {
     return this.http
       .post<Usuario>(`${this.myAppUrl}${this.myApiUrl}/register`, userData)
       .pipe(catchError(this.handleError));
+  }
+
+  getCurrentUser(): any {
+    const userId = this.getUserId();
+    if (userId) {
+      return { id: userId }; // Devuelve un objeto de usuario con el ID
+    }
+    return null;
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
@@ -82,13 +90,7 @@ export class AuthService {
     }
     return throwError(errorMessage);
   }
-  getCurrentUser(): any {
-    const token = this.getToken();
-    if (token) {
-      return jwtDecode(token);
-    }
-    return null;
-  }
+
   getUserAge(): number | null {
     const currentUser = this.getCurrentUser();
     if (currentUser && currentUser.birthdate) {

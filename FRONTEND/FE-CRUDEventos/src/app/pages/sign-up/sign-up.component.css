@@ -183,6 +183,58 @@ p{
   height: 65px;
 }
 
+
+.profile-image-container {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  /* display: inline-block; */
+  background-color:transparent;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border-radius: 50%; */
+}
+
+.profile-pic {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border-color: #aaa;
+}
+
+.profile-image-input {
+  display: none;
+
+}
+
+.add-icon {
+  /* z-index: 1; */
+  cursor: pointer;
+  position: relative;
+  bottom: -34%; 
+  right: -34%;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center; 
+  line-height: 50px;
+  font-size: 35px;
+  border: 2px solid #fff; /* Add a border for better visibility */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow for better visual */
+}
+
 /* background */
 @keyframes move {
   100% {

@@ -9,9 +9,11 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Categoria, EventoResponse } from 'src/app/interfaces/evento';
+import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventoService } from 'src/app/services/evento.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-inscripcion',
@@ -30,6 +32,7 @@ export class InscripcionComponent {
   pagoSelect!: string;
   inscripcionForm!: FormGroup;
   errorMessage!: string;
+  currentUser!: Usuario;
 
   metodosPago = [
     { value: 'efectivo', viewValue: 'Efectivo' },
@@ -50,17 +53,34 @@ export class InscripcionComponent {
     private datePipe: DatePipe,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _userService: UserService
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {
     this.obtenerEvento();
-    this.age = this._authService.getUserAge();
-    if (this.age !== null) {
-      this.categoria = this.getCategoryByAge(this.age);
-    }
+    this._authService.userId$.subscribe((userId) => {
+      console.log('id', userId);
+      if (!!userId) {
+        this._userService.getUsuario(userId).subscribe({
+          next: (user) => {
+            this.currentUser = user;
+            this.age = this._userService.getUserAge(this.currentUser);
+            console.log(this.age);
+            if (this.age !== null) {
+              this.categoria = this.getCategoryByAge(this.age);
+              console.log(this.categoria);
+            }
+          },
+          error: (error) => {
+            console.error('Failed to fetch user data:', error);
+          },
+        });
+      }
+    });
+
     this.inscripcionForm = this.fb.group({
       talleRemera: ['', Validators.required],
       distancia: ['', Validators.required],
