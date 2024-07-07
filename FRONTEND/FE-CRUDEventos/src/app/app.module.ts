@@ -20,6 +20,8 @@ import { ResultadosComponent } from './pages/corredor/resultados/resultados.comp
 import { ProximosEventosComponent } from './pages/corredor/proximos-eventos/proximos-eventos.component';
 import { InscripcionComponent } from './pages/corredor/inscripcion/inscripcion.component';
 import { VerResultadosComponent } from './pages/corredor/ver-resultados/ver-resultados.component';
+import { ComentariosComponent } from './components/comentarios/comentarios.component';
+import { TablaResultadosComponent } from './components/tabla-resultados/tabla-resultados.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -42,6 +44,8 @@ import { DatePipe } from '@angular/common';
     ProximosEventosComponent,
     InscripcionComponent,
     VerResultadosComponent,
+    ComentariosComponent,
+    TablaResultadosComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

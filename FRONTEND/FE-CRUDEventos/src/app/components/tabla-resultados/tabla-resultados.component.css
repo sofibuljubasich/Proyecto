@@ -1,0 +1,35 @@
+table {
+  width: 80%;
+  /* display: flex; */
+  justify-content: center;
+  color: aliceblue;
+  background-color: darkslategrey;
+}
+
+th.mat-sort-header-sorted {
+  color: white;
+}
+.filtro{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    padding: 1% 0px 0% 20%;
+    
+}
+.tabla{
+    padding: 0px 10% ;
+}
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width:fit-content;
+    text-align: center;
+    
+    color: aliceblue;
+  }
+.paginator{
+    background-color:#419197;
+}
