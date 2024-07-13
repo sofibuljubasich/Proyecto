@@ -35,7 +35,6 @@ export class VerEventoComponent implements OnInit {
   obtenerEvento(): void {
     this._eventoService.getEvento(this.id).subscribe((data) => {
       this.eventoData = data;
-      console.log(this.eventoData);
       this.eventoData.evento.nombre = this.capitalizeFirstLetter(
         data.evento.nombre
       );

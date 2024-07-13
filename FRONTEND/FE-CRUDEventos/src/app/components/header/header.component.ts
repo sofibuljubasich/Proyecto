@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -9,18 +11,33 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent {
   isAuthenticated: boolean = false;
-  currentUser: any = null;
+  currentUser: Usuario | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private _authService: AuthService,
+    private _userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.authService.token$.subscribe((token) => {
-      this.isAuthenticated = !!token;
-      this.currentUser = this.authService.getCurrentUser();
+    this._authService.userId$.subscribe((userId) => {
+      this.isAuthenticated = !!userId;
+      if (userId) {
+        this._userService.getUsuario(userId).subscribe({
+          next: (user) => {
+            this.currentUser = user;
+          },
+          error: (error) => {
+            console.error('Failed to fetch user data:', error);
+          },
+        });
+      } else {
+        this.currentUser = null;
+      }
     });
   }
   logout(): void {
-    this.authService.logout();
+    this._authService.logout();
     this.router.navigate(['/login']);
   }
 }

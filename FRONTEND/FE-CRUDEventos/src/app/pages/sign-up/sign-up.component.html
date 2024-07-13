@@ -4,7 +4,7 @@
 
 <div class="fondo">
   <div class="signup-container">
-    <form *ngIf="!showSecondStep" [formGroup]="signupFormPart1">
+    <form *ngIf="showStep===1" [formGroup]="signupFormPart1">
     <div>
         <p class="title">Crear Sesión</p>
         <p style="color: aliceblue;    display: flex; justify-content: center;"> Por favor, ingrese la siguiente información</p>
@@ -99,9 +99,38 @@
 
 
 <!-- Segunda parte del formulario -->
-<form *ngIf="showSecondStep" [formGroup]="signupFormPart3" (ngSubmit)="onSubmit()">
+
+<form *ngIf="showStep===2" [formGroup]="signupFormPart2">
   <div class="back-link">
-    <a (click)="showSecondStep = false" style="color: aliceblue; margin-left: 5px; text-decoration: underline; cursor: pointer;">← Volver</a>
+    <a (click)="previousSection()" style="color: aliceblue; margin-left: 5px; text-decoration: underline; cursor: pointer;">← Volver</a>
+  </div>
+  <div>
+    <p class="title">Crear Sesión</p>
+    <p style="color: aliceblue;    display: flex; justify-content: center;"> ¿Desea ingresar una imagen de perfil?</p>
+  </div>
+  <div style="display: flex; justify-content: center;">
+    <div class="profile-image-container">
+    
+    <!-- <img class="profile-pic" src="../../../../images/perfil-empty.jpg" alt="Perfil"> -->
+    <img *ngIf="selectedFileUrl; else defaultImage" [src]="selectedFileUrl" alt="Profile Picture" class="profile-pic">
+    <ng-template #defaultImage>
+      <img class="profile-pic" src="../../../../images/perfil-empty.jpg" alt="Perfil">
+    </ng-template>
+    <input id="profileImage" name="profileImage" type="file" (change)="onFileSelected($event)" class="profile-image-input">
+  <label for="profileImage" class="add-icon">+</label>
+    </div>
+  </div>
+  <div class="button-container">
+    <button type="button" (click)="nextSection()">Siguiente</button>
+  </div>
+</form>
+
+
+
+
+<form *ngIf="showStep===3" [formGroup]="signupFormPart3" (ngSubmit)="onSubmit()">
+  <div class="back-link">
+    <a (click)="previousSection()" style="color: aliceblue; margin-left: 5px; text-decoration: underline; cursor: pointer;">← Volver</a>
   </div>
   <div>
     <p class="title">Crear Sesión</p>
