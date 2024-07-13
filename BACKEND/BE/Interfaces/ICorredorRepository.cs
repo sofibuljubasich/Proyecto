@@ -7,7 +7,6 @@ namespace BE.Repository
 
         Task<Corredor> GetCorredor(int id);
 
-       
 
         Task<Corredor> CreateCorredor(Corredor corredor);
         Task UpdateCorredor(Corredor corredor);

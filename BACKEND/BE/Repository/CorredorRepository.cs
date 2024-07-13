@@ -1,6 +1,7 @@
 ﻿using BE.Interfaces;
 using BE.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Net.WebSockets;
 
 namespace BE.Repository
 {
@@ -19,7 +20,8 @@ namespace BE.Repository
             return user != null;
         }
 
-     
+       
+
 
         public async Task<Corredor> GetCorredor(int id)
         {

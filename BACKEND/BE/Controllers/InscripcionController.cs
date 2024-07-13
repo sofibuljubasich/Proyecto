@@ -13,11 +13,16 @@ namespace BE.Controllers
     {
         private readonly IMapper _mapper;   
         private readonly IInscripcionRepository _inscripcionRepository;
+        private readonly ICategoriaRepository _categoriaRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
 
-        public InscripcionController(IMapper mapper, IInscripcionRepository inscripcionRepository)
+        public InscripcionController(IMapper mapper, IInscripcionRepository inscripcionRepository, ICategoriaRepository categoriaRepository,IUsuarioRepository usuarioRepository)
         {
             _mapper = mapper;
             _inscripcionRepository = inscripcionRepository;
+            _categoriaRepository = categoriaRepository;
+            _usuarioRepository = usuarioRepository;
+
         }
 
         [HttpPost]
@@ -25,9 +30,8 @@ namespace BE.Controllers
         {
             try
             {
-                var inscrip = _mapper.Map<Inscripcion>(inscripcionDto);
+               
 
-                inscrip.Fecha = DateTime.Now;
                 var inscripByUser =await  _inscripcionRepository.CheckIfExists(inscripcionDto.UsuarioID, inscripcionDto.EventoID);
 
                 if (inscripByUser != null) 
@@ -35,6 +39,19 @@ namespace BE.Controllers
                     return BadRequest("Corredor ya inscripto");
                 }
 
+                var inscrip = _mapper.Map<Inscripcion>(inscripcionDto);
+
+                inscrip.Fecha = DateTime.Now;
+
+                var corredor = await _usuarioRepository.GetCorredor(inscrip.UsuarioID);
+
+                DateTime fecha = (DateTime)corredor.FechaNacimiento;
+
+                var edad = fecha.Year - DateTime.Now.Year;
+
+                var categoriaID = await _categoriaRepository.CalculateCategory(edad);
+
+                inscrip.CategoriaID = categoriaID;
 
 
                 inscrip = await _inscripcionRepository.CreateInscripcion(inscrip);
