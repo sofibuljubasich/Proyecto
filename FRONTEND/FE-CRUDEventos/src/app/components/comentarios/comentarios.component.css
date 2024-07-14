@@ -23,15 +23,19 @@
   border: 1px solid #ccc;
 }
 .comentarios-header button {
-  align-self: flex-end;
-  padding: 10px 20px;
+  padding: 5px 20px; /* Ajusta el padding según tus necesidades */
+  font-size: 18px;
   border: none;
   border-radius: 5px;
   background-color: #007bff;
   color: white;
   cursor: pointer;
 }
-
+h1{
+  color: aliceblue;
+  margin: 0;
+  /* margin-top: 5%; */
+}
 .comentario-formulario button {
   align-self: flex-end;
   padding: 10px 20px;
