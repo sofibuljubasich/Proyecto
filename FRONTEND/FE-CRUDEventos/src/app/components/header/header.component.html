@@ -11,7 +11,8 @@
             <button style="padding: 2px;margin: 10px;" (click)="logout()">Cerrar sesión</button>
             <div class="perfil">
                 <span style="color: aliceblue;">{{ currentUser?.nombre }} {{ currentUser?.apellido }}</span>
-                <img src="../../../../images/perfil-empty.jpg" alt="Event Image" class="imagen">
+                <!-- <img src="../../../../images/perfil-empty.jpg" alt="Event Image" class="imagen"> -->
+                <img src={{currentUser?.imagen}} alt="Event Image" class="imagen">
             </div>
         </div>
         <!-- <button (click)="logout()">Cerrar sesión</button> -->

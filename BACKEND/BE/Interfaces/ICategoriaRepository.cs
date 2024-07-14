@@ -7,7 +7,7 @@ namespace BE.Interfaces
         Task<List<Categoria>> GetCategorias();
 
         Task<List<Categoria>> GetCategoriasByEvento(int eventoID);
-        Task<int> CalculateCategory(int edadCorredor);
+        Task<Categoria> CalculateCategory(int edadCorredor);
         Task<Categoria> GetCategoria(int id);
         Task<Categoria> Create(Categoria categoria);
 

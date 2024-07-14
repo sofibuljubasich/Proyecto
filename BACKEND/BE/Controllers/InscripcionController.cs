@@ -49,9 +49,9 @@ namespace BE.Controllers
 
                 var edad = fecha.Year - DateTime.Now.Year;
 
-                var categoriaID = await _categoriaRepository.CalculateCategory(edad);
+                var categoria = await _categoriaRepository.CalculateCategory(edad);
 
-                inscrip.CategoriaID = categoriaID;
+                inscrip.CategoriaID = categoria.ID;
 
 
                 inscrip = await _inscripcionRepository.CreateInscripcion(inscrip);

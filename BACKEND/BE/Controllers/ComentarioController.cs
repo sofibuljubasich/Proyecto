@@ -42,7 +42,7 @@ namespace BE.Controllers
                 var new_comentario = await _comentarioRepository.Create(comentario);
 
 
-                return Ok("Comentario creado");
+                return Ok(new_comentario);
 
             }
             catch (Exception ex)

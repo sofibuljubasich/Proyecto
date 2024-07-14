@@ -126,6 +126,7 @@ export class SignUpComponent implements OnInit {
   onSubmit() {
     if (this.signupFormPart3.valid) {
       const usuarioData: Usuario = {
+        id: 0,
         nombre: this.signupFormPart1.value.nombre,
         apellido: this.signupFormPart1.value.apellido,
         telefono: this.signupFormPart1.value.telefono,

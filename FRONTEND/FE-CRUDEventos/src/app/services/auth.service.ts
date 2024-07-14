@@ -20,11 +20,20 @@ export class AuthService {
     string | null
   >(null);
   public userId$: Observable<string | null> = this.userIdSubject.asObservable();
+  private currentUserSubject: BehaviorSubject<any | null> = new BehaviorSubject<
+    any | null
+  >(null);
+  public currentUser$: Observable<any | null> =
+    this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
     const savedUserId = localStorage.getItem('userId');
     if (savedUserId) {
       this.userIdSubject.next(savedUserId);
+    }
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+      this.currentUserSubject.next(JSON.parse(savedUser));
     }
   }
 
@@ -66,11 +75,7 @@ export class AuthService {
   }
 
   getCurrentUser(): any {
-    const userId = this.getUserId();
-    if (userId) {
-      return { id: userId }; // Devuelve un objeto de usuario con el ID
-    }
-    return null;
+    return this.currentUserSubject.value;
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

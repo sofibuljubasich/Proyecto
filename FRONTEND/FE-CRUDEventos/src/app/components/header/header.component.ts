@@ -26,6 +26,7 @@ export class HeaderComponent {
         this._userService.getUsuario(userId).subscribe({
           next: (user) => {
             this.currentUser = user;
+            console.log(this.currentUser.imagen);
           },
           error: (error) => {
             console.error('Failed to fetch user data:', error);

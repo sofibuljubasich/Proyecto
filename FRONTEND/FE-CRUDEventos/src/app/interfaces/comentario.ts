@@ -9,5 +9,6 @@ export interface ComentarioNuevo {
   fechaHora: string;
   contenido: string;
   corredorID: number;
+  nombreCorredor: string;
   eventoID: number;
 }

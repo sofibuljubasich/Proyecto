@@ -33,6 +33,7 @@ export class InscripcionComponent {
   inscripcionForm!: FormGroup;
   errorMessage!: string;
   currentUser!: Usuario;
+  userID!: number;
 
   metodosPago = [
     { value: 'efectivo', viewValue: 'Efectivo' },
@@ -63,6 +64,7 @@ export class InscripcionComponent {
     this.obtenerEvento();
     this._authService.userId$.subscribe((userId) => {
       console.log('id', userId);
+      // this.userID = userId;
       if (!!userId) {
         this._userService.getUsuario(userId).subscribe({
           next: (user) => {
@@ -119,12 +121,13 @@ export class InscripcionComponent {
       (evento) => evento.km === this.distanciaSelect
     );
     const inscripcionData = {
-      // falta precio y usuario
       remera: this.talleSelect,
       formaPago: this.pagoSelect,
       estadoPago: 'Pendiente',
       distanciaID: distanciaS!.id,
-      usuarioID: 10,
+      // usuarioID: 10,
+      usuarioID: this.currentUser.id,
+      precio: distanciaS!.precio,
       eventoID: this.eventoData.evento.id,
     };
     this._inscripcionService.inscribir(inscripcionData).subscribe(

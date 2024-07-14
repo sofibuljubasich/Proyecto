@@ -6,11 +6,11 @@
 <div *ngIf="mostrarFormulario" class="comentario-formulario">
   <form [formGroup]="comentarioForm" (ngSubmit)="enviarComentario()">
     <textarea formControlName="contenido" placeholder="Escribe tu comentario..."></textarea>
-    <button type="submit" [disabled]="!comentarioForm.valid">Enviar</button>
+    <button type="submit" (click)="enviarComentario()" [disabled]="!comentarioForm.valid">Enviar</button>
   </form>
 </div>
 
-
+<main>
 <div *ngFor="let comentario of comentarios" class="comentario">
     <!-- <img [src]="comentario.fotoPerfil" alt="Foto de perfil" class="foto-perfil"> -->
     <img src="../../../images/perfil-empty.jpg" alt="Foto de perfil" class="foto-perfil">
@@ -21,4 +21,5 @@
     </div>
     <hr>
   </div>
+</main>
   
