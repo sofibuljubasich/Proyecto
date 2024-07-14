@@ -3,6 +3,7 @@ import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Evento, EventoResponse } from '../interfaces/evento';
+import { TablaResultados } from '../interfaces/tabla';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,11 @@ export class EventoService {
   getEvento(id: number): Observable<EventoResponse> {
     return this.http.get<EventoResponse>(
       `${this.myAppUrl}${this.myApiUrl}${id}`
+    );
+  }
+  getResultados(id: number): Observable<TablaResultados[]> {
+    return this.http.get<TablaResultados[]>(
+      `${this.myAppUrl}${this.myApiUrl}$inscriptos/{id}`
     );
   }
 }

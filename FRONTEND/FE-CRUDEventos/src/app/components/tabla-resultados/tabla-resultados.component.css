@@ -17,7 +17,7 @@ th.mat-sort-header-sorted {
     
 }
 .tabla{
-    padding: 0px 10% ;
+    padding: 0px 9% ;
 }
 .mat-mdc-form-field {
     font-size: 14px;
@@ -32,4 +32,5 @@ th.mat-sort-header-sorted {
   }
 .paginator{
     background-color:#419197;
+    width: 100%;
 }

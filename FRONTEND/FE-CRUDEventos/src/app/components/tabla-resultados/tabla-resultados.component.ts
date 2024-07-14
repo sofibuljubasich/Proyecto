@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -6,6 +6,8 @@ import { TablaResultados } from 'src/app/interfaces/tabla';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { Comentario } from 'src/app/interfaces/comentario';
+import { EventoService } from 'src/app/services/evento.service';
 
 const ELEMENT_DATA: TablaResultados[] = [
   {
@@ -115,7 +117,9 @@ const ELEMENT_DATA: TablaResultados[] = [
   templateUrl: './tabla-resultados.component.html',
   styleUrl: './tabla-resultados.component.css',
 })
-export class TablaResultadosComponent implements AfterViewInit {
+export class TablaResultadosComponent {
+  @Input() eventoId!: number;
+  // resultados: TablaResultados[] = [];
   displayedColumns: string[] = [
     'dorsal',
     'nombre',
@@ -127,7 +131,18 @@ export class TablaResultadosComponent implements AfterViewInit {
     'posicionCategoria',
   ];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    private _eventoService: EventoService
+  ) {}
+
+  ngOnInit() {
+    // this._eventoService
+    //   .getResultados(this.eventoId)
+    //   .subscribe((data: TablaResultados[]) => {
+    //     this.resultados = data;
+    //   });
+  }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -1,0 +1,85 @@
+.comentarios-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: aliceblue;
+}
+.comentario-formulario {
+  margin-bottom: 20px;
+}
+
+.comentario-formulario form {
+  display: flex;
+  flex-direction: column;
+}
+
+.comentario-formulario textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.comentarios-header button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.comentario-formulario button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.comentario-formulario button:disabled {
+  background-color: #ccc;
+}
+
+
+.comentario {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .foto-perfil {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .contenido {
+    flex-grow: 1;
+  }
+  
+  .nombre {
+    font-weight:500;
+    font-size: 1.2em;
+    color: aliceblue;
+  }
+  
+  .texto {
+    margin-top: 5px;
+    color:aliceblue;
+    font-size: smaller;
+  }
+  
+  .fecha {
+    text-align: right;
+    font-size: 0.8em;
+    color: gray;
+  }
