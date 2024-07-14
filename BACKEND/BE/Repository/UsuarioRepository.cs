@@ -76,6 +76,12 @@ namespace BE.Repository
         {
             return await _context.Usuarios.FirstOrDefaultAsync(x=>x.ID == usuarioID);
         }
-        
+        public async Task<Corredor> GetCorredor(int corredorID)
+        {
+            return await _context.Corredores.FirstOrDefaultAsync(x => x.ID == corredorID);
+                
+        }
+
+
     }
 }

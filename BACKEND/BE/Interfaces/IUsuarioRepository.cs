@@ -9,7 +9,9 @@ namespace BE.Interfaces
         Task<Usuario> GetUsuarioByEmail(string email);
 
         Task<Usuario> GetUsuario(int usuarioID);
+        Task<Corredor> GetCorredor(int coCorredorID);    
 
+        
         Task<Usuario> CreateUsuario(Usuario usuario); 
 
       

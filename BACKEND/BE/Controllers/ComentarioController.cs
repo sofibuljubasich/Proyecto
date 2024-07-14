@@ -65,6 +65,7 @@ namespace BE.Controllers
                 {
                     var corredor = await _corredorRepository.GetCorredor(comentario.CorredorID);
 
+                    comentario.ImagenCorredor = corredor.Imagen;
                     comentario.NombreCorredor = corredor.Nombre + " " + corredor.Apellido;
                 }
                     return Ok(listComentariosDto);

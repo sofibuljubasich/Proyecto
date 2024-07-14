@@ -16,7 +16,7 @@ namespace BE.Dto
         public int CorredorID { get; set; }
 
 
-
+        public string? ImagenCorredor { get; set; }
 
 
     }

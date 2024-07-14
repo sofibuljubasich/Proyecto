@@ -19,7 +19,8 @@ namespace BE.Models
 
         public string? EstadoPago { get; set; } 
 
-        public string? Posicion { get; set; }
+        public string? PosicionGeneral { get; set; }
+        public string? PosicionCategoria { get; set; }
 
         public int? Tiempo { get; set; }
 
@@ -38,6 +39,12 @@ namespace BE.Models
         public int EventoID { get; set; }
         public virtual Evento Evento { get; set; }
 
+
+        [ForeignKey("Categoria")]
+        public int CategoriaID { get; set; }
+
         public Boolean Acreditado { get; set; } = false;
+
+        public decimal Precio { get; set; }     
     }
 }

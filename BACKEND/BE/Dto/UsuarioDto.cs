@@ -17,7 +17,7 @@ namespace BE.Dto
         //        public byte[]? Imagen { get; set; }
         public string? Imagen { get; set; }
 
-
+        public DateTime? FechaNacimiento { get; set; }
         public string Telefono { get; set; }
 
 

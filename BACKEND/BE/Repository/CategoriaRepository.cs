@@ -38,6 +38,14 @@ namespace BE.Repository
             return await _context.Categorias.ToListAsync();
         }
 
+        public async Task<Categoria> CalculateCategory(int edadCorredor)
+        {
+
+            return await _context.Categorias.Where(c => c.EdadInicio < edadCorredor && c.EdadFin > edadCorredor).FirstOrDefaultAsync();
+
+           
+
+        }
         public async Task<List<Categoria>> GetCategoriasByEvento(int eventoID)
         {
 
