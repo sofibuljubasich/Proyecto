@@ -10,6 +10,9 @@ import { ProximosEventosComponent } from './pages/corredor/proximos-eventos/prox
 import { ResultadosComponent } from './pages/corredor/resultados/resultados.component';
 import { InscripcionComponent } from './pages/corredor/inscripcion/inscripcion.component';
 import { VerResultadosComponent } from './pages/corredor/ver-resultados/ver-resultados.component';
+import { EventosActivosComponent } from './pages/inscriptor/eventos-activos/eventos-activos.component';
+import { InscripcionManualComponent } from './pages/inscriptor/inscripcion-manual/inscripcion-manual.component';
+import { ListaInscriptosComponent } from './pages/inscriptor/lista-inscriptos/lista-inscriptos.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
@@ -21,12 +24,14 @@ const routes: Routes = [
   { path: 'resultados', component: ResultadosComponent },
   { path: 'inscribirse/:id', component: InscripcionComponent },
   { path: 'verResultados/:id', component: VerResultadosComponent },
-
-  // { path: 'verEvento', component: VerEventoComponent },
   { path: 'verEvento/:id', component: VerEventoComponent },
   // { path: 'eventos-proximos', component: EventosProximosComponent },
   // { path: 'resultados', component: ResultadosComponent },
   // { path: 'sobre-nosotros', component: SobreNosotrosComponent }
+  { path: 'eventosActivos', component: EventosActivosComponent },
+  { path: 'inscripcionManual', component: InscripcionManualComponent },
+  { path: 'listaInscriptos/:id', component: ListaInscriptosComponent },
+
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
 ];
 

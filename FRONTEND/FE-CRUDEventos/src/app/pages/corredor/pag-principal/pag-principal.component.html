@@ -1,9 +1,44 @@
 <div class="container">
     <main class="main">
-      <section class="buscador">      
+      <!-- <section class="buscador">      
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
           <input type="text" placeholder="Buscar evento">
           <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
-      </section>
+      </section> -->
+      <form #buscarForm="ngForm" (change)="buscar()">
+        <section class="buscador">      
+            <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
+            <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
+            <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
+        </section>
+        <section class="filtro">
+            <div class="fecha-filtro">
+                <div >
+                    <mat-label>Fecha Desde:  </mat-label>
+                    <input name="fechaIni" [(ngModel)]="parametrosBusqueda.fechaIni" type="date" class="filter">
+                </div>
+                <div>
+                    <mat-label>Fecha Hasta:  </mat-label>
+                    <input name="fechaFin" [(ngModel)]="parametrosBusqueda.fechaFin" type="date" class="filter">
+                </div>
+            </div>
+    
+            <div class="field-filtro">
+                <select [(ngModel)]="parametrosBusqueda.tipoEvento" name="tipoEvento" class="filter">
+                  <option value=0>Tipo evento: </option>
+                  <option *ngFor="let tipo of tipos" [value]="tipo.id">{{ tipo.descripcion }}</option>
+                </select>
+            </div>
+            
+            <div class="field-filtro">
+              <select [(ngModel)]="parametrosBusqueda.lugar" name="lugar" class="filter">
+                <option value="">Seleccione lugar</option>
+                <option *ngFor="let lugar of lugares" [value]="lugar">{{ lugar }}</option>
+              </select>            
+            </div>
+        </section>
+    </form>
+      <!-- <app-buscar></app-buscar> -->
   
       <section class="eventos">
         <h2>Eventos próximos activos</h2>

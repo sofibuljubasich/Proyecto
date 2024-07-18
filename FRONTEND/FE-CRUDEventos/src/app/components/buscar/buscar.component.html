@@ -1,0 +1,34 @@
+<form #buscarForm="ngForm" (change)="buscar()">
+    <section class="buscador">      
+        <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
+        <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento">
+        <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
+    </section>
+    <div class="filtro">
+        <div class="fecha-filtro">
+            <div>
+                <mat-label>Fecha Desde:  </mat-label>
+                <input name="fechaIni" [(ngModel)]="parametrosBusqueda.fechaIni" type="date">
+            </div>
+            <div>
+                <mat-label>Fecha Hasta:  </mat-label>
+                <input name="fechaFin" [(ngModel)]="parametrosBusqueda.fechaFin" type="date">
+            </div>
+        </div>
+
+        <div class="field-filtro">
+            
+            <mat-label>Tipo evento:</mat-label>
+            <input name="tipoEvento" [(ngModel)]="parametrosBusqueda.tipoEvento" type="string">
+            
+        </div>
+        
+        <div class="field-filtro">
+            
+            <mat-label>Lugar:</mat-label>
+            <input name="lugar" [(ngModel)]="parametrosBusqueda.lugar" type="string">
+            
+        </div>
+    </div>
+</form>
+  

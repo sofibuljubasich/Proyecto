@@ -21,6 +21,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -45,6 +46,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatSnackBarModule,
     MatSelectModule,
     MatSortModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatTableModule,
@@ -66,6 +68,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatSnackBarModule,
     MatSelectModule,
     MatSortModule,
+    MatCheckboxModule,
   ],
 })
 export class SharedModule {}

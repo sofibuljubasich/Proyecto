@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="card">
+      
+      <!-- <img [src]="comentario.fotoPerfil" alt="Foto de perfil" class="foto-perfil"> -->
+      <!-- <img src="../../../images/perfil-empty.jpg" alt="Foto de perfil" class="foto-perfil"> -->
+      <img [src]="eventoResp.evento.imagen" alt="Event Image" class="foto-perfil">
+      <div class="contenido">
+          <div class="nombre">{{formattedName}}</div>
+          <div class="texto">{{ eventoResp.evento.lugar }}</div>
+          <div class="fecha">{{ formattedDate }}</div>
+        </div>
+        <button routerLink="/listaInscriptos/{{eventoResp.evento.id}}">Ver</button>
+        
+    </div>
+</div>

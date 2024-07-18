@@ -4,20 +4,21 @@
     <app-header></app-header>
   </div>
   <nav>
-    <ng-container *ngIf="userRole === 'usuario'">
+    <ng-container *ngIf="userRole === 1">
       <ul>
         <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">Inicio</li>
         <li (click)="navegar('proximos-eventos')" [ngClass]="{seleccionado: seleccionado[1]}">Próximos Eventos</li>
         <li (click)="navegar('resultados')"[ngClass]="{seleccionado: seleccionado[2]}">Resultados</li>
       </ul>
     </ng-container>
-    <ng-container *ngIf="userRole === 'voluntario'">
+    <ng-container *ngIf="userRole === 4">
       <ul>
         <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">Eventos</li>
         <li (click)="navegar('proximos-eventos')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>
       </ul>
     </ng-container>
-    <ng-container *ngIf="userRole === 'admin'">
+    <!-- en lo siguiente deberia ser 3 pero estoy probando el inscriptor -->
+    <ng-container *ngIf="userRole === 2">  
       <ul>
         <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">ABM Eventos</li>
         <li (click)="navegar('proximos-eventos')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>

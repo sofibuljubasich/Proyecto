@@ -1,0 +1,62 @@
+.container{
+    /* height: 10px; */
+    /* width: 100%; */
+    padding:  7px 20%;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    /* display: flex;
+    align-content: center; */
+}
+.card{
+    background-color: #419197;
+    display: flex;
+    /* height: 130px; */
+    padding: 1%;
+    border-radius: 10px;
+    align-content: center;
+    align-items: center;
+    /* text-align: center; */
+}
+
+.foto-perfil {
+    width: 150px;
+    height: 100px;
+    border-radius: 10%;
+    margin-right: 10px;
+  }
+  
+  .contenido {
+    flex-grow: 1;
+    align-content: center;
+  }
+  
+  .nombre {
+    font-weight:500;
+    font-size: 1.9em;
+    color: aliceblue;
+  }
+  
+  .texto {
+    margin-top: 10px;
+    margin-left: 10px;
+    color:aliceblue;
+    font-size:medium;
+  }
+  
+  .fecha {
+    margin-top: 5px;
+    margin-left: 10px;
+    color:aliceblue;
+    font-size:medium;
+  }
+
+  button{
+    border-radius: 50%;
+    background-color:rgb(9, 33, 43);
+    color:aliceblue;
+    height: 50px;
+    width: 50px;
+    border: none;
+    margin-right: 20px;
+    cursor: pointer;
+  }
