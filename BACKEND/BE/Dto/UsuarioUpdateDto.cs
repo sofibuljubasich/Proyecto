@@ -1,11 +1,11 @@
-﻿using BE.Models;
+using BE.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BE.Dto
 {
-    public class UsuarioDto
+    public class UsuarioUpdateDto
     {
-        public int ID { get; set; }
+       
         public string Email { get; set; }
 
         public string Password { get; set; }
@@ -14,16 +14,15 @@ namespace BE.Dto
 
         public string Apellido { get; set; }
 
+  
         public string? Imagen { get; set; }
 
-        
+        public DateTime? FechaNacimiento { get; set; }
         public string Telefono { get; set; }
 
 
 
-        [ForeignKey("Rol")]
-        public int RolID { get; set; }
-        public virtual Rol? Rol { get; set; }
+       
 
 
     }

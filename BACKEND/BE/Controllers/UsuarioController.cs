@@ -82,7 +82,7 @@ namespace BE.Controllers
                 //await _emailSender.SendEmailAsync(user.Username, user.Password);
 
                 usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password);
-                usuario.RolID = 3; // ROL Admin
+                usuario.RolID = 2; // ROL Admin - Hacerlo Bien
                
                 var result = await _usuarioRepository.CreateUsuario(usuario);
 
@@ -93,6 +93,34 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        [HttpPut("{usuarioID}")]
+        public async Task<IActionResult> Update(int usuarioID, [FromBody]UsuarioUpdateDto usuarioDto)
+        {
+            try
+            {
+
+                var usuario = await _usuarioRepository.GetUsuario(usuarioDto.ID);
+
+                if (usuario == null)
+                {
+                    return NotFound();
+                }
+
+             
+                
+                
+
+                await _usuarioRepository.Update(usuario);
+
+                return Ok("Usuario actualizada");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 

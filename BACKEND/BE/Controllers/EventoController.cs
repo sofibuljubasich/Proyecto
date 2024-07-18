@@ -181,6 +181,14 @@ namespace BE.Controllers
                     Corredor corredor = await _corredorRepository.GetCorredor(inscripcion.UsuarioID);
                     CorredorGetDto corredorDto = _mapper.Map<CorredorGetDto>(corredor);
 
+                    //Calculo la categoria porque año a año cambia según la edad
+                    DateTime FechaNacimiento = (DateTime)corredor.FechaNacimiento;
+
+                    var edad = DateTime.Now.Year - FechaNacimiento;
+
+                    Categoria categoria = await _categoriaRepository.CalculateCategory(edad);
+
+
                     var insc = new InscripcionDto
                     {
                         ID = inscripcion.ID,
@@ -191,6 +199,7 @@ namespace BE.Controllers
                         Remera = inscripcion.Remera,
                         FormaPago = inscripcion.FormaPago,
                         EstadoPago = inscripcion.EstadoPago,
+                        Categoria = categoria,
                         Dorsal = inscripcion.Dorsal,
                         Acreditado = inscripcion.Acreditado
 
