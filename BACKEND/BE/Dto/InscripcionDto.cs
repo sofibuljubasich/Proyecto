@@ -35,6 +35,8 @@ namespace BE.Dto
 
         //[ForeignKey("Corredor")]
 
+        public virtual Categoria Categoria { get; set;}
+
         //public int UsuarioID { get; set; }
 
         public virtual CorredorGetDto Corredor { get; set; }

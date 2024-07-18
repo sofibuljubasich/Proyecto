@@ -45,9 +45,9 @@ namespace BE.Controllers
 
                 var corredor = await _usuarioRepository.GetCorredor(inscrip.UsuarioID);
 
-                DateTime fecha = (DateTime)corredor.FechaNacimiento;
+                DateTime fechaCorredor = (DateTime)corredor.FechaNacimiento;
 
-                var edad = fecha.Year - DateTime.Now.Year;
+                var edad = DateTime.Now.Year - fechaCorredor.Year;
 
                 var categoria = await _categoriaRepository.CalculateCategory(edad);
 
