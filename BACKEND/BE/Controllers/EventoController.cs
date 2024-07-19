@@ -184,7 +184,7 @@ namespace BE.Controllers
                     //Calculo la categoria porque año a año cambia según la edad
                     DateTime FechaNacimiento = (DateTime)corredor.FechaNacimiento;
 
-                    var edad = DateTime.Now.Year - FechaNacimiento;
+                    var edad = DateTime.Now.Year - FechaNacimiento.Year;
 
                     Categoria categoria = await _categoriaRepository.CalculateCategory(edad);
 

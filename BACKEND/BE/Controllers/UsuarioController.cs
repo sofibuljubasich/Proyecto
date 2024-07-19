@@ -101,7 +101,7 @@ namespace BE.Controllers
             try
             {
 
-                var usuario = await _usuarioRepository.GetUsuario(usuarioDto.ID);
+                var usuario = await _usuarioRepository.GetUsuario(usuarioID);
 
                 if (usuario == null)
                 {
@@ -110,9 +110,9 @@ namespace BE.Controllers
 
              
                 
-                
+                await _usuarioRepository.UpdateUsuario(usuario);
 
-                await _usuarioRepository.Update(usuario);
+                
 
                 return Ok("Usuario actualizada");
 

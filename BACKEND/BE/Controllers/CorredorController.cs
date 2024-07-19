@@ -61,18 +61,18 @@ namespace BE.Controllers
             try
             {
 
-                var corredor = await _corredorRepository.GetCorredor(corredorDto.ID);
+                var corredor = await _corredorRepository.GetCorredor(corredorID);
 
                 if (corredor == null)
                 {
                     return NotFound();
                 }
 
-             
-                
-                
 
-                await _corredorRepository.Update(corredor);
+
+
+
+                await _corredorRepository.UpdateCorredor(corredor);
 
                 return Ok("Corredor actualizada");
 
