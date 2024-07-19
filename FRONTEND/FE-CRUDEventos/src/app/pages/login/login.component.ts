@@ -7,8 +7,10 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -21,11 +23,13 @@ export class LoginComponent {
   loginData = { userEmail: '', password: '' };
   errorMessage: string | null = null;
   showError: boolean = false;
-
+  userRol!: number;
   constructor(
     private fb: FormBuilder,
     private _authService: AuthService,
-    private router: Router
+    private router: Router,
+    private _userService: UserService,
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -63,8 +67,20 @@ export class LoginComponent {
       this._authService.login(this.loginData).subscribe({
         next: (response) => {
           console.log('Autenticado con éxito:', response);
+          this.snackBar.open('Inicio de sesión exitoso', 'Cerrar', {
+            duration: 3000,
+          });
           this.clearErrorMessage();
-          this.router.navigate(['/inicio']);
+          this._userService.getUsuario(response).subscribe({
+            next: (user) => {
+              this.userRol = user.rolID;
+              console.log('rol: ', this.userRol);
+              this.navegar(this.userRol);
+            },
+            error: (error) => {
+              console.error('Failed to fetch user data:', error);
+            },
+          });
         }, // Redirige a la página de inicio o dashboard},
         error: (error) => {
           console.error('Error en la autenticación:', error);
@@ -94,5 +110,21 @@ export class LoginComponent {
   clearErrorMessage() {
     this.errorMessage = null;
     this.showError = false;
+  }
+  navegar(id: number) {
+    switch (id) {
+      case 1: //usuario - 1
+        this.router.navigate(['/inicio']);
+        break;
+      case 3: //inscriptor - empleado - 2
+        this.router.navigate(['/eventosActivos']);
+        break;
+      case 2: //admin - 3
+        this.router.navigate(['/inicio']);
+        break;
+      case 4: //voluntario - 4
+        this.router.navigate(['/inicio']);
+        break;
+    }
   }
 }

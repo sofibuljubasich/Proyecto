@@ -22,6 +22,11 @@ import { InscripcionComponent } from './pages/corredor/inscripcion/inscripcion.c
 import { VerResultadosComponent } from './pages/corredor/ver-resultados/ver-resultados.component';
 import { ComentariosComponent } from './components/comentarios/comentarios.component';
 import { TablaResultadosComponent } from './components/tabla-resultados/tabla-resultados.component';
+import { BuscarComponent } from './components/buscar/buscar.component';
+import { EventosActivosComponent } from './pages/inscriptor/eventos-activos/eventos-activos.component';
+import { InscripcionManualComponent } from './pages/inscriptor/inscripcion-manual/inscripcion-manual.component';
+import { ListaInscriptosComponent } from './pages/inscriptor/lista-inscriptos/lista-inscriptos.component';
+import { EventoCardHComponent } from './components/evento-card-h/evento-card-h.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -46,6 +51,11 @@ import { DatePipe } from '@angular/common';
     VerResultadosComponent,
     ComentariosComponent,
     TablaResultadosComponent,
+    BuscarComponent,
+    EventosActivosComponent,
+    InscripcionManualComponent,
+    ListaInscriptosComponent,
+    EventoCardHComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

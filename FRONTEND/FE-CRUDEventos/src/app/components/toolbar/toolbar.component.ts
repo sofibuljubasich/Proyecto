@@ -1,6 +1,9 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/auth.service';
+import { RolService } from 'src/app/services/rol.service';
+import { UserService } from 'src/app/services/user.service';
 
 /**
  * @title Basic toolbar
@@ -10,10 +13,36 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: 'toolbar.component.html',
   styleUrls: ['toolbar.component.css'],
 })
-export class ToolbarBasicExample {
-  userRole: string = 'usuario';
+export class ToolbarBasicExample implements OnInit {
+  userRole: number = 1;
+  rol: string = 'inscriptor';
+  isAuthenticated: boolean = false;
+  currentUser: Usuario | null = null;
 
-  constructor(private router: Router, private _authService: AuthService) {
+  ngOnInit(): void {
+    this._authService.userId$.subscribe((userId) => {
+      this.isAuthenticated = !!userId;
+      if (!!userId) {
+        this._userService.getUsuario(userId).subscribe({
+          next: (user) => {
+            this.userRole = user.rolID;
+          },
+          error: (error) => {
+            console.error('Failed to fetch user data:', error);
+          },
+        });
+      } else {
+        this.currentUser = null;
+      }
+    });
+  }
+
+  constructor(
+    private router: Router,
+    private _authService: AuthService,
+    private _userService: UserService,
+    private _rolService: RolService
+  ) {
     // cada vez q haya un evento del router se ejecuta la subscripcion
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
