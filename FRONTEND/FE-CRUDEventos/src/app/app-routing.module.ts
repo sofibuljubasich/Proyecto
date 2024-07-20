@@ -13,6 +13,7 @@ import { VerResultadosComponent } from './pages/corredor/ver-resultados/ver-resu
 import { EventosActivosComponent } from './pages/inscriptor/eventos-activos/eventos-activos.component';
 import { InscripcionManualComponent } from './pages/inscriptor/inscripcion-manual/inscripcion-manual.component';
 import { ListaInscriptosComponent } from './pages/inscriptor/lista-inscriptos/lista-inscriptos.component';
+import { CrearCorredorComponent } from './pages/inscriptor/crear-corredor/crear-corredor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
@@ -29,8 +30,9 @@ const routes: Routes = [
   // { path: 'resultados', component: ResultadosComponent },
   // { path: 'sobre-nosotros', component: SobreNosotrosComponent }
   { path: 'eventosActivos', component: EventosActivosComponent },
-  { path: 'inscripcionManual', component: InscripcionManualComponent },
+  { path: 'inscripcionManual/:id', component: InscripcionManualComponent },
   { path: 'listaInscriptos/:id', component: ListaInscriptosComponent },
+  { path: 'crearCorredor', component: CrearCorredorComponent },
 
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
 ];

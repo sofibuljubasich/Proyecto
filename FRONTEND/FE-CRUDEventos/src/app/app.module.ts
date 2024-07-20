@@ -27,6 +27,7 @@ import { EventosActivosComponent } from './pages/inscriptor/eventos-activos/even
 import { InscripcionManualComponent } from './pages/inscriptor/inscripcion-manual/inscripcion-manual.component';
 import { ListaInscriptosComponent } from './pages/inscriptor/lista-inscriptos/lista-inscriptos.component';
 import { EventoCardHComponent } from './components/evento-card-h/evento-card-h.component';
+import { CrearCorredorComponent } from './pages/inscriptor/crear-corredor/crear-corredor.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -56,6 +57,7 @@ import { DatePipe } from '@angular/common';
     InscripcionManualComponent,
     ListaInscriptosComponent,
     EventoCardHComponent,
+    CrearCorredorComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

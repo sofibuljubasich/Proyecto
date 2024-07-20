@@ -1,1 +1,93 @@
-<p>inscripcion-manual works!</p>
+<body>
+    <!-- <app-header></app-header> -->
+    <div *ngIf="eventoData" class="container">
+        <img [src]="eventoData.evento.imagen" alt="Descripción de la imagen" class="imagen">
+        <div id="2" class="content">
+            <div  class="titulo">{{eventoData.evento.nombre}}</div>
+            <label for="email">Seleccione un correo electrónico:</label>
+            <div id="1" style="display: flex; align-items: top; padding-top: 10px;">
+                <mat-form-field style="flex: 3;" appearance="fill">
+                  <mat-label>Email</mat-label>
+                  <input type="text" matInput [formControl]="emailControl" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onEmailChange($event.option.value)">
+                    <mat-option *ngFor="let user of filteredUsuarios | async" [value]="user.email">
+                        {{ user.email }}
+                     </mat-option>
+                     </mat-autocomplete>
+                </mat-form-field>
+                <button style="flex:1;height: 56px;" routerLink="/crearCorredor" mat-raised-button color="primary">Agregar Usuario</button>
+            </div>
+            
+            <!-- <div> -->
+                <mat-form-field appearance="fill">
+                  <mat-label>Categoría</mat-label>
+                  <input matInput [value]="category" disabled>
+                </mat-form-field>
+            <!-- </div> -->
+
+            <div style="display: grid; width: 100%;grid-template-columns: 1fr 1fr; gap: 15px;">
+            <mat-form-field>
+                <mat-label>Talle remera:</mat-label>
+                <mat-select [(ngModel)]="talleSelect" name="talle">
+                @for (talle of talles; track talles) {
+                    <mat-option [value]="talle.value">{{talle.viewValue}}</mat-option>
+                }
+                </mat-select>
+            </mat-form-field>
+            
+            <!-- <div *ngIf="inscripcionForm.get('talleRemera').invalid && inscripcionForm.get('talleRemera').touched">
+                Seleccionar un talle de remera es obligatorio.
+              </div> -->
+                <mat-form-field>
+                    
+                    <mat-label>Distancia:</mat-label>
+                    <mat-select [(ngModel)]="distanciaSelect" name="distancia">
+                        @for (dist of eventoData.distancias; track eventoData.distancias) {
+                            <mat-option [value]="dist.km">{{dist.km}} km  -  ${{dist.precio}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div style="display: flex;justify-content: center;">
+
+                <mat-form-field style="width: 50%;">
+                    <!-- <label for="pago">Método de pago:</label> -->
+                    <mat-label>Método de pago*: </mat-label>
+                    <mat-select [(ngModel)]="pagoSelect" name="metodoPago">
+                        @for (pago of metodosPago; track metodosPago) {
+                            <mat-option [value]="pago.value">{{pago.viewValue}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="errorMessage" style="color: red;display: flex; margin-left: 10%;margin-top: 33%;position: absolute;">{{ errorMessage }}</div>
+
+        </div>
+          
+        <div class="datos">
+            <div class="dato">
+            <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="calendar_month"></mat-icon>
+            <p class="label">Fecha:</p>
+            <p class="date">{{ getFormattedDate(eventoData.evento.fecha) }}</p>
+            </div>
+            <div class="dato">
+            <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="location_on"></mat-icon>
+            <p class="label">Localización:</p>
+            <p class="date">{{ eventoData.evento.lugar }}</p>
+            </div>
+            <div class="dato">
+                <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="directions_run"></mat-icon>
+                <p class="label">Tipo de evento:</p>
+                <p class="date">{{ eventoData.evento.tipo.descripcion }}</p>
+            </div>
+        </div> 
+
+        <div class="opciones">
+            <button routerLink="/listaInscriptos/{{id}}" style="border: none; text-decoration: underline;background:none;width: 40%;"> <- Regresar</button>
+            <button  mat-raised-button (click)="onInscribirse()" color="primary">Inscribirse</button>
+            
+        </div> 
+    </div>
+
+
+</body>

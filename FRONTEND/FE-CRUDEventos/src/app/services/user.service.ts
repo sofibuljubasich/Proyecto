@@ -10,7 +10,7 @@ import { Usuario } from '../interfaces/usuario';
 export class UserService {
   constructor(private http: HttpClient) {}
   private myAppUrl: string = environment.endpoint;
-  private myApiUrl: string = 'api/Usuario/';
+  private myApiUrl: string = 'api/Usuario';
 
   // agregarUsuarios(userData: Usuario): Observable<Usuario> {
   //   return this.http.post<Usuario>(
@@ -20,7 +20,7 @@ export class UserService {
   // }
   agregarUsuarios(userData: Usuario) {
     this.http
-      .post<Usuario>(`${this.myAppUrl}${this.myApiUrl}$register`, userData)
+      .post<Usuario>(`${this.myAppUrl}${this.myApiUrl}/$register`, userData)
       .subscribe(
         (response) => {
           console.log('User registered successfully', response);
@@ -32,7 +32,11 @@ export class UserService {
       );
   }
   getUsuario(id: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.get<Usuario>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
+  }
+
+  getUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
 
   getUserAge(currentUser: Usuario): number | null {
