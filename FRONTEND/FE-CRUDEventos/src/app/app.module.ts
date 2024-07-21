@@ -28,6 +28,19 @@ import { InscripcionManualComponent } from './pages/inscriptor/inscripcion-manua
 import { ListaInscriptosComponent } from './pages/inscriptor/lista-inscriptos/lista-inscriptos.component';
 import { EventoCardHComponent } from './components/evento-card-h/evento-card-h.component';
 import { CrearCorredorComponent } from './pages/inscriptor/crear-corredor/crear-corredor.component';
+import { EventosVolComponent } from './pages/voluntario/eventos-vol/eventos-vol.component';
+import { TareasAsignadasComponent } from './pages/voluntario/tareas-asignadas/tareas-asignadas.component';
+import { ChatsComponent } from './pages/chats/chats.component';
+import { ChatComponent } from './pages/chat/chat.component';
+
+import { ABMEventosComponent } from './pages/admin/abm-eventos/abm-eventos.component';
+import { AbmColaboradoresComponent } from './pages/admin/abm-colaboradores/abm-colaboradores.component';
+import { AbmTareasComponent } from './pages/admin/abm-tareas/abm-tareas.component';
+import { ReportesComponent } from './pages/admin/reportes/reportes.component';
+import { SubirResultadosComponent } from './pages/admin/subir-resultados/subir-resultados.component';
+import { VerInscripcionesComponent } from './pages/admin/ver-inscripciones/ver-inscripciones.component';
+import { VistaTareasComponent } from './pages/admin/vista-tareas/vista-tareas.component';
+import { VoluntariosComponent } from './pages/admin/voluntarios/voluntarios.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -58,6 +71,18 @@ import { DatePipe } from '@angular/common';
     ListaInscriptosComponent,
     EventoCardHComponent,
     CrearCorredorComponent,
+    EventosVolComponent,
+    TareasAsignadasComponent,
+    ChatComponent,
+    ChatsComponent,
+    ABMEventosComponent,
+    AbmColaboradoresComponent,
+    AbmTareasComponent,
+    ReportesComponent,
+    SubirResultadosComponent,
+    VerInscripcionesComponent,
+    VistaTareasComponent,
+    VoluntariosComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
