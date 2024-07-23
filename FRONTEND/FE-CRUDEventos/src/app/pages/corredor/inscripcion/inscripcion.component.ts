@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Categoria, EventoResponse } from 'src/app/interfaces/evento';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/auth.service';
+import { CorredorService } from 'src/app/services/corredor.service';
 import { EventoService } from 'src/app/services/evento.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
 import { UserService } from 'src/app/services/user.service';
@@ -55,7 +56,7 @@ export class InscripcionComponent {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private _authService: AuthService,
-    private _userService: UserService
+    private _corredorService: CorredorService
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
@@ -66,14 +67,13 @@ export class InscripcionComponent {
       console.log('id', userId);
       // this.userID = userId;
       if (!!userId) {
-        this._userService.getUsuario(userId).subscribe({
+        this._corredorService.getCorredor(userId).subscribe({
           next: (user) => {
             this.currentUser = user;
-            this.age = this._userService.getUserAge(this.currentUser);
+            this.age = this._corredorService.getUserAge(this.currentUser);
             console.log(this.age);
             if (this.age !== null) {
               this.categoria = this.getCategoryByAge(this.age);
-              console.log(this.categoria);
             }
           },
           error: (error) => {

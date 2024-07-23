@@ -28,7 +28,7 @@ export class InscripcionManualComponent {
   fecha!: string;
   age: number | null = null;
   categoria: Categoria | null = null;
-  category: string = '20-24';
+  category: string = '';
   talleSelect!: string;
   distanciaSelect!: number;
   pagoSelect!: string;
@@ -79,7 +79,7 @@ export class InscripcionManualComponent {
   }
   loadUsers(): void {
     this._userService.getUsuarios().subscribe((users) => {
-      this.usuarios = users;
+      this.usuarios = users.filter((corredor) => corredor.rolID === 1);
       this.filteredUsuarios = this.emailControl.valueChanges.pipe(
         startWith(''),
         map((value) => this._filter(value))

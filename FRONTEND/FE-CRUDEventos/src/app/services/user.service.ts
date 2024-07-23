@@ -39,15 +39,28 @@ export class UserService {
     return this.http.get<Usuario[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
 
+  // getUserAge(currentUser: Usuario): number | null {
+  //   console.log('fechaNac', currentUser.fechaNacimiento);
+  //   if (currentUser && currentUser.fechaNacimiento) {
+  //     const birthdate = new Date(currentUser.fechaNacimiento);
+  //     console.log(birthdate);
+  //     const ageDifMs = Date.now() - birthdate.getTime();
+  //     console.log(ageDifMs);
+  //     const ageDate = new Date(ageDifMs);
+  //     console.log(ageDifMs);
+  //     return Math.abs(ageDate.getUTCFullYear() - 1970);
+  //   }
+  //   return null;
+  // }
   getUserAge(currentUser: Usuario): number | null {
-    console.log('fechaNac', currentUser.fechaNacimiento);
-    if (currentUser && currentUser.fechaNacimiento) {
-      const birthdate = new Date(currentUser.fechaNacimiento);
-      console.log(birthdate);
+    // console.log('fechaNac', currentUser.fechaNacimiento);
+    if (currentUser) {
+      const birthdate = new Date('2000-12-11 00:00:00.0000000');
+
       const ageDifMs = Date.now() - birthdate.getTime();
-      console.log(ageDifMs);
+
       const ageDate = new Date(ageDifMs);
-      console.log(ageDifMs);
+
       return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
     return null;

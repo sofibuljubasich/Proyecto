@@ -4,6 +4,7 @@
     <app-header></app-header>
   </div>
   <nav>
+    <!-- CORREDOR=1 -->
     <ng-container *ngIf="userRole === 1">
       <ul>
         <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">Inicio</li>
@@ -11,19 +12,20 @@
         <li (click)="navegar('resultados')"[ngClass]="{seleccionado: seleccionado[2]}">Resultados</li>
       </ul>
     </ng-container>
-    <ng-container *ngIf="userRole === 4">
+    <!-- VOLUNTARIO=3 -->
+    <ng-container *ngIf="userRole === 3">
       <ul>
-        <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">Eventos</li>
-        <li (click)="navegar('proximos-eventos')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>
+        <li (click)="navegar('eventos')" [ngClass]="{seleccionado: seleccionado[0]}">Eventos</li>
+        <li (click)="navegar('chats')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>
       </ul>
     </ng-container>
-    <!-- en lo siguiente deberia ser 3 pero estoy probando el inscriptor -->
+    <!-- ADMIN=2 -->
     <ng-container *ngIf="userRole === 2">  
       <ul>
-        <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">ABM Eventos</li>
-        <li (click)="navegar('proximos-eventos')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>
-        <li (click)="navegar('resultados')"[ngClass]="{seleccionado: seleccionado[2]}">ABM Colaboradores</li>
-        <li (click)="navegar('resultados')"[ngClass]="{seleccionado: seleccionado[3]}">Vista Tareas</li>
+        <li (click)="navegar('ABM-Eventos')" [ngClass]="{seleccionado: seleccionado[0]}">ABM Eventos</li>
+        <li (click)="navegar('chats')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>
+        <li (click)="navegar('ABM-Colaboradores')"[ngClass]="{seleccionado: seleccionado[2]}">ABM Colaboradores</li>
+        <li (click)="navegar('vistaTareas')"[ngClass]="{seleccionado: seleccionado[3]}">Vista Tareas</li>
       </ul>
     </ng-container>
   </nav>

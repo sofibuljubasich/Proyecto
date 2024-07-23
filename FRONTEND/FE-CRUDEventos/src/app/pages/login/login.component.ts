@@ -116,14 +116,14 @@ export class LoginComponent {
       case 1: //usuario - 1
         this.router.navigate(['/inicio']);
         break;
-      case 3: //inscriptor - empleado - 2
+      case 4: //inscriptor - empleado - 4
         this.router.navigate(['/eventosActivos']);
         break;
-      case 2: //admin - 3
-        this.router.navigate(['/inicio']);
+      case 3: //admin - 2
+        this.router.navigate(['/eventos']);
         break;
-      case 4: //voluntario - 4
-        this.router.navigate(['/inicio']);
+      case 2: //voluntario - 3
+        this.router.navigate(['/ABM-Eventos']);
         break;
     }
   }
