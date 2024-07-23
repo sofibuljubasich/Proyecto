@@ -1,0 +1,100 @@
+
+
+  .container {
+
+    content: '';
+    padding-top: 100px;
+    position: absolute;
+    background-color:rgb(9, 33, 43);
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    max-height: fit-content;
+    /* height: 100%; */
+    background-size: cover;
+    background-attachment: fixed;
+    /* z-index: -1; Asegura que el pseudo-elemento esté detrás del contenido */
+    background-repeat: no-repeat;
+  }
+  .buscador {
+    width: 100%;
+    max-width: 50%;
+    margin: 20px auto;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.459);
+    border-radius: 30px;
+    backdrop-filter: blur(4px) saturate(180%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 10px 20px; */
+  }
+  
+  .buscador input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    /* padding: 24px 20px; */
+    font-size: 20px;
+    color: #1d1d1d;
+    /* width: 41.4%;
+    height: 20px; */
+  }
+  ::placeholder{
+    color: #1d1d1d;
+  }
+  .icono {
+    background:  #58629b;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    margin-right: 5px;
+    /* text-transform: capitalize; */
+  }
+
+    .evento-wrapper {
+        padding: 0 10%; /* 20% de padding a los costados */
+        box-sizing: border-box; /* Incluye el padding en el tamaño total del contenedor */
+        width: 100%;
+      }
+      
+      .evento-container {
+        width: 100%;
+
+      }
+      
+      .evento-content {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 15px 0;
+        border-bottom: 1px solid #ccc;
+        border-top: 1px solid #ccc;
+      }
+      
+      .evento {
+        flex: 4; /* Ocupa 3 partes del contenedor */
+      }
+      
+      .tareas-button {
+        flex: 1; /* Ocupa 1 parte del contenedor */
+        margin-left: 16px; /* Espacio opcional entre el evento y el botón */
+
+            height: auto;
+            width: 200px;
+            margin: 0px 10px;
+            color: rgb(5, 22, 37);
+            border: none;
+            margin-left: 10px;
+            border-radius: 20px;
+            padding: 10px;
+            cursor: pointer;
+            font-size: larger;
+            background-color: #73e9f1;
+      }

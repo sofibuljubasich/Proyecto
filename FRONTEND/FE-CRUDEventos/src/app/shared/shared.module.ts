@@ -22,6 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -47,6 +48,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     MatSortModule,
     MatCheckboxModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatTableModule,
@@ -69,6 +71,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     MatSortModule,
     MatCheckboxModule,
+    MatAutocompleteModule,
   ],
 })
 export class SharedModule {}

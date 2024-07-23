@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Comentario, ComentarioNuevo } from 'src/app/interfaces/comentario';
 import { AuthService } from 'src/app/services/auth.service';
 import { ComentarioService } from 'src/app/services/comentario.service';
+import { CorredorService } from 'src/app/services/corredor.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -28,7 +29,7 @@ export class ComentariosComponent implements OnInit {
     private _comentarioService: ComentarioService,
     private fb: FormBuilder,
     private _authService: AuthService,
-    private _userService: UserService
+    private _corredorService: CorredorService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +39,7 @@ export class ComentariosComponent implements OnInit {
     });
     this._authService.userId$.subscribe((userId) => {
       if (userId) {
-        this._userService.getUsuario(userId).subscribe({
+        this._corredorService.getCorredor(userId).subscribe({
           next: (user) => {
             this.currentUser = user;
           },

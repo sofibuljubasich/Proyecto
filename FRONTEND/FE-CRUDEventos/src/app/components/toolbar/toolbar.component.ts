@@ -48,8 +48,8 @@ export class ToolbarBasicExample implements OnInit {
       if (event instanceof NavigationEnd) {
         switch (event.urlAfterRedirects) {
           case '/inicio':
-          case '/eventos-voluntario':
-          case '/ABM-eventos':
+          case '/eventos':
+          case '/ABM-Eventos':
             this.seleccionado = [true, false, false, false];
             break;
           case '/proximos-eventos':
@@ -57,10 +57,10 @@ export class ToolbarBasicExample implements OnInit {
             this.seleccionado = [false, true, false, false];
             break;
           case '/resultados':
-          case '/ABM-colaboradores':
+          case '/ABM-Colaboradores':
             this.seleccionado = [false, false, true, false];
             break;
-          case '/vista-tareas':
+          case '/vistaTareas':
             this.seleccionado = [false, false, false, true];
             break;
           default:

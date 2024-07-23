@@ -1,13 +1,15 @@
 <div class="container">
     <main class="main">
+      <button routerLink="/eventosActivos" style="color: aliceblue; text-decoration:underline; border: none;background-color:transparent;width: fit-content;"><--Regresar</button>
         <div class="tabla" >
+          
             <div class="filtro">
                 <mat-form-field>
                     <mat-label>Filtro</mat-label>
                     <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: Mia" #input class="input">
                 </mat-form-field>
 
-                <button routerLink="/inscripcionManual">+ Agregar inscripción</button>
+                <button routerLink="/inscripcionManual/{{eventoId}}">+ Agregar inscripción</button>
             </div>
         
         <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">

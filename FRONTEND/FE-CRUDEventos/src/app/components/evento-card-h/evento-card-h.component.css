@@ -1,11 +1,9 @@
 .container{
-    /* height: 10px; */
-    /* width: 100%; */
-    padding:  7px 20%;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    /* display: flex;
-    align-content: center; */
+
+    /* padding:  7px 20%; */
+    /* border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc; */
+
 }
 .card{
     background-color: #419197;
@@ -13,7 +11,7 @@
     /* height: 130px; */
     padding: 1%;
     border-radius: 10px;
-    align-content: center;
+    /* align-content: center; */
     align-items: center;
     /* text-align: center; */
 }
@@ -50,7 +48,7 @@
     font-size:medium;
   }
 
-  button{
+  .boton{
     border-radius: 50%;
     background-color:rgb(9, 33, 43);
     color:aliceblue;
