@@ -13,14 +13,14 @@
       </ul>
     </ng-container>
     <!-- VOLUNTARIO=3 -->
-    <ng-container *ngIf="userRole === 3">
+    <ng-container *ngIf="userRole === 2">
       <ul>
         <li (click)="navegar('eventos')" [ngClass]="{seleccionado: seleccionado[0]}">Eventos</li>
         <li (click)="navegar('chats')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>
       </ul>
     </ng-container>
     <!-- ADMIN=2 -->
-    <ng-container *ngIf="userRole === 2">  
+    <ng-container *ngIf="userRole === 3">  
       <ul>
         <li (click)="navegar('ABM-Eventos')" [ngClass]="{seleccionado: seleccionado[0]}">ABM Eventos</li>
         <li (click)="navegar('chats')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>

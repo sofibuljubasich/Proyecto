@@ -5,6 +5,7 @@ html, body {
   }
 
   .container {
+
     content: '';
     padding-top: 60px;
     position: absolute;
@@ -60,13 +61,22 @@ html, body {
     margin-right: 5px;
     /* text-transform: capitalize; */
   }
+  main{
+   
+  }
   .evento-container {
-    display: flex;
+    /* display: flex; */
     /* align-items: flex-start; */
     /* flex-direction: column; */
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 15px 0;
+    /* margin-bottom: 10px; */
 
-    margin-bottom: 10px;
-    padding: 0 20%;
+
     /* border-bottom: 1px solid #ccc; */
     
   }
+.evento-content{
+  padding: 0 20%;
+}

@@ -1,1 +1,27 @@
-<p>vista-tareas works!</p>
+<div class="container">
+    <main class="main">
+        <form #buscarForm="ngForm" (change)="buscar()">
+            <section class="buscador">      
+                <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
+                <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
+                <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
+            </section>
+        </form>
+        <!-- <div class="evento-wrapper"> -->
+            <div class="evento-container">
+              <ng-container *ngIf="eventos">
+                <ng-container *ngFor="let eventoResp of eventos">
+                  <div class="evento-content">
+                    <div class="content">
+                      <div class="evento">
+                        <app-evento-card-h [eventoResp]="eventoResp"></app-evento-card-h>
+                      </div>
+                      <button routerLink="/tareasAsignadas/{{eventoResp.evento.id}}" class="tareas-button">Tareas</button>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+          <!-- </div> -->
+    </main>
+</div>
