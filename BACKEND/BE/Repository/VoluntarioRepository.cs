@@ -32,9 +32,14 @@ namespace BE.Repository
             return await _context.Voluntarios.ToListAsync();    
         }
 
-        public Task<List<Tarea>> GetTareasByVoluntario(int voluntarioID)
+        public async Task<List<Tarea>> GetTareasByVoluntario(int voluntarioID)
         {
-            throw new NotImplementedException();
+            var tareas = await _context.Voluntarios
+                            .Where(v => v.ID == voluntarioID)
+                            .SelectMany(v => v.Tareas)
+                            .Include(t => t.Evento) // Incluye la navegación a la entidad Evento si necesitas acceder a los datos del evento también.
+                            .ToListAsync();
+            return tareas;
         }
 
         public async Task<List<Voluntario>> GetVoluntarios(ICollection<int> voluntariosIDs)

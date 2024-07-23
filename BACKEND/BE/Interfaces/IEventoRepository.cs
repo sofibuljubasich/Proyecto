@@ -20,6 +20,8 @@ namespace BE.Interfaces
 
         Task<List<string>> GetLugares();
 
+        Task<List<Evento>> GetFiltro();
+
         Task UpdateStatus(int eventoID, string estado);
 
             Task<List<Inscripcion>> GetInscripcionesByEvento(int idEvento);

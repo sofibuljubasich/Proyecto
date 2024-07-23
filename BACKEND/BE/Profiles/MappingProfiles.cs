@@ -23,6 +23,7 @@ namespace BE.Profiles
             CreateMap<Corredor, CorredorGetDto>().ReverseMap();
 
             CreateMap<Voluntario, VoluntarioDto>().ReverseMap();
+            CreateMap<Voluntario,VoluntarioCreateDto>().ReverseMap(); 
                  
 
             CreateMap<Categoria, CategoriaDto>().ReverseMap();

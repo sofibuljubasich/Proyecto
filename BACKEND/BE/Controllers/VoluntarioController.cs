@@ -22,7 +22,7 @@ namespace BE.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> CrearVoluntario([FromBody] VoluntarioDto request)
+        public async Task<IActionResult> CrearVoluntario([FromBody] VoluntarioCreateDto request)
         {
             try
             {
@@ -58,6 +58,11 @@ namespace BE.Controllers
             {
                 var listTareas = await _voluntarioRepository.GetTareasByVoluntario(voluntarioID);
 
+                if (listTareas == null)
+                {
+                    return NotFound("El voluntario no tiene tareas asignadas");
+                }
+
                 return Ok(listTareas);
             }
             catch (Exception ex)
@@ -75,6 +80,9 @@ namespace BE.Controllers
                 var listVoluntarios = await _voluntarioRepository.GetAll();
 
                 var listVoluntariosDto = _mapper.Map<List<VoluntarioDto>>(listVoluntarios);
+
+
+
                 return Ok(listVoluntariosDto);
             }
             catch (Exception ex)

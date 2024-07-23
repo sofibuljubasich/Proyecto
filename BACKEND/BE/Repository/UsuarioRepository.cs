@@ -24,8 +24,11 @@ namespace BE.Repository
 
         public async Task<List<Usuario>> GetUsuarios()
         {
-            
-            return await _context.Usuarios.ToListAsync();
+           return await  _context.Usuarios
+                .Include(u => u.Rol)
+                .ToListAsync();
+
+//return await _context.Usuarios.ToListAsync();
         }
 
         public async Task<Usuario> GetUsuarioByEmail(string email)

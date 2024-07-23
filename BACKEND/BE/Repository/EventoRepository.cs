@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using static System.Reflection.Metadata.BlobBuilder;
 using AutoMapper;
 using System.Threading;
+using Microsoft.Extensions.Logging;
 
 namespace BE.Repository
 {
@@ -85,9 +86,10 @@ namespace BE.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<Inscripcion>> GetResultados(int idEvento)
+        public async Task<List<Inscripcion>> GetResultados(int idEvento)
         {
-            throw new NotImplementedException();
+            var ins = await _context.Inscripciones.Where(i => i.EventoID == idEvento).ToListAsync();
+            return ins;
         }
 
         public async Task UpdateStatus(int eventoID, string estado)

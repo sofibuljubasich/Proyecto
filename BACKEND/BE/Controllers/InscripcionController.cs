@@ -11,12 +11,12 @@ namespace BE.Controllers
     [ApiController]
     public class InscripcionController : ControllerBase
     {
-        private readonly IMapper _mapper;   
+        private readonly IMapper _mapper;
         private readonly IInscripcionRepository _inscripcionRepository;
         private readonly ICategoriaRepository _categoriaRepository;
         private readonly IUsuarioRepository _usuarioRepository;
 
-        public InscripcionController(IMapper mapper, IInscripcionRepository inscripcionRepository, ICategoriaRepository categoriaRepository,IUsuarioRepository usuarioRepository)
+        public InscripcionController(IMapper mapper, IInscripcionRepository inscripcionRepository, ICategoriaRepository categoriaRepository, IUsuarioRepository usuarioRepository)
         {
             _mapper = mapper;
             _inscripcionRepository = inscripcionRepository;
@@ -30,12 +30,12 @@ namespace BE.Controllers
         {
             try
             {
-               
 
-                var inscripByUser =await  _inscripcionRepository.CheckIfExists(inscripcionDto.UsuarioID, inscripcionDto.EventoID);
 
-                if (inscripByUser != null) 
-                { 
+                var inscripByUser = await _inscripcionRepository.CheckIfExists(inscripcionDto.UsuarioID, inscripcionDto.EventoID);
+
+                if (inscripByUser != null)
+                {
                     return BadRequest("Corredor ya inscripto");
                 }
 
@@ -84,6 +84,31 @@ namespace BE.Controllers
 
 
 
+        }
+
+        [HttpPatch, Route("ActualizarPago/{inscripcionID}")]
+        public async Task<IActionResult> ActualizarPago(int inscripcionID, [FromBody] String estadoPago)
+        {
+            try
+            {
+                var inscripcion = await _inscripcionRepository.GetInscripcion(inscripcionID);
+
+                if (inscripcion == null)
+                {
+                    return NotFound();
+                }
+
+                await _inscripcionRepository.UpdatePayment(inscripcionID, estadoPago);
+
+                return Ok("Estado Pago Actualizado");
+
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+        
+        
         }
 
         [HttpPatch, Route("acreditar/{inscripcionID}")]

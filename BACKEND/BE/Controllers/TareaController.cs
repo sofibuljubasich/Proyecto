@@ -36,6 +36,7 @@ namespace BE.Controllers
 
                 var tareaDto = new TareaDto
                 {
+                    ID = tarea.ID,  
                     Descripcion = tarea.Descripcion,
                     FechaHora = tarea.FechaHora,
                     Ubicacion = tarea.Ubicacion,
