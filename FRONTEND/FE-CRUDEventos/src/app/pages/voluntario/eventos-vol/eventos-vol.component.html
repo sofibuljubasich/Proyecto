@@ -7,19 +7,21 @@
                 <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
             </section>
         </form>
-        <div class="evento-wrapper">
+        <!-- <div class="evento-wrapper"> -->
             <div class="evento-container">
               <ng-container *ngIf="eventos">
                 <ng-container *ngFor="let eventoResp of eventos">
                   <div class="evento-content">
-                    <div class="evento">
-                      <app-evento-card-h [eventoResp]="eventoResp"></app-evento-card-h>
+                    <div class="content">
+                      <div class="evento">
+                        <app-evento-card-h [eventoResp]="eventoResp"></app-evento-card-h>
+                      </div>
+                      <button routerLink="/tareasAsignadas/{{eventoResp.evento.id}}" class="tareas-button">Tareas</button>
                     </div>
-                    <button routerLink="/tareasAsignadas/{{eventoResp.evento.id}}" class="tareas-button">Tareas</button>
                   </div>
                 </ng-container>
               </ng-container>
             </div>
-          </div>
+          <!-- </div> -->
     </main>
 </div>

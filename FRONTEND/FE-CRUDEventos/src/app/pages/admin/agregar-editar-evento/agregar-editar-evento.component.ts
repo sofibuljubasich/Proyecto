@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EventoService } from '../../services/evento.service';
+import { EventoService } from '../../../services/evento.service';
 import { Evento } from 'src/app/interfaces/evento';
 
 @Component({

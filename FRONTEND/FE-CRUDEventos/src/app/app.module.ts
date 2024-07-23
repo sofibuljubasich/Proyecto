@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 //Components
-import { AgregarEditarEventoComponent } from './pages/agregar-editar-evento/agregar-editar-evento.component';
+import { AgregarEditarEventoComponent } from './pages/admin/agregar-editar-evento/agregar-editar-evento.component';
 import { ListadoEventoComponent } from './components/listado-evento/listado-evento.component';
 import { VerEventoComponent } from './pages/corredor/ver-evento/ver-evento.component';
 import { PagPrincipalComponent } from './pages/corredor/pag-principal/pag-principal.component';
@@ -14,6 +14,7 @@ import { EventoCardComponent } from './components/evento-card/evento-card.compon
 import { CarruselComponent } from './components/carrusel/carrusel.component';
 import { ToolbarBasicExample } from './components/toolbar/toolbar.component';
 import { HeaderComponent } from './components/header/header.component';
+import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { ResultadosComponent } from './pages/corredor/resultados/resultados.component';
@@ -83,6 +84,7 @@ import { DatePipe } from '@angular/common';
     VerInscripcionesComponent,
     VistaTareasComponent,
     VoluntariosComponent,
+    CommentFormComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

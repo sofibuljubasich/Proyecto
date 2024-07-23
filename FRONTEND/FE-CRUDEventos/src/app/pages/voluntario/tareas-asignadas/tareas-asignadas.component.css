@@ -1,0 +1,82 @@
+
+
+  .container {
+    /* padding-top: 60px; */
+    position: absolute;
+    background-color:rgb(9, 33, 43);
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    max-height: fit-content;
+    /* height: 100%; */
+    background-size: cover;
+    background-attachment: fixed;
+    /* z-index: -1; Asegura que el pseudo-elemento esté detrás del contenido */
+    background-repeat: no-repeat;
+  }
+main{
+  padding-top: 80px;
+}
+
+  th.mat-sort-header-sorted {
+    color: rgb(0, 0, 0);
+  }
+  .filtro{
+      width: 60%;
+      display: flex;
+      justify-content: center;
+      padding: 1% 0px 0% 20%;
+      margin-top: -40px;
+      
+  }
+  .tabla{
+      padding: 20px 9% ;
+      /* text-align: center; */
+      justify-items: center;
+  }
+  .mat-mdc-form-field {
+      font-size: 14px;
+      width: 100%;
+      
+    }
+    .mat-header-cell {
+        text-align: center;
+      }
+table th{
+    background-color: #419197;
+    justify-content: center;
+    font-weight: bold;
+}
+    td, th {
+      width:fit-content;
+      text-align: center;
+      /* background-color: #97bce688; */
+      color: rgb(9, 36, 59);
+    }
+  .paginator{
+      background-color:#419197;
+      width: 100%;
+  }
+
+button{
+
+    /* background-color: #65bbc7; */
+    color: rgb(9, 33, 43);
+
+    cursor: pointer;
+}
+
+.volunteer-list {
+  display: flex;
+  flex-direction: column; /* Alinea los elementos verticalmente */
+  gap: 25px; /* Espacio entre los elementos */
+}
+
+
+.mat-cell {
+  padding: 0px; /* Ajusta el padding si es necesario */
+}
+/* tasks.component.css */
+th {
+  justify-content: center; 
+}

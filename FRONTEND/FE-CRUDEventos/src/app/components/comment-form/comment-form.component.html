@@ -1,0 +1,9 @@
+<div class="comment-form">
+    <h2 mat-dialog-title>Agregar Comentario</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Comentario</mat-label>
+      <textarea matInput [(ngModel)]="comment" rows="4"></textarea>
+    </mat-form-field>
+    <button mat-button (click)="submitComment()">Enviar</button>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+  </div>
