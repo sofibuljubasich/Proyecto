@@ -26,9 +26,10 @@ namespace BE.Dto
         public string Genero { get; set; }
 
         public string ObraSocial { get; set; }
-        
 
-        public string? Imagen { get; set; }
+        public IFormFile Imagen { get; set; }
+
+        //public string? Imagen { get; set; }
 
     }
 }

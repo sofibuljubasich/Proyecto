@@ -6,6 +6,7 @@ using BE.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.Intrinsics.X86;
 using System.Security.Claims;
 using System.Text;
 
@@ -81,11 +82,35 @@ namespace BE.Controllers
                 if (userByEmail is true)
                     return BadRequest("Email ya registrado");
 
+                // Manejar la imagen de perfil si está presente en la solicitud
+                string ImagenURL;
+                
+                if (request.Imagen != null && request.Imagen.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(request.Imagen.FileName);
+                    var path = Path.Combine("wwwroot/imagenes/profile", fileName);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await request.Imagen.CopyToAsync(stream);
+                    }
+
+                    ImagenURL = "/images/profile" + fileName;
+                }
+                else
+                {
+                    // Asignar una imagen por defecto
+                    ImagenURL = "/imagenes/profile/user-empty.png";     
+                }
+
+                // Mapear los datos del DTO a la entidad de Corredor
+          
+
 
                 //ver si validar algo mas del usuario
 
                 var user = _mapper.Map<Corredor>(request);
-
+                user.Imagen = ImagenURL;
 
 
                 //await _emailSender.SendEmailAsync(user.Username, user.Password);

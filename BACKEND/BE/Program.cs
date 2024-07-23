@@ -116,7 +116,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAngularDevClient");
 app.UseHttpsRedirection();
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseAuthentication();
 
 app.UseAuthorization();
