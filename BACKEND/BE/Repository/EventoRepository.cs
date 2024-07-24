@@ -108,6 +108,11 @@ namespace BE.Repository
         {
             return await _context.Eventos.Select(e =>e.Lugar).Distinct().ToListAsync();
         }
+
+        public Task<List<Evento>> GetFiltro()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

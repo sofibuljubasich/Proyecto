@@ -12,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HeaderComponent {
   isAuthenticated: boolean = false;
   currentUser: Usuario | null = null;
+  imagenURL!: string;
 
   constructor(
     private _authService: AuthService,
@@ -26,6 +27,7 @@ export class HeaderComponent {
         this._userService.getUsuario(userId).subscribe({
           next: (user) => {
             this.currentUser = user;
+            this.imagenURL = `https://localhost:7296${user.imagen}`;
             console.log(this.currentUser.imagen);
           },
           error: (error) => {

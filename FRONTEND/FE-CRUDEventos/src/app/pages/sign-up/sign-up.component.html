@@ -116,8 +116,12 @@
     <ng-template #defaultImage>
       <img class="profile-pic" src="../../../../images/perfil-empty.jpg" alt="Perfil">
     </ng-template>
-    <input id="profileImage" name="profileImage" type="file" (change)="onFileSelected($event)" class="profile-image-input">
-  <label for="profileImage" class="add-icon">+</label>
+    <form [formGroup]="signupFormPart2" >
+      <input id="profileImage" name="profileImage" type="file" (change)="onFileSelected($event)" class="profile-image-input">
+      <label for="profileImage" class="add-icon">+</label>
+    </form>
+    
+  
     </div>
   </div>
   <div class="button-container">

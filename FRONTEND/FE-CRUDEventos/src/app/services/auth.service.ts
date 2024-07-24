@@ -68,9 +68,9 @@ export class AuthService {
     return this.userIdSubject.value !== null;
   }
 
-  register(userData: Usuario) {
+  register(formData: FormData) {
     return this.http
-      .post<Usuario>(`${this.myAppUrl}${this.myApiUrl}/register`, userData)
+      .post(`${this.myAppUrl}${this.myApiUrl}/register`, formData)
       .pipe(catchError(this.handleError));
   }
 

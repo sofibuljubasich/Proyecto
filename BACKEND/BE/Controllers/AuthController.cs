@@ -74,7 +74,7 @@ namespace BE.Controllers
 
         //Register. VER COMO PASAR LOS DATOS DEL USER. SI HACER OTRO EP APARTE
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterCorredor([FromBody] RegisterDto request)
+        public async Task<IActionResult> RegisterCorredor([FromForm] RegisterDto request)
         {
             try
             {
@@ -95,12 +95,12 @@ namespace BE.Controllers
                         await request.Imagen.CopyToAsync(stream);
                     }
 
-                    ImagenURL = "/images/profile" + fileName;
+                    ImagenURL = "/Imagenes/profile/" + fileName;
                 }
                 else
                 {
                     // Asignar una imagen por defecto
-                    ImagenURL = "/imagenes/profile/user-empty.png";     
+                    ImagenURL = "/Imagenes/profile/user-empty.png";     
                 }
 
                 // Mapear los datos del DTO a la entidad de Corredor

@@ -64,11 +64,4 @@ export class EventoCardHComponent implements OnInit {
     private router: Router,
     private _userService: UserService
   ) {}
-  onInscribirse(): void {
-    if (this._authService.isAuthenticated()) {
-      this.router.navigate([`/inscribirse/${this.eventoResp.evento.id}`]);
-    } else {
-      this.router.navigate(['/login']);
-    }
-  }
 }

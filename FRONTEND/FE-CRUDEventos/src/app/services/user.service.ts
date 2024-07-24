@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
-import { Usuario } from '../interfaces/usuario';
+import { Usuario, UsuarioEnviado } from '../interfaces/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class UserService {
   //     userData
   //   );
   // }
-  agregarUsuarios(userData: Usuario) {
+  agregarUsuarios(userData: UsuarioEnviado) {
     this.http
       .post<Usuario>(`${this.myAppUrl}${this.myApiUrl}/$register`, userData)
       .subscribe(

@@ -50,6 +50,7 @@ export class CrearCorredorComponent implements OnInit {
       ],
       fechaNacimiento: ['', [Validators.required]],
       obraSocial: ['', [Validators.required]],
+      imagen: [null as any],
     });
     this.signupFormPart3 = this.fb.group(
       {
@@ -103,22 +104,24 @@ export class CrearCorredorComponent implements OnInit {
 
   onSubmit() {
     if (this.signupFormPart3.valid) {
-      const usuarioData: Usuario = {
-        id: 0,
-        nombre: this.signupFormPart1.value.nombre,
-        apellido: this.signupFormPart1.value.apellido,
-        telefono: this.signupFormPart1.value.telefono,
-        genero: this.signupFormPart1.value.genero,
-        localidad: this.signupFormPart1.value.localidad,
-        dni: this.signupFormPart1.value.dni,
-        fechaNacimiento: this.signupFormPart1.value.fechaNacimiento,
-        obraSocial: this.signupFormPart1.value.obraSocial,
-        email: this.signupFormPart3.value.email,
-        password: this.signupFormPart3.value.password,
-        imagen: '',
-        rolID: 0,
-      };
-      this._authService.register(usuarioData).subscribe(
+      const formData = new FormData();
+      formData.append('id', '0');
+      formData.append('nombre', this.signupFormPart1.value.nombre);
+      formData.append('apellido', this.signupFormPart1.value.apellido);
+      formData.append('telefono', this.signupFormPart1.value.telefono);
+      formData.append('genero', this.signupFormPart1.value.genero);
+      formData.append('localidad', this.signupFormPart1.value.localidad);
+      formData.append('dni', this.signupFormPart1.value.dni);
+      formData.append(
+        'fechaNacimiento',
+        this.signupFormPart1.value.fechaNacimiento.toISOString()
+      );
+      formData.append('obraSocial', this.signupFormPart1.value.obraSocial);
+      formData.append('email', this.signupFormPart3.value.email);
+      formData.append('password', this.signupFormPart3.value.password);
+      formData.append('imagen', this.signupFormPart1.value.imagen);
+      formData.append('rolID', '0');
+      this._authService.register(formData).subscribe(
         (response) => {
           console.log('Autenticado con éxito:', response);
           this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {

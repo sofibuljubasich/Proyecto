@@ -31,7 +31,7 @@ export class TareasAsignadasComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
-    private _taskService: TareaService,
+    // private _taskService: TareaService,
     private aRoute: ActivatedRoute,
     private bottomSheet: MatBottomSheet
   ) {

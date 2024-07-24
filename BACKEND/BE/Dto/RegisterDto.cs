@@ -27,7 +27,7 @@ namespace BE.Dto
 
         public string ObraSocial { get; set; }
 
-        public IFormFile Imagen { get; set; }
+        public IFormFile? Imagen { get; set; }
 
         //public string? Imagen { get; set; }
 

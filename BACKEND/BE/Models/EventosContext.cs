@@ -28,7 +28,7 @@ namespace BE.Models
 
         public DbSet<EventoDistancia> EventoDistancia { get; set; }
 
-        public DbSet<TareaVoluntario> TareaVoluntario { get; set;}      
+        //public DbSet<TareaVoluntario> TareaVoluntario { get; set;}      
 
 
 
