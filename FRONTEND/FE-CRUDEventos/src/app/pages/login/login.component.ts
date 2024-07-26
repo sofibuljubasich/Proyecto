@@ -119,10 +119,10 @@ export class LoginComponent {
       case 4: //inscriptor - empleado - 4
         this.router.navigate(['/eventosActivos']);
         break;
-      case 3: //admin - 2
+      case 2: //voluntario - 3
         this.router.navigate(['/eventos']);
         break;
-      case 2: //voluntario - 3
+      case 3: //admin - 2
         this.router.navigate(['/ABM-Eventos']);
         break;
     }

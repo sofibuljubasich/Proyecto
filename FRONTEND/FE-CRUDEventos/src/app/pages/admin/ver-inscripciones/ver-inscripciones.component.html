@@ -1,1 +1,93 @@
-<p>ver-inscripciones works!</p>
+<div class="container">
+    <main class="main">
+      <button routerLink="/eventosActivos" style="color: aliceblue; text-decoration:underline; border: none;background-color:transparent;width: fit-content;"><--Regresar</button>
+        <div class="tabla" >
+          
+            <div class="filtro">
+                <mat-form-field>
+                    <mat-label>Filtro</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: Mia" #input class="input">
+                </mat-form-field>
+
+            </div>
+        
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
+            <!-- Dorsal Column -->
+            <ng-container matColumnDef="nro">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by nro">
+                Nro
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.nro}} </td>
+            </ng-container>
+          
+            <!-- Nombre Column -->
+            <ng-container matColumnDef="mail">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by mail">
+                Email
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
+            </ng-container>
+          
+            <!-- Genero Column -->
+            <ng-container matColumnDef="genero">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by genero">
+                Genero
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.genero}} </td>
+            </ng-container>
+          
+            <!-- Categoria Column -->
+            <ng-container matColumnDef="categoria">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by categoria">
+                Categoria
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+            </ng-container>
+          
+            <!-- Distancia Column -->
+            <ng-container matColumnDef="distancia">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by distancia">
+                  Distancia
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.distancia}} </td>
+              </ng-container>
+
+            <!-- Tiempo Column -->
+            <ng-container matColumnDef="estado">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by estado">
+                Estado de pago
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+            </ng-container>
+          
+            <!-- Posicion General Column -->
+            <ng-container matColumnDef="metodo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by metodo">
+                Metodo de pago
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.metodo}} </td>
+            </ng-container>
+          
+            <!-- Posicion Categoria Column -->
+            <ng-container matColumnDef="entregaKit">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by entregaKit">
+                Retiro de kit
+              </th>
+              <td mat-cell *matCellDef="let element"> 
+                <mat-checkbox [checked]="element.entregaKit" class="round-checkbox" disabled="round-checkbox"></mat-checkbox>    
+            </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+            <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No se encontró inscrito con ese nombre "{{input.value}}"</td>
+          </tr>
+          </table>
+        
+        <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]" aria-label=""></mat-paginator>
+        </div> 
+    </main>
+</div>

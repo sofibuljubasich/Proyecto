@@ -24,6 +24,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [],
@@ -51,6 +52,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
     MatCheckboxModule,
     MatAutocompleteModule,
     MatBottomSheetModule,
+    MatSlideToggleModule,
   ],
   exports: [
     MatTableModule,
@@ -75,6 +77,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
     MatCheckboxModule,
     MatAutocompleteModule,
     MatBottomSheetModule,
+    MatSlideToggleModule,
   ],
 })
 export class SharedModule {}

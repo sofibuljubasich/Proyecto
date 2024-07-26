@@ -36,12 +36,12 @@ export class InscripcionService {
     );
   }
   // checkear el path y si es patch o put
-  updateEstadoPago(id: number, estadoPago: string): Observable<any> {
+  updateEstadoPago(id: number, estado: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.patch(
-      `${this.myAppUrl}${this.myApiUrl}/actualizarEstado/${id}`,
-      { estadoPago },
-      { headers }
+      `${this.myAppUrl}${this.myApiUrl}/ActualizarPago/${id}`,
+      JSON.stringify(estado), // Enviar el estado como un string
+      { headers, responseType: 'text' }
     );
   }
   //   const body = JSON.stringify({ estado });

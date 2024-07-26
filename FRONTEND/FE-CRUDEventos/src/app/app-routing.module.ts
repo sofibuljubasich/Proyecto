@@ -25,7 +25,7 @@ import { ReportesComponent } from './pages/admin/reportes/reportes.component';
 import { SubirResultadosComponent } from './pages/admin/subir-resultados/subir-resultados.component';
 import { VerInscripcionesComponent } from './pages/admin/ver-inscripciones/ver-inscripciones.component';
 import { VistaTareasComponent } from './pages/admin/vista-tareas/vista-tareas.component';
-import { VoluntariosComponent } from './pages/admin/voluntarios/voluntarios.component';
+import { AgregarEditarEventoComponent } from './pages/admin/agregar-editar-evento/agregar-editar-evento.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
@@ -56,6 +56,7 @@ const routes: Routes = [
   { path: 'alta-resultados/:id', component: SubirResultadosComponent },
   { path: 'verInscripciones/:id', component: VerInscripcionesComponent },
   { path: 'vistaTareas', component: VistaTareasComponent },
+  { path: 'altaEventos', component: AgregarEditarEventoComponent },
   // { path: 'voluntarios/:id', component: VoluntariosComponent },
 
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },

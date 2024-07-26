@@ -41,7 +41,6 @@ import { ReportesComponent } from './pages/admin/reportes/reportes.component';
 import { SubirResultadosComponent } from './pages/admin/subir-resultados/subir-resultados.component';
 import { VerInscripcionesComponent } from './pages/admin/ver-inscripciones/ver-inscripciones.component';
 import { VistaTareasComponent } from './pages/admin/vista-tareas/vista-tareas.component';
-import { VoluntariosComponent } from './pages/admin/voluntarios/voluntarios.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -83,7 +82,6 @@ import { DatePipe } from '@angular/common';
     SubirResultadosComponent,
     VerInscripcionesComponent,
     VistaTareasComponent,
-    VoluntariosComponent,
     CommentFormComponent,
   ],
   providers: [DatePipe],

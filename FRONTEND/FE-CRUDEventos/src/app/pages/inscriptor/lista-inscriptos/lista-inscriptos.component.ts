@@ -62,14 +62,7 @@ export class ListaInscriptosComponent {
   normalizeEstadoPago(estadoPago: string): string {
     return estadoPago.toLowerCase() === 'pendiente' ? 'Pendiente' : estadoPago;
   }
-  // onCheckboxChange(element: any): void {
-  //   const newState = !element.entregaKit;
-  //   console.log('estado', newState);
-  //   this._inscripcionService.acreditar(element.id, newState).subscribe(() => {
-  //     element.entregaKit = newState;
-  //     this.dataSource.data = [...this.dataSource.data]; // Fuerza la actualización de la tabla
-  //   });
-  // }
+
   onCheckboxChange(element: any): void {
     const updatedAcreditado = !element.entregaKit;
     element.entregaKit = updatedAcreditado;
@@ -84,6 +77,7 @@ export class ListaInscriptosComponent {
   }
   onEstadoChange(element: any): void {
     const updatedEstado = element.estado;
+    console.log(updatedEstado);
     this._inscripcionService
       .updateEstadoPago(element.id, updatedEstado)
       .subscribe(

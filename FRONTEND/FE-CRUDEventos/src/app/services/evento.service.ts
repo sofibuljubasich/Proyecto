@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Evento, EventoResponse } from '../interfaces/evento';
 import { TablaResultados } from '../interfaces/tabla';
@@ -35,6 +35,15 @@ export class EventoService {
   getInscriptos(id: number): Observable<Inscrito[]> {
     return this.http.get<Inscrito[]>(
       `${this.myAppUrl}${this.myApiUrl}inscriptos/${id}`
+    );
+  }
+  updateEstado(eventoID: number, estado: boolean) {
+    console.log(estado);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(
+      `${this.myAppUrl}${this.myApiUrl}UpdateEstado/${eventoID}?estado=${estado}`,
+      {},
+      { headers }
     );
   }
 
