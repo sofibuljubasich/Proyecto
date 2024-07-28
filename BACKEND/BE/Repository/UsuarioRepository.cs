@@ -77,11 +77,11 @@ namespace BE.Repository
 
         public async Task<Usuario> GetUsuario(int usuarioID)
         {
-            return await _context.Usuarios.FirstOrDefaultAsync(x=>x.ID == usuarioID);
+            return await _context.Usuarios.Include(x=>x.Rol).FirstOrDefaultAsync(x=>x.ID == usuarioID);
         }
         public async Task<Corredor> GetCorredor(int corredorID)
         {
-            return await _context.Corredores.FirstOrDefaultAsync(x => x.ID == corredorID);
+            return await _context.Corredores.Include(x => x.Rol).FirstOrDefaultAsync(x => x.ID == corredorID);
                 
         }
 

@@ -11,13 +11,16 @@ namespace BE.Models
         public DateTime FechaHora { get; set; }
 
         public string Ubicacion { get; set; } = null!;
-        public virtual ICollection<Voluntario> Voluntarios { get; set; }
+        //public virtual ICollection<Voluntario> Voluntarios { get; set; }
 
   
 
         [ForeignKey("Evento")]
         public int EventoID { get; set; }
 
-        public virtual Evento Evento { get; set; }  
+        public virtual Evento Evento { get; set; }
+        public virtual ICollection<TareaVoluntario> TareaVoluntarios { get; set; }
+
+
     }
 }

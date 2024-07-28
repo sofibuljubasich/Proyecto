@@ -13,13 +13,15 @@ namespace BE.Interfaces
 
         Task<Tarea> Create(Tarea tarea);
 
+       
+
         Task Update(Tarea tarea);
 
 
         Task<List<Tarea>> GetTareasByEvento(int eventoID);
 
 
-        Task<List<Voluntario>> GetVoluntariosByTarea(int tareaID);
+        
 
     }
 }

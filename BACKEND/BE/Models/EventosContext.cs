@@ -28,7 +28,22 @@ namespace BE.Models
 
         public DbSet<EventoDistancia> EventoDistancia { get; set; }
 
-        //public DbSet<TareaVoluntario> TareaVoluntario { get; set;}      
+        public DbSet<Mensaje> Mensaje { get; set; }             
+        public DbSet<TareaVoluntario> TareaVoluntario { get; set;}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TareaVoluntario>()
+                .HasKey(tv => new { tv.TareaID, tv.VoluntarioID });
+
+
+            modelBuilder.Entity<TareaVoluntario>()
+                .HasOne(tv => tv.Voluntario)
+                .WithMany(v => v.TareaVoluntarios)
+                .HasForeignKey(tv => tv.VoluntarioID);
+        }
 
 
 

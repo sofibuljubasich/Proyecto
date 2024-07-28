@@ -67,7 +67,7 @@ namespace BE.Controllers
 
 
         [HttpPost("register")]
-        public async Task<IActionResult> CrearUsuario([FromBody] RegisterDto request)
+        public async Task<IActionResult> CrearUsuario([FromForm] RegisterUserDto request)
         {
             try
             { 
@@ -77,12 +77,32 @@ namespace BE.Controllers
                 if (userByEmail is true)
                     return BadRequest("Usuario ya registrado");
 
+                string ImagenURL;
+
+                if (request.Imagen != null && request.Imagen.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(request.Imagen.FileName);
+                    var path = Path.Combine("wwwroot/imagenes/profile", fileName);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await request.Imagen.CopyToAsync(stream);
+                    }
+
+                    ImagenURL = "/Imagenes/profile/" + fileName;
+                }
+                else
+                {
+                    // Asignar una imagen por defecto
+                    ImagenURL = "/Imagenes/profile/user-empty.png";
+                }
+
                 var usuario = _mapper.Map<Usuario>(request);
 
                 //await _emailSender.SendEmailAsync(user.Username, user.Password);
 
                 usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password);
-                usuario.RolID = 2; // ROL Admin - Hacerlo Bien
+                //usuario.RolID = 2; // ROL Admin - Hacerlo Bien
                
                 var result = await _usuarioRepository.CreateUsuario(usuario);
 

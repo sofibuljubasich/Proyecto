@@ -1,4 +1,5 @@
 ﻿using BE.Models;
+using Microsoft.Extensions.Logging;
 
 namespace BE.Interfaces
 {
@@ -9,7 +10,7 @@ namespace BE.Interfaces
         Task<List<Voluntario>> GetAll();
 
         Task<Voluntario> Create(Voluntario voluntario);
-        Task<List<Tarea>> GetTareasByVoluntario(int voluntarioID);
+      
 
         Task<List<Voluntario>> GetVoluntarios(ICollection<int> voluntariosIDs);
 

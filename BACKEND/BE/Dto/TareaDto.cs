@@ -11,7 +11,7 @@ namespace BE.Dto
 
         public string Ubicacion { get; set; } = null!;
         public int EventoID { get; set; }
-        public virtual ICollection<VoluntarioDto>? Voluntarios { get; set; }
+        public virtual ICollection<VoluntarioDto> Voluntarios { get; set; }
 
 
       

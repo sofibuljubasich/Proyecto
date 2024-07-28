@@ -13,5 +13,6 @@ namespace BE.Interfaces
         Task UpdateTipoEvento(TipoEvento tipo);
 
         Task DeleteTipoEvento(TipoEvento tipo);
+
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BE.Models;
-using System.Text.Json.Serialization;
+using BE.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +48,11 @@ builder.Services.AddScoped<IComentarioRepository, ComentarioRepository>();
 builder.Services.AddScoped<IVoluntarioRepository, VoluntarioRepository>();
 builder.Services.AddScoped<IRolRepository, RolRepository>();
 builder.Services.AddScoped<ITipoEventoRepository, TipoEventoRepository>() ;
-builder.Services.AddScoped<IEventoDistanciaRepository, EventoDistanciaRepository>();    
+builder.Services.AddScoped<IEventoDistanciaRepository, EventoDistanciaRepository>();
+builder.Services.AddScoped<ITareaVoluntarioService, TareaVoluntarioService>();
+builder.Services.AddScoped<ITareaVoluntarioRepository,TareaVoluntarioRepository>(); 
+builder.Services.AddScoped<IMensajeRepository,MensajeRepository>(); 
+
 builder.Services.AddEndpointsApiExplorer();
 
 // jwt

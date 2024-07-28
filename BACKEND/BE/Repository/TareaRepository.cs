@@ -1,6 +1,8 @@
 ﻿using BE.Interfaces;
+using BE.Migrations;
 using BE.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 
 namespace BE.Repository
@@ -30,9 +32,10 @@ namespace BE.Repository
 
         public async Task<Tarea> GetTarea(int tareaID)
         {
-            return  await _context.Tareas
-           .Include(t => t.Voluntarios)
-           .FirstOrDefaultAsync(t => t.ID == tareaID);
+            /*  return await _context.Tareas
+             .Include(t => t.Voluntarios)
+             .FirstOrDefaultAsync(t => t.ID == tareaID);*/
+            return await _context.Tareas.FirstOrDefaultAsync(t => t.ID == tareaID);
         }
 
         public async Task<List<Tarea>> GetTareas()
@@ -42,12 +45,21 @@ namespace BE.Repository
 
         public async Task<List<Tarea>> GetTareasByEvento(int eventoID)
         {
-            return await _context.Tareas.Where(t => t.EventoID == eventoID).Include(t=>t.Voluntarios).ToListAsync();
+            return await _context.Tareas
+                            .Include(t => t.TareaVoluntarios)
+            .ThenInclude(tv => tv.Voluntario)
+                            .Where(t => t.EventoID == eventoID)
+                            .ToListAsync();
+            // return await _context.Tareas.Where(t => t.EventoID == eventoID).Include(t => t.Voluntarios).ToListAsync();
         }
 
-        public Task<List<Tarea>> GetTareasByVoluntario(int voluntarioID)
+        public async Task<List<Tarea>> GetTareasByVoluntario(int voluntarioID)
         {
-            throw new NotImplementedException();
+            return await _context.TareaVoluntario
+                            .Where(tv => tv.VoluntarioID == voluntarioID)
+                            .Select(tv => tv.Tarea)
+                            .ToListAsync();
+
         }
 
         //public async Task<List<Tarea>> GetTareasByVoluntario(int voluntarioID)
@@ -57,25 +69,49 @@ namespace BE.Repository
 
         public async Task Update(Tarea tarea)
         {
-             _context.Update(tarea);
+            _context.Update(tarea);
             await _context.SaveChangesAsync();
-            
+
 
         }
 
-        public async Task<List<Voluntario>> GetVoluntariosByTarea(int tareaID) 
+        public async Task<List<Voluntario>> GetVoluntariosByTarea(int tareaID)
+        {/*
+          *
+               var tarea = await _context.Tareas
+              .Include(t => t.Voluntarios)
+              .FirstOrDefaultAsync(t => t.ID == tareaID);
+
+               if (tarea == null)
+               {
+                   return null; // O manejar de acuerdo a tus necesidades
+               }
+
+               // Devolver la colección de voluntarios asignados a la tarea
+               return tarea.Voluntarios.ToList();*/
+            var voluntarios = await  _context.TareaVoluntario.Where(tv => tv.TareaID == tareaID).
+                                        Select(tv => tv.Voluntario).ToListAsync();
+           
+
+            return voluntarios;
+        }
+
+        public async Task CreateTareaVoluntario(int tareaID, List<Voluntario> voluntarios)
         {
-            var tarea = await _context.Tareas
-           .Include(t => t.Voluntarios)
-           .FirstOrDefaultAsync(t => t.ID == tareaID);
-
-            if (tarea == null)
+            foreach (var voluntario in voluntarios)
             {
-                return null; // O manejar de acuerdo a tus necesidades
-            }
+                var tareaVoluntario = new TareaVoluntario
+            {
+                TareaID = tareaID,
+                VoluntarioID = voluntario.ID,
+                Voluntario = voluntario,
+                Estado = "Asignado"
+            };
 
-            // Devolver la colección de voluntarios asignados a la tarea
-            return tarea.Voluntarios.ToList();
+             _context.Add(tareaVoluntario);
+        }
+            await _context.SaveChangesAsync();
         }
     }
 }
+

@@ -22,7 +22,7 @@ namespace BE.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> CrearVoluntario([FromBody] VoluntarioCreateDto request)
+        public async Task<IActionResult> CrearVoluntario([FromForm] VoluntarioCreateDto request)
         {
             try
             {
@@ -30,7 +30,25 @@ namespace BE.Controllers
                 var voluntarioByEmail = _voluntarioRepository.CheckIfExists(request.Email);
                 if (voluntarioByEmail is true)
                     return BadRequest("Voluntario ya registrado");
+                string ImagenURL;
+                
+                if (request.Imagen != null && request.Imagen.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(request.Imagen.FileName);
+                    var path = Path.Combine("wwwroot/imagenes/profile", fileName);
 
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await request.Imagen.CopyToAsync(stream);
+                    }
+
+                    ImagenURL = "/Imagenes/profile/" + fileName;
+                }
+                else
+                {
+                    // Asignar una imagen por defecto
+                    ImagenURL = "/Imagenes/profile/user-empty.png";     
+                }
 
 
                 var voluntario = _mapper.Map<Voluntario>(request);
@@ -40,7 +58,7 @@ namespace BE.Controllers
                 //await _emailSender.SendEmailAsync(user.Username, user.Password);
 
                 voluntario.Password = BCrypt.Net.BCrypt.HashPassword(voluntario.Password);
-                voluntario.RolID = 3; // ROL Voluntario
+                //voluntario.RolID = 3; // ROL Voluntario
                 var result = await _voluntarioRepository.Create(voluntario);
 
                 return Ok("Voluntario creado");
@@ -51,26 +69,9 @@ namespace BE.Controllers
             }
 
         }
-        [HttpGet, Route("tareas/{voluntarioID}")]
-        public async Task<IActionResult> GetByVoluntario(int voluntarioID)
-        {
-            try
-            {
-                var listTareas = await _voluntarioRepository.GetTareasByVoluntario(voluntarioID);
+       
 
-                if (listTareas == null)
-                {
-                    return NotFound("El voluntario no tiene tareas asignadas");
-                }
 
-                return Ok(listTareas);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -118,6 +119,7 @@ namespace BE.Controllers
 
 
         }
+        
 
 
 

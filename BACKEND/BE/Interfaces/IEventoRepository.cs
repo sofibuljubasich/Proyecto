@@ -20,7 +20,8 @@ namespace BE.Interfaces
 
         Task<List<string>> GetLugares();
 
-        //Task<List<Evento>> GetFiltro();
+        Task<List<Evento>> GetFiltro(string? buqueda
+          , DateTime? fechaInicio, DateTime? fechaFin, string? tipo);
 
         Task UpdateStatus(int eventoID, string estado);
 

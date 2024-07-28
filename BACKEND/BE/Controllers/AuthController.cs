@@ -47,29 +47,8 @@ namespace BE.Controllers
             if (!BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
                 return BadRequest("Contraseña incorrecta");
 
-            // Generamos un token según los claims
-            /*var claims = new List<Claim>
-            {
-               new Claim("id", user.ID.ToString()),
-               new Claim("email", user.Email),
-               new Claim("fullname", $"{user.Nombre} {user.Apellido}"),
-              // new Claim("rol", user.Rol.Descripcion)
-
-
-            };
-
-           var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-           var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-           var tokenDescriptor = new JwtSecurityToken(
-               issuer: _config["Jwt:Issuer"],
-               audience: _config["Jwt:Audience"],
-               claims: claims,
-               expires: DateTime.Now.AddMinutes(720),
-               signingCredentials: credentials);
-
-           var jwt = new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);*/
-
-            return Ok(user.ID);
+            var userDto = _mapper.Map<UsuarioDto>(user);
+            return Ok(userDto);
         }
 
         //Register. VER COMO PASAR LOS DATOS DEL USER. SI HACER OTRO EP APARTE
@@ -116,7 +95,7 @@ namespace BE.Controllers
                 //await _emailSender.SendEmailAsync(user.Username, user.Password);
 
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-                user.RolID = 1; // ROL USUARIO
+                //user.RolID = 1; // ROL USUARIO
                 var result = await _corredorRepository.CreateCorredor(user);    
 
                 return Ok(result.ID);

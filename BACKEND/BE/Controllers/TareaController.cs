@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using BE.Dto;
 using BE.Interfaces;
+using BE.Migrations;
 using BE.Models;
-using BE.Repository;
+using BE.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BE.Controllers
@@ -13,14 +14,16 @@ namespace BE.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ITareaRepository _tareaRepository;
-        private readonly IVoluntarioRepository _voluntarioRepository;   
-        public TareaController(IMapper mapper, ITareaRepository tareaRepository,IVoluntarioRepository voluntarioRepository)
+        private readonly IVoluntarioRepository _voluntarioRepository;
+        private readonly ITareaVoluntarioService _tareaVoluntarioService;
+        public TareaController(IMapper mapper, ITareaRepository tareaRepository,IVoluntarioRepository voluntarioRepository, ITareaVoluntarioService tareaVoluntarioService)
         {
             _mapper = mapper;   
             _tareaRepository = tareaRepository; 
             _voluntarioRepository = voluntarioRepository;
+            _tareaVoluntarioService = tareaVoluntarioService;
             
-        }
+        }//ACOMODAR PR nul
 
         [HttpGet("{tareaID}")]
         public async Task<IActionResult> Get(int tareaID)
@@ -32,7 +35,7 @@ namespace BE.Controllers
                 if (tarea == null)
                     return NotFound();
 
-                var voluntarios = tarea.Voluntarios;
+                var voluntarios = await _tareaVoluntarioService.GetVoluntariosByTarea(tareaID);    
 
                 var tareaDto = new TareaDto
                 {
@@ -65,6 +68,14 @@ namespace BE.Controllers
                 var listTareas = await _tareaRepository.GetTareasByEvento(eventoID);
 
                 var listTareasDto = _mapper.Map<List<TareaDto>>(listTareas);  
+
+                foreach (var tarea in listTareasDto) 
+                {
+                    var voluntarios = await _tareaVoluntarioService.GetVoluntariosByTarea(tarea.ID);
+
+                    tarea.Voluntarios = _mapper.Map<List<VoluntarioDto>>(voluntarios);
+                    
+                }
                 
 
                 return Ok(listTareasDto);
@@ -78,7 +89,7 @@ namespace BE.Controllers
 
        
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]TareaCreateUpdateDto tareaDto)
+        public async Task<IActionResult> Create([FromBody]TareaCreateDto tareaDto)
         {
             try
             {
@@ -92,14 +103,19 @@ namespace BE.Controllers
                         EventoID = tareaDto.EventoID,
 
                     };
+
+                List<Voluntario>?voluntarios = null;
                 if (tareaDto.VoluntariosID != null && tareaDto.VoluntariosID.Any())
-                {
-                    tarea.Voluntarios = await _voluntarioRepository.GetVoluntarios(tareaDto.VoluntariosID);
-                }
+               {
+                   voluntarios = await _voluntarioRepository.GetVoluntarios(tareaDto.VoluntariosID);
+               }
 
 
 
                 tarea = await _tareaRepository.Create(tarea);
+
+                 
+                await _tareaVoluntarioService.CreateTareaVoluntario(tarea.ID, voluntarios);
 
 
                 return Ok("Tarea creada");
@@ -115,7 +131,7 @@ namespace BE.Controllers
 
 
         [HttpPut("{tareaID}")]
-        public async Task<IActionResult> Update(int tareaID, [FromBody]TareaCreateUpdateDto tareaDto)
+        public async Task<IActionResult> Update(int tareaID, [FromBody]TareaUpdateDto tareaDto)
         {
             try
             {
@@ -135,10 +151,25 @@ namespace BE.Controllers
                 tarea.FechaHora = tareaDto.FechaHora;
                 tarea.Ubicacion = tareaDto.Ubicacion;
 
-               
-                 tarea.Voluntarios = await _voluntarioRepository.GetVoluntarios(tareaDto.VoluntariosID);
-                
+                /*
+                List<TareaVoluntario> tareaVoluntarios = new List<TareaVoluntario>();
 
+                foreach (var voluntarioID in tareaDto.VoluntariosID)
+                {
+
+                    var tareaVoluntario = new TareaVoluntario
+                    {
+                        TareaID = tareaID,
+                        VoluntarioID = voluntarioID
+                   
+                    };
+
+                    tareaVoluntarios.Add(tareaVoluntario);
+
+                }
+                
+                tarea.TareaVoluntarios = tareaVoluntarios;  
+                */
                 await _tareaRepository.Update(tarea);
 
                 return Ok("Tarea actualizada");
@@ -171,6 +202,10 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        
+
+
 
 
 

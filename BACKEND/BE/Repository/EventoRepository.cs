@@ -109,9 +109,35 @@ namespace BE.Repository
             return await _context.Eventos.Select(e =>e.Lugar).Distinct().ToListAsync();
         }
 
-        public Task<List<Evento>> GetFiltro()
+        public async Task<List<Evento>> GetFiltro(string? busqueda
+          , DateTime? fechaInicio, DateTime? fechaFin, string? tipo)
         {
-            throw new NotImplementedException();
+            var query = _context.Eventos.AsQueryable();
+
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                query = query.Where(e => e.Nombre.Contains(busqueda));
+            }
+
+            if (fechaInicio.HasValue)
+            {
+                query = query.Where(e => e.Fecha >= fechaInicio.Value);
+            }
+
+            if (fechaFin.HasValue)
+            {
+                query = query.Where(e => e.Fecha <= fechaFin.Value);
+            }
+
+            if (!string.IsNullOrEmpty(tipo))
+            {
+                query = query.Where(e => e.Tipo.Descripcion== tipo);
+            }
+
+           
+
+            return await query.ToListAsync();
+
         }
     }
 }

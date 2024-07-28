@@ -413,6 +413,30 @@ namespace BE.Controllers
 
         }
 
+        [HttpGet, Route("Filtrar")]
+        public async Task<IActionResult> GetFiltro([FromQuery] EventoFiltrosDto eventoDto)
+        {
+            try
+            {
+
+                var busqueda = eventoDto.Busqueda;
+                var fechaInicio = eventoDto.FechaInicio;
+                var fechaFin = eventoDto.FechaFin;
+                var tipo = eventoDto.Tipo;
+
+                var lugaresList = await _eventoRepository.GetFiltro(busqueda,fechaInicio,fechaFin, tipo);
+                
+                if (lugaresList == null)
+                {
+                    return NotFound("No existen lugares con eventos");
+                }
+                return Ok(lugaresList);
+
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+
+        }
+
 
 
 

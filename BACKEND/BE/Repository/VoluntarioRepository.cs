@@ -34,12 +34,10 @@ namespace BE.Repository
 
         public async Task<List<Tarea>> GetTareasByVoluntario(int voluntarioID)
         {
-            var tareas = await _context.Voluntarios
-                            .Where(v => v.ID == voluntarioID)
-                            .SelectMany(v => v.Tareas)
-                            .Include(t => t.Evento) // Incluye la navegación a la entidad Evento si necesitas acceder a los datos del evento también.
-                            .ToListAsync();
-            return tareas;
+            return await _context.TareaVoluntario.Where(tv=>tv.VoluntarioID == voluntarioID)
+                                                 .Include(tv=> tv.Tarea)
+                                                 .Select(tv=>tv.Tarea)
+                                                 .ToListAsync();    
         }
 
         public async Task<List<Voluntario>> GetVoluntarios(ICollection<int> voluntariosIDs)
@@ -59,7 +57,26 @@ namespace BE.Repository
 
         public async Task<Voluntario> Get(int voluntarioID)
         {
-            return await _context.Voluntarios.FirstOrDefaultAsync(v=>v.ID == voluntarioID);
+            return await _context.Voluntarios.Include(v=>v.Rol).FirstOrDefaultAsync(v=>v.ID == voluntarioID);
+        }
+
+        public async Task<List<Tarea>> GetTareasByEventoVoluntario(int eventoID, int voluntarioID)
+        {
+            /* var tareas = await _context.Voluntarios
+                             .Where(v => v.ID == voluntarioID)
+                             .SelectMany(v => v.Tareas)
+                             .Include(t => t.Evento).Where(e=>e.EventoID == eventoID) 
+                             .ToListAsync();
+             return tareas
+             return await _context.TareaVoluntario.Where(tv=>tv.VoluntarioID == voluntarioID)
+                                                 .Include(tv=> tv.Tarea)
+                                                 .Select(tv=>tv.Tarea)
+                                                 .ToListAsync();    
+            
+            ;*/
+            return await _context.TareaVoluntario.Where(tv=>tv.VoluntarioID ==voluntarioID && tv.Tarea.EventoID == eventoID)
+                                                 .Include(tv=>tv.Tarea)
+                                                 .Select(tv=>tv.Tarea).ToListAsync();   
         }
     }
 }

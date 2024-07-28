@@ -4,6 +4,7 @@ using BE.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE.Migrations
 {
     [DbContext(typeof(EventosContext))]
-    partial class EventosContextModelSnapshot : ModelSnapshot
+    [Migration("20240726203553_tesst")]
+    partial class tesst
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -210,35 +213,6 @@ namespace BE.Migrations
                     b.ToTable("Inscripciones");
                 });
 
-            modelBuilder.Entity("BE.Models.Mensaje", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Contenido")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EstadoLeido")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("FechaHoraEnvio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("destinatarioID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("remitenteID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Mensaje");
-                });
-
             modelBuilder.Entity("BE.Models.Rol", b =>
                 {
                     b.Property<int>("ID")
@@ -287,19 +261,29 @@ namespace BE.Migrations
 
             modelBuilder.Entity("BE.Models.TareaVoluntario", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Comentario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("TareaID")
                         .HasColumnType("int");
 
                     b.Property<int>("VoluntarioID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Comentario")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("ID");
 
-                    b.Property<string>("Estado")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TareaID", "VoluntarioID");
+                    b.HasIndex("TareaID");
 
                     b.HasIndex("VoluntarioID");
 

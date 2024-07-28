@@ -25,7 +25,8 @@ namespace BE.Repository
 
         public async Task<Corredor> GetCorredor(int id)
         {
-            return await _context.Corredores.FindAsync(id);
+
+            return await _context.Corredores.Include(c => c.Rol).FirstOrDefaultAsync(c=>c.ID == id); ;
         }
 
         public async Task<Corredor> CreateCorredor(Corredor corredor)
