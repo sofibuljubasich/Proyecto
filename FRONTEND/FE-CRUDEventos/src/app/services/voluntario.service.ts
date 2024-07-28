@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { EventoResponse } from '../interfaces/evento';
-import { Voluntario, VoluntarioNuevo } from '../interfaces/usuario';
+import { General, UsuarioEnviado } from '../interfaces/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -14,12 +14,13 @@ export class VoluntarioService {
 
   constructor(private http: HttpClient) {}
 
-  getVoluntarios(): Observable<Voluntario[]> {
-    return this.http.get<Voluntario[]>(`${this.myAppUrl}${this.myApiUrl}`);
+  getVoluntarios(): Observable<General[]> {
+    return this.http.get<General[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
-  register(userData: VoluntarioNuevo): Observable<Voluntario> {
-    return this.http.get<Voluntario>(
-      `${this.myAppUrl}${this.myApiUrl}/register`
+  register(userData: UsuarioEnviado) {
+    return this.http.post<General>(
+      `${this.myAppUrl}${this.myApiUrl}/register`,
+      userData
     );
   }
 }

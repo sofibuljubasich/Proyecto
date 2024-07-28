@@ -6,10 +6,11 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { ComentarioNuevo } from 'src/app/interfaces/comentario';
-import { Voluntario, VoluntarioNuevo } from 'src/app/interfaces/usuario';
+import { General, UsuarioEnviado } from 'src/app/interfaces/usuario';
 import { Inscrito } from 'src/app/interfaces/usuario';
 import { EventoService } from 'src/app/services/evento.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
+import { UserService } from 'src/app/services/user.service';
 import { VoluntarioService } from 'src/app/services/voluntario.service';
 
 @Component({
@@ -28,7 +29,7 @@ export class AbmColaboradoresComponent {
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private aRoute: ActivatedRoute,
-    private _inscripcionService: InscripcionService,
+    private _userService: UserService,
     private fb: FormBuilder,
     private _volService: VoluntarioService
   ) {
@@ -50,7 +51,7 @@ export class AbmColaboradoresComponent {
     });
   }
   getColaboradores(): void {
-    this._volService.getVoluntarios().subscribe((data: Voluntario[]) => {
+    this._volService.getVoluntarios().subscribe((data: General[]) => {
       const transformedData = data.map((voluntario, index) => ({
         nro: index + 1,
         email: voluntario.email,
@@ -67,7 +68,7 @@ export class AbmColaboradoresComponent {
 
   agregar(): void {
     if (this.altaForm.valid) {
-      const nuevoColaborador: VoluntarioNuevo = {
+      const nuevoColaborador: UsuarioEnviado = {
         nombre: this.altaForm.value.nombre,
         apellido: this.altaForm.value.apellido,
         telefono: this.altaForm.value.telefono,
@@ -77,12 +78,34 @@ export class AbmColaboradoresComponent {
       };
       console.log(nuevoColaborador);
       if (this.altaForm.value.rol == 3) {
-        this._volService.register(nuevoColaborador).subscribe((voluntario) => {
-          voluntario.nombre =
-            this.altaForm.value.nombre + ' ' + this.altaForm.value.apellido;
-          voluntario.email = this.altaForm.value.email;
-          // voluntario.rolID=this.altaForm.value.rol;
-          this.dataSource.data.push(voluntario);
+        this._volService.register(nuevoColaborador).subscribe(() => {
+          const nuevo: UsuarioEnviado = {
+            nombre:
+              this.altaForm.value.nombre + ' ' + this.altaForm.value.apellido,
+            email: this.altaForm.value.email,
+            apellido: this.altaForm.value.apellido,
+            telefono: this.altaForm.value.telefono,
+            password: this.altaForm.value.password,
+          };
+
+          // Actualizar el DataSource
+          this.dataSource.data = [...this.dataSource.data, nuevo];
+        });
+      } else {
+        this._userService.agregarUsuarios(nuevoColaborador).subscribe(() => {
+          const nuevo: UsuarioEnviado = {
+            nombre:
+              this.altaForm.value.nombre + ' ' + this.altaForm.value.apellido,
+            email: this.altaForm.value.email,
+            apellido: this.altaForm.value.apellido,
+            telefono: this.altaForm.value.telefono,
+            password: this.altaForm.value.password,
+          };
+
+          // Actualizar el DataSource
+          this.dataSource.data = [...this.dataSource.data, nuevo];
+
+          // Limpiar el formulario si es necesario
         });
       }
 

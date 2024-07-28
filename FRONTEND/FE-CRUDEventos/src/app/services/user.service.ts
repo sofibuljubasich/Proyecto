@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
-import { Usuario, UsuarioEnviado } from '../interfaces/usuario';
+import { General, Usuario, UsuarioEnviado } from '../interfaces/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -19,17 +19,10 @@ export class UserService {
   //   );
   // }
   agregarUsuarios(userData: UsuarioEnviado) {
-    this.http
-      .post<Usuario>(`${this.myAppUrl}${this.myApiUrl}/$register`, userData)
-      .subscribe(
-        (response) => {
-          console.log('User registered successfully', response);
-          //this.router.navigate(['/login']); // Redirigir al login después del registro exitoso
-        },
-        (error) => {
-          console.error('Error registering user', error);
-        }
-      );
+    return this.http.post<General>(
+      `${this.myAppUrl}${this.myApiUrl}/register`,
+      userData
+    );
   }
   getUsuario(id: string): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.myAppUrl}${this.myApiUrl}/${id}`);

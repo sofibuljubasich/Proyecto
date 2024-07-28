@@ -3,13 +3,8 @@ export interface UsuarioEnviado {
   password: string;
   nombre: string;
   apellido: string;
-  fechaNacimiento: string;
-  localidad: string;
-  dni: string;
   telefono: string;
-  genero: string;
-  obraSocial: string;
-  imagen: File;
+  // rolID: number;
 }
 
 export interface Usuario {
@@ -27,6 +22,7 @@ export interface Usuario {
   imagen: string;
   rolID: number;
 }
+
 export interface Corredor {
   id: number;
   email: string;
@@ -59,7 +55,7 @@ export interface Distancia {
   km: number;
 }
 
-export interface Voluntario {
+export interface General {
   id: number;
   email: string;
   nombre: string;
@@ -68,11 +64,11 @@ export interface Voluntario {
   rolID: number;
   password: string;
 }
-export interface VoluntarioNuevo {
-  email: string;
-  nombre: string;
-  apellido: string;
-  telefono: string;
-  // rolID: number;
-  password: string;
-}
+// export interface VoluntarioNuevo {
+//   email: string;
+//   nombre: string;
+//   apellido: string;
+//   telefono: string;
+
+//   password: string;
+// }
