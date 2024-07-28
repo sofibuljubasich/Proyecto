@@ -19,6 +19,10 @@ namespace BE.Dto
 
         public string Telefono { get; set; }
 
+        
+        [ForeignKey("Rol")]
+        public int RolID { get; set; }
+
      
 
       

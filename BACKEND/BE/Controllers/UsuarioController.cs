@@ -115,6 +115,30 @@ namespace BE.Controllers
 
         }
 
+        [HttpPatch, Route("UpdateRol")]
+        public async Task<IActionResult> UpdateRol(int usuarioID, int rolID)
+        {
+            try
+            {
+                var usuario = await _usuarioRepository.GetUsuario(usuarioID);
+
+                if (usuario == null)
+                {
+                    return NotFound();
+                }
+
+                usuario.RolID = rolID;
+                await _usuarioRepository.UpdateUsuario(usuario);
+                return Ok("Rol actualizado");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+        }
+
         [HttpPut("{usuarioID}")]
         public async Task<IActionResult> Update(int usuarioID, [FromBody]UsuarioUpdateDto usuarioDto)
         {
