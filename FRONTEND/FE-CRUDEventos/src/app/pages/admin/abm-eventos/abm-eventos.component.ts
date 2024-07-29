@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Busqueda } from 'src/app/interfaces/busqueda';
 import { EventoResponse } from 'src/app/interfaces/evento';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,6 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ABMEventosComponent {
   eventos: EventoResponse[] = [];
   eventosActivos: EventoResponse[] = [];
+  id: number;
 
   onToggleChange(evento: any, event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -38,8 +40,11 @@ export class ABMEventosComponent {
     private _eventoService: EventoService,
     private _tipoService: TipoEventoService,
     private _authService: AuthService,
-    private _userService: UserService
-  ) {}
+    private _userService: UserService,
+    private aRoute: ActivatedRoute
+  ) {
+    this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
+  }
 
   ngOnInit(): void {
     this.obtenerEventos();

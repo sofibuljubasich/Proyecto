@@ -74,7 +74,7 @@ export class AbmColaboradoresComponent {
         telefono: this.altaForm.value.telefono,
         email: this.altaForm.value.email,
         password: this.altaForm.value.password,
-        // rolID:this.altaForm.value.rol
+        rolID: this.altaForm.value.rol,
       };
       console.log(nuevoColaborador);
       if (this.altaForm.value.rol == 3) {
@@ -86,6 +86,7 @@ export class AbmColaboradoresComponent {
             apellido: this.altaForm.value.apellido,
             telefono: this.altaForm.value.telefono,
             password: this.altaForm.value.password,
+            rolID: this.altaForm.value.rol,
           };
 
           // Actualizar el DataSource
@@ -100,6 +101,7 @@ export class AbmColaboradoresComponent {
             apellido: this.altaForm.value.apellido,
             telefono: this.altaForm.value.telefono,
             password: this.altaForm.value.password,
+            rolID: this.altaForm.value.rol,
           };
 
           // Actualizar el DataSource
@@ -108,7 +110,7 @@ export class AbmColaboradoresComponent {
           // Limpiar el formulario si es necesario
         });
       }
-
+      this.getColaboradores;
       this.altaForm.reset();
       this.toggleFormulario();
     }

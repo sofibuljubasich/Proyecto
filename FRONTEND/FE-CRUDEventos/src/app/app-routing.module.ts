@@ -26,6 +26,7 @@ import { SubirResultadosComponent } from './pages/admin/subir-resultados/subir-r
 import { VerInscripcionesComponent } from './pages/admin/ver-inscripciones/ver-inscripciones.component';
 import { VistaTareasComponent } from './pages/admin/vista-tareas/vista-tareas.component';
 import { AgregarEditarEventoComponent } from './pages/admin/agregar-editar-evento/agregar-editar-evento.component';
+import { TareasComponent } from './pages/admin/tareas/tareas.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
@@ -52,11 +53,14 @@ const routes: Routes = [
   { path: 'ABM-Eventos', component: ABMEventosComponent },
   { path: 'ABM-Colaboradores', component: AbmColaboradoresComponent },
   { path: 'ABM-Tareas/:id', component: AbmTareasComponent },
+  { path: 'ABM-Tareas', component: AbmTareasComponent },
   { path: 'reportes/:id', component: ReportesComponent },
   { path: 'alta-resultados/:id', component: SubirResultadosComponent },
   { path: 'verInscripciones/:id', component: VerInscripcionesComponent },
   { path: 'vistaTareas', component: VistaTareasComponent },
-  { path: 'altaEventos', component: AgregarEditarEventoComponent },
+  { path: 'tareas-creadas/:id', component: TareasComponent },
+  { path: 'altaEventos/:id', component: AgregarEditarEventoComponent },
+  { path: 'altaEvento', component: AgregarEditarEventoComponent },
   // { path: 'voluntarios/:id', component: VoluntariosComponent },
 
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },

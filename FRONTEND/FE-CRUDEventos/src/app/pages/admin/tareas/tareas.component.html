@@ -1,1 +1,89 @@
-<p>tareas works!</p>
+<div class="container">
+    <main class="main">
+      <button routerLink="/eventosActivos" style="color: aliceblue; text-decoration: underline; border: none; background-color: transparent; width: fit-content;">
+        <--Regresar
+      </button>
+        <div class="agregar-container">
+          <button class="agregar" routerLink="/ABM-Tareas">+ Agregar tarea</button>
+        </div>
+      <div class="tabla">
+  
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+            <!-- Ubicacion Column -->
+            <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef >Descripcion</th>
+                <td mat-cell *matCellDef="let task">{{ task.descripcion }}</td>
+              </ng-container>
+
+
+  
+          <!-- FechaHora Column -->
+          <ng-container matColumnDef="fechaHora">
+            <th mat-header-cell *matHeaderCellDef >Fecha</th>
+            <td mat-cell *matCellDef="let task">{{ task.fechaHora | date }}</td>
+          </ng-container>
+  
+          <!-- Ubicacion Column -->
+          <ng-container matColumnDef="ubicacion">
+            <th mat-header-cell *matHeaderCellDef >Ubicación</th>
+            <td mat-cell *matCellDef="let task">{{ task.ubicacion }}</td>
+          </ng-container>
+  
+          <!-- Comentario Column -->
+          <ng-container matColumnDef="comentario">
+            <th mat-header-cell *matHeaderCellDef>Comentario</th>
+            <td mat-cell *matCellDef="let task">
+                <div *ngFor="let volunteer of task.voluntarios">
+                  <button mat-icon-button (click)="openCommentForm(task)">
+                    <mat-icon>mail</mat-icon>
+                  </button>
+                </div>
+              </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="voluntarios">
+            <th mat-header-cell *matHeaderCellDef>Voluntarios</th>
+            <td mat-cell *matCellDef="let task">
+              <div class="volunteer-list">
+                <div *ngFor="let volunteer of task.voluntarios">
+                  {{ volunteer.nombre }} {{ volunteer.apellido }}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+                    <!-- Estado Column -->
+                    <ng-container matColumnDef="estado">
+                        <th  mat-header-cell *matHeaderCellDef >Estado</th>
+                        <td mat-cell *matCellDef="let task">{{ task.estado }}</td>
+                      </ng-container>
+  
+           <!-- Chat Column -->
+           <ng-container matColumnDef="chat">
+            <th mat-header-cell *matHeaderCellDef>Chat</th>
+            <td mat-cell *matCellDef="let task">
+              <div *ngFor="let volunteer of task.voluntarios">
+                <button mat-icon-button routerLink="/chat/{{volunteer.id}}">
+                  <mat-icon>forum</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="editar">
+            <th mat-header-cell *matHeaderCellDef>Editar</th>
+            <td mat-cell *matCellDef="let task">
+              <button mat-icon-button routerLink="/ABM-Tareas/{{id}}" style="background-color: rgba(184, 184, 184, 0.459);border-radius: 10px;">
+                <mat-icon >edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" class="paginator"></mat-paginator>
+      </div>
+    </main>
+  </div>
+  

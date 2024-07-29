@@ -37,22 +37,22 @@ export class AuthService {
     }
   }
 
-  login(userData: any) {
+  login(userData: any): Observable<Usuario> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
     return this.http
-      .post(`${this.myAppUrl}${this.myApiUrl}/login`, userData, {
+      .post<Usuario>(`${this.myAppUrl}${this.myApiUrl}/login`, userData, {
         headers,
-        responseType: 'text',
       })
       .pipe(
-        tap((response: string) => this.setSession(response)),
+        tap((response: Usuario) => this.setSession(response)),
         catchError(this.handleError)
       );
   }
 
-  private setSession(userId: string): void {
-    this.userIdSubject.next(userId);
-    localStorage.setItem('userId', userId);
+  private setSession(user: Usuario): void {
+    this.userIdSubject.next(JSON.stringify(user.id));
+    localStorage.setItem('userId', JSON.stringify(user.id));
   }
 
   logout(): void {

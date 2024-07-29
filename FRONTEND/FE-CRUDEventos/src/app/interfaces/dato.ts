@@ -1,5 +1,63 @@
+import { Chat, Mensaje } from './chat';
 import { Tarea } from './tarea';
-
+export const CHAT_DATA: Chat[] = [
+  {
+    idChat: 1,
+    foto: '../images/perfil-empty.jpg',
+    idEmisor: 'Ruben Lopez',
+    mensajes: [
+      {
+        id: 1,
+        fechaHora: new Date('2024-03-16T00:22:34.368'),
+        contenido: 'Hola',
+        idEmisor: 5,
+        idReceptor: 6,
+      },
+      {
+        id: 2,
+        fechaHora: new Date('2024-03-16T00:22:34.368'),
+        contenido: 'Hola',
+        idEmisor: 6,
+        idReceptor: 5,
+      },
+      {
+        id: 3,
+        fechaHora: new Date('2024-03-16T00:22:34.368'),
+        contenido: 'Que tal estas?',
+        idEmisor: 5,
+        idReceptor: 6,
+      },
+    ],
+  },
+  {
+    idChat: 2,
+    idEmisor: 'Julia Sanchez',
+    foto: '../images/perfil-empty.jpg',
+    mensajes: [
+      {
+        id: 1,
+        fechaHora: new Date('2024-03-16T00:22:34.368'),
+        contenido: 'Acordate...',
+        idEmisor: 2,
+        idReceptor: 6,
+      },
+    ],
+  },
+  {
+    idChat: 2,
+    foto: '../images/perfil-empty.jpg',
+    idEmisor: 'Marta Ramirez',
+    mensajes: [
+      {
+        id: 1,
+        fechaHora: new Date('2024-03-16T00:22:34.368'),
+        contenido: 'Acordate...',
+        idEmisor: 1,
+        idReceptor: 6,
+      },
+    ],
+  },
+];
 export const TASK_DATA: Tarea[] = [
   {
     tareaID: 1,

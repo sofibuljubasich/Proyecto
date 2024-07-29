@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { Evento, EventoResponse } from '../interfaces/evento';
 import { TablaResultados } from '../interfaces/tabla';
 import { Busqueda } from '../interfaces/busqueda';
@@ -47,25 +47,31 @@ export class EventoService {
     );
   }
 
-  // buscar(filtros: Busqueda): Observable<any>{
-  //   let params = new HttpParams();
-  //   if (filtros.texto) {
-  //     params = params.set('busqueda', filtros.texto);
-  //   }
-  //   if (filtros.fechaIni) {
-  //     params = params.set('fechaInicio', filtros.fechaIni);
-  //   }
-  //   if (filtros.fechaFin) {
-  //     params = params.set('fechaFin', filtros.fechaFin);
-  //   }
-  //   if (filtros.tipoEvento) {
-  //     params = params.set('tipo', filtros.tipoEvento);
-  //   }
-  //   if (filtros.lugar) {
-  //     params = params.set('lugar', filtros.lugar);
-  //   }
-  //  return this.http.get(`${this.myAppUrl}${this.myApiUrl}$busqueda`,{filtros});
-  //  }
+  createEvento(evento: Evento): Observable<Evento> {
+    return this.http.post<Evento>(`${this.myAppUrl}${this.myApiUrl}`, evento);
+  }
+
+  // Actualizar un evento existente
+  updateEvento(id: number, evento: Evento) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<Evento>(
+      `${this.myAppUrl}${this.myApiUrl}${id}`,
+      evento,
+      { headers, responseType: 'text' as 'json' }
+    );
+  }
+
+  // Eliminar un evento por su ID
+  deleteEvento(eventoId: number): Observable<any> {
+    return this.http.delete(`${this.myAppUrl}${this.myApiUrl}${eventoId}`);
+  }
+
+  // Manejo de errores
+  private handleError(error: any): Observable<never> {
+    console.error('Ocurrió un error:', error);
+    throw new Error('Error en la solicitud HTTP.');
+  }
+
   getLugares(): Observable<string[]> {
     return this.http.get<string[]>(`${this.myAppUrl}${this.myApiUrl}Lugares`);
   }

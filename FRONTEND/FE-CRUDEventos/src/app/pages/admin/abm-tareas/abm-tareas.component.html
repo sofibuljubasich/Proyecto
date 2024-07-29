@@ -1,1 +1,41 @@
-<p>abm-tareas works!</p>
+<div class="container">
+    <div class="contenedor-general">
+        <div class="datos">
+            <div>
+                <label for="descripcion">Descripcion de la tarea</label>
+                <input type="text">
+            </div>
+            <div class="botones">
+                <div>
+                    <label for="fecha">Fecha</label>
+                    <input type="date">
+                </div>
+                <div>
+                    <label for="lugar">Lugar</label>
+                    <input type="text">
+                </div>
+            </div>
+            <div class="lista-voluntarios">
+                <label for="lugar">Voluntarios disponibles</label>
+                <div class="content" *ngFor= "let vol of voluntarios">
+                    <mat-checkbox ></mat-checkbox>
+                    {{ vol.nombre }} {{ vol.apellido }}
+                </div>
+            </div>
+            <div class="opciones">
+                <button (click)="goBack()" style="border: none; text-decoration: underline;background:none;"> <- Regresar</button>
+                <button (click)="goBack()" type="submit" mat-raised-button color="primary" >Guardar</button>
+                <button (click)="goBack()" style="background-color: rgb(135, 136, 136);" type="button">Cancelar
+                </button>
+              </div>
+        </div>      
+         
+    </div>
+    <div>
+        <div>
+            <div>
+
+            </div>
+        </div>
+    </div>
+</div>

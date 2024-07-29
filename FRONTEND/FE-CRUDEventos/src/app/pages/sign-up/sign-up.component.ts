@@ -29,6 +29,7 @@ export class SignUpComponent implements OnInit {
   showError: boolean = false;
   selectedFile: File | null = null;
   selectedFileUrl: string | null = null; // URL de la imagen seleccionada
+  rol: number = 1;
 
   constructor(
     private fb: FormBuilder,
@@ -129,7 +130,6 @@ export class SignUpComponent implements OnInit {
 
   onSubmit() {
     if (this.signupFormPart3.valid) {
-      console.log(this.signupFormPart2.value.image);
       const formData = new FormData();
       formData.append('nombre', this.signupFormPart1.value.nombre);
       formData.append('apellido', this.signupFormPart1.value.apellido);
@@ -145,7 +145,8 @@ export class SignUpComponent implements OnInit {
       formData.append('email', this.signupFormPart3.value.email);
       formData.append('password', this.signupFormPart3.value.password);
       formData.append('imagen', this.signupFormPart2.value.imagen);
-      // console.log(usuarioData);
+      formData.append('rolID', '1');
+      console.log(formData);
       this._authService.register(formData).subscribe(
         (response) => {
           console.log('Autenticado con éxito:', response);

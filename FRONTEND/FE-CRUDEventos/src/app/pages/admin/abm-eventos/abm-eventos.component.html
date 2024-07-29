@@ -19,7 +19,7 @@
                       <div class="evento">
                         <app-evento-card-h [eventoResp]="eventoResp"></app-evento-card-h>
                       </div>
-                      <mat-icon class="custom-icon" routerLink="/altaEventos" aria-hidden="false" aria-label="Example calendar icon" fontIcon="edit_square"></mat-icon>
+                      <mat-icon class="custom-icon" routerLink="/altaEventos/{{eventoResp.evento.id}}" aria-hidden="false" aria-label="Example calendar icon" fontIcon="edit_square"></mat-icon>
                       <label class="switch">
                         <input type="checkbox" [checked]="eventoResp.evento.estado==='Activo'" (change)="onToggleChange(eventoResp.evento, $event)">
                         <span class="slider"></span>
