@@ -19,6 +19,7 @@ export class TareasAsignadasComponent {
   id: number;
   displayedColumns: string[] = [
     'estado',
+    'descripcion',
     'fechaHora',
     'ubicacion',
     'comentario',

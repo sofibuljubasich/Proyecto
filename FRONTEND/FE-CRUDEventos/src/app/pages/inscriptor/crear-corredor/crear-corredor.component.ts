@@ -120,7 +120,7 @@ export class CrearCorredorComponent implements OnInit {
       formData.append('email', this.signupFormPart3.value.email);
       formData.append('password', this.signupFormPart3.value.password);
       formData.append('imagen', this.signupFormPart1.value.imagen);
-      formData.append('rolID', '0');
+      formData.append('rolID', '1');
       this._authService.register(formData).subscribe(
         (response) => {
           console.log('Autenticado con éxito:', response);

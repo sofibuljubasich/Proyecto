@@ -1,0 +1,250 @@
+
+
+.container {
+
+    content: '';
+    padding-top: 100px;
+    position: absolute;
+    background-color:rgb(9, 33, 43);
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    max-height: fit-content;
+    /* height: 100%; */
+    background-size: cover;
+    background-attachment: fixed;
+    /* z-index: -1; Asegura que el pseudo-elemento esté detrás del contenido */
+    background-repeat: no-repeat;
+  }
+  .buscador {
+    width: 100%;
+    max-width: 50%;
+    margin: 20px auto;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.459);
+    border-radius: 30px;
+    backdrop-filter: blur(4px) saturate(180%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 10px 20px; */
+  }
+  
+  .buscador input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    /* padding: 24px 20px; */
+    font-size: 20px;
+    color: #1d1d1d;
+    /* width: 41.4%;
+    height: 20px; */
+  }
+  ::placeholder{
+    color: #1d1d1d;
+  }
+  .icono {
+    background:  #58629b;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    margin-right: 5px;
+    /* text-transform: capitalize; */
+  }
+  .agregar-button{
+    height: auto;
+    width: 200px;
+    margin: 0px 10px;
+    color: rgb(255, 255, 255);
+    border: none;
+   margin-left: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: larger;
+    background-color: #1520b3;
+  }
+main{
+   /* 20% de padding a los costados */
+  box-sizing: border-box; /* Incluye el padding en el tamaño total del contenedor */
+  width: 100%;
+}
+.evento-container{
+  width: 100%;
+}
+.custom-icon {
+  font-size: 4rem; /* Ajusta este valor para cambiar el tamaño del icono */
+  vertical-align: middle; /* Alinea el icono verticalmente con el texto */
+  padding: 5px;
+  color: rgb(255, 255, 255,0.7); /* Color del icono */
+  /* line-height: 1; */
+  width: 20px;
+  height: auto;
+  flex: 0.3;
+  cursor: pointer;
+}
+
+/* styles.css o el archivo de estilos global */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+
+      .content {
+        /* width: 100%; */
+        padding: 0 15%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+      }
+      
+      .evento-content {
+        /* padding: 0 10%; */
+
+        padding: 15px 0;
+
+      }
+      
+      .evento-sec {
+        display: flex;
+        padding: 15px 15%;
+        align-items: center;
+        
+      }
+      .evento{
+        flex: 3; /* Ocupa 3 partes del contenedor */
+      }
+      
+      .tareas-button {
+         /* Ocupa 1 parte del contenedor */
+        margin-left: 16px; /* Espacio opcional entre el evento y el botón */
+
+            height: auto;
+            width: 200px;
+            margin: 0px 10px;
+            color: rgb(5, 22, 37);
+            border: none;
+            margin-left: 10px;
+            border-radius: 20px;
+            padding: 10px;
+            cursor: pointer;
+            font-size: larger;
+            background-color: #73e9f1;
+      }
+
+      .container{
+
+        /* padding:  7px 20%; */
+        /* border-bottom: 1px solid #ccc;
+        border-top: 1px solid #ccc; */
+    
+    }
+    .card{
+        background-color: #419197;
+        display: flex;
+        /* height: 130px; */
+        padding: 1%;
+        border-radius: 10px;
+        cursor: pointer;
+        /* align-content: center; */
+        align-items: center;
+        /* text-align: center; */
+    }
+    
+.foto-perfil {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-right: 10px;
+        object-fit: cover;
+        border: 2px solid #000000;
+
+      }
+      
+      .contenido {
+        flex-grow: 1;
+        align-content: center;
+      }
+      
+      .nombre {
+        font-weight:500;
+        font-size: 1.9em;
+        color: rgb(1, 20, 37);
+      }
+      
+      .texto {
+        margin-top: 10px;
+        margin-left: 10px;
+        color:aliceblue;
+        font-size:medium;
+      }
+      
+      .fecha {
+        margin-top: 5px;
+        margin-left: 10px;
+        color:aliceblue;
+        font-size:medium;
+        text-align: right;
+        font-size: 0.8em;
+        
+      }
+    
+      .boton{
+        border-radius: 50%;
+        background-color:rgb(9, 33, 43);
+        color:aliceblue;
+        height: 50px;
+        width: 50px;
+        border: none;
+        margin-right: 20px;
+        cursor: pointer;
+      }

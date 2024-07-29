@@ -1,0 +1,178 @@
+/* Mantén el estilo existente */
+body {
+    background-color: #04364A;
+    /* display: flex */
+  }
+.container {
+    padding: 8% 3%;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 3fr 4fr; /* Define dos columnas, una para la imagen y otra para el contenido */
+    gap: 16px; /* Espacio entre las columnas */
+    align-items: start; /* Alinea el contenido al inicio */
+    justify-items: center;
+  }
+  
+  .imagen {
+    display: flex;
+    width: 100%; /* La imagen ocupará toda la columna */
+    height: auto; /* Mantén la proporción de la imagen */
+    border: 3px solid white; /* Añade un borde blanco más grueso */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Añade una sombra más fuerte */
+    background-color: white; /* Asegúrate de que el área dentro del borde sea blanca */
+  }
+  .update-image {
+    margin-top: -200px;
+    /* padding: 10px; */
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+  
+  .update-image input[type="file"] {
+    margin-right: 10px;
+  }
+  .content {
+    display: grid;
+    grid-template-rows: auto auto; /* Dos filas: una para el título y otra para los datos */
+    gap: 10px; /* Espacio entre las filas */
+  }
+  
+  .titulo {
+    display: flex;
+    padding-left: 20%;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+  }
+  .second{
+    padding: 0px 30px;
+    margin-bottom: -10px;
+    /* margin-top: -20px; */
+  }
+  
+  .datos {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas para los datos */
+    gap: 5px; /* Espacio entre las columnas */
+    padding: 20px 30px;
+    align-items: start;
+  }
+  
+  .distancias {
+    margin-top: 20px;
+  }
+  
+  table {
+
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    align-items: start;
+    margin-top: -50px;
+  }
+  
+  th, td {
+    border: 1px solid #0c0c0c;
+    text-align: left;
+    padding: 8px;
+    vertical-align: middle;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #858585;
+    color: black;
+  }
+  
+  .distancia-item {
+    background-color: #ffffff;
+  }
+  
+  .dato, .tipo {
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-icon {
+    font-size: 3rem; /* Ajusta este valor para cambiar el tamaño del icono */
+    vertical-align: middle; /* Alinea el icono verticalmente con el texto */
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    color: white; /* Color del icono */
+    line-height: 1;
+    width: 50px;
+    height: auto;
+  }
+  .tipo{
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    height: max-content;
+    margin-bottom: 15px;
+  }
+  
+  .label {
+    margin: 0;
+    font-weight: 500;
+    padding: 9px;
+    font-size: 20px;
+    text-decoration: underline;
+  }
+  .fecha, .lugar, .descripcion {
+    color: white;
+    font-size: 16px;
+  }
+  .date {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .opciones {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacio entre botones */
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  button {
+    height: auto;
+    width: 150px;
+    color: aliceblue;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: larger;
+  }
+.boton-eliminar{
+    height: auto;
+    width: 80px;
+    color: aliceblue;
+    background-color: rgb(177, 5, 5);
+    border: none;
+    border-radius: 10px;
+    /* padding: 10px; */
+    cursor: pointer;
+    font-size:smaller;
+}
+
+.add-icon {
+    /* z-index: 1; */
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 10%;
+    /* width: 50px; */
+    /* height: 50px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+    line-height: 50px;
+
+  }

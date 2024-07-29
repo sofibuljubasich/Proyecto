@@ -4,7 +4,7 @@ export interface UsuarioEnviado {
   nombre: string;
   apellido: string;
   telefono: string;
-  // rolID: number;
+  rolID: number;
 }
 
 export interface Usuario {

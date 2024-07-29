@@ -41,6 +41,7 @@ import { ReportesComponent } from './pages/admin/reportes/reportes.component';
 import { SubirResultadosComponent } from './pages/admin/subir-resultados/subir-resultados.component';
 import { VerInscripcionesComponent } from './pages/admin/ver-inscripciones/ver-inscripciones.component';
 import { VistaTareasComponent } from './pages/admin/vista-tareas/vista-tareas.component';
+import { TareasComponent } from './pages/admin/tareas/tareas.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -83,6 +84,7 @@ import { DatePipe } from '@angular/common';
     VerInscripcionesComponent,
     VistaTareasComponent,
     CommentFormComponent,
+    TareasComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

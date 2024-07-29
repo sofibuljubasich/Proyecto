@@ -70,8 +70,9 @@ export class LoginComponent {
           this.snackBar.open('Inicio de sesión exitoso', 'Cerrar', {
             duration: 3000,
           });
+
           this.clearErrorMessage();
-          this._userService.getUsuario(response).subscribe({
+          this._userService.getUsuario(JSON.stringify(response.id)).subscribe({
             next: (user) => {
               this.userRol = user.rolID;
               console.log('rol: ', this.userRol);

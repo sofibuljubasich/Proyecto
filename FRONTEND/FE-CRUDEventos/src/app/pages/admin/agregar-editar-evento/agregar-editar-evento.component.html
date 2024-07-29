@@ -1,16 +1,88 @@
-<!-- <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="nombre">Nombre del Evento:</label>
-      <input type="text" id="nombre" formControlName="nombre">
+<body>
+
+  <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+      <!-- Imagen del evento -->
+      
+        <img [src]="eventoForm.value.imagen" alt="Imagen del Evento" class="imagen">
+      
+      
+      <!-- Contenido del formulario -->
+      <div class="content">
+        <div class="titulo" *ngIf="isEditing">
+          <p class="label">Nombre:</p>
+          <input formControlName="nombre" [readonly]="!isEditing" />
+        </div>
+        <div class="titulo" *ngIf="!isEditing">
+          <div class="titulo">{{eventoForm.value.nombre}}</div>
+        </div>
+          
+        <div class="datos">
+        <div class="dato">
+          <mat-icon class="custom-icon" aria-hidden="false" aria-label="Calendar icon" fontIcon="calendar_month"></mat-icon>
+          <p class="label">Fecha:</p>
+          <input formControlName="fecha" type="date" [readonly]="!isEditing" (change)="onDateChange($event)" />
+        </div>
+        <div class="dato">
+          <mat-icon class="custom-icon" aria-hidden="false" aria-label="Location icon" fontIcon="location_on"></mat-icon>
+          <p class="label">Localización:</p>
+          <input formControlName="lugar" [readonly]="!isEditing" />
+        </div>
+      </div>
+      
+      <div class="second">
+        <div class="tipo">
+          <mat-icon class="custom-icon" aria-hidden="false" aria-label="Event type icon" fontIcon="directions_run"></mat-icon>
+          <p class="label">Tipo de evento:</p>
+          <input formControlName="tipo" [readonly]="!isEditing" />
+        </div>
+      </div>
+      
+      <!-- Distancias asociadas -->
+      <div class="datos">
+        <div class="dato">
+          <mat-icon class="custom-icon" aria-hidden="false" aria-label="Distances icon" fontIcon="flag"></mat-icon>
+          <p class="label">Distancias asociadas:</p>
+        </div>
+        <div class="distancias">
+          <table>
+            <thead>
+              <tr>
+                <th>Kilómetro</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let distancia of (eventoForm.get('distancias')?.value || []); let i = index">
+                
+                <td>{{ distancia.km }} Km</td>
+                <td>$ {{ distancia.precio }}</td>
+                <td>
+                  <button class="boton-eliminar" (click)="removeDistancia(i)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button *ngIf="isEditing" (click)="addDistancia()">Agregar Distancia</button>
+        </div>
+
+      </div>
+
+
     </div>
-    <div>
-      <label for="fecha">Fecha del Evento:</label>
-      <input type="date" id="fecha" formControlName="fecha">
+    <div class="update-image" *ngIf="isEditing">
+      <input  type="file" (change)="onImageChange($event)" />
+      <!-- <label *ngIf="isEditing" for="profileImage" class="add-icon">Subir nueva imagen</label> -->
     </div>
-    <div>
-      <label for="imagen">Imagen del Evento:</label>
-      <input type="file" id="imagen" (change)="onFileSelected($event)">
-    </div>
-    <button type="submit" [disabled]="eventoForm.invalid">Agregar Evento</button>
-  </form>
-   -->
+  </div>
+            <!-- Botones de acción -->
+            <div class="opciones">
+              <button routerLink="/inicio" style="border: none; text-decoration: underline;background:none;"> <- Regresar</button>
+              <button type="submit" mat-raised-button color="primary" [disabled]="!isEditing">Guardar</button>
+              <button style="background-color: rgb(36, 153, 173);" type="button" (click)="toggleEdit()">
+                {{ isEditing ? 'Cancelar' : 'Editar' }}
+              </button>
+            </div>
+</form>
+</body>
