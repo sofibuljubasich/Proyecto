@@ -98,6 +98,7 @@ namespace BE.Controllers
                 }
 
                 var usuario = _mapper.Map<Usuario>(request);
+                usuario.Imagen = ImagenURL;
 
                 //await _emailSender.SendEmailAsync(user.Username, user.Password);
 

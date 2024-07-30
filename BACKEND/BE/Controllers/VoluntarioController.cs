@@ -52,6 +52,7 @@ namespace BE.Controllers
 
 
                 var voluntario = _mapper.Map<Voluntario>(request);
+                voluntario.Imagen = ImagenURL;
 
 
 
@@ -63,6 +64,7 @@ namespace BE.Controllers
 
                 return Ok("Voluntario creado");
             }
+
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
