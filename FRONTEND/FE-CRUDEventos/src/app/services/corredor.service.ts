@@ -19,11 +19,11 @@ export class CorredorService {
     console.log('fechaNac', currentUser.fechaNacimiento);
     if (currentUser && currentUser.fechaNacimiento) {
       const birthdate = new Date(currentUser.fechaNacimiento);
-
+      console.log('birthday', birthdate);
       const ageDifMs = Date.now() - birthdate.getTime();
-
+      console.log('agedif ms', ageDifMs);
       const ageDate = new Date(ageDifMs);
-
+      console.log('agedif ms', ageDate.getUTCFullYear());
       return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
     return null;

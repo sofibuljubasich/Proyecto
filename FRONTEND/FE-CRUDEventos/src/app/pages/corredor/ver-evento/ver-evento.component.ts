@@ -14,6 +14,7 @@ export class VerEventoComponent implements OnInit {
   eventoData!: EventoResponse;
   id!: number;
   fecha!: string;
+  imagenURL!:string;
 
   constructor(
     private _eventoService: EventoService,
@@ -35,6 +36,7 @@ export class VerEventoComponent implements OnInit {
   obtenerEvento(): void {
     this._eventoService.getEvento(this.id).subscribe((data) => {
       this.eventoData = data;
+      this.imagenURL = `https://localhost:7296${this.eventoData.evento.imagen}`;
       this.eventoData.evento.nombre = this.capitalizeFirstLetter(
         data.evento.nombre
       );
