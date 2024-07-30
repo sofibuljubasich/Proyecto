@@ -16,8 +16,10 @@ export class EventoCardComponent implements OnInit {
   @Input() eventoResp!: EventoResponse;
   formattedDate: string = '';
   formattedName: string = '';
+  imagenURL!: string;
 
   ngOnInit(): void {
+    this.imagenURL = `https://localhost:7296${this.eventoResp.evento.imagen}`;
     this.formattedDate = this.formatDate(this.eventoResp.evento.fecha);
     this.formattedName = this.capitalizeFirstLetter(
       this.eventoResp.evento.nombre

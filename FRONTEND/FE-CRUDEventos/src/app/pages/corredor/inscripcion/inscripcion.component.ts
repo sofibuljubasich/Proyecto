@@ -35,6 +35,7 @@ export class InscripcionComponent {
   errorMessage!: string;
   currentUser!: Usuario;
   userID!: number;
+  imagenURL!: string;
 
   metodosPago = [
     { value: 'efectivo', viewValue: 'Efectivo' },
@@ -63,25 +64,7 @@ export class InscripcionComponent {
 
   ngOnInit(): void {
     this.obtenerEvento();
-    this._authService.userId$.subscribe((userId) => {
-      console.log('id', userId);
-      // this.userID = userId;
-      if (!!userId) {
-        this._corredorService.getCorredor(userId).subscribe({
-          next: (user) => {
-            this.currentUser = user;
-            this.age = this._corredorService.getUserAge(this.currentUser);
-            console.log(this.age);
-            if (this.age !== null) {
-              this.categoria = this.getCategoryByAge(this.age);
-            }
-          },
-          error: (error) => {
-            console.error('Failed to fetch user data:', error);
-          },
-        });
-      }
-    });
+    this.obtenerCorredor();
 
     this.inscripcionForm = this.fb.group({
       talleRemera: ['', Validators.required],
@@ -95,21 +78,45 @@ export class InscripcionComponent {
   }
   obtenerEvento(): void {
     this._eventoService.getEvento(this.id).subscribe((data) => {
+      console.log("data",data);
       this.eventoData = data;
+      this.imagenURL = `https://localhost:7296${this.eventoData.evento.imagen}`;
       this.eventoData.evento.nombre = this.capitalizeFirstLetter(
         data.evento.nombre
       );
+      this.obtenerCorredor();
+    });
+  }
+  obtenerCorredor():void{
+    this._authService.userId$.subscribe((userId) => {
+      console.log('id', userId);
+      // this.userID = userId;
+      if (!!userId) {
+        this._corredorService.getCorredor(userId).subscribe({
+          next: (user) => {
+            this.currentUser = user;
+            this.age = this._corredorService.getUserAge(this.currentUser);
+            console.log("edad",this.age);
+            if (this.age != null) {
+              this.getCategoryByAge(this.age);
+            }
+          },
+          error: (error) => {
+            console.error('Failed to fetch user data:', error);
+          },
+        });
+      }
     });
   }
   getFormattedDate(date: string | Date): string | null {
     return this.datePipe.transform(date, 'dd/MM/yyyy');
   }
-  getCategoryByAge(age: number): Categoria | null {
-    return (
+  getCategoryByAge(age: number) {
+    this.categoria =
       this.eventoData.categorias.find(
         (categoria) => age >= categoria.edadInicio && age <= categoria.edadFin
-      ) || null
-    );
+      )|| null;
+    
   }
   onInscribirse(): void {
     if (!this.talleSelect || !this.distanciaSelect || !this.pagoSelect) {
