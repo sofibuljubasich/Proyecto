@@ -1,14 +1,33 @@
-<!-- <div id="carouselExampleIndicators" class="carousel slide">
 
-    <div class="carousel-inner">
-      <div class="carousel-item active" style="color: aqua; display: flex;">
-        <evento-card></evento-card>
-        <evento-card></evento-card>
-        <evento-card></evento-card>
-      </div>
 
-  </div> -->
- 
-<!-- <owl-carousel-o [options]="customOptions">
-    <ng-template carouselSlide><app-listado-evento></app-listado-evento></ng-template>  
-</owl-carousel-o> -->
+  <ng-container *ngIf="eventos" >
+    <owl-carousel-o [options]="customOptions">
+      <ng-container *ngFor= "let eventoResp of eventos">
+        <ng-template carouselSlide>
+          <div class="card">
+            <div class="card-image-container">
+              <img [src]="imagenURL" alt="Event Image" class="card-image">
+              <div class="card-date">{{ formattedDate }}</div>
+            </div>
+            <div class="card-content">
+              <h2 class="card-title">{{formattedName}}</h2>
+              <ng-container *ngIf="eventoResp.estado !== 'Inactivo'">
+                <div class="card-actions">
+                  <button mat-icon-button style="transform: scale(2);" routerLink="/verEvento/{{eventoResp.id}}">
+                    <mat-icon  style="color: rgb(0, 0, 0); margin-inline-start: 0px;">info</mat-icon>
+                  </button>
+                  <button  class="signup-button" >Inscribirse</button>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="eventoResp.estado === 'Inactivo'">
+                <div class="card-actions">
+                  <button routerLink="/verResultados/{{eventoResp.id}}" class="signup-button" >Ver Resultados</button>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </ng-container>
+

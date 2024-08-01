@@ -5,7 +5,7 @@
           <input type="text" placeholder="Buscar evento">
           <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
       </section> -->
-      <form #buscarForm="ngForm" (change)="buscar()">
+      <form #buscarForm="ngForm" (change)="obtenerEventos()">
         <section class="buscador">      
             <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
             <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
@@ -25,8 +25,8 @@
     
             <div class="field-filtro">
                 <select [(ngModel)]="parametrosBusqueda.tipoEvento" name="tipoEvento" class="filter">
-                  <option value=0>Tipo evento: </option>
-                  <option *ngFor="let tipo of tipos" [value]="tipo.id">{{ tipo.descripcion }}</option>
+                  <option value=''>Tipo evento: </option>
+                  <option *ngFor="let tipo of tipos" [value]="tipo.descripcion">{{ tipo.descripcion }}</option>
                 </select>
             </div>
             

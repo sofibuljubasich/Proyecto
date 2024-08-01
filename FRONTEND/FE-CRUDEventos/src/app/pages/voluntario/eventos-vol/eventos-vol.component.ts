@@ -12,8 +12,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrl: './eventos-vol.component.css',
 })
 export class EventosVolComponent {
-  eventos: EventoResponse[] = [];
-  eventosActivos: EventoResponse[] = [];
+  eventos: any[] = [];
+  eventosActivos: any[] = [];
   userRole: number = 3;
 
   constructor(
@@ -40,9 +40,10 @@ export class EventosVolComponent {
   }
 
   obtenerEventos(): void {
-    this._eventoService.getEventos().subscribe((data: any[]) => {
+    this._eventoService.buscar(this.parametrosBusqueda).subscribe(
+      (data: any[]) =>{
       this.eventos = data;
-      this.filtrarEventos();
+      this.filtrarEventos(this.eventos);
     });
   }
 
@@ -50,17 +51,14 @@ export class EventosVolComponent {
     texto: '',
     fechaIni: '',
     fechaFin: '',
-    tipoEvento: 0,
+    tipoEvento: '',
     lugar: '',
   };
 
-  buscar() {
-    console.log(this.parametrosBusqueda);
-    // this._eventoService.buscar(this.parametrosBusqueda)
-  }
+
   // ver que los eventos inactivos tengan resultados
-  filtrarEventos(): void {
-    this.eventosActivos = this.eventos.filter(
+  filtrarEventos(ev:any[]): void {
+    this.eventosActivos = ev.filter(
       // fijarse q tengan resultados
       (evento) => evento.evento.estado !== 'Inactivo'
     );

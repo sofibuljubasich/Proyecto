@@ -75,4 +75,24 @@ export class EventoService {
   getLugares(): Observable<string[]> {
     return this.http.get<string[]>(`${this.myAppUrl}${this.myApiUrl}Lugares`);
   }
+
+  buscar(filtros:Busqueda): Observable<any[]>{
+    let params= new HttpParams();
+    if (filtros.texto){
+      params=params.set('busqueda',filtros.texto);
+    }
+    if (filtros.fechaIni){
+      params=params.set('fechaInicio',filtros.fechaIni);
+    }
+    if (filtros.fechaFin){
+      params=params.set('fechaFin',filtros.fechaFin);
+    }
+    if (filtros.tipoEvento){
+      params=params.set('tipo',filtros.tipoEvento);
+    }
+  //  if (filtros.texto){
+  //    params=params.set('lugar',filtros.lugar);
+  //  }
+    return this.http.get<any[]>(`${this.myAppUrl}${this.myApiUrl}Filtrar`,{params});
+  }
 }

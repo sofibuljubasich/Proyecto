@@ -5,7 +5,7 @@
         <div class="content">
             <div style="width: 100%;padding-left: 10px;" class="titulo">{{eventoData.evento.nombre}}</div>
             <label for="categoria">Categoría:</label>
-            <input *ngIf="categoria!=null" type="text" id="categoria" [value]="categoria?.edadInicio +'-'+ categoria?.edadFin" readonly>
+            <input *ngIf="categoria!=null" type="text" id="categoria" [value]="categoria.edadInicio +'-'+ categoria.edadFin" readonly>
             <input style="font-size: larger; height: 50px;margin-bottom: 20px;padding-left: 40px; color:rgb(169, 25, 25); background-color: grey;" *ngIf="categoria==null" type="text" id="-" [value]="'No se encuentran asociadas categorias para su edad en este evento'" readonly>
 
             <!-- <label for="talle">Talle remera:</label> -->

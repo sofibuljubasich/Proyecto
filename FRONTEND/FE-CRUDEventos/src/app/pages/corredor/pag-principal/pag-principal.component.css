@@ -48,10 +48,6 @@ body {
   text-align: center;
   
 }
-.filter option{ 
-  border-radius: 10%;
-  background-color: #58629b;
-}
 
 .filtro{
   width: 100%;
@@ -130,11 +126,12 @@ body {
   .event-list{
     background-color: rgb(65, 145, 151, 0.8);
     border-radius: 10px;
-    justify-content: space-around;
-    /* display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;*/
-    /* padding: 2%;  */
+    position: relative;
+    /* justify-content: space-between;
+    display: flex;
+     flex-direction: row;
+    flex-wrap: wrap;
+     padding: 2%;  */
 
   } 
   .full-width {

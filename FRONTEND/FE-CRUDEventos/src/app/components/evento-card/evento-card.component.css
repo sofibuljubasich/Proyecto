@@ -47,7 +47,9 @@
     margin: 13px;
     background-color: #ccc;
   }
-  
+  element.style {
+    width: auto;
+}
   /* Image Container */
   .card-image-container {
     position: relative;

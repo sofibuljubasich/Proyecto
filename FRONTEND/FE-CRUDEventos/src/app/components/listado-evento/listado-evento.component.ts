@@ -16,9 +16,9 @@ const listEventos: Evento[] = [];
   templateUrl: './listado-evento.component.html',
   styleUrls: ['./listado-evento.component.css'],
 })
-export class ListadoEventoComponent implements OnInit {
-  @Input() eventos: EventoResponse[] | null = null;
-  filtrados: EventoResponse[] | null = null;
+export class ListadoEventoComponent implements OnInit,AfterViewInit {
+  @Input() eventos: any[] | null = null;
+  filtrados: any[] | null = null;
 
   constructor() {}
 
@@ -26,13 +26,15 @@ export class ListadoEventoComponent implements OnInit {
     if (this.eventos) {
       this.filtrados = this.eventos.sort(
         (a, b) =>
-          new Date(a.evento.fecha).getTime() -
-          new Date(b.evento.fecha).getTime()
+          new Date(a.fecha).getTime() -
+          new Date(b.fecha).getTime()
       );
     }
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+
+  }
 
   customOptions: OwlOptions = {
     loop: false,
@@ -40,8 +42,9 @@ export class ListadoEventoComponent implements OnInit {
     touchDrag: true,
     pullDrag: true,
     dots: false,
-    items: 3,
+    items: 2,
     navText: [
+      
       '<span style="color: black; font-size: 2em;"><< Previo</span>',
       '<span style="color: black; font-size: 2em;">Próximo >></span>',
     ],
@@ -51,18 +54,24 @@ export class ListadoEventoComponent implements OnInit {
       0: {
         items: 1,
       },
-      400: {
+      200: {
         items: 2,
       },
-      740: {
+      300: {
         items: 3,
       },
-      940: {
+      400: {
         items: 4,
       },
     },
     nav: true,
+    autoWidth:true,
+    //center:true
+    
+
   };
+
+
 }
 
 // obtenerEvento(): void {
