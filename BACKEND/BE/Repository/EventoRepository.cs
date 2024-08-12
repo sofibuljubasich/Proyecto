@@ -145,7 +145,9 @@ namespace BE.Repository
 
         public bool CheckIfExists(int eventoID)
         {
-            throw new NotImplementedException();
+            Evento? evento = _context.Eventos.FirstOrDefault(e => e.ID == eventoID);
+            return evento!= null;   
+           
         }
 
         public async Task<List<string>> GetInscriptosEmails(int eventoID)
@@ -156,6 +158,19 @@ namespace BE.Repository
         .ToListAsync();
 
             return emails;
+        }
+
+        public async Task CargarResultado(int eventoID, int corredorID, string? posicionCat, string? posicionGral, int? tiempo)
+        {
+            var inscrip = await _context.Inscripciones.SingleOrDefaultAsync(i => i.EventoID == eventoID && i.Corredor.ID == corredorID);
+
+            inscrip.PosicionCategoria = posicionCat;    
+            inscrip.PosicionGeneral = posicionGral; 
+            inscrip.Tiempo = tiempo;
+
+            await _context.SaveChangesAsync();
+
+
         }
     }
 }

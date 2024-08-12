@@ -1,5 +1,6 @@
 ﻿using BE.Models;
 using BE.Dto;
+using Microsoft.Extensions.Logging;
 
 namespace BE.Interfaces
 {
@@ -35,6 +36,13 @@ namespace BE.Interfaces
 
         Task<List<string>>
             GetInscriptosEmails(int eventoID);
+
+       Task CargarResultado(int
+           eventoID,int
+           corredorID,string?
+           posicionCat,string?
+           posicionGral,int?
+           tiempo);
 
 
 

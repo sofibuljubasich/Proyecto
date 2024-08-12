@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Azure.Core;
 using BE.Services;
 using NETCore.MailKit.Core;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using ExcelDataReader;
 
 namespace BE.Controllers
 {
@@ -520,7 +522,7 @@ namespace BE.Controllers
         }
 
         [HttpPost, Route("EnviarEmail/{eventoID}")]
-        public async Task<IActionResult>EnviarEmail(int eventoID, [FromBody] string asunto, [FromBody] string mensaje)
+        public async Task<IActionResult>EnviarEmail(int eventoID, [FromQuery] string asunto, [FromQuery] string mensaje)
         {
             try
             {
@@ -548,9 +550,70 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
 
+  }
+
+        [HttpPost, Route("CargarResultados/{eventoID}")]
+        public async Task<IActionResult> CargarResultados(int eventoID, [FromForm] IFormFile file)
+        {
+            try
+            {
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);  
+                if (file == null || file.Length == 0)
+                { return BadRequest("Archivo vacío"); }
+
+               
+                var uploadsFolder = $"{Directory.GetCurrentDirectory()}\\Uploads";
+
+                if (!Directory.Exists(uploadsFolder))
+                { Directory.CreateDirectory(uploadsFolder); }       
+
+                var filePath = Path.Combine(uploadsFolder, file.Name);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
+                using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        do
+                        {
+                            bool headerSkip = false;
+                            while (reader.Read())
+                            {
+                                if (!headerSkip)
+                                {
+                                    headerSkip = true;
+                                    continue;
+                                }
+
+                                int corredorID = (int)reader.GetValue(1);
+                                string? posicionCat = reader.GetValue(2).ToString();    
+                                string? posicionGral = reader.GetValue(3).ToString();
+                                int? tiempo = (int)reader.GetValue(4);
+
+                                await _eventoRepository.CargarResultado(eventoID, corredorID, posicionCat, posicionGral, tiempo);
+
+                         
+                              
+    }
 
 
+                        }while (reader.NextResult()) ;      
+                    }
+                
+                }
+                return Ok("Resultados cargados");
 
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
 
