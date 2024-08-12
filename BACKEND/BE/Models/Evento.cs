@@ -15,6 +15,7 @@ namespace BE.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
 
+        public TimeSpan Hora { get; set; }
         public string Lugar { get; set; } 
 
         public string Estado { get; set; } 

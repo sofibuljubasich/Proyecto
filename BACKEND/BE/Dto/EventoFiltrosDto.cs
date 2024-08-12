@@ -11,7 +11,9 @@ namespace BE.Dto
 
         public DateTime? FechaFin {get; set; }      
 
-        public string? Tipo { get; set; }    
+        public string? Tipo { get; set; }   
+
+        public string? Lugar { get; set; }  
 
 
 

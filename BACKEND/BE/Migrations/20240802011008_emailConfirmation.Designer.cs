@@ -4,6 +4,7 @@ using BE.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE.Migrations
 {
     [DbContext(typeof(EventosContext))]
-    partial class EventosContextModelSnapshot : ModelSnapshot
+    [Migration("20240802011008_emailConfirmation")]
+    partial class emailConfirmation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,10 +341,6 @@ namespace BE.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ConfirmationToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("ConfirmedEmail")
                         .HasColumnType("bit");
 
@@ -363,13 +362,6 @@ namespace BE.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordResetToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("PasswordResetTokenExpires")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("RolID")
                         .HasColumnType("int");

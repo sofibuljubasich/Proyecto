@@ -4,7 +4,7 @@ namespace BE.Interfaces
 {
     public interface IInscripcionRepository
     {
-
+       
         Task<Inscripcion> GetInscripcion(int id);
       
         Task UpdatePayment(int inscID, string estadoPago);

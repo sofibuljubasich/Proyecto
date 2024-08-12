@@ -110,7 +110,7 @@ namespace BE.Repository
         }
 
         public async Task<List<Evento>> GetFiltro(string? busqueda
-          , DateTime? fechaInicio, DateTime? fechaFin, string? tipo)
+          , DateTime? fechaInicio, DateTime? fechaFin, string? tipo, string? lugar)
         {
             var query = _context.Eventos.AsQueryable();
 
@@ -134,10 +134,28 @@ namespace BE.Repository
                 query = query.Where(e => e.Tipo.Descripcion== tipo);
             }
 
-           
+            if (!string.IsNullOrEmpty(lugar))
+            {
+                query = query.Where(e => e.Lugar == lugar);
+            }
 
             return await query.ToListAsync();
 
+        }
+
+        public bool CheckIfExists(int eventoID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<string>> GetInscriptosEmails(int eventoID)
+        {
+            var emails = await _context.Inscripciones
+        .Where(i => i.EventoID == eventoID)
+        .Select(i => i.Corredor.Email)
+        .ToListAsync();
+
+            return emails;
         }
     }
 }

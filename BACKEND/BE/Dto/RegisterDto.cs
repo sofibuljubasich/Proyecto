@@ -30,8 +30,7 @@ namespace BE.Dto
 
         public IFormFile? Imagen { get; set; }
 
-        [ForeignKey("Rol")]
-        public int RolID { get; set; }
+        
         //public string? Imagen { get; set; }
 
     }

@@ -59,7 +59,7 @@ namespace BE.Controllers
                 //await _emailSender.SendEmailAsync(user.Username, user.Password);
 
                 voluntario.Password = BCrypt.Net.BCrypt.HashPassword(voluntario.Password);
-                //voluntario.RolID = 3; // ROL Voluntario
+                voluntario.RolID = 3; // ROL Voluntario
                 var result = await _voluntarioRepository.Create(voluntario);
 
                 return Ok("Voluntario creado");

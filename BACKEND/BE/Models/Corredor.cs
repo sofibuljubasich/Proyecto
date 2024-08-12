@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace BE.Models
 {
@@ -10,6 +11,7 @@ namespace BE.Models
 
         public string Localidad { get; set; }
 
+        [Required]
         public string Dni { get; set; }
 
         public string Genero { get; set; }

@@ -53,6 +53,9 @@ builder.Services.AddScoped<ITareaVoluntarioService, TareaVoluntarioService>();
 builder.Services.AddScoped<ITareaVoluntarioRepository,TareaVoluntarioRepository>(); 
 builder.Services.AddScoped<IMensajeRepository,MensajeRepository>(); 
 
+builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailService, EmailService>();
+
 builder.Services.AddEndpointsApiExplorer();
 
 // jwt

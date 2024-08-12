@@ -14,8 +14,7 @@ namespace BE.Dto
 
             public string Apellido { get; set; }
 
-            [ForeignKey("Rol")]
-            public int RolID { get; set; }
+            
             public string Telefono { get; set; }
 
             public IFormFile? Imagen { get; set; }   

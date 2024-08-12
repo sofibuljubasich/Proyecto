@@ -21,7 +21,7 @@ namespace BE.Interfaces
         Task<List<string>> GetLugares();
 
         Task<List<Evento>> GetFiltro(string? buqueda
-          , DateTime? fechaInicio, DateTime? fechaFin, string? tipo);
+          , DateTime? fechaInicio, DateTime? fechaFin, string? tipo, string? lugar);
 
         Task UpdateStatus(int eventoID, string estado);
 
@@ -30,6 +30,11 @@ namespace BE.Interfaces
             Task<List<Usuario>> GetVoluntariosByEvento(int eventoID);
 
         Task<List<Inscripcion>> GetResultados(int idEvento);
+
+        bool CheckIfExists(int eventoID);
+
+        Task<List<string>>
+            GetInscriptosEmails(int eventoID);
 
 
 

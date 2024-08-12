@@ -13,7 +13,18 @@ namespace BE.Repository
             _context = context;
         }
 
-     
+        public async Task ConfirmEmailAsync(string email, string token)
+        {
+            var user = _context.Usuarios.SingleOrDefault(u => u.Email == email && u.ConfirmationToken == token);
+
+
+            user.ConfirmedEmail = true;
+               
+                
+            
+            
+            await _context.SaveChangesAsync();
+        }
 
         // Ver si poner un string
         public bool CheckIfUserExists(string userCorreo)
@@ -85,6 +96,46 @@ namespace BE.Repository
                 
         }
 
+        public async   Task<string> RequestPasswordResetAsync(string email)
+        {
+            var user = _context.Usuarios.SingleOrDefault(u => u.Email == email);
+            if (user == null)
+            {
+                throw new Exception("El usuario no existe.");
+            }
 
+            // Generar un token de restablecimiento de contraseña
+            user.PasswordResetToken = Guid.NewGuid().ToString();
+            user.PasswordResetTokenExpires = DateTime.UtcNow.AddHours(1); // El token expira en 1 hora
+
+            _context.Usuarios.Update(user);
+            await _context.SaveChangesAsync();
+
+            return user.PasswordResetToken;
+
+         
+        }
+
+    
+
+    public async Task ResetPasswordAsync(string email, string token, string newPassword)
+        {
+        var user = _context.Usuarios.SingleOrDefault(u => u.Email == email && u.PasswordResetToken == token);
+
+        if (user == null || user.PasswordResetTokenExpires < DateTime.UtcNow)
+        {
+            throw new Exception("El token de restablecimiento es inválido o ha expirado.");
+        }
+
+        // Hashear la nueva contraseña
+        user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
+
+        // Limpiar el token de restablecimiento
+        user.PasswordResetToken = null;
+        user.PasswordResetTokenExpires = null;
+
+        _context.Usuarios.Update(user);
+        await _context.SaveChangesAsync();
+    }
     }
 }

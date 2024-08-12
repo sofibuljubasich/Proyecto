@@ -18,6 +18,7 @@ namespace BE.Profiles
             CreateMap<Usuario, LoginDto>().ReverseMap();
             CreateMap<Usuario, RegisterDto>().ReverseMap();
             CreateMap<Usuario, UsuarioDto>().ReverseMap();  
+            CreateMap<Usuario, RegisterUserDto>().ReverseMap(); 
 
             CreateMap<Corredor, RegisterDto>().ReverseMap();
             CreateMap<Corredor, CorredorGetDto>().ReverseMap();

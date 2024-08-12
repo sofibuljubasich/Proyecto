@@ -52,7 +52,7 @@ namespace BE.Controllers
                 var categoria = await _categoriaRepository.CalculateCategory(edad);
 
                 inscrip.CategoriaID = categoria.ID;
-
+                inscrip.Dorsal = inscrip.UsuarioID;
 
                 inscrip = await _inscripcionRepository.CreateInscripcion(inscrip);
 

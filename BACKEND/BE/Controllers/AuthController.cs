@@ -3,12 +3,10 @@ using BE.Dto;
 using BE.Interfaces;
 using BE.Models;
 using BE.Repository;
+using BE.Services;
+using MercadoPago.Resource.User;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.Intrinsics.X86;
-using System.Security.Claims;
-using System.Text;
+
 
 namespace BE.Controllers
 {
@@ -20,16 +18,22 @@ namespace BE.Controllers
         private readonly IUsuarioRepository _userRepository;
         private readonly ICorredorRepository _corredorRepository;  
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
 
 
-
-        public AuthController(IUsuarioRepository userRepository,ICorredorRepository corredorRepository, IConfiguration config,IMapper mapper)
+        public AuthController(IUsuarioRepository userRepository,ICorredorRepository corredorRepository,
+            IConfiguration config,IMapper mapper, IEmailService emailService)
         {
             _userRepository = userRepository;
             _corredorRepository = corredorRepository;   
             _config = config;
             _mapper = mapper;
+            _emailService = emailService;
         }
+
+
+     
+      
 
         //Login 
         [HttpPost("login")]
@@ -43,6 +47,8 @@ namespace BE.Controllers
                 return BadRequest("Email inexistente");
 
             }
+            if (user.ConfirmedEmail == false)
+                return Unauthorized("Email no confirmado");
 
             if (!BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
                 return BadRequest("Contraseña incorrecta");
@@ -86,16 +92,26 @@ namespace BE.Controllers
           
 
 
-                //ver si validar algo mas del usuario
+                
+
 
                 var user = _mapper.Map<Corredor>(request);
                 user.Imagen = ImagenURL;
 
 
-                //await _emailSender.SendEmailAsync(user.Username, user.Password);
+                
 
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-                //user.RolID = 1; // ROL USUARIO
+                user.RolID = 1; // ROL USUARIO-Corredor
+               
+                //Seteo para verificar cuenta
+                var token = Guid.NewGuid().ToString();
+                user.ConfirmedEmail = false;
+                user.ConfirmationToken = token;
+                var confirmationLink = $"https://localhost:7296/api/Auth/confirm-email?token={token}&email={user.Email}";
+                await _emailService.SendEmailAsync(user.Email, "Confirma tu cuenta",
+            $"Por favor confirma tu cuenta haciendo clic en el enlace: <a href='{confirmationLink}'>Confirmar Email</a>");
+
                 var result = await _corredorRepository.CreateCorredor(user);    
 
                 return Ok(result.ID);
@@ -105,6 +121,54 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);  
             }
 
+        }
+
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(string email, string token)
+        {
+            try
+            {
+                
+                await _userRepository.ConfirmEmailAsync(email, token);
+                return Ok("Correo electrónico confirmado exitosamente.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromQuery] string email) 
+        {
+            try
+            {
+                var PasswordResetToken =   await _userRepository.RequestPasswordResetAsync(email);
+
+                // Enviar correo de restablecimiento de contraseña
+                var resetLink = $"https://localhost:7296/api/Auth/reset-password?token={PasswordResetToken}&email={email}";
+                await _emailService.SendEmailAsync(email, "Restablecer tu contraseña",
+                    $"Puedes restablecer tu contraseña haciendo clic en el enlace: <a href='{resetLink}'>Restablecer Contraseña</a>");
+                return Ok("Si existe una cuenta con ese correo electrónico, se ha enviado un enlace de restablecimiento de contraseña.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto model)
+        {
+            try
+            {
+                await _userRepository.ResetPasswordAsync(model.Email, model.Token, model.NewPassword);
+                return Ok("Contraseña restablecida con éxito.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

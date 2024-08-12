@@ -6,6 +6,9 @@ using BE.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Azure.Core;
+using BE.Services;
+using NETCore.MailKit.Core;
 
 namespace BE.Controllers
 {
@@ -21,8 +24,9 @@ namespace BE.Controllers
         private readonly IEventoDistanciaRepository _eventoDistanciaRepository;
         private readonly ICorredorRepository _corredorRepository;
         private readonly ITipoEventoRepository _tipoRepository;
+        private readonly Services.IEmailService _emailService;
         public EventoController(IMapper mapper, IEventoRepository eventoRepository, ICategoriaRepository categoriaRepository, IDistanciaRepository distanciaRepository,
-                IEventoDistanciaRepository eventoDistanciaRepository, ICorredorRepository corredorRepository, ITipoEventoRepository tipoRepository)
+                IEventoDistanciaRepository eventoDistanciaRepository, ICorredorRepository corredorRepository, ITipoEventoRepository tipoRepository, Services.IEmailService emailService)
         {
             _mapper = mapper;
             _eventoRepository = eventoRepository;
@@ -31,7 +35,9 @@ namespace BE.Controllers
             _eventoDistanciaRepository = eventoDistanciaRepository;
             _corredorRepository = corredorRepository;
             _tipoRepository = tipoRepository;
+            _emailService = emailService;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -250,20 +256,46 @@ namespace BE.Controllers
 
         //Por Rol
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] EventoCreateDto eventoDto)
+        public async Task<IActionResult> Create([FromForm] EventoCreateDto eventoDto)
         {
             try
             {
                 var distancias = eventoDto.EventoDistancias;
+
+                string ImagenURL;
+
+                if (eventoDto.Imagen != null && eventoDto.Imagen.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(eventoDto.Imagen.FileName);
+                    var path = Path.Combine("wwwroot/imagenes/events", fileName);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await eventoDto.Imagen.CopyToAsync(stream);
+                    }
+
+                    ImagenURL = "/Imagenes/events/" + fileName;
+                }
+                else
+                {
+                    // Asignar una imagen por defecto
+                    ImagenURL = "/Imagenes/events/event-empty.jpg";
+                }
+
+                
+                
 
                 var newEvento = new Evento()
                 {
                     Nombre = eventoDto.Nombre,
                     Lugar = eventoDto.Lugar,
                     Fecha = eventoDto.Fecha,
-                    // Imagen = eventoDto.Imagen,
+                    Imagen = ImagenURL,
                     Estado = "Activo",
-                    TipoID = eventoDto.TipoID
+                    TipoID = eventoDto.TipoID,
+                    Categorias = eventoDto.Categorias
+
+                    
                 };
                 //var evento = _mapper.Map<Evento>(eventoDto);
 
@@ -272,8 +304,6 @@ namespace BE.Controllers
                 newEvento = await _eventoRepository.Create(newEvento);
 
                 // CREAR EVENTO-DISTANCIA-PRECIO
-
-
                 foreach (var eventoDistancia in distancias)
                 {
                     var newDistancia = await _distanciaRepository.GetDistancia(eventoDistancia.DistanciaID);
@@ -289,6 +319,8 @@ namespace BE.Controllers
 
 
                 }
+
+                //EVENTO CATEGORIA
 
 
 
@@ -310,7 +342,7 @@ namespace BE.Controllers
             try
             {
 
-
+              
                 var edlist = _mapper.Map<ICollection<EventoDistancia>>(eventoDto.EventoDistancias);
 
                 await _eventoRepository.Update(eventoID, eventoDto);
@@ -423,8 +455,9 @@ namespace BE.Controllers
                 var fechaInicio = eventoDto.FechaInicio;
                 var fechaFin = eventoDto.FechaFin;
                 var tipo = eventoDto.Tipo;
+                var lugar = eventoDto.Lugar;
 
-                var lugaresList = await _eventoRepository.GetFiltro(busqueda,fechaInicio,fechaFin, tipo);
+                var lugaresList = await _eventoRepository.GetFiltro(busqueda, fechaInicio, fechaFin, tipo, lugar);
                 
                 if (lugaresList == null)
                 {
@@ -436,7 +469,89 @@ namespace BE.Controllers
             catch (Exception ex) { return BadRequest(ex.Message); }
 
         }
+        
+        [HttpGet,Route("InfoKits/{eventoID}")]
+         public async Task<IActionResult> InfoKits(int eventoID)
+        {
+            try
+            {
+                var listInscrips = await _eventoRepository.GetInscripcionesByEvento(eventoID);
 
+               
+
+                var inscripciones = new List<KitDto>();
+                foreach (var inscripcion in listInscrips)
+                {
+                    //buscar corredor y distancia 
+                    Distancia distancia = await _distanciaRepository.GetDistancia(inscripcion.DistanciaID);
+                    DistanciaDto distanciaDto = _mapper.Map<DistanciaDto>(distancia);
+
+                    Corredor corredor = await _corredorRepository.GetCorredor(inscripcion.UsuarioID);
+                    CorredorGetDto corredorDto = _mapper.Map<CorredorGetDto>(corredor);
+
+                   
+
+
+                    var insc = new KitDto
+                    {
+                        
+
+                        Corredor = corredorDto,
+                        Distancia = distanciaDto,
+                        Remera = inscripcion.Remera,
+                      
+                        Dorsal = inscripcion.Dorsal,
+                      
+
+
+
+                    };
+
+                    inscripciones.Add(insc);
+                }
+                return Ok(inscripciones);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost, Route("EnviarEmail/{eventoID}")]
+        public async Task<IActionResult>EnviarEmail(int eventoID, [FromBody] string asunto, [FromBody] string mensaje)
+        {
+            try
+            {
+
+                var eventoExists = _eventoRepository.CheckIfExists(eventoID);
+
+                if (eventoExists == false) { return BadRequest("No existe el evento"); }
+
+                 var emails = await _eventoRepository.GetInscriptosEmails(eventoID);
+
+                foreach (var email in emails)
+                {
+                    await _emailService.SendEmailAsync(email, asunto, mensaje);
+                
+                }
+                return Ok("Correos enviados");
+                    
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+
+
+
+        }
 
 
 

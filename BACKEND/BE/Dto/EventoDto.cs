@@ -12,7 +12,8 @@ namespace BE.Dto
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
-
+      //public TimeOnly Hora { get; set; }
+        public TimeSpan Hora { get; set; }
         public string Lugar { get; set; }
 
         public string Estado { get; set; }

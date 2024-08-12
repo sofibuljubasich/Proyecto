@@ -14,9 +14,13 @@ namespace BE.Dto
 
         public string Lugar { get; set; }
 
+        public TimeSpan Hora { get; set; }
         //public string Estado { get; set; }
 
-        //public byte[]? Imagen { get; set; }
+        public IFormFile Imagen { get; set; }
+
+        public ICollection<Categoria> Categorias { get; set; }
+
 
         public virtual ICollection<EventoDistanciaCreateDto> EventoDistancias { get; set; }
         public int TipoID { get; set; }

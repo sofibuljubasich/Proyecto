@@ -26,8 +26,14 @@ namespace BE.Models
         [ForeignKey("Rol")]
         public int RolID { get; set; }
         public virtual Rol? Rol { get; set; }
+        public string ConfirmationToken { get; set; }
+        public Boolean ConfirmedEmail { get; set; }
 
-        
+        // Campos adicionales para recuperación de contraseña
+        public string PasswordResetToken { get; set; }
+        public DateTime? PasswordResetTokenExpires { get; set; }
+
+
 
     }
 }

@@ -43,6 +43,9 @@ namespace BE.Models
                 .HasOne(tv => tv.Voluntario)
                 .WithMany(v => v.TareaVoluntarios)
                 .HasForeignKey(tv => tv.VoluntarioID);
+            modelBuilder.Entity<Corredor>()
+                .HasIndex(c => c.Dni)
+                .IsUnique();
         }
 
 

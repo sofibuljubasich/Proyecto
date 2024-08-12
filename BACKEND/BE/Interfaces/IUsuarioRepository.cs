@@ -4,6 +4,11 @@ namespace BE.Interfaces
 {
     public interface IUsuarioRepository
     {
+        Task<string>
+            RequestPasswordResetAsync(string email);
+
+        Task ResetPasswordAsync(string email, string token, string newPassword);
+        Task ConfirmEmailAsync(string email, string token);
         Task<List<Usuario>> GetUsuarios(); // SOLO LOS ADMIN ACCEDEN
 
         Task<Usuario> GetUsuarioByEmail(string email);
