@@ -10,8 +10,8 @@ import { TipoEventoService } from 'src/app/services/tipo-evento.service';
   styleUrl: './eventos-activos.component.css',
 })
 export class EventosActivosComponent {
-  eventos: EventoResponse[] = [];
-  eventosActivos: EventoResponse[] = [];
+  eventos: any[] = [];
+  eventosActivos: any[] = [];
 
   constructor(
     private _eventoService: EventoService,
@@ -23,9 +23,10 @@ export class EventosActivosComponent {
   }
 
   obtenerEventos(): void {
-    this._eventoService.getEventos().subscribe((data: any[]) => {
+    this._eventoService.buscar(this.parametrosBusqueda).subscribe(
+      (data: any[]) =>{
       this.eventos = data;
-      this.filtrarEventos();
+      this.filtrarEventos(this.eventos);
     });
   }
 
@@ -33,17 +34,14 @@ export class EventosActivosComponent {
     texto: '',
     fechaIni: '',
     fechaFin: '',
-    tipoEvento: 0,
+    tipoEvento: '',
     lugar: '',
   };
 
-  buscar() {
-    console.log(this.parametrosBusqueda);
-    // this._eventoService.buscar(this.parametrosBusqueda)
-  }
+
   // ver que los eventos inactivos tengan resultados
-  filtrarEventos(): void {
-    this.eventosActivos = this.eventos.filter(
+  filtrarEventos(ev:any[]): void {
+    this.eventosActivos = ev.filter(
       // fijarse q tengan resultados
       (evento) => evento.evento.estado !== 'Inactivo'
     );

@@ -5,37 +5,41 @@
           <input type="text" placeholder="Buscar evento">
           <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
       </section> -->
-      <form #buscarForm="ngForm" (change)="buscar()">
+      <form #buscarForm="ngForm" (change)="obtenerEventos()">
         <section class="buscador">      
             <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
             <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
             <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
         </section>
         <section class="filtro">
-            <div class="fecha-filtro">
-                <div >
-                    <mat-label>Fecha Desde:  </mat-label>
-                    <input name="fechaIni" [(ngModel)]="parametrosBusqueda.fechaIni" type="date" class="filter">
-                </div>
-                <div>
-                    <mat-label>Fecha Hasta:  </mat-label>
-                    <input name="fechaFin" [(ngModel)]="parametrosBusqueda.fechaFin" type="date" class="filter">
-                </div>
-            </div>
-    
+          <div class="filtro-column fechas">
             <div class="field-filtro">
-                <select [(ngModel)]="parametrosBusqueda.tipoEvento" name="tipoEvento" class="filter">
-                  <option value=0>Tipo evento: </option>
-                  <option *ngFor="let tipo of tipos" [value]="tipo.id">{{ tipo.descripcion }}</option>
+                <mat-label for="fechaIni">Fecha Desde:</mat-label>
+                <input id="fechaIni" name="fechaIni" [(ngModel)]="parametrosBusqueda.fechaIni" type="date" class="filter">
+            </div>
+            <div class="field-filtro">
+                <mat-label for="fechaFin">Fecha Hasta:</mat-label>
+                <input id="fechaFin" name="fechaFin" [(ngModel)]="parametrosBusqueda.fechaFin" type="date" class="filter">
+            </div>
+        </div>
+    
+        <!-- Sección para tipo y lugar (derecha) -->
+        <div class="filtro-column tipo-lugar">
+            <div class="field-filtro">
+                <mat-label for="tipoEvento">Tipo evento:</mat-label>
+                <select id="tipoEvento" [(ngModel)]="parametrosBusqueda.tipoEvento" name="tipoEvento" class="filter">
+                    <option value=''>Tipo evento:</option>
+                    <option *ngFor="let tipo of tipos" [value]="tipo.descripcion">{{ tipo.descripcion }}</option>
                 </select>
             </div>
-            
             <div class="field-filtro">
-              <select [(ngModel)]="parametrosBusqueda.lugar" name="lugar" class="filter">
-                <option value="">Seleccione lugar</option>
-                <option *ngFor="let lugar of lugares" [value]="lugar">{{ lugar }}</option>
-              </select>            
+                <mat-label for="lugar">Seleccione lugar:</mat-label>
+                <select id="lugar" [(ngModel)]="parametrosBusqueda.lugar" name="lugar" class="filter">
+                    <option value="">Seleccione lugar</option>
+                    <option *ngFor="let lugar of lugares" [value]="lugar">{{ lugar }}</option>
+                </select>            
             </div>
+        </div>
         </section>
     </form>
       <!-- <app-buscar></app-buscar> -->

@@ -64,12 +64,8 @@ export class ChatsComponent {
     texto: '',
     fechaIni: '',
     fechaFin: '',
-    tipoEvento: 0,
+    tipoEvento: '',
     lugar: '',
   };
 
-  buscar() {
-    console.log(this.parametrosBusqueda);
-    // this._eventoService.buscar(this.parametrosBusqueda)
-  }
 }

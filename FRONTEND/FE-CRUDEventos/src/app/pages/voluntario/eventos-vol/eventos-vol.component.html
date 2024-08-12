@@ -1,6 +1,6 @@
 <div class="container">
     <main class="main">
-        <form #buscarForm="ngForm" (change)="buscar()">
+        <form #buscarForm="ngForm" (change)="obtenerEventos()">
             <section class="buscador">      
                 <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
                 <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
@@ -16,7 +16,7 @@
                       <div class="evento">
                         <app-evento-card-h [eventoResp]="eventoResp"></app-evento-card-h>
                       </div>
-                      <button routerLink="/tareasAsignadas/{{eventoResp.evento.id}}" class="tareas-button">Tareas</button>
+                      <button routerLink="/tareasAsignadas/{{eventoResp.id}}" class="tareas-button">Tareas</button>
                     </div>
                   </div>
                 </ng-container>

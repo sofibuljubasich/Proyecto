@@ -5,7 +5,8 @@
   #mat {
     background-color:#419197 ;
     color: #002717;
-    padding: 20px;
+    height: min-content;
+    /* padding: 20px; */
     /* display: flex; */
     /* justify-content: space-between; */
     align-items: center;

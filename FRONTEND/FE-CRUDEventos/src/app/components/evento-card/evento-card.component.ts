@@ -13,14 +13,16 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['evento-card.component.css'],
 })
 export class EventoCardComponent implements OnInit {
-  @Input() eventoResp!: EventoResponse;
+  @Input() eventoResp!: any;
   formattedDate: string = '';
   formattedName: string = '';
+  imagenURL!: string;
 
   ngOnInit(): void {
-    this.formattedDate = this.formatDate(this.eventoResp.evento.fecha);
+    this.imagenURL = `https://localhost:7296${this.eventoResp.imagen}`;
+    this.formattedDate = this.formatDate(this.eventoResp.fecha);
     this.formattedName = this.capitalizeFirstLetter(
-      this.eventoResp.evento.nombre
+      this.eventoResp.nombre
     );
   }
 
@@ -52,7 +54,7 @@ export class EventoCardComponent implements OnInit {
   constructor(private _authService: AuthService, private router: Router) {}
   onInscribirse(): void {
     if (this._authService.isAuthenticated()) {
-      this.router.navigate([`/inscribirse/${this.eventoResp.evento.id}`]);
+      this.router.navigate([`/inscribirse/${this.eventoResp.id}`]);
     } else {
       this.router.navigate(['/login']);
     }

@@ -2,6 +2,6 @@ export interface Busqueda {
   texto: string;
   fechaIni: string;
   fechaFin: string;
-  tipoEvento: number;
+  tipoEvento: string;
   lugar: string;
 }

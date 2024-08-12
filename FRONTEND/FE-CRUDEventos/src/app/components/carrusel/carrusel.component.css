@@ -1,49 +1,219 @@
-.carousel-item{
-    justify-content: center;
-}
-.containers{
-    width: 95%;
-    margin: 0 auto;
-
-}
-.row{
+owl-carousel-o .owl-item {
     display: flex;
-    width: 100%;
-    
-}
-.col-md-2{
+    justify-content: space-around;
+    width: auto !important;
+  }
+
+  .example-card {
+    width: 80%;
+    /* margin: 20px 10px 10px 100px; */
+    margin-top: 15px;
+    margin-left: 10%;
+    margin-bottom: 15px;
     flex-grow: 1;
-    width: 100%;
+    flex-basis: 200;
+    display: flex;
+    padding: 2%;
+    /* justify-content: center; */
 }
-.partners .carousel-item{
-    transition: all .3s ease;
-}
-
-.owl-nav .owl-prev{
-    /* top:calc(50% - 20px);
-    left: 0;
-    position: absolute; */
-    color: black !important;
-    background-color: #e9b6b6 !important;
-}
-
-.owl-nav .owl-next{
-    /* right: 0;
+.card-date {
     position: absolute;
-    top:calc(50% - 20px);
-    font-size: 50px; */
-    color: black !important;
-    background-color: #e9b6b6 !important;
-}
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+/* Rules for sizing the icon. */
+ .material-icons.md-18 { font-size: 18px; }
+ .material-icons.md-24 { font-size: 24px; }
+ .material-icons.md-36 { font-size: 36px; }
+ .material-icons.md-48 { font-size: 48px; }
+ .button-48 { height: 48px; width: 48px; }
+ 
+ /* Rules for using icons as black on a light background. */
+ .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+ .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+ 
+ /* Rules for using icons as white on a dark background. */
+ .material-icons.md-light { color: rgba(255, 255, 255, 1); }
+ .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
-.owl-nav{
- position: absolute;
- z-index: 1;
- top: 50%;
- transform: translateY(-50%);
- width: 100%;
+ /* General Card Styles */
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 90%;
+    max-width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 13px;
+    margin: 13px;
+    background-color: #ccc;
+  }
+  element.style {
+    width: auto;
 }
-.owl-carousel{
+  /* Image Container */
+  .card-image-container {
     position: relative;
-}
+    width: 100%;
+    height: 200px;
+  }
+  
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Date Overlay */
+  .card-date {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+  
+  /* Content Styles */
+  .card-content {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.5em;
+    margin: 0 0 10px 0;
+  }
+  
+  /* Actions Styles */
+  .card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  
+  .info-icon {
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  
+  .signup-button {
+    background: #04364A;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5em;
+  }
+  
+  .signup-button:hover {
+    background: #0056b3;
+  }
+  
+  .carousel-wrapper {
+    width: 1200px;
+    margin: auto;
+    position: relative;
+    text-align: center;
+    font-family: sans-serif;
+  }
 
+  .owl-carousel .owl-nav {
+    overflow: hidden;
+    height: 0px;
+  }
+
+  .owl-theme .owl-dots .owl-dot.active span,
+  .owl-theme .owl-dots .owl-dot:hover span {
+    background: #5110e9;
+  }
+
+
+  .owl-carousel .item {
+    text-align: center;
+  }
+
+  .owl-carousel .nav-button {
+    height: 50px;
+    width: 25px;
+    cursor: pointer;
+    position: absolute;
+    top: 110px !important;
+  }
+
+  .owl-carousel .owl-prev.disabled,
+  .owl-carousel .owl-next.disabled {
+    pointer-events: none;
+    opacity: 0.25;
+  }
+
+  .owl-carousel .owl-prev {
+    left: -35px !important;
+  }
+
+  .owl-carousel .owl-next {
+    right: -35px !important;
+  }
+
+  .owl-theme .owl-nav [class*=owl-] {
+    color: #ffffff;
+    font-size: 39px;
+    background: #000000!important;
+    border-radius: 3px;
+  }
+
+  .owl-carousel .prev-carousel:hover {
+    background-position: 0px -53px;
+  }
+
+  .owl-carousel .next-carousel:hover {
+    background-position: -24px -53px;
+  }
+
+  .owl-carousel .owl-item {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .owl-carousel .owl-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .owl-carousel .owl-stage-outer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .owl-carousel .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+  }
+  
+  .carousel-nav-prev, .carousel-nav-next {
+    background: url('/path-to-your-arrow-icon.svg') no-repeat center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-size: contain; /* Ensure arrows fit well */
+  }
+  
+  .carousel-nav-prev {
+    background-position: left;
+  }
+  
+  .carousel-nav-next {
+    background-position: right;
+  }

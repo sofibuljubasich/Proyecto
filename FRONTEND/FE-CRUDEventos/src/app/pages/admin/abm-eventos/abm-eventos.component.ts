@@ -13,8 +13,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrl: './abm-eventos.component.css',
 })
 export class ABMEventosComponent {
-  eventos: EventoResponse[] = [];
-  eventosActivos: EventoResponse[] = [];
+  eventos: any = [];
+  eventosActivos: any = [];
   id: number;
 
   onToggleChange(evento: any, event: Event): void {
@@ -51,8 +51,10 @@ export class ABMEventosComponent {
   }
 
   obtenerEventos(): void {
-    this._eventoService.getEventos().subscribe((data: any[]) => {
+    this._eventoService.buscar(this.parametrosBusqueda).subscribe(
+      (data: any[]) =>{
       this.eventos = data;
+      //this.filtrarEventos(this.eventos);
     });
   }
 
@@ -60,12 +62,7 @@ export class ABMEventosComponent {
     texto: '',
     fechaIni: '',
     fechaFin: '',
-    tipoEvento: 0,
+    tipoEvento: '',
     lugar: '',
   };
-
-  buscar() {
-    console.log(this.parametrosBusqueda);
-    // this._eventoService.buscar(this.parametrosBusqueda)
-  }
 }

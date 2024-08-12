@@ -13,7 +13,7 @@ export class BuscarComponent {
     texto: '',
     fechaIni: '',
     fechaFin: '',
-    tipoEvento: 0,
+    tipoEvento:'',
     lugar: '',
   };
 

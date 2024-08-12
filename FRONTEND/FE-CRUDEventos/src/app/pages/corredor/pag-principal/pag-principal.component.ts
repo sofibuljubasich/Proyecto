@@ -10,9 +10,9 @@ import { TipoEventoService } from 'src/app/services/tipo-evento.service';
   styleUrls: ['./pag-principal.component.css'],
 })
 export class PagPrincipalComponent {
-  eventos: EventoResponse[] = [];
-  eventosActivos: EventoResponse[] = [];
-  eventosInactivos: EventoResponse[] = [];
+  eventos: any[] = [];
+  eventosActivos: any[] = [];
+  eventosInactivos: any[] = [];
   tipos: Tipo[] = []; // Reemplaza con tus tipos
   lugares: string[] = []; // Reemplaza con tus lugares
 
@@ -28,9 +28,10 @@ export class PagPrincipalComponent {
   }
 
   obtenerEventos(): void {
-    this._eventoService.getEventos().subscribe((data: any[]) => {
+    this._eventoService.buscar(this.parametrosBusqueda).subscribe(
+      (data: any[]) =>{
       this.eventos = data;
-      this.filtrarEventos();
+      this.filtrarEventos(this.eventos);
     });
   }
   obtenerTipos(): void {
@@ -57,22 +58,19 @@ export class PagPrincipalComponent {
     texto: '',
     fechaIni: '',
     fechaFin: '',
-    tipoEvento: 0,
+    tipoEvento: '',
     lugar: '',
   };
 
-  buscar() {
-    console.log(this.parametrosBusqueda);
-    // this._eventoService.buscar(this.parametrosBusqueda)
-  }
+
   // ver que los eventos inactivos tengan resultados
-  filtrarEventos(): void {
-    this.eventosInactivos = this.eventos.filter(
-      (evento) => evento.evento.estado === 'Inactivo'
+  filtrarEventos(ev:any[]): void {
+    this.eventosInactivos = ev.filter(
+      (evento) => evento.estado === 'Inactivo'
     );
-    this.eventosActivos = this.eventos.filter(
+    this.eventosActivos = ev.filter(
       // fijarse q tengan resultados
-      (evento) => evento.evento.estado !== 'Inactivo'
+      (evento) => evento.estado !== 'Inactivo'
     );
   }
   applyFilter(event: Event) {

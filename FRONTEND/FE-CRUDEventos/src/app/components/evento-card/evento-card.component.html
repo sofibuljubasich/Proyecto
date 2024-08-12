@@ -21,22 +21,22 @@
 
   <div class="card">
     <div class="card-image-container">
-      <img [src]="eventoResp.evento.imagen" alt="Event Image" class="card-image">
+      <img [src]="imagenURL" alt="Event Image" class="card-image">
       <div class="card-date">{{ formattedDate }}</div>
     </div>
     <div class="card-content">
       <h2 class="card-title">{{formattedName}}</h2>
-      <ng-container *ngIf="eventoResp.evento.estado !== 'Inactivo'">
+      <ng-container *ngIf="eventoResp.estado !== 'Inactivo'">
         <div class="card-actions">
-          <button mat-icon-button style="transform: scale(2);" routerLink="/verEvento/{{eventoResp.evento.id}}">
+          <button mat-icon-button style="transform: scale(2);" routerLink="/verEvento/{{eventoResp.id}}">
             <mat-icon  style="color: rgb(0, 0, 0); margin-inline-start: 0px;">info</mat-icon>
           </button>
           <button (click)="onInscribirse()" class="signup-button" >Inscribirse</button>
         </div>
       </ng-container>
-      <ng-container *ngIf="eventoResp.evento.estado === 'Inactivo'">
+      <ng-container *ngIf="eventoResp.estado === 'Inactivo'">
         <div class="card-actions">
-          <button routerLink="/verResultados/{{eventoResp.evento.id}}" class="signup-button" >Ver Resultados</button>
+          <button routerLink="/verResultados/{{eventoResp.id}}" class="signup-button" >Ver Resultados</button>
         </div>
       </ng-container>
     </div>

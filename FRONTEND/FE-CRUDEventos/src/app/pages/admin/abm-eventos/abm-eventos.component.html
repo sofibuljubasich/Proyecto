@@ -1,6 +1,6 @@
 <div class="container">
     <main class="main">
-        <form #buscarForm="ngForm" (change)="buscar()">
+        <form #buscarForm="ngForm" (change)="obtenerEventos()">
             <section class="buscador">      
                 <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
                 <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
@@ -19,16 +19,16 @@
                       <div class="evento">
                         <app-evento-card-h [eventoResp]="eventoResp"></app-evento-card-h>
                       </div>
-                      <mat-icon class="custom-icon" routerLink="/altaEventos/{{eventoResp.evento.id}}" aria-hidden="false" aria-label="Example calendar icon" fontIcon="edit_square"></mat-icon>
+                      <mat-icon class="custom-icon" routerLink="/altaEventos/{{eventoResp.id}}" aria-hidden="false" aria-label="Example calendar icon" fontIcon="edit_square"></mat-icon>
                       <label class="switch">
-                        <input type="checkbox" [checked]="eventoResp.evento.estado==='Activo'" (change)="onToggleChange(eventoResp.evento, $event)">
+                        <input type="checkbox" [checked]="eventoResp.estado==='Activo'" (change)="onToggleChange(eventoResp, $event)">
                         <span class="slider"></span>
                       </label>
                     </div>
                     <div class="content">
-                      <button routerLink="/verInscripciones/{{eventoResp.evento.id}}" class="tareas-button">Inscripciones</button>
-                      <button routerLink="/reportes/{{eventoResp.evento.id}}" class="tareas-button">Reportes</button>
-                      <button routerLink="/alta-resultados/{{eventoResp.evento.id}}" class="tareas-button">Resultados</button>
+                      <button routerLink="/verInscripciones/{{eventoResp.id}}" class="tareas-button">Inscripciones</button>
+                      <button routerLink="/reportes/{{eventoResp.id}}" class="tareas-button">Reportes</button>
+                      <button routerLink="/alta-resultados/{{eventoResp.id}}" class="tareas-button">Resultados</button>
                     </div>
                   </div>
                 </ng-container>
