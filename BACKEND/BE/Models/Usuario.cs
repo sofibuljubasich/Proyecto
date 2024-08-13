@@ -30,7 +30,7 @@ namespace BE.Models
         public Boolean ConfirmedEmail { get; set; }
 
         // Campos adicionales para recuperación de contraseña
-        public string PasswordResetToken { get; set; }
+        public string? PasswordResetToken { get; set; }
         public DateTime? PasswordResetTokenExpires { get; set; }
 
 
