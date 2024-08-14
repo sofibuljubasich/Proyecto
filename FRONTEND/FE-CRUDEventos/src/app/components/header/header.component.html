@@ -1,5 +1,5 @@
 <mat-toolbar id="mat">
-    <img src="images/Logo2.gif" alt="Logo" class="logo" height="50" width="150" routerLink='./inicio'>
+    <img src="images/Logo2.gif" alt="Logo" class="logo" routerLink='./inicio'>
     <!-- <span class="example-spacer"></span> -->
     <ng-container *ngIf="!isAuthenticated">
         <span class="example-spacer"></span>
@@ -8,9 +8,13 @@
     </ng-container>
     <ng-container *ngIf="isAuthenticated">
         <div class="derecha">
-            <button style="padding: 2px;margin: 10px;" (click)="logout()">Cerrar sesión</button>
+            <button (click)="logout()">Cerrar sesión</button>
             <div class="perfil">
-                <span style="color: aliceblue;">{{ currentUser?.nombre }} {{ currentUser?.apellido }}</span>
+                <div class="name">
+                    <span class="nombre">{{ currentUser?.nombre }}</span>
+                    <span> </span>
+                    <span class="apellido">{{ currentUser?.apellido }}</span>
+                </div>
                 <!-- <img src="../../../../images/perfil-empty.jpg" alt="Event Image" class="imagen"> -->
                 <img [src]="imagenURL" alt="Event Image" class="imagen">
             </div>

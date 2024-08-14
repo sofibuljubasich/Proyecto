@@ -67,7 +67,7 @@ table {
   border-collapse: collapse;
   table-layout: fixed;
   align-items: start;
-  margin-top: -50px;
+  margin-top: -20px;
 }
 
 th, td {
@@ -92,6 +92,12 @@ th {
   display: flex;
   align-items: center;
   
+}
+.columna{
+  color: white;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
 }
 .custom-icon {
   font-size: 3rem; /* Ajusta este valor para cambiar el tamaño del icono */
@@ -131,11 +137,12 @@ th {
   .opciones {
     display: flex;
     justify-content: center;
-    gap: 100px; /* Opcional: Espacio entre botones */
-    position: fixed;
+    margin-top: -100px;
+    gap: 10px; /* Opcional: Espacio entre botones */
+    /* position: fixed; */
     /* bottom: 20%; */
-    left: 30%;
-    transform: translate(5%, -200%);
+    /* left: 30%; */
+    /* transform: translate(5%, -200%); */
 }
 button{
 

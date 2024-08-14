@@ -1,13 +1,22 @@
 <div class="container">
     <main class="main">
-      <section class="buscador">      
-          <input type="text" placeholder="Buscar evento">
-          <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
-      </section>
+    <form #buscarForm="ngForm" (change)="obtenerEventos()">
+        <section class="buscador">      
+            <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
+            <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
+            <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
+        </section>
+    </form>
       <section class="eventos">
         <h2>Próximos eventos:</h2>
         <div class="event-list">
-          <app-listado-evento [eventos]="eventosActivos"></app-listado-evento>
+          <!-- Mostrar mensaje si no hay eventos inactivos -->
+          <div style="text-align: center;padding: 20px;font-size: 18px;" *ngIf="eventosActivos.length === 0">
+            No se encuentran eventos de esas características.
+          </div>
+          
+          <!-- Mostrar la lista de eventos inactivos si hay alguno -->
+          <app-listado-evento *ngIf="eventosActivos.length > 0" [eventos]="eventosActivos"></app-listado-evento>
         </div>
     </section>
    

@@ -25,32 +25,58 @@
             </div>
           </div>
           <div class="datos">
-            <div class="dato">
-              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="flag"></mat-icon>
-              <p class="label">Distancias asociadas:</p>
-            </div>
-            <div class="distancias">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Kilometro</th>
-                    <th>Precio</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let distancia of eventoData.distancias" class="distancia-item">
-                    <td>{{ distancia.km }} Km</td>
-                    <td>$ {{ distancia.precio }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              <div class="item">
+                <div class="columna">
+                  <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="flag"></mat-icon>
+                  <p class="label">Distancias asociadas:</p>
+                </div>
+                <div class="distancias">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Kilometro</th>
+                        <th>Precio</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let distancia of eventoData.distancias" class="distancia-item">
+                        <td>{{ distancia.km }} Km</td>
+                        <td>$ {{ distancia.precio }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="columna">
+                  <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="flag"></mat-icon>
+                  <p class="label">Categorías asociadas:</p>
+                </div>
+                <div class="distancias">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Edad Inicio</th>
+                        <th>Edad final</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let categoria of eventoData.categorias" class="distancia-item">
+                        <td>{{ categoria.edadInicio }}</td>
+                        <td>{{ categoria.edadFin }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
           </div>
         </div>
+        <div class="opciones">
+          <button routerLink="inicio" style="border: none; text-decoration: underline;background:none;"> <- Regresar</button>
+          <button  mat-raised-button (click)="onInscribirse()" color="primary">Inscribirse</button>
+        </div>
       </div>
-      <div class="opciones">
-        <button routerLink="inicio" style="border: none; text-decoration: underline;background:none;"> <- Regresar</button>
-        <button  mat-raised-button (click)="onInscribirse()" color="primary">Inscribirse</button>
-      </div>
+
 
 </body>
