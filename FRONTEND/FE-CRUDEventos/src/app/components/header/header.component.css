@@ -5,7 +5,7 @@
   #mat {
     background-color:#419197 ;
     color: #002717;
-    height: min-content;
+    height: 60px;
     /* padding: 20px; */
     /* display: flex; */
     /* justify-content: space-between; */
@@ -17,15 +17,18 @@
     left: 0px;
   }
   button{
-    margin: 0px 10px;
+    margin: 0px 1%;
     border: none;
-    margin-left: 10px;
+    margin-left: 1%;
     border-radius: 10px;
-    padding: 10px;
+    padding: 1%;
     cursor: pointer;
+    
   }
 .logo {
     cursor: pointer;
+    height:50px;
+    width:150px;
 }
 
   .fixed{
@@ -39,7 +42,10 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  align-content: center;
+  align-items: center;
+  margin: 10px;
+
+  
 }
 .custom-icon {
   font-size: 3rem; /* Ajusta este valor para cambiar el tamaño del icono */
@@ -62,4 +68,46 @@
 .perfil{
   display: flex;
   align-items: center;
+  color: aliceblue;
+}
+.name{
+  display: flex;
+    flex-direction: row; /* Alinea nombre y apellido en una fila */
+    align-items: center;
+  .nombre{
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo{
+    height:auto;
+    width:100px;
+  }
+  button{
+    font-size: 10px;
+    height: 30px;
+  }
+  .name{
+    display: flex;
+    flex-direction: column; /* Alinea los elementos en una columna */
+    align-items: center; /* Centra los elementos horizontalmente, si es necesario */
+    margin-left: 10px;
+    padding: 10px 0;
+  }
+  .perfil{
+    font-size: 12px;
+
+    .imagen{
+      width: 30px;
+      height: 30px;
+    }
+    
+  }
+  .name .nombre {
+      margin-right: 0; /* Elimina el margen derecho en pantallas pequeñas */
+      margin-bottom: -50px; /* Espacio entre el nombre y el apellido en pantallas pequeñas */
+  }
+
+
 }
