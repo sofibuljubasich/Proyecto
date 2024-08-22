@@ -13,7 +13,7 @@ li.seleccionado  {
 
 nav{
 max-width: 50%;
-max-height: 40px;
+max-height: fit-content;
 margin: auto;
 background-color: #419197;
 margin-top:60px; 
@@ -28,6 +28,7 @@ ul{
   list-style-type: none;
   display: flex;
   width: 100%;
+  margin:0px;
   justify-content: center;
   padding: 0px 3px; 
   /* max-width: 60%; */
@@ -45,7 +46,7 @@ li{
   color: #419197;
   background-color: rgb(235, 234, 247);
   position: relative;
-  top: -15px;
+  /* top: -15px; */
   height: 34px;
   margin: 0px 2px;
   border-bottom-left-radius: 10px;
@@ -57,7 +58,11 @@ li{
   align-content: space-around;
   width: 100%;
 }
-
+@media (max-width: 890px) {
+  nav{
+    max-width: 60%;
+  }
+}
 
 /* Media Query para pantallas medianas */
 @media (max-width: 767px) {
@@ -82,11 +87,11 @@ li{
 
   li {
     flex:auto;
-    padding: 10px 0;
-    height: fit-content;
-    margin: 5px 0;
+    padding: 0px 0;
+    min-height: fit-content;
+    margin: 0px 0;
     border-radius: 10px;
-    padding-top: 20px;
+    padding-top: 2px;
   }
 }
 

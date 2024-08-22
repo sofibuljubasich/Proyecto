@@ -6,6 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Comentario, ComentarioNuevo } from 'src/app/interfaces/comentario';
 import { AuthService } from 'src/app/services/auth.service';
 import { ComentarioService } from 'src/app/services/comentario.service';
@@ -24,15 +25,18 @@ export class ComentariosComponent implements OnInit {
   mostrarFormulario = false;
   comentarioForm!: FormGroup;
   currentUser: any;
+  isAuthenticated:boolean= false
 
   constructor(
     private _comentarioService: ComentarioService,
     private fb: FormBuilder,
     private _authService: AuthService,
-    private _corredorService: CorredorService
+    private _corredorService: CorredorService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
+    this.isAuthenticated= this._authService.isAuthenticated();
     this.loadComentarios();
     this.comentarioForm = this.fb.group({
       contenido: ['', Validators.required],
@@ -53,9 +57,19 @@ export class ComentariosComponent implements OnInit {
     });
   }
   toggleFormulario(): void {
-    this.mostrarFormulario = !this.mostrarFormulario;
-  }
+    if (this.isAuthenticated) {
+      this.mostrarFormulario = !this.mostrarFormulario;
+    } else {
+      // Lógica cuando el usuario está autenticado
+      this.showMessage();
+    }
 
+  }
+  showMessage() {
+    this.snackBar.open('Usuario no participó del evento', '', {
+      duration: 3000, // Duración en milisegundos
+    });
+  }
   enviarComentario(): void {
     if (this.comentarioForm.valid) {
       console.log(this.currentUser);

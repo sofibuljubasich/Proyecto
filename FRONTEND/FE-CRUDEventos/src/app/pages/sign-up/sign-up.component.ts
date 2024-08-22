@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -12,6 +12,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/auth.service';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sign-up',
@@ -35,7 +44,8 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private _authService: AuthService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -130,6 +140,7 @@ export class SignUpComponent implements OnInit {
 
   onSubmit() {
     if (this.signupFormPart3.valid) {
+      console.log(this.signupFormPart1);
       const formData = new FormData();
       formData.append('nombre', this.signupFormPart1.value.nombre);
       formData.append('apellido', this.signupFormPart1.value.apellido);
@@ -146,15 +157,18 @@ export class SignUpComponent implements OnInit {
       formData.append('password', this.signupFormPart3.value.password);
       formData.append('imagen', this.signupFormPart2.value.imagen);
       formData.append('rolID', '1');
-      console.log(formData);
       this._authService.register(formData).subscribe(
         (response) => {
           console.log('Autenticado con éxito:', response);
-          this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {
-            duration: 3000,
-          });
+          
           this.errorMessage = null;
-          this.router.navigate(['/login']);
+          this.dialog.open(DialogContentComponent, {
+            data: { message: 'Le hemos enviado un mail a su cuenta, por favor, verifiquela' }
+          });
+          // this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {
+          //   duration: 3000,
+          // });
+          
         },
         (error) => {
           console.error('Error en la autenticación:', error);
@@ -183,5 +197,29 @@ export class SignUpComponent implements OnInit {
   isFieldInvalid(form: FormGroup, field: string) {
     const control = form.get(field);
     return control?.invalid && (control?.touched || control?.dirty);
+  }
+}
+
+@Component({
+  selector: 'dialog-content',
+  template: `
+    <h1 mat-dialog-title>Verifique su email</h1>
+    <div mat-dialog-content>{{ data.message }}</div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onClose()">Cerrar</button>
+    </div>
+  `
+})
+export class DialogContentComponent {
+  constructor(
+    private router: Router,
+    public dialogRef: MatDialogRef<DialogContentComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { message: string }
+  ) {}
+
+  onClose(): void {
+    this.router.navigate(['/login']);
+    this.dialogRef.close();
+
   }
 }
