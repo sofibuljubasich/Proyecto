@@ -127,6 +127,7 @@ export class InscripcionComponent {
     const distanciaS = this.eventoData.distancias.find(
       (evento) => evento.km === this.distanciaSelect
     );
+
     const inscripcionData = {
       remera: this.talleSelect,
       formaPago: this.pagoSelect,
@@ -137,6 +138,7 @@ export class InscripcionComponent {
       precio: distanciaS!.precio,
       eventoID: this.eventoData.evento.id,
     };
+    console.log(inscripcionData)
     this._inscripcionService.inscribir(inscripcionData).subscribe(
       (response) => {
         this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {

@@ -17,6 +17,7 @@ import {
   MatDialog,
   MatDialogActions,
   MatDialogClose,
+  MatDialogConfig,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -45,7 +46,7 @@ export class SignUpComponent implements OnInit {
     private _authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -140,7 +141,6 @@ export class SignUpComponent implements OnInit {
 
   onSubmit() {
     if (this.signupFormPart3.valid) {
-      console.log(this.signupFormPart1);
       const formData = new FormData();
       formData.append('nombre', this.signupFormPart1.value.nombre);
       formData.append('apellido', this.signupFormPart1.value.apellido);
@@ -160,15 +160,15 @@ export class SignUpComponent implements OnInit {
       this._authService.register(formData).subscribe(
         (response) => {
           console.log('Autenticado con éxito:', response);
-          
+
           this.errorMessage = null;
           this.dialog.open(DialogContentComponent, {
-            data: { message: 'Le hemos enviado un mail a su cuenta, por favor, verifiquela' }
+            data: {
+              message:
+                'Le hemos enviado un mail a su cuenta, por favor, verifiquela',
+            },
           });
-          // this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {
-          //   duration: 3000,
-          // });
-          
+          this.router.navigate(['/login']);
         },
         (error) => {
           console.error('Error en la autenticación:', error);
@@ -203,12 +203,33 @@ export class SignUpComponent implements OnInit {
 @Component({
   selector: 'dialog-content',
   template: `
-    <h1 mat-dialog-title>Verifique su email</h1>
-    <div mat-dialog-content>{{ data.message }}</div>
-    <div mat-dialog-actions>
-      <button mat-button (click)="onClose()">Cerrar</button>
+    <div
+      class="container-msj"
+      style="  padding: 20px;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  text-align: center;"
+    >
+      <h1 mat-dialog-title>Verifique su email</h1>
+      <div mat-dialog-content style="  padding: 10px;">{{ data.message }}</div>
+      <div mat-dialog-actions>
+        <button
+          style="padding: 10px;
+    background-color:#419197;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    width: 30%"
+          mat-button
+          (click)="onClose()"
+        >
+          Cerrar
+        </button>
+      </div>
     </div>
-  `
+  `,
 })
 export class DialogContentComponent {
   constructor(
@@ -220,6 +241,5 @@ export class DialogContentComponent {
   onClose(): void {
     this.router.navigate(['/login']);
     this.dialogRef.close();
-
   }
 }

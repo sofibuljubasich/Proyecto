@@ -27,11 +27,13 @@ import { VerInscripcionesComponent } from './pages/admin/ver-inscripciones/ver-i
 import { VistaTareasComponent } from './pages/admin/vista-tareas/vista-tareas.component';
 import { AgregarEditarEventoComponent } from './pages/admin/agregar-editar-evento/agregar-editar-evento.component';
 import { TareasComponent } from './pages/admin/tareas/tareas.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   // CORREDOR
   { path: 'inicio', component: PagPrincipalComponent },
   { path: 'proximos-eventos', component: ProximosEventosComponent },

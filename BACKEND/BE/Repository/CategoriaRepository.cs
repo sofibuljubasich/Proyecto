@@ -41,7 +41,7 @@ namespace BE.Repository
         public async Task<Categoria> CalculateCategory(int edadCorredor)
         {
 
-            return await _context.Categorias.Where(c => c.EdadInicio < edadCorredor && c.EdadFin > edadCorredor).FirstOrDefaultAsync();
+            return await _context.Categorias.Where(c => c.EdadInicio <= edadCorredor && c.EdadFin >= edadCorredor).FirstOrDefaultAsync();
 
            
 

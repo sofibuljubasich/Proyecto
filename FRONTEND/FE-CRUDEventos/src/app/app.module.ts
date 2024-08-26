@@ -42,6 +42,7 @@ import { SubirResultadosComponent } from './pages/admin/subir-resultados/subir-r
 import { VerInscripcionesComponent } from './pages/admin/ver-inscripciones/ver-inscripciones.component';
 import { VistaTareasComponent } from './pages/admin/vista-tareas/vista-tareas.component';
 import { TareasComponent } from './pages/admin/tareas/tareas.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -85,6 +86,7 @@ import { DatePipe } from '@angular/common';
     VistaTareasComponent,
     CommentFormComponent,
     TareasComponent,
+    ResetPasswordComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
