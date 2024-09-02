@@ -164,10 +164,12 @@ namespace BE.Repository
         {
             var inscrip = await _context.Inscripciones.SingleOrDefaultAsync(i => i.EventoID == eventoID && i.Corredor.ID == corredorID);
 
-            inscrip.PosicionCategoria = posicionCat;    
-            inscrip.PosicionGeneral = posicionGral; 
-            inscrip.Tiempo = tiempo;
-
+            if (inscrip != null)
+            {
+                inscrip.PosicionCategoria = posicionCat;
+                inscrip.PosicionGeneral = posicionGral;
+                inscrip.Tiempo = tiempo;
+            }
             await _context.SaveChangesAsync();
 
 

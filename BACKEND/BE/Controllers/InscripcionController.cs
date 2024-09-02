@@ -41,9 +41,13 @@ namespace BE.Controllers
 
                 var inscrip = _mapper.Map<Inscripcion>(inscripcionDto);
 
+                //var distancia = _distanciaRe
+
                 inscrip.Fecha = DateTime.Now;
 
                 var corredor = await _usuarioRepository.GetCorredor(inscrip.UsuarioID);
+
+               
 
                 DateTime fechaCorredor = (DateTime)corredor.FechaNacimiento;
 

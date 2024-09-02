@@ -11,6 +11,12 @@ using BE.Services;
 using NETCore.MailKit.Core;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using ExcelDataReader;
+using System.Diagnostics.Contracts;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using NPOI.HSSF.UserModel;
+using ClosedXML;
+using ClosedXML.Excel;
 
 namespace BE.Controllers
 {
@@ -228,7 +234,7 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
-       
+
 
         //Por Rol
         [HttpDelete("{id}")]
@@ -284,8 +290,8 @@ namespace BE.Controllers
                     ImagenURL = "/Imagenes/events/event-empty.jpg";
                 }
 
-                
-                
+
+
 
                 var newEvento = new Evento()
                 {
@@ -297,7 +303,7 @@ namespace BE.Controllers
                     TipoID = eventoDto.TipoID,
                     Categorias = eventoDto.Categorias
 
-                    
+
                 };
                 //var evento = _mapper.Map<Evento>(eventoDto);
 
@@ -344,7 +350,7 @@ namespace BE.Controllers
             try
             {
 
-              
+
                 var edlist = _mapper.Map<ICollection<EventoDistancia>>(eventoDto.EventoDistancias);
 
                 await _eventoRepository.Update(eventoID, eventoDto);
@@ -382,12 +388,12 @@ namespace BE.Controllers
                         ID = resultado.ID,
                         Dorsal = resultado.Dorsal,
                         PosicionCategoria = resultado.PosicionCategoria,
-                        PosicionGeneral = resultado.PosicionGeneral,    
+                        PosicionGeneral = resultado.PosicionGeneral,
                         Tiempo = resultado.Tiempo,
-                        Corredor = resultado.Corredor,  
-                        Distancia = resultado.Distancia,    
+                        Corredor = resultado.Corredor,
+                        Distancia = resultado.Distancia,
                         Categoria = categoria
-                        
+
 
                     };
 
@@ -396,7 +402,7 @@ namespace BE.Controllers
                 }
 
 
-                   
+
 
                 return Ok(listResultadosDto);
 
@@ -460,7 +466,7 @@ namespace BE.Controllers
                 var lugar = eventoDto.Lugar;
 
                 var lugaresList = await _eventoRepository.GetFiltro(busqueda, fechaInicio, fechaFin, tipo, lugar);
-                
+
                 if (lugaresList == null)
                 {
                     return NotFound("No existen lugares con eventos");
@@ -471,15 +477,15 @@ namespace BE.Controllers
             catch (Exception ex) { return BadRequest(ex.Message); }
 
         }
-        
-        [HttpGet,Route("InfoKits/{eventoID}")]
-         public async Task<IActionResult> InfoKits(int eventoID)
+
+        [HttpGet, Route("InfoKits/{eventoID}")]
+        public async Task<IActionResult> InfoKits(int eventoID)
         {
             try
             {
                 var listInscrips = await _eventoRepository.GetInscripcionesByEvento(eventoID);
 
-               
+
 
                 var inscripciones = new List<KitDto>();
                 foreach (var inscripcion in listInscrips)
@@ -491,19 +497,19 @@ namespace BE.Controllers
                     Corredor corredor = await _corredorRepository.GetCorredor(inscripcion.UsuarioID);
                     CorredorGetDto corredorDto = _mapper.Map<CorredorGetDto>(corredor);
 
-                   
+
 
 
                     var insc = new KitDto
                     {
-                        
+
 
                         Corredor = corredorDto,
                         Distancia = distanciaDto,
                         Remera = inscripcion.Remera,
-                      
+
                         Dorsal = inscripcion.Dorsal,
-                      
+
 
 
 
@@ -521,8 +527,87 @@ namespace BE.Controllers
             }
         }
 
+        //Generar excel con info de kits e inscriptos
+        [HttpGet("KitsExportarExcel/{eventoID}")]
+        public async Task<IActionResult> ExportarKitsExcel(int eventoID)
+        {
+            // Consultar los datos desde la base de datos
+            var listInscrips = await _eventoRepository.GetInscripcionesByEvento(eventoID);
+
+
+
+            var inscripciones = new List<KitDto>();
+            foreach (var inscripcion in listInscrips)
+            {
+                //buscar corredor y distancia 
+                Distancia distancia = await _distanciaRepository.GetDistancia(inscripcion.DistanciaID);
+                DistanciaDto distanciaDto = _mapper.Map<DistanciaDto>(distancia);
+
+                Corredor corredor = await _corredorRepository.GetCorredor(inscripcion.UsuarioID);
+                CorredorGetDto corredorDto = _mapper.Map<CorredorGetDto>(corredor);
+
+
+
+
+                var insc = new KitDto
+                {
+
+
+                    Corredor = corredorDto,
+                    Distancia = distanciaDto,
+                    Remera = inscripcion.Remera,
+
+                    Dorsal = inscripcion.Dorsal,
+
+
+
+
+                };
+
+                inscripciones.Add(insc);
+            }
+            // Crear un nuevo archivo Excel con ClosedXML
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add($"Inscriptos_Evento_{eventoID}");
+                
+                       
+                // Agregar encabezados
+                
+                worksheet.Cell(1, 1).Value = "Dorsal";
+                worksheet.Cell(1, 2).Value = "Nombre";
+                worksheet.Cell(1, 3).Value = "Apellido";
+                worksheet.Cell(1, 4).Value = "DNI";
+                worksheet.Cell(1, 5).Value = "FechaNacimiento";
+                worksheet.Cell(1, 6).Value = "DistanciaKM";
+                worksheet.Cell(1, 7).Value = "Remera";
+
+                // Llenar datos desde la base de datos
+                for (int i = 0; i < inscripciones.Count; i++)
+                {
+                    worksheet.Cell(i + 2, 1).Value = inscripciones[i].Dorsal;
+                    worksheet.Cell(i + 2, 2).Value = inscripciones[i].Corredor.Nombre;
+                    worksheet.Cell(i + 2, 3).Value = inscripciones[i].Corredor.Apellido;
+                    worksheet.Cell(i + 2, 4).Value = inscripciones[i].Corredor.Dni;
+                    worksheet.Cell(i + 2, 5).Value = inscripciones[i].Corredor.FechaNacimiento;
+                    worksheet.Cell(i + 2, 6).Value = inscripciones[i].Distancia.KM;
+                    worksheet.Cell(i + 2, 7).Value = inscripciones[i].Remera;
+                }
+
+                // Guardar el archivo Excel en un stream de memoria
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+
+                    // Devolver el archivo Excel
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Inscriptos_Evento_{eventoID}.xlsx");
+                }
+            }
+        }
+
         [HttpPost, Route("EnviarEmail/{eventoID}")]
-        public async Task<IActionResult>EnviarEmail(int eventoID, [FromQuery] string asunto, [FromQuery] string mensaje)
+        public async Task<IActionResult> EnviarEmail(int eventoID, [FromQuery] string asunto, [FromQuery] string mensaje)
         {
             try
             {
@@ -531,81 +616,16 @@ namespace BE.Controllers
 
                 if (eventoExists == false) { return BadRequest("No existe el evento"); }
 
-                 var emails = await _eventoRepository.GetInscriptosEmails(eventoID);
+                var emails = await _eventoRepository.GetInscriptosEmails(eventoID);
 
                 foreach (var email in emails)
                 {
                     await _emailService.SendEmailAsync(email, asunto, mensaje);
-                
+
                 }
                 return Ok("Correos enviados");
-                    
 
 
-
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
-
-  }
-
-        [HttpPost, Route("CargarResultados/{eventoID}")]
-        public async Task<IActionResult> CargarResultados(int eventoID, [FromForm] IFormFile file)
-        {
-            try
-            {
-                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);  
-                if (file == null || file.Length == 0)
-                { return BadRequest("Archivo vacío"); }
-
-               
-                var uploadsFolder = $"{Directory.GetCurrentDirectory()}\\Uploads";
-
-                if (!Directory.Exists(uploadsFolder))
-                { Directory.CreateDirectory(uploadsFolder); }       
-
-                var filePath = Path.Combine(uploadsFolder, file.Name);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-
-                using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
-                {
-                    using (var reader = ExcelReaderFactory.CreateReader(stream))
-                    {
-                        do
-                        {
-                            bool headerSkip = false;
-                            while (reader.Read())
-                            {
-                                if (!headerSkip)
-                                {
-                                    headerSkip = true;
-                                    continue;
-                                }
-
-                                int corredorID = (int)reader.GetValue(1);
-                                string? posicionCat = reader.GetValue(2).ToString();    
-                                string? posicionGral = reader.GetValue(3).ToString();
-                                int? tiempo = (int)reader.GetValue(4);
-
-                                await _eventoRepository.CargarResultado(eventoID, corredorID, posicionCat, posicionGral, tiempo);
-
-                         
-                              
-    }
-
-
-                        }while (reader.NextResult()) ;      
-                    }
-                
-                }
-                return Ok("Resultados cargados");
 
 
             }
@@ -614,9 +634,57 @@ namespace BE.Controllers
 
                 return BadRequest(ex.Message);
             }
+
         }
 
+        [HttpPost, Route("CargarResultados")]
+        public async Task<IActionResult> Cargar(IFormFile file)
+        {
+            {
+                Stream stream = file.OpenReadStream();
 
+                IWorkbook MiExcel = null;
+
+                if (Path.GetExtension(file.FileName) == ".xlsx")
+                {
+                    MiExcel = new XSSFWorkbook(stream);
+                }
+                else
+                {
+                    MiExcel = new HSSFWorkbook(stream);
+                }
+
+                ISheet HojaExcel = MiExcel.GetSheetAt(0);
+
+                int cantidadFilas = HojaExcel.LastRowNum;
+                List<ExcelDtoFileName> lista = new List<ExcelDtoFileName>();
+
+                for (int i = 1; i <= cantidadFilas; i++)
+                {
+
+                    IRow fila = HojaExcel.GetRow(i);
+
+
+                    var corredor = fila.GetCell(0).ToString();
+                    var PosicionCategoria = fila.GetCell(1).ToString();
+                    var PosicionGeneral = fila.GetCell(2).ToString();
+                    var Tiempo = fila.GetCell(3).ToString();
+                    var evento = fila.GetCell(4).ToString();
+
+                    int eventoID = int.Parse(evento);
+                    int corredorID = int.Parse(corredor);
+                    int tiempo = int.Parse(Tiempo);
+                    await _eventoRepository.CargarResultado(eventoID, corredorID, PosicionCategoria, PosicionGeneral, tiempo);
+
+                }
+
+
+
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
+
+
+            }
+        }
 
     }
 }
