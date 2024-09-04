@@ -2,6 +2,7 @@ import {
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
+  HttpParams,
 } from '@angular/common/http';
 import { Injectable, WritableSignal, signal } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
@@ -53,6 +54,18 @@ export class AuthService {
   private setSession(user: Usuario): void {
     this.userIdSubject.next(JSON.stringify(user.id));
     localStorage.setItem('userId', JSON.stringify(user.id));
+  }
+
+  forgotPassword(email: string) {
+    // Configura los parámetros de consulta
+    const params = new HttpParams().set('email', email);
+
+    // Envía la solicitud GET
+    return this.http
+      .get(`${this.myAppUrl}${this.myApiUrl}/forgot-password`, { params })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   logout(): void {
