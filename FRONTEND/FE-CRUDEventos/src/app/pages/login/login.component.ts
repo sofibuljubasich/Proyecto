@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -11,6 +11,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogConfig,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -20,17 +30,24 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginComponent {
   loginForm!: FormGroup;
+  emailForm!: FormGroup;
   loginData = { userEmail: '', password: '' };
+
   errorMessage: string | null = null;
   showError: boolean = false;
+  reset:boolean= false;
   userRol!: number;
   constructor(
     private fb: FormBuilder,
     private _authService: AuthService,
     private router: Router,
     private _userService: UserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
+    this.emailForm = this.fb.group({
+      emailReset: ['', [Validators.required, Validators.email]],
+    });
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -56,8 +73,47 @@ export class LoginComponent {
     return this.loginForm.get('email');
   }
 
+  get emailReset() {
+    return this.emailForm.get('emailReset');
+  }
+
   get password() {
     return this.loginForm.get('password');
+  }
+  resetPass(){
+    this.reset=true;
+    console.log(this.reset)
+  }
+  onReset(){
+    if (this.emailForm.valid) {
+      const emailReset = this.emailForm.value.emailReset;
+      console.log(emailReset)
+      this._authService.forgotPassword(emailReset).subscribe(
+        (response) => {
+          console.log('Autenticado con éxito:', response);
+
+          this.errorMessage = null;
+          this.dialog.open(DialogContentComponent, {
+            data: {
+              message:
+                'Si existe una cuenta con ese correo electrónico, se ha enviado un enlace de restablecimiento de contraseña.',
+            },
+          });
+          // this.router.navigate(['/login']);
+        },
+        (error) => {
+          console.error('Error en la autenticación:', error);
+          this.errorMessage = error;
+          this.showError = true;
+          setTimeout(() => {
+            this.showError = false;
+          }, 3000);
+        }
+      );
+    } else {
+      this.emailForm.markAllAsTouched();
+    }
+
   }
   onSubmit() {
     if (this.loginForm.valid) {
@@ -93,17 +149,6 @@ export class LoginComponent {
         },
         complete: () => console.info('complete'),
       });
-      // if (this.loginForm.valid) {
-      //   console.log('exito');
-      //    const usuarioData: Usuario = {
-      //      email: this.loginForm.value.email,
-      //      password: this.loginForm.value.password,
-      //    };
-      //    console.log(usuarioData);
-      //    this._authService.register(usuarioData);
-      // } else {
-      //   this.loginForm.markAllAsTouched();
-      // }
     } else {
       this.loginForm.markAllAsTouched();
     }
@@ -128,4 +173,47 @@ export class LoginComponent {
         break;
     }
   }
+}
+  @Component({
+    selector: 'dialog-content',
+    template: `
+      <div
+        class="container-msj"
+        style="  padding: 20px;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    text-align: center;"
+      >
+        <h1 mat-dialog-title>Verifique su email</h1>
+        <div mat-dialog-content style="  padding: 10px;">{{ data.message }}</div>
+        <div mat-dialog-actions>
+          <button
+            style="padding: 10px;
+      background-color:#419197;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 15px;
+      width: 30%"
+            mat-button
+            (click)="onClose()"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    `,
+  })
+  export class DialogContentComponent {
+    constructor(
+      private router: Router,
+      public dialogRef: MatDialogRef<DialogContentComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: { message: string }
+    ) {}
+  
+    onClose(): void {
+      // this.router.navigate(['/reset-password']);
+      this.dialogRef.close();
+    }
 }
