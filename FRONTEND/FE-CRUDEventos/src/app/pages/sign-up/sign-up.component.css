@@ -30,7 +30,7 @@ p{
 .signup-container {
     z-index: 1;
     width: 60%;
-    height: 480px;
+    min-height: max-content;
     margin-top: 90px;
     padding: 10px;
     border: 1px solid #ccc;

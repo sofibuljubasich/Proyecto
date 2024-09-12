@@ -8,7 +8,6 @@
     </ng-container>
     <ng-container *ngIf="isAuthenticated">
         <div class="derecha">
-            <button (click)="logout()">Cerrar sesión</button>
             <div class="perfil">
                 <div class="name">
                     <span class="nombre">{{ currentUser?.nombre }}</span>
@@ -16,7 +15,21 @@
                     <span class="apellido">{{ currentUser?.apellido }}</span>
                 </div>
                 <!-- <img src="../../../../images/perfil-empty.jpg" alt="Event Image" class="imagen"> -->
-                <img [src]="imagenURL" alt="Event Image" class="imagen">
+                <img [src]="imagenURL" [matMenuTriggerFor]="menu" alt="Event Image" class="imagen">
+                <mat-menu style="justify-content: center;" #menu="matMenu">
+                    <button  mat-menu-item>
+                      <mat-icon style="justify-content: center;">person</mat-icon>
+                      <span>Ver perfil</span>
+                    </button>
+                    <button  mat-menu-item>
+                      <mat-icon>settings</mat-icon>
+                      <span>Cambiar contraseña</span>
+                    </button>
+                    <button (click)="logout()"  style="color: red;" mat-menu-item>
+                      <mat-icon style="color: red;">block</mat-icon>
+                      <span>Cerrar sesión</span>
+                    </button>
+                  </mat-menu>
             </div>
         </div>
         <!-- <button (click)="logout()">Cerrar sesión</button> -->

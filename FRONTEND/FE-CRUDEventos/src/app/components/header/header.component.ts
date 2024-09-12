@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-header',

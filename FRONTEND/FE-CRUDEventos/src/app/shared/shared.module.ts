@@ -26,6 +26,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [],
@@ -55,6 +56,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatBottomSheetModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatMenuModule,
   ],
   exports: [
     MatTableModule,
@@ -81,6 +83,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatBottomSheetModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatMenuModule
   ],
 })
 export class SharedModule {}

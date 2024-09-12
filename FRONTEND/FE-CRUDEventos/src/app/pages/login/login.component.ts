@@ -88,20 +88,21 @@ export class LoginComponent {
     if (this.emailForm.valid) {
       const emailReset = this.emailForm.value.emailReset;
       console.log(emailReset)
-      this._authService.forgotPassword(emailReset).subscribe(
-        (response) => {
+      this._authService.forgotPassword(emailReset).subscribe({
+        next: (response) => {
           console.log('Autenticado con éxito:', response);
 
           this.errorMessage = null;
           this.dialog.open(DialogContentComponent, {
             data: {
               message:
-                'Si existe una cuenta con ese correo electrónico, se ha enviado un enlace de restablecimiento de contraseña.',
+                response,
             },
           });
+          this.reset=false;
           // this.router.navigate(['/login']);
         },
-        (error) => {
+        error: (error) => {
           console.error('Error en la autenticación:', error);
           this.errorMessage = error;
           this.showError = true;
@@ -109,7 +110,7 @@ export class LoginComponent {
             this.showError = false;
           }, 3000);
         }
-      );
+    });
     } else {
       this.emailForm.markAllAsTouched();
     }
@@ -152,6 +153,9 @@ export class LoginComponent {
     } else {
       this.loginForm.markAllAsTouched();
     }
+  }
+  previousSection(): void {
+    this.reset=false;
   }
   clearErrorMessage() {
     this.errorMessage = null;
@@ -213,7 +217,7 @@ export class LoginComponent {
     ) {}
   
     onClose(): void {
-      // this.router.navigate(['/reset-password']);
+      
       this.dialogRef.close();
     }
 }
