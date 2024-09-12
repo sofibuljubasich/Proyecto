@@ -130,7 +130,9 @@ namespace BE.Controllers
             {
                 
                 await _userRepository.ConfirmEmailAsync(email, token);
-                return Ok("Correo electrónico confirmado exitosamente.");
+                var redirectUrl = "https://localhost:4200/confirmacionCuenta";
+                return Redirect(redirectUrl);
+               
             }
             catch (Exception ex)
             {
@@ -146,7 +148,7 @@ namespace BE.Controllers
                 var PasswordResetToken =   await _userRepository.RequestPasswordResetAsync(email);
 
                 // Enviar correo de restablecimiento de contraseña
-                var resetLink = $"https://localhost:7296/api/Auth/reset-password?token={PasswordResetToken}&email={email}";
+                var resetLink = $"https://localhost:4200/reset-password?token={PasswordResetToken}&email={email}";
                 await _emailService.SendEmailAsync(email, "Restablecer tu contraseña",
                     $"Puedes restablecer tu contraseña haciendo clic en el enlace: <a href='{resetLink}'>Restablecer Contraseña</a>");
                 return Ok("Si existe una cuenta con ese correo electrónico, se ha enviado un enlace de restablecimiento de contraseña.");
