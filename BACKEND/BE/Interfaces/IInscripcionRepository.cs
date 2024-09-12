@@ -15,5 +15,6 @@ namespace BE.Interfaces
 
         Task DeleteInscripcion(Inscripcion inscripcion);
         Task<Inscripcion> CheckIfExists(int usuarioID, int eventoID);
+        Task<List<Evento>> ObtenerEventosInscritosPorUsuario(int usuarioID);
     }
 }

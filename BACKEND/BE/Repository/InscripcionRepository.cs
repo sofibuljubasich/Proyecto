@@ -68,6 +68,16 @@ namespace BE.Repository
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<List<Evento>> ObtenerEventosInscritosPorUsuario(int usuarioID)
+        {
+            var eventos = await _context.Inscripciones
+                .Where(i => i.UsuarioID == usuarioID)
+                .Include(i => i.Evento) // Incluye los eventos relacionados
+                .Select(i => i.Evento)  // Selecciona solo los eventos
+                .ToListAsync();
+
+            return eventos;
+        }
 
         public async Task UpdatePayment(int inscID, string estadoPago)
         {

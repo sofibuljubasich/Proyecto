@@ -70,6 +70,28 @@ namespace BE.Controllers
             }
         }
 
+        [HttpGet("{corredorID}")]
+        public async Task<IActionResult>GetEventosByUser(int corredorID)
+        {
+
+            try
+            {
+
+                var eventosByCorredor = await _inscripcionRepository.ObtenerEventosInscritosPorUsuario(corredorID);
+
+
+                var eventosByCorredorDto = _mapper.Map<List<EventoDto>>(eventosByCorredor);
+
+                return Ok(eventosByCorredorDto);
+            }catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+
+        }
+
         [HttpGet("inscripcionID")]
         public async Task<IActionResult> Get(int inscripcionID)
         {
