@@ -43,6 +43,7 @@ import { VerInscripcionesComponent } from './pages/admin/ver-inscripciones/ver-i
 import { VistaTareasComponent } from './pages/admin/vista-tareas/vista-tareas.component';
 import { TareasComponent } from './pages/admin/tareas/tareas.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { MisEventosComponent } from './pages/corredor/mis-eventos/mis-eventos.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -87,6 +88,7 @@ import { DatePipe } from '@angular/common';
     CommentFormComponent,
     TareasComponent,
     ResetPasswordComponent,
+    MisEventosComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

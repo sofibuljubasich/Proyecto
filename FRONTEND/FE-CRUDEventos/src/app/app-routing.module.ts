@@ -28,6 +28,7 @@ import { VistaTareasComponent } from './pages/admin/vista-tareas/vista-tareas.co
 import { AgregarEditarEventoComponent } from './pages/admin/agregar-editar-evento/agregar-editar-evento.component';
 import { TareasComponent } from './pages/admin/tareas/tareas.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { MisEventosComponent } from './pages/corredor/mis-eventos/mis-eventos.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'inscribirse/:id', component: InscripcionComponent },
   { path: 'verResultados/:id', component: VerResultadosComponent },
   { path: 'verEvento/:id', component: VerEventoComponent },
+  { path: 'misEventos', component: MisEventosComponent },
   // INSCRIPTOR
   { path: 'eventosActivos', component: EventosActivosComponent },
   { path: 'inscripcionManual/:id', component: InscripcionManualComponent },

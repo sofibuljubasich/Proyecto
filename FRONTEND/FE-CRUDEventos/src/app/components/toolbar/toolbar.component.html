@@ -10,6 +10,9 @@
         <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">Inicio</li>
         <li (click)="navegar('proximos-eventos')" [ngClass]="{seleccionado: seleccionado[1]}">Próximos Eventos</li>
         <li (click)="navegar('resultados')"[ngClass]="{seleccionado: seleccionado[2]}">Resultados</li>
+        <ng-container *ngIf="isAuthenticated">
+          <li (click)="navegar('misEventos')"[ngClass]="{seleccionado: seleccionado[3]}">Mis Eventos</li>
+        </ng-container>
       </ul>
     </ng-container>
     <!-- VOLUNTARIO=3 -->

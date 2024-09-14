@@ -41,6 +41,9 @@
       </form>
     </div>
     <div *ngIf="reset" class="signup-container">
+        <div class="back-link">
+            <a (click)="previousSection()" style="color: aliceblue; margin-left: 5px; text-decoration: underline; cursor: pointer;">← Volver</a>
+          </div>
         <div>
             <p class="title">Resetear contraseña</p>
             <p style="color: aliceblue;    display: flex; justify-content: center;"> Por favor, ingrese su email</p>

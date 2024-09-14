@@ -56,17 +56,15 @@ export class AuthService {
     localStorage.setItem('userId', JSON.stringify(user.id));
   }
 
-  forgotPassword(email: string) {
-    // Configura los parámetros de consulta
-    const params = new HttpParams().set('email', email);
+  forgotPassword(email: string):Observable<string> {
 
-    // Envía la solicitud GET
     return this.http
-      .get(`${this.myAppUrl}${this.myApiUrl}/forgot-password`, { params })
+      .post<string>(`${this.myAppUrl}${this.myApiUrl}/forgot-password?email=${encodeURIComponent(email)}`, null, { responseType: 'text' as 'json' })
       .pipe(
         catchError(this.handleError)
       );
   }
+
 
   logout(): void {
     this.userIdSubject.next(null);
@@ -103,11 +101,12 @@ export class AuthService {
         errorMessage = Object.values(error.error.errors).join(', ');
       } else {
         // Otros errores del servidor
-        errorMessage = error.error.message || JSON.stringify(error.error);
+        errorMessage = error.error.message || 'Error desconocido';
       }
     }
-    return throwError(errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
+
 
   getUserAge(): number | null {
     const currentUser = this.getCurrentUser();

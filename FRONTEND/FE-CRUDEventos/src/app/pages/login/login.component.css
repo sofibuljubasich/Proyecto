@@ -36,7 +36,7 @@ label{
 .signup-container {
 
   width: 60%;
-  height: 350px;
+  min-height: max-content;
   z-index: 1;
   justify-content: center;
   /* margin-top: -100px; */
@@ -49,7 +49,9 @@ label{
 background: linear-gradient(to right, #20126e, #2b79a7);  */
 /* box-shadow: 0px 0px 30px #f7f7f7; */
 }
-
+.back-link{
+  margin-left: 20px;
+}
 .datos {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Dos columnas para los datos */

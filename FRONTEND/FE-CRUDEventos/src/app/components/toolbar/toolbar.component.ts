@@ -61,6 +61,7 @@ export class ToolbarBasicExample implements OnInit {
             this.seleccionado = [false, false, true, false];
             break;
           case '/vistaTareas':
+          case '/misEventos':
             this.seleccionado = [false, false, false, true];
             break;
           default:
