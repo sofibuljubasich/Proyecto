@@ -29,6 +29,6 @@ namespace BE.Dto
   
         public decimal Precio { get; set; } 
         public int EventoID { get; set; }
-
+        public int? NroTransaccion { get; set; }    
     }
 }

@@ -60,7 +60,7 @@ namespace BE.Controllers
 
                 inscrip = await _inscripcionRepository.CreateInscripcion(inscrip);
 
-
+                inscrip.NroTransaccion = inscripcionDto.NroTransaccion;
                 return CreatedAtAction("Get", new { id = inscrip.ID });
 
             }

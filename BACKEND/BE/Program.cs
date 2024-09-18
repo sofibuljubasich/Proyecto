@@ -51,8 +51,8 @@ builder.Services.AddScoped<ITipoEventoRepository, TipoEventoRepository>() ;
 builder.Services.AddScoped<IEventoDistanciaRepository, EventoDistanciaRepository>();
 builder.Services.AddScoped<ITareaVoluntarioService, TareaVoluntarioService>();
 builder.Services.AddScoped<ITareaVoluntarioRepository,TareaVoluntarioRepository>(); 
-builder.Services.AddScoped<IMensajeRepository,MensajeRepository>(); 
-
+builder.Services.AddScoped<IMensajeRepository,MensajeRepository>();
+builder.Services.AddHttpClient();
 builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddTransient<IEmailService, EmailService>();
 
