@@ -14,7 +14,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CorredorService } from 'src/app/services/corredor.service';
 import { EventoService } from 'src/app/services/evento.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
+import { PaymentService } from 'src/app/services/payment.service';
 import { UserService } from 'src/app/services/user.service';
+declare const MercadoPago: any;
 
 @Component({
   selector: 'app-inscripcion',
@@ -22,6 +24,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrl: './inscripcion.component.css',
 })
 export class InscripcionComponent {
+
   eventoData!: EventoResponse;
   id!: number;
   fecha!: string;
@@ -36,6 +39,7 @@ export class InscripcionComponent {
   currentUser!: Usuario;
   userID!: number;
   imagenURL!: string;
+  preferenceId!: any;
 
   metodosPago = [
     { value: 'efectivo', viewValue: 'Efectivo' },
@@ -47,6 +51,8 @@ export class InscripcionComponent {
     { value: 'L', viewValue: 'L' },
     { value: 'XL', viewValue: 'XL' },
   ];
+  mp: any;
+
 
   constructor(
     private _eventoService: EventoService,
@@ -57,12 +63,16 @@ export class InscripcionComponent {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private _authService: AuthService,
-    private _corredorService: CorredorService
+    private _corredorService: CorredorService,
+    private _paymentService: PaymentService
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {
+    this.mp = new MercadoPago('APP_USR-136e7dcf-f8a5-4da2-9373-8ef757b3954a', {
+      locale: 'es-AR' // Configura tu región
+    });
     this.obtenerEvento();
     this.obtenerCorredor();
 
@@ -118,6 +128,43 @@ export class InscripcionComponent {
       )|| null;
     
   }
+  
+  // Método para generar el botón de pago
+  pagar() {
+    if (!this.talleSelect || !this.distanciaSelect || !this.pagoSelect) {
+      this.errorMessage = 'Todos los campos son obligatorios';
+      setTimeout(() => (this.errorMessage = ''), 3000); // Limpiar mensaje de error después de 3 segundos
+      return;
+    }
+    const distanciaS = this.eventoData.distancias.find(
+      (evento) => evento.km === this.distanciaSelect
+    );
+
+    const producto = {
+      title: this.eventoData.evento.nombre,
+      quantity: 1,
+      unitPrice: Number(distanciaS!.precio)
+    };
+    this._paymentService.createPreference(producto).subscribe((response: any) => {
+      console.log(response);
+      this.preferenceId = response.id; // El ID de la preferencia creada
+
+      // Integrar Mercado Pago Checkout Pro
+      const mp = new MercadoPago('APP_USR-136e7dcf-f8a5-4da2-9373-8ef757b3954a', {
+        locale: 'es-AR'
+      });
+
+      mp.checkout({
+        preference: {
+          id: this.preferenceId
+        },
+        autoOpen: true // Abrir el checkout inmediatamente
+      });
+      this.onInscribirse()
+    }, error => {
+      console.error('Error al crear la preferencia:', error);
+    });
+  }
   onInscribirse(): void {
     if (!this.talleSelect || !this.distanciaSelect || !this.pagoSelect) {
       this.errorMessage = 'Todos los campos son obligatorios';
@@ -137,6 +184,7 @@ export class InscripcionComponent {
       usuarioID: this.currentUser.id,
       precio: distanciaS!.precio,
       eventoID: this.eventoData.evento.id,
+      nroTransaccion: this.preferenceId
     };
     console.log(inscripcionData)
     this._inscripcionService.inscribir(inscripcionData).subscribe(

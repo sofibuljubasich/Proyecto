@@ -139,3 +139,15 @@ html, body {
     font-size: larger;
     text-indent: 20px;
   }
+
+  .boton-mp {
+    display: flex;                /* Usar flexbox para alinear elementos */
+    align-items: center;         /* Centrar verticalmente */
+    justify-content: center;      /* Centrar horizontalmente */
+    padding: 10px 20px;         /* Espaciado interno del botón */
+}
+
+.payment-icon {
+    width: auto;                 /* Mantener proporciones del ícono */
+    margin-right: 8px;          /* Espacio entre el ícono y el texto */
+}

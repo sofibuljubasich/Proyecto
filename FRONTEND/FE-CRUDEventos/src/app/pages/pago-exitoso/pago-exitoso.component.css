@@ -1,0 +1,84 @@
+.mat {
+    background-color: #419197;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    height: auto;
+    top: 0px;
+    left: 0px;
+  }
+  
+  .fondo {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #78D6C6;
+  }
+  
+  .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: solid;
+    font-size: 25px;
+    font-weight: 600;
+    color: aliceblue;
+  }
+  label{
+    color: aliceblue;
+    justify-content: center;
+  }
+  .signup-container {
+  
+    width: 40%;
+    min-height: max-content;
+    z-index: 1;
+    justify-content: center;
+    /* margin-top: -100px; */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    position: relative;
+    background: #04364A;  /* fallback for old browsers */
+  /* background: -webkit-linear-gradient(to right, #0b1536, #148cc3);  
+  background: linear-gradient(to right, #20126e, #2b79a7);  */
+  /* box-shadow: 0px 0px 30px #f7f7f7; */
+  }
+  .button-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+  }
+  .signup-container button {
+    width: 50%;
+    padding: 10px;
+    background-color:#419197;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .custom-icon {
+    color: green; /* Color verde para el ícono */
+    font-size: 50px;
+
+  }
+  .success-icon-container {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    font-size: large;
+  }
+  .mat-icon{
+    height: 50px;
+    width: 50px;
+  }
