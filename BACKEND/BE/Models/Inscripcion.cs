@@ -47,7 +47,7 @@ namespace BE.Models
 
         public decimal Precio { get; set; }   
 
-        public int? NroTransaccion { get; set; }  
+        public string? NroTransaccion { get; set; }  
         
         //public int NroKit { get; set; } //Generar automatico, imprimir todos los numeros y su corredor
     }
