@@ -7,14 +7,14 @@
 
       <div class="contenido">
           <div class="nombre">{{formattedName}}</div>
-          <div class="texto">{{ eventoResp.evento.lugar }}</div>
+          <div class="texto">{{ eventoResp.lugar }}</div>
           <div class="fecha">{{ formattedDate }}</div>
         </div>
         <ng-container *ngIf="userRole === 4">  
-          <button class="boton" routerLink="/listaInscriptos/{{eventoResp.evento.id}}">Ver</button>
+          <button class="boton" routerLink="/listaInscriptos/{{eventoResp.id}}">Ver</button>
         </ng-container>
         <ng-container *ngIf="userRole != 4">  
-          <button mat-icon-button style="transform: scale(2);    margin-right: 20px;" routerLink="/verEvento/{{eventoResp.evento.id}}">
+          <button mat-icon-button style="transform: scale(2);    margin-right: 20px;" routerLink="/verEvento/{{eventoResp.id}}">
             <mat-icon  style="color: rgb(0, 0, 0); margin-inline-start: 0px;cursor: pointer;">info</mat-icon>
           </button>
         </ng-container>

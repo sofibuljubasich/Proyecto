@@ -15,6 +15,7 @@ export class PagPrincipalComponent {
   eventosInactivos: any[] = [];
   tipos: Tipo[] = []; // Reemplaza con tus tipos
   lugares: string[] = []; // Reemplaza con tus lugares
+  userRole: number = 1;
 
   constructor(
     private _eventoService: EventoService,
@@ -28,11 +29,12 @@ export class PagPrincipalComponent {
   }
 
   obtenerEventos(): void {
-    this._eventoService.buscar(this.parametrosBusqueda).subscribe(
-      (data: any[]) =>{
-      this.eventos = data;
-      this.filtrarEventos(this.eventos);
-    });
+    this._eventoService
+      .buscar(this.parametrosBusqueda)
+      .subscribe((data: any[]) => {
+        this.eventos = data;
+        this.filtrarEventos(this.eventos);
+      });
   }
   obtenerTipos(): void {
     this._tipoService.getTipos().subscribe(
@@ -62,12 +64,9 @@ export class PagPrincipalComponent {
     lugar: '',
   };
 
-
   // ver que los eventos inactivos tengan resultados
-  filtrarEventos(ev:any[]): void {
-    this.eventosInactivos = ev.filter(
-      (evento) => evento.estado === 'Inactivo'
-    );
+  filtrarEventos(ev: any[]): void {
+    this.eventosInactivos = ev.filter((evento) => evento.estado === 'Inactivo');
     this.eventosActivos = ev.filter(
       // fijarse q tengan resultados
       (evento) => evento.estado !== 'Inactivo'

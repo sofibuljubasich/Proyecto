@@ -32,11 +32,12 @@ export class LoginComponent {
   loginForm!: FormGroup;
   emailForm!: FormGroup;
   loginData = { userEmail: '', password: '' };
-
+  isAuthenticated: boolean = false;
   errorMessage: string | null = null;
   showError: boolean = false;
-  reset:boolean= false;
+  reset: boolean = false;
   userRol!: number;
+  userRole: number = 0;
   constructor(
     private fb: FormBuilder,
     private _authService: AuthService,
@@ -80,14 +81,14 @@ export class LoginComponent {
   get password() {
     return this.loginForm.get('password');
   }
-  resetPass(){
-    this.reset=true;
-    console.log(this.reset)
+  resetPass() {
+    this.reset = true;
+    console.log(this.reset);
   }
-  onReset(){
+  onReset() {
     if (this.emailForm.valid) {
       const emailReset = this.emailForm.value.emailReset;
-      console.log(emailReset)
+      console.log(emailReset);
       this._authService.forgotPassword(emailReset).subscribe({
         next: (response) => {
           console.log('Autenticado con éxito:', response);
@@ -95,11 +96,10 @@ export class LoginComponent {
           this.errorMessage = null;
           this.dialog.open(DialogContentComponent, {
             data: {
-              message:
-                response,
+              message: response,
             },
           });
-          this.reset=false;
+          this.reset = false;
           // this.router.navigate(['/login']);
         },
         error: (error) => {
@@ -109,12 +109,11 @@ export class LoginComponent {
           setTimeout(() => {
             this.showError = false;
           }, 3000);
-        }
-    });
+        },
+      });
     } else {
       this.emailForm.markAllAsTouched();
     }
-
   }
   onSubmit() {
     if (this.loginForm.valid) {
@@ -125,14 +124,13 @@ export class LoginComponent {
         next: (response) => {
           console.log('Autenticado con éxito:', response);
           this.snackBar.open('Inicio de sesión exitoso', 'Cerrar', {
-            duration: 3000,
+            duration: 300,
           });
 
           this.clearErrorMessage();
           this._userService.getUsuario(JSON.stringify(response.id)).subscribe({
             next: (user) => {
               this.userRol = user.rolID;
-              console.log('rol: ', this.userRol);
               this.navegar(this.userRol);
             },
             error: (error) => {
@@ -155,7 +153,7 @@ export class LoginComponent {
     }
   }
   previousSection(): void {
-    this.reset=false;
+    this.reset = false;
   }
   clearErrorMessage() {
     this.errorMessage = null;
@@ -169,30 +167,30 @@ export class LoginComponent {
       case 4: //inscriptor - empleado - 4
         this.router.navigate(['/eventosActivos']);
         break;
-      case 2: //voluntario - 3
+      case 3: //voluntario - 3
         this.router.navigate(['/eventos']);
         break;
-      case 3: //admin - 2
+      case 2: //admin - 2
         this.router.navigate(['/ABM-Eventos']);
         break;
     }
   }
 }
-  @Component({
-    selector: 'dialog-content',
-    template: `
-      <div
-        class="container-msj"
-        style="  padding: 20px;
+@Component({
+  selector: 'dialog-content',
+  template: `
+    <div
+      class="container-msj"
+      style="  padding: 20px;
     border-radius: 8px;
     background-color: #f5f5f5;
     text-align: center;"
-      >
-        <h1 mat-dialog-title>Verifique su email</h1>
-        <div mat-dialog-content style="  padding: 10px;">{{ data.message }}</div>
-        <div mat-dialog-actions>
-          <button
-            style="padding: 10px;
+    >
+      <h1 mat-dialog-title>Verifique su email</h1>
+      <div mat-dialog-content style="  padding: 10px;">{{ data.message }}</div>
+      <div mat-dialog-actions>
+        <button
+          style="padding: 10px;
       background-color:#419197;
       color: white;
       border: none;
@@ -200,24 +198,23 @@ export class LoginComponent {
       cursor: pointer;
       font-size: 15px;
       width: 30%"
-            mat-button
-            (click)="onClose()"
-          >
-            Cerrar
-          </button>
-        </div>
+          mat-button
+          (click)="onClose()"
+        >
+          Cerrar
+        </button>
       </div>
-    `,
-  })
-  export class DialogContentComponent {
-    constructor(
-      private router: Router,
-      public dialogRef: MatDialogRef<DialogContentComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: { message: string }
-    ) {}
-  
-    onClose(): void {
-      
-      this.dialogRef.close();
-    }
+    </div>
+  `,
+})
+export class DialogContentComponent {
+  constructor(
+    private router: Router,
+    public dialogRef: MatDialogRef<DialogContentComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { message: string }
+  ) {}
+
+  onClose(): void {
+    this.dialogRef.close();
+  }
 }

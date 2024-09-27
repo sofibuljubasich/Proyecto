@@ -10,18 +10,16 @@ import { UserService } from 'src/app/services/user.service';
   styleUrl: './evento-card-h.component.css',
 })
 export class EventoCardHComponent implements OnInit {
-  @Input() eventoResp!: EventoResponse;
+  @Input() eventoResp!: any;
   formattedDate: string = '';
   formattedName: string = '';
   userRole: number = 3;
   imagenURL!: string;
 
   ngOnInit(): void {
-    this.imagenURL = `https://localhost:7296${this.eventoResp.evento.imagen}`;
-    this.formattedDate = this.formatDate(this.eventoResp.evento.fecha);
-    this.formattedName = this.capitalizeFirstLetter(
-      this.eventoResp.evento.nombre
-    );
+    this.imagenURL = `https://localhost:7296${this.eventoResp.imagen}`;
+    this.formattedDate = this.formatDate(this.eventoResp.fecha);
+    this.formattedName = this.capitalizeFirstLetter(this.eventoResp.nombre);
     this._authService.userId$.subscribe((userId) => {
       if (!!userId) {
         this._userService.getUsuario(userId).subscribe({

@@ -18,8 +18,15 @@ export class ToolbarBasicExample implements OnInit {
   rol: string = 'inscriptor';
   isAuthenticated: boolean = false;
   currentUser: Usuario | null = null;
+  isLoginPage: boolean = false;
 
   ngOnInit(): void {
+    this.router.events.subscribe((event: any) => {
+      if (event.url) {
+        // Comprobar si la URL actual es la página de login
+        this.isLoginPage = this.router.url.includes('/login');
+      }
+    });
     this._authService.userId$.subscribe((userId) => {
       this.isAuthenticated = !!userId;
       if (!!userId) {
@@ -36,7 +43,6 @@ export class ToolbarBasicExample implements OnInit {
       }
     });
   }
-
   constructor(
     private router: Router,
     private _authService: AuthService,

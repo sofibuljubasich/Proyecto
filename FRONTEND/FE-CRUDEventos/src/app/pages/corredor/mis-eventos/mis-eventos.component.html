@@ -11,12 +11,12 @@
         <h2>Próximos eventos:</h2>
         <div class="event-list">
           <!-- Mostrar mensaje si no hay eventos inactivos -->
-          <div style="text-align: center;padding: 20px;font-size: 18px;" *ngIf="eventosActivos.length === 0">
+          <div style="text-align: center;padding: 20px;font-size: 18px;" *ngIf="eventos.length === 0">
             No se encuentran eventos de esas características.
           </div>
           
           <!-- Mostrar la lista de eventos inactivos si hay alguno -->
-          <app-listado-evento *ngIf="eventosActivos.length > 0" [eventos]="eventosActivos"></app-listado-evento>
+          <app-listado-evento *ngIf="eventos.length > 0" [eventos]="eventos"></app-listado-evento>
         </div>
     </section>
    

@@ -27,6 +27,7 @@ export interface Categoria {
 
 export interface Distancia {
   id: number;
+  distanciaID: number;
   km: number;
   precio: number;
 }

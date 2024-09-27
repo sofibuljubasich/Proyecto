@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-header',
@@ -29,8 +29,8 @@ export class HeaderComponent {
         this._userService.getUsuario(userId).subscribe({
           next: (user) => {
             this.currentUser = user;
+            console.log(userId);
             this.imagenURL = `https://localhost:7296${user.imagen}`;
-            console.log(this.currentUser.imagen);
           },
           error: (error) => {
             console.error('Failed to fetch user data:', error);

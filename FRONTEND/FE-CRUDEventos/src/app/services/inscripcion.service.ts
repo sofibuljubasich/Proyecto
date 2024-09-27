@@ -6,6 +6,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
+import { Evento } from '../interfaces/evento';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,12 @@ export class InscripcionService {
     return this.http
       .post(`${this.myAppUrl}${this.myApiUrl}`, inscripcionData, httpOptions)
       .pipe(catchError(this.handleError));
+  }
+
+  getInscxUsuario(idUsuario: number): Observable<Evento[]> {
+    return this.http.get<Evento[]>(
+      `${this.myAppUrl}${this.myApiUrl}/${idUsuario}`
+    );
   }
 
   acreditar(id: number, estado: boolean): Observable<any> {

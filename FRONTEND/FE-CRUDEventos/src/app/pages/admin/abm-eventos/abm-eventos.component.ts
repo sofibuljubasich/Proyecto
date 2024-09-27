@@ -14,8 +14,6 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ABMEventosComponent {
   eventos: any = [];
-  eventosActivos: any = [];
-  id: number;
 
   onToggleChange(evento: any, event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -42,20 +40,20 @@ export class ABMEventosComponent {
     private _authService: AuthService,
     private _userService: UserService,
     private aRoute: ActivatedRoute
-  ) {
-    this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
-  }
+  ) {}
 
   ngOnInit(): void {
     this.obtenerEventos();
   }
 
   obtenerEventos(): void {
-    this._eventoService.buscar(this.parametrosBusqueda).subscribe(
-      (data: any[]) =>{
-      this.eventos = data;
-      //this.filtrarEventos(this.eventos);
-    });
+    this._eventoService
+      .buscar(this.parametrosBusqueda)
+      .subscribe((data: any[]) => {
+        this.eventos = data;
+        console.log(this.eventos);
+        //this.filtrarEventos(this.eventos);
+      });
   }
 
   parametrosBusqueda: Busqueda = {

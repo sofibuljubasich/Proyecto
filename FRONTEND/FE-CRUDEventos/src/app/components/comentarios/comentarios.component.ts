@@ -25,18 +25,20 @@ export class ComentariosComponent implements OnInit {
   mostrarFormulario = false;
   comentarioForm!: FormGroup;
   currentUser: any;
-  isAuthenticated:boolean= false
+  isAuthenticated: boolean = false;
+  baseUrl: string = `https://localhost:7296`;
+  errorMessage: string = '';
 
   constructor(
     private _comentarioService: ComentarioService,
     private fb: FormBuilder,
     private _authService: AuthService,
     private _corredorService: CorredorService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.isAuthenticated= this._authService.isAuthenticated();
+    this.isAuthenticated = this._authService.isAuthenticated();
     this.loadComentarios();
     this.comentarioForm = this.fb.group({
       contenido: ['', Validators.required],
@@ -58,12 +60,12 @@ export class ComentariosComponent implements OnInit {
   }
   toggleFormulario(): void {
     if (this.isAuthenticated) {
+      console.log(this.mostrarFormulario);
       this.mostrarFormulario = !this.mostrarFormulario;
     } else {
       // Lógica cuando el usuario está autenticado
       this.showMessage();
     }
-
   }
   showMessage() {
     this.snackBar.open('Usuario no participó del evento', '', {
@@ -80,14 +82,20 @@ export class ComentariosComponent implements OnInit {
         eventoID: this.eventoId,
       };
       console.log(nuevoComentario);
-      this._comentarioService
-        .crearComentario(nuevoComentario)
-        .subscribe((comentario) => {
+      this._comentarioService.crearComentario(nuevoComentario).subscribe({
+        next: (comentario) => {
+          console.log(this.currentUser.imagen);
+          comentario.imagenCorredor = this.baseUrl + this.currentUser.imagen;
           comentario.nombreCorredor =
             this.currentUser.nombre + ' ' + this.currentUser.apellido;
           this.comentarios.push(comentario);
-          console.log(comentario);
-        });
+          console.log('comentario:', comentario);
+          this.errorMessage = ''; // Limpiar el mensaje de error en caso de éxito
+        },
+        error: (error) => {
+          this.errorMessage = 'Error al crear el comentario: ' + error.message;
+        },
+      });
       this.comentarioForm.reset();
       this.toggleFormulario();
     }
@@ -105,6 +113,11 @@ export class ComentariosComponent implements OnInit {
         .getComentarios(this.eventoId)
         .subscribe((data: Comentario[]) => {
           this.comentarios = data;
+          this.comentarios = data.map((comentario) => {
+            // Si el backend proporciona una ruta relativa, la concatenamos con la URL base
+            comentario.imagenCorredor = `${this.baseUrl}${comentario.imagenCorredor}`;
+            return comentario;
+          });
         });
     }
   }

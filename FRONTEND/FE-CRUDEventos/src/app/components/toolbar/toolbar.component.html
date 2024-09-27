@@ -5,6 +5,7 @@
   </div>
   <nav>
     <!-- CORREDOR=1 -->
+    <ng-container *ngIf="!isLoginPage">
     <ng-container *ngIf="userRole === 1">
       <ul>
         <li (click)="navegar('inicio')" [ngClass]="{seleccionado: seleccionado[0]}">Inicio</li>
@@ -15,6 +16,7 @@
         </ng-container>
       </ul>
     </ng-container>
+  </ng-container>
     <!-- VOLUNTARIO=3 -->
     <ng-container *ngIf="userRole === 3">
       <ul>

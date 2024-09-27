@@ -4,6 +4,7 @@ export interface Comentario {
   contenido: string;
   nombreCorredor: string;
   corredorID: number;
+  imagenCorredor: string;
 }
 export interface ComentarioNuevo {
   fechaHora: string;

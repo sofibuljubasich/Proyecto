@@ -24,7 +24,6 @@ declare const MercadoPago: any;
   styleUrl: './inscripcion.component.css',
 })
 export class InscripcionComponent {
-
   eventoData!: EventoResponse;
   id!: number;
   fecha!: string;
@@ -42,8 +41,8 @@ export class InscripcionComponent {
   preferenceId!: any;
 
   metodosPago = [
-    { value: 'efectivo', viewValue: 'Efectivo' },
-    { value: 'mercado pago', viewValue: 'Mercado Pago' },
+    { value: 'Efectivo', viewValue: 'Efectivo' },
+    { value: 'Mercado Pago', viewValue: 'Mercado Pago' },
   ];
   talles = [
     { value: 'S', viewValue: 'S' },
@@ -52,7 +51,6 @@ export class InscripcionComponent {
     { value: 'XL', viewValue: 'XL' },
   ];
   mp: any;
-
 
   constructor(
     private _eventoService: EventoService,
@@ -71,7 +69,7 @@ export class InscripcionComponent {
 
   ngOnInit(): void {
     this.mp = new MercadoPago('APP_USR-136e7dcf-f8a5-4da2-9373-8ef757b3954a', {
-      locale: 'es-AR' // Configura tu región
+      locale: 'es-AR', // Configura tu región
     });
     this.obtenerEvento();
     this.obtenerCorredor();
@@ -88,7 +86,7 @@ export class InscripcionComponent {
   }
   obtenerEvento(): void {
     this._eventoService.getEvento(this.id).subscribe((data) => {
-      console.log("data",data);
+      console.log('data', data);
       this.eventoData = data;
       this.imagenURL = `https://localhost:7296${this.eventoData.evento.imagen}`;
       this.eventoData.evento.nombre = this.capitalizeFirstLetter(
@@ -97,7 +95,7 @@ export class InscripcionComponent {
       this.obtenerCorredor();
     });
   }
-  obtenerCorredor():void{
+  obtenerCorredor(): void {
     this._authService.userId$.subscribe((userId) => {
       console.log('id', userId);
       // this.userID = userId;
@@ -106,7 +104,7 @@ export class InscripcionComponent {
           next: (user) => {
             this.currentUser = user;
             this.age = this._corredorService.getUserAge(this.currentUser);
-            console.log("edad",this.age);
+            console.log('edad', this.age);
             if (this.age != null) {
               this.getCategoryByAge(this.age);
             }
@@ -125,10 +123,9 @@ export class InscripcionComponent {
     this.categoria =
       this.eventoData.categorias.find(
         (categoria) => age >= categoria.edadInicio && age <= categoria.edadFin
-      )|| null;
-    
+      ) || null;
   }
-  
+
   // Método para generar el botón de pago
   pagar() {
     if (!this.talleSelect || !this.distanciaSelect || !this.pagoSelect) {
@@ -137,33 +134,41 @@ export class InscripcionComponent {
       return;
     }
     const distanciaS = this.eventoData.distancias.find(
-      (evento) => evento.km === this.distanciaSelect
+      (evento) => evento.distanciaID === this.distanciaSelect
     );
 
     const producto = {
       title: this.eventoData.evento.nombre,
       quantity: 1,
-      unitPrice: Number(distanciaS!.precio)
+      unitPrice: Number(distanciaS!.precio),
     };
-    this._paymentService.createPreference(producto).subscribe((response: any) => {
-      console.log(response);
-      this.preferenceId = response.id; // El ID de la preferencia creada
+    this._paymentService.createPreference(producto).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.preferenceId = response.id; // El ID de la preferencia creada
 
-      // Integrar Mercado Pago Checkout Pro
-      const mp = new MercadoPago('APP_USR-136e7dcf-f8a5-4da2-9373-8ef757b3954a', {
-        locale: 'es-AR'
-      });
+        // Integrar Mercado Pago Checkout Pro
+        const mp = new MercadoPago(
+          'APP_USR-136e7dcf-f8a5-4da2-9373-8ef757b3954a',
+          {
+            locale: 'es-AR',
+          }
+        );
 
-      mp.checkout({
-        preference: {
-          id: this.preferenceId
-        },
-        autoOpen: true // Abrir el checkout inmediatamente
-      });
-      this.onInscribirse()
-    }, error => {
-      console.error('Error al crear la preferencia:', error);
-    });
+        mp.checkout({
+          preference: {
+            id: this.preferenceId,
+          },
+          autoOpen: true, // Abrir el checkout inmediatamente
+          onSuccess: (payment: any) => {
+            this.onInscribirse();
+          },
+        });
+      },
+      (error) => {
+        console.error('Error al crear la preferencia:', error);
+      }
+    );
   }
   onInscribirse(): void {
     if (!this.talleSelect || !this.distanciaSelect || !this.pagoSelect) {
@@ -172,21 +177,25 @@ export class InscripcionComponent {
       return;
     }
     const distanciaS = this.eventoData.distancias.find(
-      (evento) => evento.km === this.distanciaSelect
+      (evento) => evento.distanciaID === this.distanciaSelect
     );
+    const estado = 'Pendiente';
+    if (this.pagoSelect != 'Efectivo') {
+      const estado = 'Pagado';
+    }
 
     const inscripcionData = {
       remera: this.talleSelect,
       formaPago: this.pagoSelect,
-      estadoPago: 'Pendiente',
-      distanciaID: distanciaS!.id,
+      estadoPago: estado,
+      distanciaID: this.distanciaSelect,
       // usuarioID: 10,
       usuarioID: this.currentUser.id,
       precio: distanciaS!.precio,
       eventoID: this.eventoData.evento.id,
-      nroTransaccion: this.preferenceId
+      nroTransaccion: this.preferenceId,
     };
-    console.log(inscripcionData)
+    console.log(inscripcionData);
     this._inscripcionService.inscribir(inscripcionData).subscribe(
       (response) => {
         this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {
