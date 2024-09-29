@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BE.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -45,17 +47,39 @@ public class WebhookController : ControllerBase
 
         // Verificar el estado del pago
         string status = paymentDetails.status;
+        string inscripID = paymentDetails.external_reference;
+
         if (status == "approved")
         {
-            // Lógica para manejar un pago aprobado
+           
+
+            //Registrar inscripcion en BD
+            await RegistrarPago(inscripID, "Aprobado");
+
+
         }
         else if (status == "pending")
         {
-            // Lógica para pagos pendientes
+            await RegistrarPago(inscripID, "Pendiente de Aprobación");
         }
         else if (status == "rejected")
         {
-            // Lógica para pagos rechazados
+            await RegistrarPago(inscripID, "Rechazado");
         }
     }
-}
+
+    private async Task RegistrarPago(string inscripID, string estadoPago)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            string url = $"https://tuservidor/api/ActualizarPago/{inscripID}"; // Cambia por la URL de tu API
+            var content = new StringContent($"\"{estadoPago}\"", Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PatchAsync(url, content);
+
+        }
+
+
+
+        }
+    }

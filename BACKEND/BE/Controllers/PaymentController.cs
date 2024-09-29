@@ -27,20 +27,21 @@ namespace BE.Controllers
             {
                 items = new[]
                 {
-            new
-            {
-                title = product.Title,
-                quantity = product.Quantity,
-                unit_price = product.UnitPrice
-            }
-        },
+                    new
+                    {
+                        title = product.Title,
+                        quantity = product.Quantity,
+                        unit_price = product.UnitPrice
+                    }
+                },
                 back_urls = new
                 {
                     success = "https://localhost:4200/pago-exitoso",
                     failure = "https://localhost:4200/pago-rechazado?inscripcion",
                     pending = "https://localhost:4200/pago-pendiente?inscripcion"
                 },
-                auto_return = "approved"
+                auto_return = "approved",
+                external_referencia = product.InscripcionID
             };
 
             // Crear la solicitud HTTP a Mercado Pago

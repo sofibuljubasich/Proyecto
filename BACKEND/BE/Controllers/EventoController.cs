@@ -637,8 +637,8 @@ namespace BE.Controllers
 
         }
 
-        [HttpPost, Route("CargarResultados")]
-        public async Task<IActionResult> Cargar(IFormFile file)
+        [HttpPost, Route("CargarResultados/{eventoID}")]
+        public async Task<IActionResult> Cargar(IFormFile file, int eventoID)
         {
             {
                 Stream stream = file.OpenReadStream();
@@ -669,9 +669,7 @@ namespace BE.Controllers
                     var PosicionCategoria = fila.GetCell(1).ToString();
                     var PosicionGeneral = fila.GetCell(2).ToString();
                     var Tiempo = fila.GetCell(3).ToString();
-                    var evento = fila.GetCell(4).ToString();
-
-                    int eventoID = int.Parse(evento);
+                   
                     int corredorID = int.Parse(corredor);
                     int tiempo = int.Parse(Tiempo);
                     await _eventoRepository.CargarResultado(eventoID, corredorID, PosicionCategoria, PosicionGeneral, tiempo);

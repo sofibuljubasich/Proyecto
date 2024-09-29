@@ -8,7 +8,7 @@
         public decimal UnitPrice { get; set; }
 
 
-
+        public int InscripcionID { get; set; }  
     }
 
 
