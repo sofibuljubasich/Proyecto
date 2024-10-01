@@ -29,6 +29,12 @@ namespace BE.Repository
             return await _context.Corredores.Include(c => c.Rol).FirstOrDefaultAsync(c=>c.ID == id); ;
         }
 
+
+        public async Task<Corredor> GetCorredorByDni(string dni)
+        {
+            return await _context.Corredores.SingleOrDefaultAsync(c => c.Dni == dni);
+
+        }
         public async Task<Corredor> CreateCorredor(Corredor corredor)
         {
             _context.Corredores.Add(corredor);
@@ -36,6 +42,7 @@ namespace BE.Repository
             await _context.SaveChangesAsync();
             return corredor;
         }
+
 
         public async Task UpdateCorredor(Corredor corredor)
         {

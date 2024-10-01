@@ -3,6 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
+using BE.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Text;
+
 [ApiController]
 [Route("api/[controller]")]
 public class WebhookController : ControllerBase
@@ -13,10 +18,30 @@ public class WebhookController : ControllerBase
         // Leer el cuerpo de la solicitud
         string requestBody = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
 
-        // Parsear la información recibida
-        var webhookEvent = JsonConvert.DeserializeObject<dynamic>(requestBody);
+        // Verificar que el cuerpo de la solicitud no esté vacío
+        if (string.IsNullOrWhiteSpace(requestBody))
+        {
+            return BadRequest("El cuerpo de la solicitud está vacío.");
+        }
 
-        // Verificar el tipo de evento recibido (por ejemplo, payment)
+        // Intentar deserializar el JSON
+        dynamic webhookEvent;
+        try
+        {
+            webhookEvent = JsonConvert.DeserializeObject<dynamic>(requestBody);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error al deserializar el cuerpo de la solicitud: {ex.Message}");
+        }
+
+        // Verificar que los campos necesarios no sean nulos
+        if (webhookEvent == null || webhookEvent.type == null || webhookEvent.data == null || webhookEvent.data.id == null)
+        {
+            return BadRequest("El evento recibido es inválido o faltan campos requeridos.");
+        }
+
+        // Parsear los valores
         string eventType = webhookEvent.type;
         long eventId = webhookEvent.data.id;
 
@@ -26,6 +51,8 @@ public class WebhookController : ControllerBase
             case "payment":
                 await ProcessPaymentEvent(eventId);
                 break;
+            default:
+                return BadRequest($"Tipo de evento no soportado: {eventType}");
         }
 
         // Responder con 200 OK
@@ -37,7 +64,7 @@ public class WebhookController : ControllerBase
         // Llamar a la API de Mercado Pago para obtener los detalles del pago
         string url = $"https://api.mercadopago.com/v1/payments/{paymentId}";
         var client = new HttpClient();
-        client.DefaultRequestHeaders.Add("Authorization", "Bearer  APP_USR-45478970418305-091719-b79bcd32d2ff0734b06c20e40b59e4f7-1928410126");
+        client.DefaultRequestHeaders.Add("Authorization", "Bearer APP_USR-XXXXXX");
 
         var response = await client.GetAsync(url);
         response.EnsureSuccessStatusCode();
@@ -45,18 +72,20 @@ public class WebhookController : ControllerBase
         var responseBody = await response.Content.ReadAsStringAsync();
         var paymentDetails = JsonConvert.DeserializeObject<dynamic>(responseBody);
 
+        // Verificar que los detalles del pago no sean nulos
+        if (paymentDetails == null || paymentDetails.status == null || paymentDetails.external_reference == null)
+        {
+            throw new Exception("Error: no se pudieron obtener los detalles del pago.");
+        }
+
         // Verificar el estado del pago
         string status = paymentDetails.status;
         string inscripID = paymentDetails.external_reference;
 
         if (status == "approved")
         {
-           
-
-            //Registrar inscripcion en BD
+            // Registrar inscripcion en BD
             await RegistrarPago(inscripID, "Aprobado");
-
-
         }
         else if (status == "pending")
         {
@@ -77,9 +106,11 @@ public class WebhookController : ControllerBase
 
             HttpResponseMessage response = await client.PatchAsync(url, content);
 
-        }
-
-
-
+            // Verificar si la llamada al servicio fue exitosa
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al registrar el pago: {response.ReasonPhrase}");
+            }
         }
     }
+}

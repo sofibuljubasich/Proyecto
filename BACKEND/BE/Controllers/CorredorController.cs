@@ -29,12 +29,12 @@ namespace BE.Controllers
 
 
 
-        [HttpGet("{corredorID}")]
-        public async Task<IActionResult> Get(int corredorID)
+        [HttpGet("{Dni}")]
+        public async Task<IActionResult> GetByDni(string Dni)
         {
             try
             {
-                var corredor = await _corredorRepository.GetCorredor(corredorID);
+                var corredor = await _corredorRepository.GetCorredorByDni(Dni);
 
                 if (corredor == null)
                 {
@@ -55,6 +55,31 @@ namespace BE.Controllers
             }
         }
 
+        [HttpGet("{corredorID}")]
+        public async Task<IActionResult> Get(int corredorID)
+        {
+            try
+            {
+                var corredor = await _corredorRepository.GetCorredor(corredorID);
+
+                if (corredor == null)
+                {
+                    return NotFound();
+                }
+
+                var corredorDto = _mapper.Map<CorredorGetDto>(corredor);
+
+
+
+                return Ok(corredorDto);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPut("{corredorID}")]
         public async Task<IActionResult> Update(int corredorID, [FromBody]CorredorUpdateDto corredorDto)
         {

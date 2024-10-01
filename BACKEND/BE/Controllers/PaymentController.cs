@@ -41,7 +41,8 @@ namespace BE.Controllers
                     pending = "https://localhost:4200/pago-pendiente?inscripcion"
                 },
                 auto_return = "approved",
-                external_referencia = product.InscripcionID
+                external_referencia = product.InscripcionID,
+                notification_url = "https://13c3-2803-9800-98c4-88d3-fdb1-96d8-3d32-ceca.ngrok-free.app/api/Webhook"
             };
 
             // Crear la solicitud HTTP a Mercado Pago
