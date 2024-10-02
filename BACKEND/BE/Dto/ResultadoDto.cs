@@ -19,7 +19,7 @@ namespace BE.Dto
 
         public string? PosicionCategoria { get; set; }
 
-        public int? Tiempo { get; set; }
+        public string? Tiempo { get; set; }
 
         [ForeignKey("Distancia")]
 

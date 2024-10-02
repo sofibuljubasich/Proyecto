@@ -25,5 +25,6 @@ namespace BE.Interfaces
         Task DeleteUsuario(Usuario usuario);
         bool CheckIfUserExists(string email);
         Usuario? Validate(string userEmail, string password);
+        Task ChangePasswordAsync(string email, string newPasswordHash);
     }
 }

@@ -22,7 +22,7 @@ namespace BE.Models
         public string? PosicionGeneral { get; set; }
         public string? PosicionCategoria { get; set; }
 
-        public int? Tiempo { get; set; }
+        public string? Tiempo { get; set; }
 
         [ForeignKey("Distancia")]
 

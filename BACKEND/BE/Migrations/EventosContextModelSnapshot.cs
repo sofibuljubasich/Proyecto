@@ -199,8 +199,8 @@ namespace BE.Migrations
                     b.Property<string>("Remera")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Tiempo")
-                        .HasColumnType("int");
+                    b.Property<string>("Tiempo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UsuarioID")
                         .HasColumnType("int");

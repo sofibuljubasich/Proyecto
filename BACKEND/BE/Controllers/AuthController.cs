@@ -172,5 +172,38 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto model)
+        {
+            try
+            {
+                // Obtener el usuario por su email
+                var user = await _userRepository.GetUsuarioByEmail(model.Email);
+
+                if (user == null)
+                {
+                    return BadRequest("Usuario no encontrado");
+                }
+
+                // Verificar que la contraseña actual sea correcta
+                if (!BCrypt.Net.BCrypt.Verify(model.CurrentPassword, user.Password))
+                {
+                    return BadRequest("La contraseña actual es incorrecta");
+                }
+
+                // Hash de la nueva contraseña
+                var newPasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
+
+                // Actualizar la contraseña del usuario
+                await _userRepository.ChangePasswordAsync(user.Email, newPasswordHash);
+
+                return Ok("Contraseña cambiada con éxito");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace BE.Interfaces
            eventoID,int
            corredorID,string?
            posicionCat,string?
-           posicionGral,int?
+           posicionGral,string?
            tiempo);
 
 

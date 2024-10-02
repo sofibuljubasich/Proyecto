@@ -160,7 +160,7 @@ namespace BE.Repository
             return emails;
         }
 
-        public async Task CargarResultado(int eventoID, int corredorID, string? posicionCat, string? posicionGral, int? tiempo)
+        public async Task CargarResultado(int eventoID, int corredorID, string? posicionCat, string? posicionGral, string? tiempo)
         {
             var inscrip = await _context.Inscripciones.SingleOrDefaultAsync(i => i.EventoID == eventoID && i.Corredor.ID == corredorID);
 

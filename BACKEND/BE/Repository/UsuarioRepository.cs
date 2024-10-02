@@ -48,7 +48,23 @@ namespace BE.Repository
            
         }
 
-     
+        public async Task ChangePasswordAsync(string email, string newPasswordHash)
+        {
+            // Buscar al usuario por email
+            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                throw new Exception("Usuario no encontrado");
+            }
+
+            // Actualizar el hash de la contraseña
+            user.Password = newPasswordHash;
+
+            // Guardar los cambios en la base de datos
+            _context.Usuarios.Update(user);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task UpdateUsuario(Usuario usuario)
         {

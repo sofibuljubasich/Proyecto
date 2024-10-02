@@ -671,8 +671,11 @@ namespace BE.Controllers
                     var Tiempo = fila.GetCell(3).ToString();
                    
                     int corredorID = int.Parse(corredor);
-                    int tiempo = int.Parse(Tiempo);
-                    await _eventoRepository.CargarResultado(eventoID, corredorID, PosicionCategoria, PosicionGeneral, tiempo);
+                    //TimeSpan tiempo = int.Parse(Tiempo);
+
+
+                   
+                  await _eventoRepository.CargarResultado(eventoID, corredorID, PosicionCategoria, PosicionGeneral, Tiempo);
 
                 }
 
