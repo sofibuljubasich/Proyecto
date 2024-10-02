@@ -22,7 +22,7 @@ namespace BE.Dto
 
         public string? Posicion { get; set; }
 
-        public int? Tiempo { get; set; }
+        public string? Tiempo { get; set; }
 
         public decimal Precio { get; set; } 
 
