@@ -65,6 +65,17 @@ export class AuthService {
       );
   }
 
+  resetPassword(userData:any):Observable<string> {
+
+    return this.http
+      .post<string>(`${this.myAppUrl}${this.myApiUrl}/reset-password`, userData, { responseType: 'text' as 'json' })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  changePassword(email:string, currentPassword: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.myAppUrl}${this.myApiUrl}/change-password`, { email, currentPassword, newPassword });
+  }
 
   logout(): void {
     this.userIdSubject.next(null);

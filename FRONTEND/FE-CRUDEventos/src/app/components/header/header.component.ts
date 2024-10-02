@@ -45,4 +45,8 @@ export class HeaderComponent {
     this._authService.logout();
     this.router.navigate(['/login']);
   }
+  change():void {
+    console.log('hola')
+    this.router.navigate(['/change-password']);
+  }
 }

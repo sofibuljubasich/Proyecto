@@ -1,0 +1,67 @@
+.container {
+
+    content: '';
+    padding-top: 100px;
+    position: absolute;
+    background-color:rgb(9, 33, 43);
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    max-height: fit-content;
+    /* height: 100%; */
+    background-size: cover;
+    background-attachment: fixed;
+    /* z-index: -1; Asegura que el pseudo-elemento esté detrás del contenido */
+    background-repeat: no-repeat;
+  }
+
+  .file-upload-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%;
+  }
+  .main{
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  input[type="file"] {
+    margin-bottom: 10px;
+    color: rgb(165, 165, 165);
+  }
+  
+  h2{color: white;}
+  .vista-previa{
+    height: 300px;
+    padding: 20px;
+    background-color: rgb(185, 185, 185);
+  }
+  .custom-icon{
+  font-size: 5rem; /* Ajusta este valor para cambiar el tamaño del icono */
+  vertical-align: middle; /* Alinea el icono verticalmente con el texto */
+
+  line-height: 1;
+  width: auto;
+  height: auto;
+  color: #34A853;
+}
+button{
+    margin-top: 10px;
+    width: 15%;
+  padding: 5px;
+  background-color:#419197;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
+button:disabled {
+    background-color: gray; /* Color gris para el estado deshabilitado */
+    color: darkgray; /* Color del texto en gris */
+    cursor: not-allowed; /* Cambia el cursor a "no permitido" */
+  }

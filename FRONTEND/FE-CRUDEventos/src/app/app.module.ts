@@ -33,6 +33,7 @@ import { EventosVolComponent } from './pages/voluntario/eventos-vol/eventos-vol.
 import { TareasAsignadasComponent } from './pages/voluntario/tareas-asignadas/tareas-asignadas.component';
 import { ChatsComponent } from './pages/chats/chats.component';
 import { ChatComponent } from './pages/chat/chat.component';
+import { EmailPopupComponent } from './components/email-popup/email-popup.component';
 
 import { ABMEventosComponent } from './pages/admin/abm-eventos/abm-eventos.component';
 import { AbmColaboradoresComponent } from './pages/admin/abm-colaboradores/abm-colaboradores.component';
@@ -44,6 +45,7 @@ import { VistaTareasComponent } from './pages/admin/vista-tareas/vista-tareas.co
 import { TareasComponent } from './pages/admin/tareas/tareas.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { MisEventosComponent } from './pages/corredor/mis-eventos/mis-eventos.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -89,6 +91,8 @@ import { DatePipe } from '@angular/common';
     TareasComponent,
     ResetPasswordComponent,
     MisEventosComponent,
+    EmailPopupComponent,
+    ChangePasswordComponent
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

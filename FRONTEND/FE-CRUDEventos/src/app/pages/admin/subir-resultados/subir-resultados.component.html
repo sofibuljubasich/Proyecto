@@ -1,1 +1,18 @@
-<p>subir-resultados works!</p>
+<div class="container">
+    <main class="main">
+        <div class="file-upload-container">
+            <h2>Cargar Archivo Excel</h2>
+            <input type="file" (change)="onFileSelected($event)" accept=".xls,.xlsx" />
+            <div  class="vista-previa">
+                <ng-container *ngIf="file">
+                    <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="description"></mat-icon>
+                    <p> {{ file.name }}</p>
+                    <p>Tamaño: {{ file.size / 1024 | number: '1.0-0' }} KB</p>
+                </ng-container>
+            </div>
+            <button (click)="uploadFile()" [disabled]="!file">Cargar</button>
+          </div>
+    </main>
+</div>
+
+

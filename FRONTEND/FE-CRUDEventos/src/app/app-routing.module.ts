@@ -30,12 +30,14 @@ import { TareasComponent } from './pages/admin/tareas/tareas.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { MisEventosComponent } from './pages/corredor/mis-eventos/mis-eventos.component';
 import { PagoExitosoComponent } from './pages/pago-exitoso/pago-exitoso.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'change-password', component: ChangePasswordComponent },
   { path: 'pago-exitoso', component: PagoExitosoComponent },
   // CORREDOR
   { path: 'inicio', component: PagPrincipalComponent },
