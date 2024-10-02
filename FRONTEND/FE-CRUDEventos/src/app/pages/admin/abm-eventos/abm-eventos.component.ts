@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { EmailPopupComponent } from 'src/app/components/email-popup/email-popup.component';
 import { Busqueda } from 'src/app/interfaces/busqueda';
 import { EventoResponse } from 'src/app/interfaces/evento';
 import { AuthService } from 'src/app/services/auth.service';
@@ -39,7 +41,8 @@ export class ABMEventosComponent {
     private _tipoService: TipoEventoService,
     private _authService: AuthService,
     private _userService: UserService,
-    private aRoute: ActivatedRoute
+    private aRoute: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +57,13 @@ export class ABMEventosComponent {
         console.log(this.eventos);
         //this.filtrarEventos(this.eventos);
       });
+  }
+  enviarMail(id:number){
+    console.log(id)
+    const dialogRef = this.dialog.open(EmailPopupComponent, {
+      data: { id } // Pasa el eventoID al popup
+    });
+
   }
 
   parametrosBusqueda: Busqueda = {

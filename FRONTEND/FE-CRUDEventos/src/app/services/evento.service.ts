@@ -61,6 +61,14 @@ export class EventoService {
     );
   }
 
+  cargarResultados(eventoID: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post(`${this.myAppUrl}${this.myApiUrl}CargarResultados/${eventoID}`, formData);
+  }
+
+
   // Eliminar un evento por su ID
   deleteEvento(eventoId: number): Observable<any> {
     return this.http.delete(`${this.myAppUrl}${this.myApiUrl}${eventoId}`);
@@ -75,7 +83,12 @@ export class EventoService {
   getLugares(): Observable<string[]> {
     return this.http.get<string[]>(`${this.myAppUrl}${this.myApiUrl}Lugares`);
   }
-
+  enviarEmail(eventoID: number, asunto: string, mensaje: string): Observable<any> {
+    return this.http.post(`${this.myAppUrl}${this.myApiUrl}EnviarEmail/${eventoID}`, null, {
+      params: { asunto, mensaje },
+       responseType: 'text' as 'json'
+    });
+  }
   buscar(filtros:Busqueda): Observable<any[]>{
     let params= new HttpParams();
     if (filtros.texto){
