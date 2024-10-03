@@ -12,8 +12,11 @@ export class CorredorService {
   private myAppUrl: string = environment.endpoint;
   private myApiUrl: string = 'api/Corredor';
 
+  getCorredorByDni(dni: string): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.myAppUrl}${this.myApiUrl}/${dni}`);
+  }
   getCorredor(id: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
+    return this.http.get<Usuario>(`${this.myAppUrl}${this.myApiUrl}/GetCorredor/${id}`);
   }
   getUserAge(currentUser: Usuario): number | null {
     console.log('fechaNac', currentUser.fechaNacimiento);

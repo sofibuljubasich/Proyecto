@@ -29,7 +29,7 @@ export class EventoService {
   }
   getResultados(id: number): Observable<TablaResultados[]> {
     return this.http.get<TablaResultados[]>(
-      `${this.myAppUrl}${this.myApiUrl}$resultados/${id}`
+      `${this.myAppUrl}${this.myApiUrl}resultados/${id}`
     );
   }
   getInscriptos(id: number): Observable<Inscrito[]> {

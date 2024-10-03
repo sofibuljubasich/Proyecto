@@ -17,6 +17,7 @@ export class ChangePasswordComponent {
   changePasswordForm: FormGroup;
   showError: boolean = false;
   errorMessage: string | null = null;
+  loginData = { email: '',currentPassword: '', newPassword: '' };
 
   constructor(
     private _authService: AuthService,
@@ -54,8 +55,11 @@ export class ChangePasswordComponent {
 
   onSubmit(): void {
     if (this.changePasswordForm.valid) {
-      const { currentPassword, newPassword } = this.changePasswordForm.value;
-      this._authService.changePassword(this.currentUser.email,currentPassword, newPassword)
+      this.loginData.email = this.currentUser.email; 
+      this.loginData.currentPassword = this.changePasswordForm.value.currentPassword;
+      this.loginData.newPassword = this.changePasswordForm.value.newPassword;
+      console.log(this.loginData)
+      this._authService.changePassword(this.loginData)
         .subscribe({
           next: (response) => {
             console.log('Autenticado con éxito:', response);

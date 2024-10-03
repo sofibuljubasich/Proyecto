@@ -55,7 +55,7 @@ namespace BE.Controllers
             }
         }
 
-        [HttpGet("{corredorID}")]
+        [HttpGet("GetCorredor/{corredorID}")]
         public async Task<IActionResult> Get(int corredorID)
         {
             try

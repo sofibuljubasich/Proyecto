@@ -73,8 +73,11 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
-  changePassword(email:string, currentPassword: string, newPassword: string): Observable<any> {
-    return this.http.post(`${this.myAppUrl}${this.myApiUrl}/change-password`, { email, currentPassword, newPassword });
+  changePassword(userData:any): Observable<string> {
+    return this.http.post<string>(`${this.myAppUrl}${this.myApiUrl}/change-password`,userData, { responseType: 'text' as 'json' })
+    .pipe(
+      catchError(this.handleError)
+    );
   }
 
   logout(): void {
@@ -112,11 +115,12 @@ export class AuthService {
         errorMessage = Object.values(error.error.errors).join(', ');
       } else {
         // Otros errores del servidor
-        errorMessage = error.error.message || 'Error desconocido';
+        errorMessage = error.error.message || JSON.stringify(error.error);
       }
     }
     return throwError(() => new Error(errorMessage));
   }
+  
 
 
   getUserAge(): number | null {
