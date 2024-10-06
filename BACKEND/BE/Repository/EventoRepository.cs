@@ -86,11 +86,23 @@ namespace BE.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<List<Inscripcion>> GetResultados(int idEvento)
+        /*public async Task<List<Inscripcion>> GetResultados(int idEvento)
         {
             var ins = await _context.Inscripciones.Where(i => i.EventoID == idEvento).ToListAsync();
             return ins;
-        }
+        }*/
+
+        public async Task<List<Inscripcion>> GetResultados(int idEvento)
+{
+    var ins = await _context.Inscripciones
+        .Include(i => i.Corredor)        // Incluye la entidad Corredor
+        .Include(i => i.Distancia)       // Incluye la entidad Distancia
+        .Where(i => i.EventoID == idEvento)
+        .ToListAsync();
+
+    return ins;
+}
+
 
         public async Task UpdateStatus(int eventoID, string estado)
         {
