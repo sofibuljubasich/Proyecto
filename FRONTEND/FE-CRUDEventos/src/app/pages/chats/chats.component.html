@@ -3,9 +3,12 @@
         <!--<form #buscarForm="ngForm" (change)="">-->
             <section class="buscador">      
                 <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
-                <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
+                <!-- <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off"> -->
                 <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
             </section>
+            <div style="justify-content: end; padding-right: 10%;display: flex; padding-bottom: 15px;">
+              <button routerLink="/altaChat" class="agregar-button"> +   Nuevo chat</button>
+            </div>
         <!--</form>-->
         <!-- <div class="evento-wrapper"> -->
             <div class="evento-container">
@@ -14,14 +17,14 @@
                   <div class="evento-content">
                     <div class="evento-sec">
                       <div class="evento">
-                        <div class="card" routerLink="/chat/{{chat.idChat}}">
+                        <div class="card" routerLink="/chat/{{chat.destinatarioID}}">
       
-                            <img [src]="chat.foto" alt="Event Image" class="foto-perfil">
+                            <img [src]="chat.destinatario.imagen" alt="Event Image" class="foto-perfil">
                             <div class="contenido">
-                                    <div class="nombre">{{chat.idEmisor}}</div>
+                                    <div class="nombre">{{chat.remitenteID}}</div>
                                     <div class="texto">{{ chat.mensajes[0].contenido }}</div>
-                                    <div class="fecha">{{ chat.mensajes[0].fechaHora | date:'dd/MM/yyyy HH:mm' }} </div>
-
+                                    <div class="fecha">{{ chat.mensajes[0].fechaHoraEnvio | date:'dd/MM/yyyy HH:mm' }} </div>
+                                    <span *ngIf="chat.cantidadSinLeer > 0" class="unread-indicator">●</span>
                               </div>
                               
                           </div>

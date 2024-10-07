@@ -25,6 +25,7 @@
   .chat-image {
     width: 100px;
     height: 100px;
+    object-fit: cover;
     border-radius: 50%;
     margin-right: 10px;
   }
@@ -35,6 +36,7 @@
         font-size: 30px;
         font-weight: 700;
         margin-top: 10px;
+        color: aliceblue;
     }
     .dia{
         margin-top: 50px;
@@ -45,7 +47,7 @@
   
   .chat-messages {
     margin-top: 0px;
-    padding: 0 20%;
+    padding: 0px 10%;
     color: rgb(0, 0, 0);
     overflow-y: auto;
     height: 300px;
@@ -54,6 +56,9 @@
     background-color: white;
     align-self: flex-end;
     border: 1px solid #ddd;
+    margin: 5px 0px 5px 20%;
+  text-align: right;
+    
   }
   
   .from-others {
@@ -61,13 +66,10 @@
     color: white;
     align-self: flex-start;
     .hora{
-        text-align: left;
         color: rgb(46, 46, 46);
       }
-    .message{
-        text-align: left;
-        /* color: grey; */
-    }
+      margin: 5px 20% 5px 0px;
+      text-align: left;
     border: 1px solid #0056b3; /* Azul oscuro para el borde */
   }
   .message::after {
@@ -91,8 +93,9 @@
   }  
   .message {
     border-bottom: 1px solid black;
-    margin: 10px 0px;
-    border-radius: 15px
+    /* margin: 10px 0px; */
+    border-radius: 15px;
+    padding: 1px 15px
   }
   
   .message p {

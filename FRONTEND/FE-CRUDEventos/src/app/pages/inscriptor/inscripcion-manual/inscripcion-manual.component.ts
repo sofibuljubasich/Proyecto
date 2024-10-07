@@ -41,6 +41,7 @@ export class InscripcionManualComponent {
   emailControl = new FormControl();
   selectedEmail: string = '';
   idCorredor: number | null = null;
+  imagenURL!: string;
 
   metodosPago = [
     { value: 'efectivo', viewValue: 'Efectivo' },
@@ -80,6 +81,7 @@ export class InscripcionManualComponent {
   loadUsers(): void {
     this._userService.getUsuarios().subscribe((users) => {
       this.usuarios = users.filter((corredor) => corredor.rolID === 1);
+      console.log(this.usuarios);
       this.filteredUsuarios = this.emailControl.valueChanges.pipe(
         startWith(''),
         map((value) => this._filter(value))
@@ -117,6 +119,7 @@ export class InscripcionManualComponent {
   obtenerEvento(): void {
     this._eventoService.getEvento(this.id).subscribe((data) => {
       this.eventoData = data;
+      this.imagenURL = `https://localhost:7296${this.eventoData.evento.imagen}`;
       this.eventoData.evento.nombre = this.capitalizeFirstLetter(
         data.evento.nombre
       );

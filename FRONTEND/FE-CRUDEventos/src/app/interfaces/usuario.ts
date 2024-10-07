@@ -1,3 +1,5 @@
+import { Categoria } from './evento';
+
 export interface UsuarioEnviado {
   email: string;
   password: string;
@@ -46,6 +48,7 @@ export interface Inscrito {
   posicion: number | null;
   tiempo: string | null;
   precio: number;
+  categoria: Categoria;
   distancia: Distancia;
   corredor: Corredor;
   acreditado: boolean;

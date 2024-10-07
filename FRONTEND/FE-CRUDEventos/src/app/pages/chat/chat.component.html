@@ -1,28 +1,29 @@
 
 <div class="fondo">
     <div class="signup-container">
-        <div *ngIf="chat">
-            <div class="chat-header">
-              <img [src]="chat.foto" alt="Foto del chat" class="chat-image" />
+            <div class="chat-header" *ngIf="otro">
+              <img [src]="imagenURL" alt="Foto del chat" class="chat-image" />
               <div class="chat-info">
-                <p class="nombre"><strong> {{ chat.idEmisor }}</strong></p>
-                <p class="dia">{{ chat.mensajes[0].fechaHora| date:'dd/MM/yyyy' }}</p>
+                <p class="nombre"><strong> {{ otro.nombre }} {{ otro.apellido }}</strong></p>
+                <!-- <p class="dia">{{ chat.mensajes[0].fechaHoraEnvio| date:'dd/MM/yyyy' }}</p> -->
               </div>
             </div>
-          
+          <ng-container *ngIf="mensajes">
             <div class="chat-messages" #messagesContainer>
-                <div *ngFor="let mensaje of chat.mensajes" class="message" [ngClass]="{'from-me': mensaje.idEmisor === 5, 'from-others': mensaje.idEmisor !== 5}">
-                <!-- <p><strong>ID Emisor:</strong> {{ mensaje.idEmisor }}</p> -->
-                <p class="msj"> {{ mensaje.contenido }}</p>
-                <p class="hora">{{ mensaje.fechaHora | date:'HH:mm' }}</p>
-              </div>
+              <ng-container *ngFor="let mensaje of mensajes">
+                <div class="message" [ngClass]="{'from-me': mensaje.remitenteID === usuarioID, 'from-others': mensaje.remitenteID !== usuarioID}">
+                  <!-- <p><strong>ID Emisor:</strong> {{ mensaje.idEmisor }}</p> -->
+                  <p class="msj"> {{ mensaje.contenido }}</p>
+                  <p class="hora">{{ mensaje.fechaHoraEnvio | date:'HH:mm' }}</p>
+                </div>
+              </ng-container>
             </div>
+          </ng-container>
             <div class="chat-input">
                 <input [(ngModel)]="nuevoMensaje" placeholder="Escribe un mensaje..." (keydown.enter)="enviarMensaje()">
                 <button (click)="enviarMensaje()">
                   <mat-icon>send</mat-icon>
                 </button>
-              </div>
-          </div>
+            </div>
     </div>
 </div>

@@ -6,8 +6,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Chat } from 'src/app/interfaces/chat';
-import { CHAT_DATA } from 'src/app/interfaces/dato';
+import { Chat, Mensaje } from 'src/app/interfaces/chat';
+import { Usuario } from 'src/app/interfaces/usuario';
+import { AuthService } from 'src/app/services/auth.service';
+import { ChatService } from 'src/app/services/chat.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-chat',
@@ -16,46 +19,80 @@ import { CHAT_DATA } from 'src/app/interfaces/dato';
 })
 export class ChatComponent implements AfterViewChecked {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
-  chat: Chat | undefined;
-  id!: number;
+  otroId!: string;
+  otroIdN!: number;
   selectedChat: any;
   nuevoMensaje: string = '';
+  mensajes: any[] = [];
+  usuarioID!: number;
+  otro!: Usuario;
+  imagenURL!: string;
 
-  constructor(private route: ActivatedRoute) {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+  constructor(
+    private route: ActivatedRoute,
+    private _chatService: ChatService,
+    private _authService: AuthService,
+    private _userService: UserService
+  ) {
+    this.otroId = String(this.route.snapshot.paramMap.get('id'));
+    this.otroIdN = Number(this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {
-    console.log(this.id);
-    this.chat = this.getChatById(this.id);
-    console.log(this.chat);
+    this.getUsuario();
+    this.getOtro();
+    this.getMensajes();
   }
-  getChatById(id: number): Chat | undefined {
-    return CHAT_DATA.find((c) => c.idChat === id);
+  getUsuario(): void {
+    this._authService.userId$.subscribe((userId) => {
+      if (userId) {
+        this.usuarioID = Number(userId);
+      }
+    });
   }
+  getOtro(): void {
+    this._userService.getUsuario(this.otroId).subscribe((user) => {
+      this.otro = user;
+      this.imagenURL = `https://localhost:7296${user.imagen}`;
+    });
+  }
+  getMensajes(): void {
+    this._chatService.getMensajes(this.usuarioID, this.otroIdN).subscribe(
+      (data: Mensaje[]) => {
+        this.mensajes = data;
+        console.log(data);
+        console.log(this.usuarioID);
+      },
+      (error) => {
+        console.error('Error obteniendo los mensajes', error);
+      }
+    );
+  }
+
   ngAfterViewChecked(): void {
     setTimeout(() => this.scrollToBottom(), 0);
   }
 
   enviarMensaje(): void {
-    if (this.nuevoMensaje.trim().length > 0 && this.chat) {
-      console.log(this.chat);
-
-      const mensajes = this.chat.mensajes || [];
-      const nuevoId = mensajes.length
-        ? Math.max(...mensajes.map((m: { id: number }) => m.id)) + 1
-        : 1;
-
-      this.chat.mensajes.push({
-        id: nuevoId,
-        fechaHora: new Date(),
+    if (this.nuevoMensaje.trim()) {
+      const mensaje = {
+        remitenteID: this.usuarioID,
+        destinatarioID: this.otroId,
         contenido: this.nuevoMensaje,
-        idEmisor: 5, // Cambia esto según el usuario actual
-        idReceptor: this.chat.mensajes[0]?.idReceptor || 6, // Cambia esto según el receptor
-      });
-      this.nuevoMensaje = ''; // Limpiar el campo de entrada
+      };
+
+      this._chatService.sendMensaje(mensaje).subscribe(
+        (data) => {
+          this.mensajes.push(data); // Agrega el mensaje enviado a la lista de mensajes
+          this.nuevoMensaje = ''; // Limpia la barra de texto
+        },
+        (error) => {
+          console.error('Error enviando el mensaje', error);
+        }
+      );
     }
   }
+
   private scrollToBottom(): void {
     if (this.messagesContainer && this.messagesContainer.nativeElement) {
       const container = this.messagesContainer.nativeElement;

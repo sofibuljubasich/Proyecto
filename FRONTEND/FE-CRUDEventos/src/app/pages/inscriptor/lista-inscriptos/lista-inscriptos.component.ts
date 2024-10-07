@@ -50,7 +50,7 @@ export class ListaInscriptosComponent {
           mail: inscrito.corredor.email,
           genero: inscrito.corredor.genero,
           distancia: `${inscrito.distancia.km} km`,
-          categoria: inscrito.remera, // Asumiendo que "categoria" se refiere a la remera
+          categoria: `${inscrito.categoria.edadInicio} - ${inscrito.categoria.edadFin}`, // Asumiendo que "categoria" se refiere a la remera
           estado: this.normalizeEstadoPago(inscrito.estadoPago),
           metodo: inscrito.formaPago,
           entregaKit: inscrito.acreditado,

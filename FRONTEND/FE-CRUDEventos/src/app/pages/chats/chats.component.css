@@ -163,7 +163,24 @@ input:checked + .slider:before {
       .evento{
         flex: 3; /* Ocupa 3 partes del contenedor */
       }
-      
+      .unread-indicator {
+        color: red;
+        font-size: 20px;
+        margin-left: 10px;
+      }
+      .agregar-button{
+        height: auto;
+        width: 200px;
+        margin: 0px 10px;
+        color: rgb(255, 255, 255);
+        border: none;
+       margin-left: 10px;
+        border-radius: 10px;
+        padding: 10px;
+        cursor: pointer;
+        font-size: larger;
+        background-color: #1520b3;
+      }
       .tareas-button {
          /* Ocupa 1 parte del contenedor */
         margin-left: 16px; /* Espacio opcional entre el evento y el botón */
@@ -181,13 +198,7 @@ input:checked + .slider:before {
             background-color: #73e9f1;
       }
 
-      .container{
 
-        /* padding:  7px 20%; */
-        /* border-bottom: 1px solid #ccc;
-        border-top: 1px solid #ccc; */
-    
-    }
     .card{
         background-color: #419197;
         display: flex;
