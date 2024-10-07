@@ -98,6 +98,49 @@ namespace BE.Controllers
             }
         }
 
+        [HttpPut("UpdateVoluntarios/{tareaID}")]
+        public async Task<IActionResult> UpdateVoluntarios(int tareaID, List<int> voluntariosID)
+        {
+            try
+            {
+                // Buscar la tarea por ID y cargar las asignaciones de voluntarios actuales
+                var tareaVoluntarios = await _tareaVoluntarioRepository.GetVoluntariosByTarea(tareaID);
+
+                if (tareaVoluntarios == null)
+                {
+                    return NotFound("Tarea no encontrada");
+                }
+
+                // Obtener los IDs de los voluntarios actualmente asignados
+                var currentVoluntariosIds = tareaVoluntarios.Select(tv => tv.ID).ToList();
+
+                // Remover los voluntarios que ya no están en la nueva lista
+                var voluntariosToRemove = tareaVoluntarios
+                    .Where(tv => !voluntariosID.Contains(tv.ID))
+                    .ToList();
+
+                if (voluntariosToRemove.Any())
+                {
+                    await _tareaVoluntarioRepository.RemoveVoluntarios(voluntariosToRemove);
+                    // _context.TareaVoluntarios.RemoveRange(voluntariosToRemove);
+                }
+
+                // Agregar nuevos voluntarios que no estén ya asignados
+                foreach (var voluntarioID in voluntariosID)
+                {
+                    if (!currentVoluntariosIds.Contains(voluntarioID))
+                    {
+                        await _tareaVoluntarioRepository.AddVoluntario(tareaID, voluntarioID);
+
+                    }
+                }
+
+                    return Ok("Tarea actualizada");
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpGet, Route("tareas/{voluntarioID}")]
         public async Task<IActionResult> GetByVoluntario(int voluntarioID)
         {

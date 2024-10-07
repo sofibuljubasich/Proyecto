@@ -103,6 +103,22 @@ namespace BE.Services
         {
             return await _context.TareaVoluntario.FindAsync(tareaID, voluntarioID);
         }
+
+        public async Task RemoveVoluntarios(List<Voluntario> voluntarios)
+        {
+             _context.RemoveRange(voluntarios);
+                await _context.SaveChangesAsync();
+        }
+
+        public async Task AddVoluntario(int tareaID, int voluntarioID)
+        {
+            _context.Add(new TareaVoluntario
+            {
+                TareaID = tareaID,
+                VoluntarioID = voluntarioID
+            });
+            await _context.SaveChangesAsync();
+        }
     }
 }
 

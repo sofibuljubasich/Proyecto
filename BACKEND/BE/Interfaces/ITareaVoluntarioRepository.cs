@@ -18,7 +18,10 @@ namespace BE.Interfaces
         Task AddComentario(TareaVoluntario tareaVoluntario);
 
         Task AddEstado(TareaVoluntario tareaVoluntario);
+
+        Task RemoveVoluntarios(List<Voluntario> voluntarios);
         
+        Task AddVoluntario(int TareaID, int voluntarioID);  
         //Actualizar
 
         // Comentaro
