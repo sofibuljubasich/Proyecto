@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import {
   AfterContentChecked,
   AfterViewChecked,
@@ -32,7 +33,8 @@ export class ChatComponent implements AfterViewChecked {
     private route: ActivatedRoute,
     private _chatService: ChatService,
     private _authService: AuthService,
-    private _userService: UserService
+    private _userService: UserService,
+    private location: Location
   ) {
     this.otroId = String(this.route.snapshot.paramMap.get('id'));
     this.otroIdN = Number(this.route.snapshot.paramMap.get('id'));
@@ -42,6 +44,9 @@ export class ChatComponent implements AfterViewChecked {
     this.getUsuario();
     this.getOtro();
     this.getMensajes();
+  }
+  goBack(): void {
+    this.location.back();
   }
   getUsuario(): void {
     this._authService.userId$.subscribe((userId) => {

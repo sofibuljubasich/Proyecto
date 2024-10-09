@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,19 +11,19 @@ import { EventoService } from 'src/app/services/evento.service';
   styleUrl: './subir-resultados.component.css',
 })
 export class SubirResultadosComponent {
- idEvento!: number; // Recibe el ID del evento
+  idEvento!: number; // Recibe el ID del evento
   file!: File | null;
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private aRoute: ActivatedRoute,
-    private _eventoService: EventoService, 
+    private _eventoService: EventoService,
     private snackBar: MatSnackBar,
     private router: Router,
+    private location: Location
   ) {
     this.idEvento = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
-  
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -46,8 +47,11 @@ export class SubirResultadosComponent {
         error: (error) => {
           console.error('Error al cargar el archivo', error);
           // Maneja el error aquí, mostrando un mensaje de error si es necesario
-        }
+        },
       });
     }
+  }
+  goBack(): void {
+    this.location.back();
   }
 }

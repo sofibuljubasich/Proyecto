@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
@@ -10,7 +11,11 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 export class VerResultadosComponent {
   eventoId!: number;
 
-  constructor(private aRoute: ActivatedRoute, private router: Router) {
+  constructor(
+    private aRoute: ActivatedRoute,
+    private router: Router,
+    private location: Location
+  ) {
     this.eventoId = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
 
@@ -20,5 +25,8 @@ export class VerResultadosComponent {
         window.scrollTo(0, 0);
       }
     });
+  }
+  goBack(): void {
+    this.location.back();
   }
 }

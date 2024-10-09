@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -9,29 +10,33 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  styleUrl: './change-password.component.css'
+  styleUrl: './change-password.component.css',
 })
 export class ChangePasswordComponent {
   isAuthenticated: boolean = false;
-  currentUser!: Usuario ;
+  currentUser!: Usuario;
   changePasswordForm: FormGroup;
   showError: boolean = false;
   errorMessage: string | null = null;
-  loginData = { email: '',currentPassword: '', newPassword: '' };
+  loginData = { email: '', currentPassword: '', newPassword: '' };
 
   constructor(
     private _authService: AuthService,
     private _userService: UserService,
     private router: Router,
     private fb: FormBuilder,
-    private snackBar:MatSnackBar
+    private snackBar: MatSnackBar,
+    private location: Location
   ) {
-    this.changePasswordForm = this.fb.group({
-    currentPassword: ['', [Validators.required]],
-    newPassword: ['', [Validators.required, Validators.minLength(6)]],
-    confirmPassword: ['', Validators.required]
-  }, { validator: this.passwordMatchValidator });
-}
+    this.changePasswordForm = this.fb.group(
+      {
+        currentPassword: ['', [Validators.required]],
+        newPassword: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+      },
+      { validator: this.passwordMatchValidator }
+    );
+  }
 
   ngOnInit(): void {
     this._authService.userId$.subscribe((userId) => {
@@ -50,44 +55,45 @@ export class ChangePasswordComponent {
   }
   passwordMatchValidator(form: FormGroup) {
     return form.get('newPassword')?.value === form.get('confirmPassword')?.value
-      ? null : { 'mismatch': true };
+      ? null
+      : { mismatch: true };
   }
-
+  goBack(): void {
+    this.location.back();
+  }
   onSubmit(): void {
     if (this.changePasswordForm.valid) {
-      this.loginData.email = this.currentUser.email; 
-      this.loginData.currentPassword = this.changePasswordForm.value.currentPassword;
+      this.loginData.email = this.currentUser.email;
+      this.loginData.currentPassword =
+        this.changePasswordForm.value.currentPassword;
       this.loginData.newPassword = this.changePasswordForm.value.newPassword;
-      console.log(this.loginData)
-      this._authService.changePassword(this.loginData)
-        .subscribe({
-          next: (response) => {
-            console.log('Autenticado con éxito:', response);
-            this.snackBar.open('Contraseña cambiada con exito', 'Cerrar', {
-              duration: 3000,
-            });
-  
-            this.clearErrorMessage();
-            this.router.navigate(['/inicio']);
-  
-          }, // Redirige a la página de inicio o dashboard},
-          error: (error) => {
-            console.error('Error en la autenticación:', error);
-            this.errorMessage = error;
-            this.showError = true;
-            setTimeout(() => {
-              this.showError = false;
-            }, 3000);
-          },
-          complete: () => console.info('complete'),
-        });
-  
-      } else {
-        this.changePasswordForm.markAllAsTouched();
-      }
+      console.log(this.loginData);
+      this._authService.changePassword(this.loginData).subscribe({
+        next: (response) => {
+          console.log('Autenticado con éxito:', response);
+          this.snackBar.open('Contraseña cambiada con exito', 'Cerrar', {
+            duration: 3000,
+          });
+
+          this.clearErrorMessage();
+          this.router.navigate(['/inicio']);
+        }, // Redirige a la página de inicio o dashboard},
+        error: (error) => {
+          console.error('Error en la autenticación:', error);
+          this.errorMessage = error;
+          this.showError = true;
+          setTimeout(() => {
+            this.showError = false;
+          }, 3000);
+        },
+        complete: () => console.info('complete'),
+      });
+    } else {
+      this.changePasswordForm.markAllAsTouched();
     }
-    clearErrorMessage() {
-      this.errorMessage = null;
-      this.showError = false;
-    }
+  }
+  clearErrorMessage() {
+    this.errorMessage = null;
+    this.showError = false;
+  }
 }

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatPaginator } from '@angular/material/paginator';
@@ -31,7 +32,8 @@ export class TareasComponent {
   constructor(
     // private _taskService: TareaService,
     private aRoute: ActivatedRoute,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private location: Location
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
@@ -54,7 +56,9 @@ export class TareasComponent {
       }
     });
   }
-
+  goBack(): void {
+    this.location.back();
+  }
   openChat(task: Tarea): void {
     // Lógica para redirigir a la página de chat
   }

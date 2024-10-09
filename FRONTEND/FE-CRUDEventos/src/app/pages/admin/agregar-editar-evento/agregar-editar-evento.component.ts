@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventoService } from '../../../services/evento.service';
 import { Evento, EventoResponse } from 'src/app/interfaces/evento';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -24,6 +24,7 @@ export class AgregarEditarEventoComponent implements OnInit {
     private _eventoService: EventoService,
     private aRoute: ActivatedRoute,
     private router: Router,
+    private location: Location,
     private datePipe: DatePipe
   ) {
     this.eventoForm = this.fb.group({
@@ -77,7 +78,9 @@ export class AgregarEditarEventoComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
-
+  goBack(): void {
+    this.location.back();
+  }
   // updateImage(): void {
   //   if (this.selectedFile) {
   //     const formData = new FormData();

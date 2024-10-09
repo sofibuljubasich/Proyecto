@@ -1,5 +1,6 @@
 <div class="container">
     <main class="main">
+        <button (click)="goBack()" style="color: aliceblue; text-decoration:underline; border: none;background-color:transparent;width: fit-content;"><--Regresar</button>
         <div class="file-upload-container">
             <h2>Cargar Archivo Excel</h2>
             <input type="file" (change)="onFileSelected($event)" accept=".xls,.xlsx" />

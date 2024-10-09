@@ -2,6 +2,9 @@
 <div class="fondo">
     <div class="signup-container">
       <form *ngIf="showStep===1" [formGroup]="signupFormPart1">
+        <div class="back-link">
+          <a (click)="goBack()" style="color: aliceblue; margin-left: 5px; text-decoration: underline; cursor: pointer;">← Volver</a>
+        </div>
       <div>
           <p class="title">Crear Sesión</p>
           <p style="color: aliceblue;    display: flex; justify-content: center;"> Por favor, ingrese la siguiente información</p>

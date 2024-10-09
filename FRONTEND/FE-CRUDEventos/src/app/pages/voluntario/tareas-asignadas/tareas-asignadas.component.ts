@@ -8,6 +8,7 @@ import { TareaService } from 'src/app/services/tarea.service';
 import { TASK_DATA } from 'src/app/interfaces/dato';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommentFormComponent } from 'src/app/components/comment-form/comment-form.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-tareas-asignadas',
@@ -34,6 +35,7 @@ export class TareasAsignadasComponent {
   constructor(
     // private _taskService: TareaService,
     private aRoute: ActivatedRoute,
+    private location: Location,
     private bottomSheet: MatBottomSheet
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
@@ -70,7 +72,9 @@ export class TareasAsignadasComponent {
       }
     });
   }
-
+  goBack(): void {
+    this.location.back();
+  }
   openChat(task: Tarea): void {
     // Lógica para redirigir a la página de chat
   }

@@ -12,6 +12,7 @@ import { EventoService } from 'src/app/services/evento.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
 import { UserService } from 'src/app/services/user.service';
 import { VoluntarioService } from 'src/app/services/voluntario.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-abm-colaboradores',
@@ -31,7 +32,8 @@ export class AbmColaboradoresComponent {
     private aRoute: ActivatedRoute,
     private _userService: UserService,
     private fb: FormBuilder,
-    private _volService: VoluntarioService
+    private _volService: VoluntarioService,
+    private location: Location
   ) {
     this.eventoId = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
@@ -114,6 +116,9 @@ export class AbmColaboradoresComponent {
       this.altaForm.reset();
       this.toggleFormulario();
     }
+  }
+  goBack(): void {
+    this.location.back();
   }
 
   onRolChange(element: any): void {

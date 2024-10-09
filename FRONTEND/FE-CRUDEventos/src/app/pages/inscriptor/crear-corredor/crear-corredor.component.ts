@@ -67,7 +67,9 @@ export class CrearCorredorComponent implements OnInit {
   previousSection(): void {
     this.showStep = 1;
   }
-
+  goBack(): void {
+    this.location.back();
+  }
   passwordsMatch(password: string, confirmPassword: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const passwordControl = control.get(password);

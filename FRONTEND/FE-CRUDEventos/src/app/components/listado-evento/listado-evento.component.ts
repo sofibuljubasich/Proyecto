@@ -16,7 +16,7 @@ const listEventos: Evento[] = [];
   templateUrl: './listado-evento.component.html',
   styleUrls: ['./listado-evento.component.css'],
 })
-export class ListadoEventoComponent implements OnInit,AfterViewInit {
+export class ListadoEventoComponent implements OnInit, AfterViewInit {
   @Input() eventos: any[] | null = null;
   filtrados: any[] | null = null;
 
@@ -25,16 +25,12 @@ export class ListadoEventoComponent implements OnInit,AfterViewInit {
   ngOnInit(): void {
     if (this.eventos) {
       this.filtrados = this.eventos.sort(
-        (a, b) =>
-          new Date(a.fecha).getTime() -
-          new Date(b.fecha).getTime()
+        (a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()
       );
     }
   }
 
-  ngAfterViewInit(): void {
-
-  }
+  ngAfterViewInit(): void {}
 
   customOptions: OwlOptions = {
     loop: false,
@@ -44,7 +40,6 @@ export class ListadoEventoComponent implements OnInit,AfterViewInit {
     dots: false,
     items: 4,
     navText: [
-      
       '<span style="color: black; font-size: 2em;"><< Previo</span>',
       '<span style="color: black; font-size: 2em;">Próximo >></span>',
     ],
@@ -65,10 +60,8 @@ export class ListadoEventoComponent implements OnInit,AfterViewInit {
       },
     },
     nav: true,
-    autoWidth:true,
+    autoWidth: true,
     //center:true
-    
-
   };
   customOptions2: OwlOptions = {
     loop: false,
@@ -78,7 +71,6 @@ export class ListadoEventoComponent implements OnInit,AfterViewInit {
     dots: false,
     items: 4,
     navText: [
-      
       '<span style="color: black; font-size: 2em;"><< Previo</span>',
       '<span style="color: black; font-size: 2em;">Próximo >></span>',
     ],
@@ -99,13 +91,9 @@ export class ListadoEventoComponent implements OnInit,AfterViewInit {
       },
     },
     nav: true,
-    autoWidth:true,
+    autoWidth: true,
     //center:true
-    
-
   };
-
-
 }
 
 // obtenerEvento(): void {

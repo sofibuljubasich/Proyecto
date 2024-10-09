@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventoResponse } from 'src/app/interfaces/evento';
@@ -14,12 +14,13 @@ export class VerEventoComponent implements OnInit {
   eventoData!: EventoResponse;
   id!: number;
   fecha!: string;
-  imagenURL!:string;
+  imagenURL!: string;
 
   constructor(
     private _eventoService: EventoService,
     private aRoute: ActivatedRoute,
     private router: Router,
+    private location: Location,
     private datePipe: DatePipe,
     private _authService: AuthService
   ) {
@@ -47,6 +48,9 @@ export class VerEventoComponent implements OnInit {
   }
   getFormattedTime(date: string | Date): string | null {
     return this.datePipe.transform(date, 'HH:mm');
+  }
+  goBack(): void {
+    this.location.back();
   }
   onInscribirse(): void {
     if (this._authService.isAuthenticated()) {
