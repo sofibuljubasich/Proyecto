@@ -119,6 +119,9 @@ export class InscripcionComponent {
   getFormattedDate(date: string | Date): string | null {
     return this.datePipe.transform(date, 'dd/MM/yyyy');
   }
+  getFormattedTime(date: string | Date): string | null {
+    return this.datePipe.transform(date, 'HH:mm');
+  }
   getCategoryByAge(age: number) {
     this.categoria =
       this.eventoData.categorias.find(

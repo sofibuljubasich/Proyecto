@@ -16,14 +16,24 @@
               <p class="label">Localización:</p>
               <p class="date">{{ eventoData.evento.lugar }}</p>
             </div>
+            <div class="dato">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="directions_run"></mat-icon>
+              <p class="label">Tipo de evento:</p>
+              <p class="date">{{ eventoData.evento.tipo.descripcion }}</p>
+            </div>
+            <div class="dato">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="schedule"></mat-icon>
+              <p class="label">Hora:</p>
+              <p class="date">{{ getFormattedTime(eventoData.evento.fecha) }}</p>
+            </div>
           </div>
-          <div class="second">
+          <!--<div class="second">
             <div class="tipo">
               <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="directions_run"></mat-icon>
               <p class="label">Tipo de evento:</p>
               <p class="date">{{ eventoData.evento.tipo.descripcion }}</p>
             </div>
-          </div>
+          </div>-->
           <div class="datos">
               <div class="item">
                 <div class="columna">
@@ -50,7 +60,7 @@
             
               <div class="item">
                 <div class="columna">
-                  <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="flag"></mat-icon>
+                  <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="local_offer"></mat-icon>
                   <p class="label">Categorías asociadas:</p>
                 </div>
                 <div class="distancias">

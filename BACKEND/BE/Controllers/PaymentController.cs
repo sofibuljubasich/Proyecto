@@ -36,7 +36,7 @@ namespace BE.Controllers
                 },
                 back_urls = new
                 {
-                    success = "https://localhost:4200/pago-exitoso",
+                    success = "http://localhost:4200/pago-exitoso",
                     failure = "https://localhost:4200/pago-rechazado?inscripcion",
                     pending = "https://localhost:4200/pago-pendiente?inscripcion"
                 },

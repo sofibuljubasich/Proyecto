@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace BE.Models
 {
@@ -18,6 +19,7 @@ namespace BE.Models
 
         public string ObraSocial { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Inscripcion> Inscripciones { get; set; }
     }
 }

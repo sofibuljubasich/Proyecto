@@ -42,7 +42,7 @@ export class ListadoEventoComponent implements OnInit,AfterViewInit {
     touchDrag: true,
     pullDrag: true,
     dots: false,
-    items: 2,
+    items: 4,
     navText: [
       
       '<span style="color: black; font-size: 2em;"><< Previo</span>',
@@ -54,14 +54,48 @@ export class ListadoEventoComponent implements OnInit,AfterViewInit {
       0: {
         items: 1,
       },
-      200: {
+      400: {
         items: 2,
       },
-      300: {
+      800: {
         items: 3,
       },
-      400: {
+      1000: {
         items: 4,
+      },
+    },
+    nav: true,
+    autoWidth:true,
+    //center:true
+    
+
+  };
+  customOptions2: OwlOptions = {
+    loop: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    items: 4,
+    navText: [
+      
+      '<span style="color: black; font-size: 2em;"><< Previo</span>',
+      '<span style="color: black; font-size: 2em;">Próximo >></span>',
+    ],
+    // navClass: ['owl-prev', 'owl-next'],
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 1,
+      },
+      800: {
+        items: 1,
+      },
+      1000: {
+        items: 1,
       },
     },
     nav: true,

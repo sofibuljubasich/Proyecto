@@ -46,6 +46,7 @@ import { TareasComponent } from './pages/admin/tareas/tareas.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { MisEventosComponent } from './pages/corredor/mis-eventos/mis-eventos.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { ChatSelectorComponent } from './components/chat-selector/chat-selector.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -92,7 +93,8 @@ import { DatePipe } from '@angular/common';
     ResetPasswordComponent,
     MisEventosComponent,
     EmailPopupComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ChatSelectorComponent
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

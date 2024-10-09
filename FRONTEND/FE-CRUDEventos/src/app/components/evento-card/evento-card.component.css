@@ -1,15 +1,4 @@
-.example-card {
-    width: 80%;
-    /* margin: 20px 10px 10px 100px; */
-    margin-top: 15px;
-    margin-left: 10%;
-    margin-bottom: 15px;
-    flex-grow: 1;
-    flex-basis: 200;
-    display: flex;
-    padding: 2%;
-    /* justify-content: center; */
-}
+
 .card-date {
     position: absolute;
     bottom: 10px;
@@ -41,7 +30,7 @@
     border-radius: 8px;
     overflow: hidden;
     width: 90%;
-    max-width: 300px;
+    max-width: 400px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-top: 13px;
     margin: 13px;

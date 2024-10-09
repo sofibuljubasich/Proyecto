@@ -1,0 +1,18 @@
+
+
+<div class="modal">
+    <div class="modal-content">
+        <div class="dialog-header">
+            <button class="close-button" (click)="closeDialog()">×</button>
+          </div>
+        <p class="title">Selecciona una persona</p>
+        <input type="text" [(ngModel)]="searchTerm" (input)="filterPersonas()" placeholder="Buscar por nombre">
+        <div class="usuarios-container">
+            <div class="listado" *ngFor="let persona of filteredPersonas" (click)="seleccionarPersona(persona)" >
+                <img src="{{ persona.foto }}" alt="{{ persona.foto }}" class="profile-photo">
+                <span>{{ persona.nombre }} {{ persona.apellido }}</span>
+            </div>
+        </div>
+    </div>
+        
+</div>

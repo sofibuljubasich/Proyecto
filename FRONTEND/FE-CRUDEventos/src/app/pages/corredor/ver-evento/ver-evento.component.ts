@@ -45,7 +45,9 @@ export class VerEventoComponent implements OnInit {
   getFormattedDate(date: string | Date): string | null {
     return this.datePipe.transform(date, 'dd/MM/yyyy');
   }
-
+  getFormattedTime(date: string | Date): string | null {
+    return this.datePipe.transform(date, 'HH:mm');
+  }
   onInscribirse(): void {
     if (this._authService.isAuthenticated()) {
       this.router.navigate([`/inscribirse/${this.eventoData.evento.id}`]);

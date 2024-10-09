@@ -8,6 +8,8 @@ import { TipoEventoService } from 'src/app/services/tipo-evento.service';
 import { UserService } from 'src/app/services/user.service';
 import { Chat } from 'src/app/interfaces/chat';
 import { ChatService } from 'src/app/services/chat.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ChatSelectorComponent } from 'src/app/components/chat-selector/chat-selector.component';
 
 @Component({
   selector: 'app-chats',
@@ -28,7 +30,8 @@ export class ChatsComponent {
     private _authService: AuthService,
     private _userService: UserService,
     private aRoute: ActivatedRoute,
-    private _chatService: ChatService
+    private _chatService: ChatService,
+    private dialog: MatDialog
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
@@ -54,5 +57,9 @@ export class ChatsComponent {
         console.error('Error obteniendo los chats', error);
       }
     );
+  }
+  abrirChatSelector() {
+    console.log("hola")
+    const dialogRef = this.dialog.open(ChatSelectorComponent);
   }
 }

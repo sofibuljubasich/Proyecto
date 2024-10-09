@@ -1,0 +1,112 @@
+
+  
+  .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: solid;
+    font-size: 25px;
+    font-weight: 600;
+    color: aliceblue;
+    margin-top: -20px;
+  }
+  label{
+    color: aliceblue;
+    justify-content: center;
+
+  }
+main {
+  
+    width: 40%;
+    min-height: max-content;
+    z-index: 1;
+    justify-content: center;
+    /* margin-top: -100px; */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    position: relative;
+    background: #04364A;  /* fallback for old browsers */
+  /* background: -webkit-linear-gradient(to right, #0b1536, #148cc3);  
+  background: linear-gradient(to right, #20126e, #2b79a7);  */
+  /* box-shadow: 0px 0px 30px #f7f7f7; */
+  }
+  .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #04364A;
+    border: 1px solid #ccc;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  input{
+    margin: 10px 10%;
+    height: 40px;
+    border-radius: 20px;
+  }
+  .listado{
+    margin: 10px 10%;
+    display: flex;
+  align-items: center; /* Centra verticalmente la foto y el nombre */
+    color: aliceblue;
+  }
+
+  .profile-photo{
+    object-fit: cover;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 30px;
+  }
+  .usuarios-container {
+    display: flex;
+    flex-direction: column; /* Coloca los elementos en columna */
+    align-items: center; /* Centra horizontalmente los elementos */
+    justify-content: flex-start; /* Alinea los elementos al inicio del contenedor */
+    max-height: 50vh; /* Altura máxima del contenedor */
+    overflow-y: auto; /* Permite el scroll vertical cuando el contenido excede la altura */
+    border: 1px solid #ccc; /* Agrega un borde para visualizar el contenedor */
+    padding: 10px; /* Espaciado interno */
+    margin-top: 20px; /* Espaciado superior */
+    border-radius: 5px; /* Bordes redondeados */
+    margin: 0px 40px;
+  }
+  .usuarios-container :hover{
+    background-color: #115c7a;
+    border-radius: 30px;
+    width: 80%;
+  }
+  .dialog-header {
+    display: flex;
+    justify-content: flex-end; /* Alinea la "X" a la derecha */
+    margin-bottom: 10px; /* Espaciado inferior */
+  }
+  
+  .close-button {
+    background: none; /* Sin fondo */
+    border: none; /* Sin borde */
+    font-size: 24px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    color: #ffffff; /* Color del texto */
+  }
+  
+  .close-button:hover {
+    border-radius: 50%;
+    background-color: rgb(86, 86, 86); /* Cambia el color al pasar el ratón */
+  }
+  

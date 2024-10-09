@@ -31,7 +31,7 @@ border: 3px solid white; /* Añade un borde blanco más grueso */
 .content {
   display: grid;
   grid-template-rows: auto auto; /* Dos filas: una para el título y otra para los datos */
-  gap: 10px; /* Espacio entre las filas */
+  gap: 0px; /* Espacio entre las filas */
 
 }
 
@@ -50,7 +50,7 @@ border: 3px solid white; /* Añade un borde blanco más grueso */
   display: grid;
   grid-template-columns: 1fr 1fr; /* Dos columnas para los datos */
   gap: 5px; /* Espacio entre las columnas */
-  padding: 20px 30px;
+  padding: 20px 30px 0px 30px;
   align-items: start;
 }
 .distancias {
@@ -60,7 +60,9 @@ border: 3px solid white; /* Añade un borde blanco más grueso */
 .distancias {
   margin-top: 20px;
 }
-
+.item{
+  margin-top: 0px;
+}
 table {
 
   width: 60%;
@@ -91,6 +93,7 @@ th {
   font-size: 16px;
   display: flex;
   align-items: center;
+  margin-bottom: 30px;
   
 }
 .columna{

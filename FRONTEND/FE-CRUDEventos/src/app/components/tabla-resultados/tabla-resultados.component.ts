@@ -31,7 +31,7 @@ export class TablaResultadosComponent {
     'posicionGral',
     'posicionCategoria',
   ];
-  dataSource = new MatTableDataSource(this.resultados);
+  dataSource = new MatTableDataSource<any>([]);
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private _eventoService: EventoService,
@@ -42,19 +42,21 @@ export class TablaResultadosComponent {
      this._eventoService
        .getResultados(this.eventoId)
        .subscribe((data: any) => {
-         this.resultados = data.map((res:any) => {
+        console.log(data)
+        this.resultados = data.map((res:any) => {
               return {
                 dorsal: res.dorsal,
-                //nombre: `${usuario.nombre} ${usuario.apellido}`,
-                genero: res.genero,
-                distancia: res.distancia,
+                nombre: `${res.corredor.nombre} ${res.corredor.apellido}`,
+                genero: res.corredor.genero,
+                distancia: res.distancia.km,
                 categoria: `${res.categoria.edadInicio} - ${res.categoria.edadFin}`,
                 tiempo: res.tiempo,
-                posicionGral: res.posicionGral,
+                posicionGral: res.posicionGeneral,
                 posicionCategoria: res.posicionCategoria,
               };
-            })})
-          
+            })
+            this.dataSource.data =this.resultados;})
+      
   }
 
   @ViewChild(MatSort) sort!: MatSort;
