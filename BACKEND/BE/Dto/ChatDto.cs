@@ -6,7 +6,7 @@ namespace BE.Dto
     public class ChatDto
     {
       
-
+       // public int IDChat { get; set; } 
         [ForeignKey("Usuario")]
         public int RemitenteID { get; set; }
 

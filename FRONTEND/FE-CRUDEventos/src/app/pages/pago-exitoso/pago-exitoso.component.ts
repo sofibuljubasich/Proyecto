@@ -30,9 +30,7 @@ export class PagoExitosoComponent implements OnInit {
 
       // Enviar el ID del pago al backend para completar la inscripción
       this.http
-        .post('https://tu-backend.com/api/inscripciones/completar', {
-          paymentId,
-        })
+        .get(`/api/payment/status?paymentId=${paymentId}`)
         .subscribe(
           (response: any) => {
             // Verifica que el backend respondió correctamente
