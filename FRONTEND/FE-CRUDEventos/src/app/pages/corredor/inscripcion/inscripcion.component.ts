@@ -136,6 +136,9 @@ export class InscripcionComponent {
       setTimeout(() => (this.errorMessage = ''), 3000); // Limpiar mensaje de error después de 3 segundos
       return;
     }
+
+    this.onInscribirse();
+
     const distanciaS = this.eventoData.distancias.find(
       (evento) => evento.distanciaID === this.distanciaSelect
     );
@@ -164,7 +167,7 @@ export class InscripcionComponent {
           },
           autoOpen: true, // Abrir el checkout inmediatamente
           onSuccess: (payment: any) => {
-            this.onInscribirse();
+
           },
         });
       },
@@ -183,9 +186,9 @@ export class InscripcionComponent {
       (evento) => evento.distanciaID === this.distanciaSelect
     );
     const estado = 'Pendiente';
-    if (this.pagoSelect != 'Efectivo') {
-      const estado = 'Pagado';
-    }
+    //if (this.pagoSelect != 'Efectivo') {
+    //  const estado = 'Pagado';
+    //}
 
     const inscripcionData = {
       remera: this.talleSelect,

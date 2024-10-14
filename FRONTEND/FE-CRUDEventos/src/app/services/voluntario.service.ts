@@ -17,7 +17,7 @@ export class VoluntarioService {
   getVoluntarios(): Observable<General[]> {
     return this.http.get<General[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
-  register(userData: UsuarioEnviado) {
+  register(userData: FormData) {
     return this.http
       .post<General>(`${this.myAppUrl}${this.myApiUrl}/register`, userData)
       .pipe(catchError(this.handleError));

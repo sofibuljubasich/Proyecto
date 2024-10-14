@@ -103,8 +103,9 @@ namespace BE.Controllers
                 //await _emailSender.SendEmailAsync(user.Username, user.Password);
 
                 usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password);
-                //usuario.RolID = 2; // ROL Admin - Hacerlo Bien
-               
+                usuario.RolID = request.RolID; // ROL Admin - Hacerlo Bien
+                usuario.ConfirmedEmail = true;
+
                 var result = await _usuarioRepository.CreateUsuario(usuario);
 
                 return Ok("Administrador creado");

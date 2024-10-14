@@ -42,6 +42,9 @@
                 <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="report"></mat-icon>
                 <p style="margin: 0;">Se abona presencialmente el día anterior al evento durante la entrega de kits</p>
             </div>
+            <div *ngIf="pagoSelect != 'Efectivo'" style="color: #04364A; background-color: none; display: flex; align-items: center;">
+                <p style="margin: 0;">Se abona presencialmente el aaaaaaa día anterior al evento durante la entrega de kits</p>
+            </div>
             <div *ngIf="errorMessage" style="color: red;display: flex; margin-left: 10%;margin-top: 33%;position: absolute;">{{ errorMessage }}</div>
                 <!-- <mat-select [(ngModel)]="pagoSelect" name="pago">
                 @for (met of metodos; track metodos) {

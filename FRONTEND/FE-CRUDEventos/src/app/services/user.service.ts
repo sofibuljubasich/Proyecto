@@ -18,7 +18,7 @@ export class UserService {
   //     userData
   //   );
   // }
-  agregarUsuarios(userData: UsuarioEnviado) {
+  agregarUsuarios(userData:FormData) {
     return this.http.post<General>(
       `${this.myAppUrl}${this.myApiUrl}/register`,
       userData

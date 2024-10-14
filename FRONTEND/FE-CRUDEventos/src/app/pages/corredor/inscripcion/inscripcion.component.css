@@ -108,7 +108,7 @@ html, body {
     .opciones {
       display: flex;
       justify-content: center;
-      padding-top: 5%
+      margin-top: -50px
 ; /* Opcional: Espacio entre botones */
       /* position: fixed; */
       /* bottom: 20%;

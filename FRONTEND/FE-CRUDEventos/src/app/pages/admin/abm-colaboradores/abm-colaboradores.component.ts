@@ -13,6 +13,8 @@ import { InscripcionService } from 'src/app/services/inscripcion.service';
 import { UserService } from 'src/app/services/user.service';
 import { VoluntarioService } from 'src/app/services/voluntario.service';
 import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogContentComponent } from '../../sign-up/sign-up.component';
 
 @Component({
   selector: 'app-abm-colaboradores',
@@ -23,6 +25,8 @@ export class AbmColaboradoresComponent {
   eventoId!: number;
   mostrarFormulario = false;
   altaForm!: FormGroup;
+  errorMessage: string | null = null;
+  showError: boolean = false;
 
   // resultados: TablaResultados[] = [];
   displayedColumns: string[] = ['nro', 'nombre', 'email', 'rol', 'acciones'];
@@ -33,7 +37,8 @@ export class AbmColaboradoresComponent {
     private _userService: UserService,
     private fb: FormBuilder,
     private _volService: VoluntarioService,
-    private location: Location
+    private location: Location,
+    private dialog: MatDialog
   ) {
     this.eventoId = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
@@ -58,9 +63,9 @@ export class AbmColaboradoresComponent {
         nro: index + 1,
         email: voluntario.email,
         nombre: voluntario.nombre + ' ' + voluntario.apellido,
-        // rol: voluntario.rolID
-        rol: '3',
+        rol: voluntario.rolID
       }));
+      console.log(transformedData)
       this.dataSource.data = transformedData;
     });
   }
@@ -70,30 +75,50 @@ export class AbmColaboradoresComponent {
 
   agregar(): void {
     if (this.altaForm.valid) {
-      const nuevoColaborador: UsuarioEnviado = {
-        nombre: this.altaForm.value.nombre,
-        apellido: this.altaForm.value.apellido,
-        telefono: this.altaForm.value.telefono,
-        email: this.altaForm.value.email,
-        password: this.altaForm.value.password,
-        rolID: this.altaForm.value.rol,
-      };
-      console.log(nuevoColaborador);
+      const nuevoColaborador = new FormData();
+      nuevoColaborador.append('nombre', this.altaForm.value.nombre);
+      nuevoColaborador.append('apellido', this.altaForm.value.apellido);
+      nuevoColaborador.append('telefono', this.altaForm.value.telefono);
+      nuevoColaborador.append('email', this.altaForm.value.email);
+      nuevoColaborador.append('password', this.altaForm.value.password);
+      nuevoColaborador.append('rolID', this.altaForm.value.rol);
       if (this.altaForm.value.rol == 3) {
-        this._volService.register(nuevoColaborador).subscribe(() => {
-          const nuevo: UsuarioEnviado = {
-            nombre:
-              this.altaForm.value.nombre + ' ' + this.altaForm.value.apellido,
-            email: this.altaForm.value.email,
-            apellido: this.altaForm.value.apellido,
-            telefono: this.altaForm.value.telefono,
-            password: this.altaForm.value.password,
-            rolID: this.altaForm.value.rol,
-          };
+        this._volService.register(nuevoColaborador).subscribe(
+          (response) => {
+            const nuevoColaborador: UsuarioEnviado = {
+              nombre: this.altaForm.value.nombre,
+              apellido: this.altaForm.value.apellido,
+              telefono: this.altaForm.value.telefono,
+              email: this.altaForm.value.email,
+              password: this.altaForm.value.password,
+              rolID: this.altaForm.value.rol,
+            };
+      
+            this.dataSource.data.push(nuevoColaborador); // Agregar a la lista de colaboradores
+            this.altaForm.reset();
+  
+            this.errorMessage = null;
+            this.dialog.open(DialogContentComponent, {
+              data: {
+                message:
+                  response,
+              },
+            });
+            //this.dialog.closeAll;
+          },
+          (error) => {
+            console.error('Error en la autenticación:', error);
+            this.errorMessage = error;
+            this.showError = true;
+            setTimeout(() => {
+              this.showError = false;
+            }, 3000);
+          }
+        );
 
           // Actualizar el DataSource
-          this.dataSource.data = [...this.dataSource.data, nuevo];
-        });
+          //this.dataSource.data = [...this.dataSource.data, nuevo];
+      
       } else {
         this._userService.agregarUsuarios(nuevoColaborador).subscribe(() => {
           const nuevo: UsuarioEnviado = {

@@ -28,6 +28,7 @@ export class ChatComponent implements AfterViewChecked {
   usuarioID!: number;
   otro!: Usuario;
   imagenURL!: string;
+  isScrolledToBottom: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -74,10 +75,30 @@ export class ChatComponent implements AfterViewChecked {
     );
   }
 
-  ngAfterViewChecked(): void {
-    setTimeout(() => this.scrollToBottom(), 0);
+  ngAfterViewInit(): void {
+    this.scrollToBottom(); // Al cargar el componente, desplazarse al final
   }
 
+  ngAfterViewChecked(): void {
+    if (this.isScrolledToBottom) {
+      this.scrollToBottom(); // Desplazarse al final si está en la parte inferior
+    }
+  }
+
+  scrollToBottom(): void {
+    const chatMessages = document.querySelector('.chat-messages') as HTMLElement;
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  onScroll(event: Event): void {
+    const chatMessages = event.target as HTMLElement;
+    const scrollTop = chatMessages.scrollTop;
+    const scrollHeight = chatMessages.scrollHeight;
+    const clientHeight = chatMessages.clientHeight;
+
+    // Verifica si el usuario está al final del contenedor
+    this.isScrolledToBottom = scrollHeight - clientHeight <= scrollTop + 1;
+  }
   enviarMensaje(): void {
     if (this.nuevoMensaje.trim()) {
       const mensaje = {
@@ -98,10 +119,4 @@ export class ChatComponent implements AfterViewChecked {
     }
   }
 
-  private scrollToBottom(): void {
-    if (this.messagesContainer && this.messagesContainer.nativeElement) {
-      const container = this.messagesContainer.nativeElement;
-      container.scrollTop = container.scrollHeight;
-    }
-  }
 }

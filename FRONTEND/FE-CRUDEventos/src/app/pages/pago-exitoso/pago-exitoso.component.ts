@@ -19,7 +19,7 @@ export class PagoExitosoComponent implements OnInit {
     private http: HttpClient,
     private router: Router
   ) {}
-
+  //id y status
   ngOnInit(): void {
     const queryParams = this.route.snapshot.queryParams;
 
