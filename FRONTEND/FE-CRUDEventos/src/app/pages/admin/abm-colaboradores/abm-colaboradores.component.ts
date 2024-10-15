@@ -27,6 +27,7 @@ export class AbmColaboradoresComponent {
   altaForm!: FormGroup;
   errorMessage: string | null = null;
   showError: boolean = false;
+  nuevoid:number=0;
 
   // resultados: TablaResultados[] = [];
   displayedColumns: string[] = ['nro', 'nombre', 'email', 'rol', 'acciones'];
@@ -38,7 +39,7 @@ export class AbmColaboradoresComponent {
     private fb: FormBuilder,
     private _volService: VoluntarioService,
     private location: Location,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
     this.eventoId = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
@@ -58,13 +59,17 @@ export class AbmColaboradoresComponent {
     });
   }
   getColaboradores(): void {
-    this._volService.getVoluntarios().subscribe((data: General[]) => {
-      const transformedData = data.map((voluntario, index) => ({
-        nro: index + 1,
-        email: voluntario.email,
-        nombre: voluntario.nombre + ' ' + voluntario.apellido,
-        rol: voluntario.rolID
+    this._userService.getUsuarios().subscribe((data: General[]) => {
+      const transformedData = data
+      .filter(voluntario => voluntario.rolID !== 1 && voluntario.rolID !== 2) // Filtra los voluntarios con rolID diferente de 2
+      .map((voluntario, index) => ({
+        id: voluntario.id,
+        nro: index + 1, // Número de orden
+        email: voluntario.email, // Email del voluntario
+        nombre: `${voluntario.nombre} ${voluntario.apellido}`, // Nombre completo
+        rol: voluntario.rolID // ID del rol
       }));
+      this.nuevoid=transformedData.length
       console.log(transformedData)
       this.dataSource.data = transformedData;
     });
@@ -84,81 +89,63 @@ export class AbmColaboradoresComponent {
       nuevoColaborador.append('rolID', this.altaForm.value.rol);
       if (this.altaForm.value.rol == 3) {
         this._volService.register(nuevoColaborador).subscribe(
-          (response) => {
-            const nuevoColaborador: UsuarioEnviado = {
-              nombre: this.altaForm.value.nombre,
-              apellido: this.altaForm.value.apellido,
-              telefono: this.altaForm.value.telefono,
-              email: this.altaForm.value.email,
-              password: this.altaForm.value.password,
-              rolID: this.altaForm.value.rol,
-            };
-      
-            this.dataSource.data.push(nuevoColaborador); // Agregar a la lista de colaboradores
-            this.altaForm.reset();
-  
-            this.errorMessage = null;
-            this.dialog.open(DialogContentComponent, {
-              data: {
-                message:
-                  response,
-              },
-            });
-            //this.dialog.closeAll;
-          },
-          (error) => {
-            console.error('Error en la autenticación:', error);
-            this.errorMessage = error;
-            this.showError = true;
-            setTimeout(() => {
-              this.showError = false;
-            }, 3000);
+          (response:any) => {
+              console.log(response)
+              const nuevoUsuario: any = {
+                  id: response.id,
+                  nro: this.dataSource.data.length + 1,
+                  email: response.email,
+                  nombre: `${response.nombre} ${response.apellido}`,
+                  rol: response.rolID
+                }
+              console.log(nuevoUsuario)
+              this.dataSource.data = [...this.dataSource.data, nuevoUsuario];
           }
-        );
-
-          // Actualizar el DataSource
-          //this.dataSource.data = [...this.dataSource.data, nuevo];
-      
+        ) 
       } else {
-        this._userService.agregarUsuarios(nuevoColaborador).subscribe(() => {
-          const nuevo: UsuarioEnviado = {
-            nombre:
-              this.altaForm.value.nombre + ' ' + this.altaForm.value.apellido,
-            email: this.altaForm.value.email,
-            apellido: this.altaForm.value.apellido,
-            telefono: this.altaForm.value.telefono,
-            password: this.altaForm.value.password,
-            rolID: this.altaForm.value.rol,
-          };
-
-          // Actualizar el DataSource
-          this.dataSource.data = [...this.dataSource.data, nuevo];
-
-          // Limpiar el formulario si es necesario
-        });
+        this._userService.agregarUsuarios(nuevoColaborador).subscribe(
+          (response:any) => {
+              const nuevoUsuario: any = {
+                id: response.id,
+                nro: this.dataSource.data.length + 1,
+                email: response.email,
+                nombre: `${response.nombre} ${response.apellido}`,
+                rol: response.rolID
+              };
+              console.log(nuevoUsuario)
+              this.dataSource.data = [...this.dataSource.data, nuevoUsuario];
+          }
+        )
       }
+      
       this.getColaboradores;
       this.altaForm.reset();
       this.toggleFormulario();
+      this.errorMessage = null;
     }
   }
+
+
   goBack(): void {
     this.location.back();
   }
 
   onRolChange(element: any): void {
     const updatedEstado = element.rol == 3 ? 3 : 4;
-    console.log(updatedEstado);
-    // this._inscripcionService
-    //   .updateEstadoPago(element.id, updatedEstado)
-    //   .subscribe(
-    //     () => {
-    //       console.log('Estado de pago actualizado');
-    //     },
-    //     (error) => {
-    //       console.error('Error al actualizar estado de pago:', error);
-    //     }
-    //   );
+    console.log(element);
+    const usuarioID = element.id;
+    const rolID = element.rol;
+  
+    this._userService.updateRol(usuarioID, rolID).subscribe(
+      response => {
+        console.log('Rol actualizado:', response);
+        // Aquí puedes manejar cualquier lógica adicional, como mostrar un mensaje de éxito
+      },
+      error => {
+        console.error('Error al actualizar rol:', error);
+        // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
+      }
+    );
   }
 
   delete(element: any) {}

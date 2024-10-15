@@ -108,7 +108,7 @@ namespace BE.Controllers
 
                 var result = await _usuarioRepository.CreateUsuario(usuario);
 
-                return Ok("Administrador creado");
+                return Ok(result);
             }
             catch (Exception ex)
             {

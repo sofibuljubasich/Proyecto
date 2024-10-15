@@ -62,7 +62,7 @@ namespace BE.Controllers
                 voluntario.RolID = 3; // ROL Voluntario
                 var result = await _voluntarioRepository.Create(voluntario);
 
-                return Ok("Voluntario creado");
+                return Ok(result);
             }
 
             catch (Exception ex)

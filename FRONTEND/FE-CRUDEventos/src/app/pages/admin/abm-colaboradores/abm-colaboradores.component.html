@@ -104,9 +104,10 @@
               </th>
               <td mat-cell *matCellDef="let element">
                 <mat-select [(value)]="element.rol" (selectionChange)="onRolChange(element)">
-                    <mat-option value=3>Voluntario</mat-option>
-                    <mat-option value=4>Inscriptor</mat-option>
-                  </mat-select> 
+                    <mat-option [value]="3">Voluntario</mat-option>
+                    <mat-option [value]="4">Inscriptor</mat-option>
+                  </mat-select>
+                  
                 </td>
             </ng-container>
 

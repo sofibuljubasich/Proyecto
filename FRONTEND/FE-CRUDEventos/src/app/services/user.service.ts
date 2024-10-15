@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import { General, Usuario, UsuarioEnviado } from '../interfaces/usuario';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +20,10 @@ export class UserService {
   //   );
   // }
   agregarUsuarios(userData:FormData) {
-    return this.http.post<General>(
+    
+    return this.http.post(
       `${this.myAppUrl}${this.myApiUrl}/register`,
-      userData
+      userData,
     );
   }
   getUsuario(id: string): Observable<Usuario> {
@@ -30,6 +32,11 @@ export class UserService {
 
   getUsuarios(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${this.myAppUrl}${this.myApiUrl}`);
+  }
+
+  updateRol(usuarioID: number, rolID: number): Observable<any> {
+    
+    return this.http.patch(`${this.myAppUrl}${this.myApiUrl}/UpdateRol?usuarioID=${usuarioID}&rolID=${rolID}`, {});
   }
 
   // getUserAge(currentUser: Usuario): number | null {
@@ -57,5 +64,22 @@ export class UserService {
       return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
     return null;
+  }
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'Ocurrió un error inesperado';
+    if (error.error instanceof ErrorEvent) {
+      // Error del lado del cliente
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Error del lado del servidor
+      if (error.status === 400 && error.error.errors) {
+        // Si hay errores de validación devueltos por el servidor
+        errorMessage = Object.values(error.error.errors).join(', ');
+      } else {
+        // Otros errores del servidor
+        errorMessage = error.error.message || JSON.stringify(error.error);
+      }
+    }
+    return throwError(errorMessage);
   }
 }

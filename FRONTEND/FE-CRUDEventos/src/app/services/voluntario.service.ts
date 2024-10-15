@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
@@ -19,8 +19,11 @@ export class VoluntarioService {
   }
   register(userData: FormData) {
     return this.http
-      .post<General>(`${this.myAppUrl}${this.myApiUrl}/register`, userData)
-      .pipe(catchError(this.handleError));
+      .post(`${this.myAppUrl}${this.myApiUrl}/register`, 
+        userData,
+        
+      )
+    
   }
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Ocurrió un error inesperado';
