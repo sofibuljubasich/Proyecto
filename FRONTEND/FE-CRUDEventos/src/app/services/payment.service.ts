@@ -17,4 +17,9 @@ export class PaymentService {
     console.log(product)
     return this.http.post(`${this.myAppUrl}${this.myApiUrl}/create`, product);
   }
+
+  getStatus(inscripcionID: number): Observable<any> {
+    return this.http.get(`${this.myAppUrl}${this.myApiUrl}/status?inscripcionId=${inscripcionID}`);
+  }
+
 }

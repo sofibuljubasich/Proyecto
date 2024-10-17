@@ -39,6 +39,8 @@ export class InscripcionComponent {
   userID!: number;
   imagenURL!: string;
   preferenceId!: any;
+  inscID!: number;
+  isSuccess: boolean=false;
 
   metodosPago = [
     { value: 'Efectivo', viewValue: 'Efectivo' },
@@ -62,7 +64,8 @@ export class InscripcionComponent {
     private snackBar: MatSnackBar,
     private _authService: AuthService,
     private _corredorService: CorredorService,
-    private _paymentService: PaymentService
+    private _paymentService: PaymentService,
+    private _inscService:InscripcionService
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
@@ -138,44 +141,9 @@ export class InscripcionComponent {
     }
 
     this.onInscribirse();
-
-    const distanciaS = this.eventoData.distancias.find(
-      (evento) => evento.distanciaID === this.distanciaSelect
-    );
-
-    const producto = {
-      title: this.eventoData.evento.nombre,
-      quantity: 1,
-      unitPrice: Number(distanciaS!.precio),
-    };
-    this._paymentService.createPreference(producto).subscribe(
-      (response: any) => {
-        console.log(response);
-        this.preferenceId = response.id; // El ID de la preferencia creada
-
-        // Integrar Mercado Pago Checkout Pro
-        const mp = new MercadoPago(
-          'APP_USR-136e7dcf-f8a5-4da2-9373-8ef757b3954a',
-          {
-            locale: 'es-AR',
-          }
-        );
-
-        mp.checkout({
-          preference: {
-            id: this.preferenceId,
-          },
-          autoOpen: true, // Abrir el checkout inmediatamente
-          onSuccess: (payment: any) => {
-
-          },
-        });
-      },
-      (error) => {
-        console.error('Error al crear la preferencia:', error);
-      }
-    );
   }
+
+  
   onInscribirse(): void {
     if (!this.talleSelect || !this.distanciaSelect || !this.pagoSelect) {
       this.errorMessage = 'Todos los campos son obligatorios';
@@ -202,12 +170,22 @@ export class InscripcionComponent {
       nroTransaccion: this.preferenceId,
     };
     console.log(inscripcionData);
+
     this._inscripcionService.inscribir(inscripcionData).subscribe(
       (response) => {
-        this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {
+        console.log('Esta es el response de la inscripcion',response)
+        this.inscID=response.id,
+        console.log(this.inscID)
+        this.snackBar.open('Usuario inscrito exitosamente', 'Cerrar', {
           duration: 3000,
         });
-        this.router.navigate(['/inicio']);
+        const producto = {
+          title: this.eventoData.evento.nombre,
+          quantity: 1,
+          unitPrice: Number(distanciaS!.precio),
+          InscripcionID: this.inscID
+        };
+        this.payment(producto)
       },
       (error) => {
         this.errorMessage = 'Error en la inscripción: ' + error;
@@ -215,4 +193,32 @@ export class InscripcionComponent {
       }
     );
   }
+  payment(producto:any): void{
+    this._paymentService.createPreference(producto).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.preferenceId = response.id; // El ID de la preferencia creada
+
+        // Integrar Mercado Pago Checkout Pro
+        const mp = new MercadoPago(
+          'APP_USR-136e7dcf-f8a5-4da2-9373-8ef757b3954a',
+          {
+            locale: 'es-AR',
+          }
+        );
+
+        mp.checkout({
+          preference: {
+            id: this.preferenceId,
+          },
+          autoOpen: true, // Abrir el checkout inmediatamente
+
+        });
+      },
+      (error) => {
+        console.error('Error al crear la preferencia:', error);
+      }
+    );
+  }
+  
 }

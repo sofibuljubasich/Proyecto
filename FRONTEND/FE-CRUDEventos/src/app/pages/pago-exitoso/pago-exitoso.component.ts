@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Subscriber } from 'rxjs';
+import { InscripcionService } from 'src/app/services/inscripcion.service';
+import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
   selector: 'app-pago-exitoso',
@@ -13,27 +16,29 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 export class PagoExitosoComponent implements OnInit {
   mensaje: string = '';
   loading: boolean = true;
+  estado!:string;
+  id!:any;
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private _paymentService: PaymentService,
+    private _inscService:InscripcionService
   ) {}
   //id y status
   ngOnInit(): void {
     const queryParams = this.route.snapshot.queryParams;
-
-    // Verificar si los parámetros de la URL están presentes
+    const urlParams = new URLSearchParams(window.location.search);
+    this.id = urlParams.get('id');
+    console.log('se supone q esto es el id de la insc',this.id)
     if (queryParams['status'] === 'approved') {
-      // Obtener el ID del pago desde los parámetros de la URL
-      const paymentId = queryParams['payment_id'];
-
-      // Enviar el ID del pago al backend para completar la inscripción
-      this.http
-        .get(`/api/payment/status?paymentId=${paymentId}`)
-        .subscribe(
-          (response: any) => {
+ 
+      this.estado='Pagado'
+    
+            this._inscService.updateEstadoPago(this.id,this.estado).subscribe ((response:any)=>{
             // Verifica que el backend respondió correctamente
+            console.log('¡Pago exitoso! Tu inscripción ha sido registrada.')
             this.mensaje = '¡Pago exitoso! Tu inscripción ha sido registrada.';
             this.loading = false;
           },
