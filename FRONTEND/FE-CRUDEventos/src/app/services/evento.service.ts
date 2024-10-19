@@ -60,14 +60,21 @@ export class EventoService {
       { headers, responseType: 'text' as 'json' }
     );
   }
-
+  descargar(eventoID: number): Observable<any> {
+    return this.http.get(
+      `${this.myAppUrl}${this.myApiUrl}KitsExportarExcel/${eventoID}`,
+      { responseType: 'blob' }
+    );
+  }
   cargarResultados(eventoID: number, file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post(`${this.myAppUrl}${this.myApiUrl}CargarResultados/${eventoID}`, formData);
+    return this.http.post(
+      `${this.myAppUrl}${this.myApiUrl}CargarResultados/${eventoID}`,
+      formData
+    );
   }
-
 
   // Eliminar un evento por su ID
   deleteEvento(eventoId: number): Observable<any> {
@@ -83,29 +90,39 @@ export class EventoService {
   getLugares(): Observable<string[]> {
     return this.http.get<string[]>(`${this.myAppUrl}${this.myApiUrl}Lugares`);
   }
-  enviarEmail(eventoID: number, asunto: string, mensaje: string): Observable<any> {
-    return this.http.post(`${this.myAppUrl}${this.myApiUrl}EnviarEmail/${eventoID}`, null, {
-      params: { asunto, mensaje },
-       responseType: 'text' as 'json'
-    });
+  enviarEmail(
+    eventoID: number,
+    asunto: string,
+    mensaje: string
+  ): Observable<any> {
+    return this.http.post(
+      `${this.myAppUrl}${this.myApiUrl}EnviarEmail/${eventoID}`,
+      null,
+      {
+        params: { asunto, mensaje },
+        responseType: 'text' as 'json',
+      }
+    );
   }
-  buscar(filtros:Busqueda): Observable<any[]>{
-    let params= new HttpParams();
-    if (filtros.texto){
-      params=params.set('busqueda',filtros.texto);
+  buscar(filtros: Busqueda): Observable<any[]> {
+    let params = new HttpParams();
+    if (filtros.texto) {
+      params = params.set('busqueda', filtros.texto);
     }
-    if (filtros.fechaIni){
-      params=params.set('fechaInicio',filtros.fechaIni);
+    if (filtros.fechaIni) {
+      params = params.set('fechaInicio', filtros.fechaIni);
     }
-    if (filtros.fechaFin){
-      params=params.set('fechaFin',filtros.fechaFin);
+    if (filtros.fechaFin) {
+      params = params.set('fechaFin', filtros.fechaFin);
     }
-    if (filtros.tipoEvento){
-      params=params.set('tipo',filtros.tipoEvento);
+    if (filtros.tipoEvento) {
+      params = params.set('tipo', filtros.tipoEvento);
     }
-  //  if (filtros.texto){
-  //    params=params.set('lugar',filtros.lugar);
-  //  }
-    return this.http.get<any[]>(`${this.myAppUrl}${this.myApiUrl}Filtrar`,{params});
+    //  if (filtros.texto){
+    //    params=params.set('lugar',filtros.lugar);
+    //  }
+    return this.http.get<any[]>(`${this.myAppUrl}${this.myApiUrl}Filtrar`, {
+      params,
+    });
   }
 }

@@ -13,8 +13,8 @@
 
 }
 .agregar-container{
-    justify-content: end;
-    display: flex;
+    /* justify-content: end; */
+    display: flex-end;
 }
 .container {
     /* padding-top: 60px; */

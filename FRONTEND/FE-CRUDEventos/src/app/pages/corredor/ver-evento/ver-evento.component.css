@@ -6,33 +6,54 @@ html, body {
 
 body {
   background-color: #04364A;
-  /* display: flex */
 }
 
 .container {
-  padding: 8% 3%;
-  margin: 0;
+  padding: 10% 3% 0px 3%;
   display: grid;
-  grid-template-columns: 3fr 4fr; /* Define dos columnas, una para la imagen y otra para el contenido */
-  gap: 16px; /* Espacio entre las columnas */
-  /* margin: 5% 5%; Ajusta los márgenes según tus necesidades */
-  align-items: start; /* Alinea el contenido al inicio */
-  justify-items: center;
+  grid-template-columns: 3fr 4fr; /* Imagen y opciones a la izquierda (3fr), contenido a la derecha (4fr) */
+  gap: 16px;
+  align-items: start;
+  justify-items: start;
+}
+
+.imagen-y-opciones {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Asegura que tanto la imagen como los botones estén alineados a la izquierda */
 }
 
 .imagen {
-  width: 100%; /* La imagen ocupará toda la columna */
-  height: auto; /* Mantén la proporción de la imagen */
-border: 3px solid white; /* Añade un borde blanco más grueso */
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Añade una sombra más fuerte */
-  background-color: white; /* Asegúrate de que el área dentro del borde sea blanca */
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  background-color: white;
+}
+
+.opciones {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  height: auto;
+  width: 200px;
+  color: aliceblue;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: larger;
+  background-color: transparent;
 }
 
 .content {
   display: grid;
-  grid-template-rows: auto auto; /* Dos filas: una para el título y otra para los datos */
-  gap: 0px; /* Espacio entre las filas */
-
+  grid-template-rows: auto auto;
+  gap: 0px;
 }
 
 .titulo {
@@ -41,43 +62,38 @@ border: 3px solid white; /* Añade un borde blanco más grueso */
   font-weight: bold;
   color: white;
 }
-.second{
-  padding: 0px 30px;
-  margin-bottom: -10px;
-  /* margin-top: -20px; */
-}
+
 .datos {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Dos columnas para los datos */
-  gap: 5px; /* Espacio entre las columnas */
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
   padding: 20px 30px 0px 30px;
-  align-items: start;
 }
+
 .distancias {
-  margin-left: 2.5rem; /* Añade margen izquierdo para alinear con la etiqueta */
+  margin-left: 2.5rem;
   width: 100%;
 }
+
 .distancias {
   margin-top: 20px;
 }
-.item{
+
+.item {
   margin-top: 0px;
 }
-table {
 
+table {
   width: 60%;
   border-collapse: collapse;
   table-layout: fixed;
-  align-items: start;
   margin-top: -20px;
 }
 
 th, td {
   border: 1px solid #0c0c0c;
-  text-align: left;
-  padding: 8px;
-  vertical-align: middle;
   text-align: center;
+  padding: 8px;
 }
 
 th {
@@ -88,72 +104,46 @@ th {
 .distancia-item {
   background-color: #ffffff;
 }
+
 .dato {
   color: white;
   font-size: 16px;
   display: flex;
   align-items: center;
   margin-bottom: 30px;
-  
 }
-.columna{
+
+.columna {
   color: white;
   font-size: 16px;
   display: flex;
   align-items: center;
 }
+
 .custom-icon {
-  font-size: 3rem; /* Ajusta este valor para cambiar el tamaño del icono */
-  vertical-align: middle; /* Alinea el icono verticalmente con el texto */
-  margin-right: 10px; /* Espacio entre el icono y el texto */
-  color: white; /* Color del icono */
-  line-height: 1;
-  width: 50px;
-  height: auto;
+    font-size: 3rem; /* Ajusta este valor para cambiar el tamaño del icono */
+    vertical-align: middle; /* Alinea el icono verticalmente con el texto */
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    color: white; /* Color del icono */
+    line-height: 1;
+    width: 50px;
+    height: auto;
 }
-.tipo{
-  color: white;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  height: max-content;
-  margin-bottom: 15px;
-}
+
 .label {
-  margin: 0; /* Quita el margen predeterminado del <p> */
-  font-weight: 500; /* Hace el texto "Fecha:" en negrita */
+  margin: 0;
+  font-weight: 500;
   padding: 9px;
   font-size: 20px;
-  text-decoration: underline ;
-  text-decoration-thickness: 1px;
+  text-decoration: underline;
 }
 
 .date {
-  margin: 0; /* Quita el margen predeterminado del <p> */
+  margin: 0;
   font-size: 18px;
 }
-.fecha, .lugar, .descripcion {
-  color: white;
-  font-size: 16px;
-}
 
-  .opciones {
-    display: flex;
-    justify-content: center;
-    margin-top: -100px;
-    gap: 10px; /* Opcional: Espacio entre botones */
-    /* position: fixed; */
-    /* bottom: 20%; */
-    /* left: 30%; */
-    /* transform: translate(5%, -200%); */
-}
-button{
-
-  height: auto;
-  width: 200px;
-  margin: 0px 10px;
-  color: aliceblue;
-  border: none;
+button {
   margin-left: 10px;
   border-radius: 10px;
   padding: 10px;

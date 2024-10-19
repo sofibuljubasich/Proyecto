@@ -50,7 +50,7 @@ export class VerInscripcionesComponent {
           mail: inscrito.corredor.email,
           genero: inscrito.corredor.genero,
           distancia: `${inscrito.distancia.km} km`,
-          categoria: inscrito.remera, // Asumiendo que "categoria" se refiere a la remera
+          categoria: `${inscrito.categoria.edadInicio} - ${inscrito.categoria.edadFin}`, // Asumiendo que "categoria" se refiere a la remera
           estado: this.normalizeEstadoPago(inscrito.estadoPago),
           metodo: inscrito.formaPago,
           entregaKit: inscrito.acreditado,
@@ -59,6 +59,21 @@ export class VerInscripcionesComponent {
         this.dataSource.data = transformedData;
       });
   }
+
+  descarga() {
+    this._eventoService.descargar(this.eventoId).subscribe((data: Blob) => {
+      const blob = new Blob([data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Inscriptos_Evento_${this.eventoId}.xlsx`; // Nombre del archivo descargado
+      link.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
   normalizeEstadoPago(estadoPago: string): string {
     return estadoPago.toLowerCase() === 'pendiente' ? 'Pendiente' : estadoPago;
   }

@@ -8,8 +8,13 @@
                     <mat-label>Filtro</mat-label>
                     <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: Mia" #input class="input">
                 </mat-form-field>
-
+                <div style="justify-content: end; padding-right: 10%;display: flex; padding-bottom: 15px;">
+                  <button (click)="descarga()" class="agregar-button">
+                    <span class="material-icons">download</span> Descargar
+                  </button>
+                </div>
             </div>
+            
         
         <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
             <!-- Dorsal Column -->
