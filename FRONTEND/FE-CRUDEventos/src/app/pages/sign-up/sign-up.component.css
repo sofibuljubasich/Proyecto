@@ -218,8 +218,8 @@ p{
   /* z-index: 1; */
   cursor: pointer;
   position: relative;
-  bottom: -34%; 
-  right: -34%;
+  margin-top: 350%;
+  right: -200%;
   background-color: #007bff;
   color: #fff;
   border-radius: 50%;

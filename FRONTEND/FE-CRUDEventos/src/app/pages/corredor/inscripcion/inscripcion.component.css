@@ -10,7 +10,7 @@ html, body {
   }
   
   .container {
-    padding: 9% 3%;
+    padding: 10% 3% 0px 3%;
     margin: 0;
     display: grid;
     grid-template-columns: 4fr 4fr; /* Define dos columnas, una para la imagen y otra para el contenido */
@@ -22,7 +22,8 @@ html, body {
   
   .imagen {
     width: 100%; /* La imagen ocupará toda la columna */
-    height: 70%; /* Mantén la proporción de la imagen */
+    height: 300px;
+    object-fit: cover;
     
   border: 3px solid white; /* Añade un borde blanco más grueso */
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Añade una sombra más fuerte */
@@ -48,9 +49,9 @@ html, body {
   .datos {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Dos columnas para los datos */
-    gap: 1px; /* Espacio entre las columnas */
+    gap: 5px; /* Espacio entre las columnas */
     /* padding: 0px 0px; */
-    margin-top: -15%;
+
     align-items: start;
   }
 
@@ -108,7 +109,7 @@ html, body {
     .opciones {
       display: flex;
       justify-content: center;
-      margin-top: -50px
+      /* margin-top: -50px */
 ; /* Opcional: Espacio entre botones */
       /* position: fixed; */
       /* bottom: 20%;

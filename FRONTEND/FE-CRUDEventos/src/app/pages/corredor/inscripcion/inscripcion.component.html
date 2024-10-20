@@ -1,9 +1,35 @@
 <body>
     <!-- <app-header></app-header> -->
     <div *ngIf="eventoData" class="container">
-        <img [src]="imagenURL" alt="Descripción de la imagen" class="imagen">
+        <div class="imagen-y-opciones">
+            <img [src]="imagenURL" alt="Descripción de la imagen" class="imagen">
+            <div class="datos">
+                <div class="dato">
+                <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="calendar_month"></mat-icon>
+                <p class="label">Fecha:</p>
+                <p class="date">{{ getFormattedDate(eventoData.evento.fecha) }}</p>
+                </div>
+                <div class="dato">
+                <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="location_on"></mat-icon>
+                <p class="label">Localización:</p>
+                <p class="date">{{ eventoData.evento.lugar }}</p>
+                </div>
+                <div class="dato">
+                    <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="directions_run"></mat-icon>
+                    <p class="label">Tipo de evento:</p>
+                    <p class="date">{{ eventoData.evento.tipo.descripcion }}</p>
+                </div>
+                <div class="dato">
+                    <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="schedule"></mat-icon>
+                    <p class="label">Hora:</p>
+                    <p class="date">{{ getFormattedTime(eventoData.evento.fecha) }}</p>
+                  </div>
+            </div> 
+        </div>
+        
         <div class="content">
-            <div style="width: 100%;padding-left: 10px;" class="titulo">{{eventoData.evento.nombre}}</div>
+            <div style="width: 100%;padding-left: 10px;" class="titulo">Inscripción a evento: </div>
+            <div style="font-size: 25px; display: flex;color: aliceblue; justify-content: center;margin-top: 20px; margin-bottom: -10px;" >{{eventoData.evento.nombre}}</div>
             <label for="categoria">Categoría:</label>
             <input *ngIf="categoria!=null" type="text" id="categoria" [value]="categoria.edadInicio +'-'+ categoria.edadFin" readonly>
             <input style="font-size: larger; height: 50px;margin-bottom: 20px;padding-left: 40px; color:rgb(169, 25, 25); background-color: grey;" *ngIf="categoria==null" type="text" id="-" [value]="'No se encuentran asociadas categorias para su edad en este evento'" readonly>
@@ -55,31 +81,10 @@
 
         </div>
           
-        <div class="datos">
-            <div class="dato">
-            <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="calendar_month"></mat-icon>
-            <p class="label">Fecha:</p>
-            <p class="date">{{ getFormattedDate(eventoData.evento.fecha) }}</p>
-            </div>
-            <div class="dato">
-            <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="location_on"></mat-icon>
-            <p class="label">Localización:</p>
-            <p class="date">{{ eventoData.evento.lugar }}</p>
-            </div>
-            <div class="dato">
-                <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="directions_run"></mat-icon>
-                <p class="label">Tipo de evento:</p>
-                <p class="date">{{ eventoData.evento.tipo.descripcion }}</p>
-            </div>
-            <div class="dato">
-                <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="schedule"></mat-icon>
-                <p class="label">Hora:</p>
-                <p class="date">{{ getFormattedTime(eventoData.evento.fecha) }}</p>
-              </div>
-        </div> 
+        <div></div>
 
         <div class="opciones">
-            <button routerLink="inicio" style="border: none; text-decoration: underline;background:none;width: 40%;"> <- Regresar</button>
+            <button routerLink="inicio" style="grid-column: 2;border: none; text-decoration: underline;background:none;width: 40%;"> <- Regresar</button>
             <button *ngIf="pagoSelect != 'Mercado Pago'" mat-raised-button (click)="onInscribirse()" color="primary">Inscribirse</button>
             <button class="boton-mp" *ngIf="pagoSelect === 'Mercado Pago'" mat-raised-button (click)="pagar()" color="primary">
                 <span class="mdc-button__label" style="display: flex; align-items: center;">

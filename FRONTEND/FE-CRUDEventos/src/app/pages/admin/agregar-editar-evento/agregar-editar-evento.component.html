@@ -78,7 +78,7 @@
   </div>
             <!-- Botones de acción -->
             <div class="opciones">
-              <button routerLink="/inicio" style="border: none; text-decoration: underline;background:none;"> <- Regresar</button>
+              <button (click)="goBack()" style="border: none; text-decoration: underline;background:none;"> <- Regresar</button>
               <button type="submit" mat-raised-button color="primary" [disabled]="!isEditing">Guardar</button>
               <button style="background-color: rgb(36, 153, 173);" type="button" (click)="toggleEdit()">
                 {{ isEditing ? 'Cancelar' : 'Editar' }}

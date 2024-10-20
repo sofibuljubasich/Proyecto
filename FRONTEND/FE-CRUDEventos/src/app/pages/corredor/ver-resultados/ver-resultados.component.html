@@ -1,12 +1,17 @@
 <div class="container">
   <button (click)="goBack()" style="color: aliceblue; text-decoration:underline; border: none;background-color:transparent;width: fit-content;  margin-top: 100px;"><--Regresar</button>
-    <main class="main">
-      
+ 
+  <main class="main">
+    <section *ngIf="eventoData!=null" class="titulo">
+    <div >Resultados de "{{eventoData.evento.nombre}}"</div>
+    </section>
+    <div class="info">
       <section>
         <app-tabla-resultados [eventoId]="eventoId"></app-tabla-resultados>
       </section>
       <section class="tabla">
         <app-comentarios [eventoId]="eventoId"></app-comentarios>
       </section>
-    </main>
-  </div>
+    </div>
+  </main>
+</div>

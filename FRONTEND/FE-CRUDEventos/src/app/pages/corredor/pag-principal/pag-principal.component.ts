@@ -1,4 +1,9 @@
-import { Component, HostListener } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Busqueda } from 'src/app/interfaces/busqueda';
 import { Evento, EventoResponse, Tipo } from 'src/app/interfaces/evento';
 import { EventoService } from 'src/app/services/evento.service';
@@ -9,7 +14,7 @@ import { TipoEventoService } from 'src/app/services/tipo-evento.service';
   templateUrl: './pag-principal.component.html',
   styleUrls: ['./pag-principal.component.css'],
 })
-export class PagPrincipalComponent {
+export class PagPrincipalComponent implements OnChanges {
   eventos: any[] = [];
   eventosActivos: any[] = [];
   eventosInactivos: any[] = [];
@@ -26,6 +31,9 @@ export class PagPrincipalComponent {
     this.obtenerEventos();
     this.obtenerLugares();
     this.obtenerTipos();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.obtenerEventos();
   }
 
   obtenerEventos(): void {
