@@ -25,15 +25,21 @@ namespace BE.Repository
         public async Task<List<ChatDto>> GetChats(int usuarioID)
         {
             return await _context.Mensaje
-            .Where(m => m.destinatarioID == usuarioID)
-            .GroupBy(m => m.remitenteID)
-            .Select(g => new ChatDto
-            {
-               
-                RemitenteID = usuarioID,
-                DestinatarioID = g.Key,
-                CantidadSinLeer = g.Count()
-            }).ToListAsync();
+        .Where(m => m.remitenteID == usuarioID || m.destinatarioID == usuarioID)
+        .GroupBy(m => new
+        {
+            RemitenteID = m.remitenteID == usuarioID ? m.destinatarioID : m.remitenteID,
+            DestinatarioID = m.remitenteID == usuarioID ? m.destinatarioID : m.remitenteID
+        })
+        .Select(g => new ChatDto
+        {
+            RemitenteID = usuarioID ,
+            DestinatarioID = g.Key.RemitenteID,
+            Destinatario = g.Key.RemitenteID == usuarioID
+                ? _context.Usuarios.FirstOrDefault(u => u.ID == g.Key.DestinatarioID)
+                : _context.Usuarios.FirstOrDefault(u => u.ID == g.Key.RemitenteID),
+            CantidadSinLeer = g.Count(m => m.destinatarioID == usuarioID && m.EstadoLeido == false)
+        }).ToListAsync();
             
 
         }

@@ -5,8 +5,9 @@
       <div class="imagen-y-opciones">
         <img [src]="imagenURL" alt="Descripción de la imagen" class="imagen">
         <div class="opciones">
-            <button (click)="goBack()" style="border: none; text-decoration: underline;background:none;">← Regresar</button>
-            <button mat-raised-button (click)="onInscribirse()" color="primary">Inscribirse</button>
+            <button *ngIf="currentUser.rolID==3" (click)="goBack()" style="border: none; color:aliceblue; background-color: rgb(83, 82, 82);justify-content: center;">← Regresar</button>
+            <button *ngIf="currentUser.rolID!=3" (click)="goBack()" style="border: none; text-decoration: underline;background:none;">← Regresar</button>
+            <button *ngIf="currentUser.rolID!=3" mat-raised-button (click)="onInscribirse()" color="primary">Inscribirse</button>
         </div>
     </div>
 

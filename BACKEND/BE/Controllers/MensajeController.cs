@@ -78,7 +78,8 @@ namespace BE.Controllers
 
                 if (mensajes != null) 
                 {
-                    await _mensajeRepository.MarcarLeido(mensajes);
+                    var mensajesRecibidos = mensajes.Where(m => m.destinatarioID == usuarioID).ToList();
+                    await _mensajeRepository.MarcarLeido(mensajesRecibidos);
                 }   
 
 

@@ -38,6 +38,7 @@
     /* padding: 24px 20px; */
     font-size: 20px;
     color: #1d1d1d;
+    padding-left: 5%;
     /* width: 41.4%;
     height: 20px; */
   }
@@ -146,17 +147,11 @@ input:checked + .slider:before {
         justify-content: center;
         
       }
-      
-      .evento-content {
-        /* padding: 0 10%; */
 
-        padding: 15px 0;
-
-      }
       
       .evento-sec {
         display: flex;
-        padding: 15px 15%;
+        padding: 15px 20%;
         align-items: center;
         
       }
@@ -164,9 +159,16 @@ input:checked + .slider:before {
         flex: 3; /* Ocupa 3 partes del contenedor */
       }
       .unread-indicator {
-        color: red;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
         font-size: 20px;
-        margin-left: 10px;
+        display: flex;
+        width: 30px;
+        height: 30px;
+        justify-content: center;
+        align-items: center;
+        text-align: right;
       }
       .agregar-button{
         height: auto;
@@ -203,7 +205,7 @@ input:checked + .slider:before {
         background-color: #419197;
         display: flex;
         /* height: 130px; */
-        padding: 1%;
+        padding: 2%;
         border-radius: 10px;
         cursor: pointer;
         /* align-content: center; */
@@ -224,6 +226,8 @@ input:checked + .slider:before {
       .contenido {
         flex-grow: 1;
         align-content: center;
+        display: flex;
+        justify-content: space-between;
       }
       
       .nombre {

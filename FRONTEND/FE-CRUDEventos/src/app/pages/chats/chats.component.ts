@@ -23,6 +23,8 @@ export class ChatsComponent {
   chats: Chat[] = [];
   formattedDate: string = '';
   usuarioID: any;
+  baseUrl: string = `https://localhost:7296`;
+  searchText: string = '';
 
   constructor(
     private _eventoService: EventoService,
@@ -51,6 +53,11 @@ export class ChatsComponent {
     this._chatService.getChats(this.usuarioID).subscribe(
       (data) => {
         this.chats = data;
+        this.chats = data.map((chat: Chat) => {
+          // Si el backend proporciona una ruta relativa, la concatenamos con la URL base
+          chat.destinatario.imagen = `${this.baseUrl}${chat.destinatario.imagen}`;
+          return chat;
+        });
         console.log(data);
       },
       (error) => {
@@ -59,7 +66,7 @@ export class ChatsComponent {
     );
   }
   abrirChatSelector() {
-    console.log("hola")
+    console.log('hola');
     const dialogRef = this.dialog.open(ChatSelectorComponent);
   }
 }

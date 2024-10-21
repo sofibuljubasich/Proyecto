@@ -11,7 +11,7 @@
           <div class="fecha">{{ formattedDate }}</div>
         </div>
         <ng-container *ngIf="userRole === 4">  
-          <button class="boton" routerLink="/listaInscriptos/{{eventoResp.id}}">Ver</button>
+          <button class="ver" routerLink="/listaInscriptos/{{eventoResp.id}}">Ver Inscriptos</button>
         </ng-container>
         <ng-container *ngIf="userRole != 4">  
           <button mat-icon-button style="transform: scale(2);    margin-right: 20px;" routerLink="/verEvento/{{eventoResp.id}}">

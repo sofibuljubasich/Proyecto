@@ -13,6 +13,5 @@ export interface Chat {
   remitenteID: number;
   destinatarioID: number;
   destinatario: Usuario;
-  mensajes: Mensaje[];
   cantidadSinLeer: number;
 }

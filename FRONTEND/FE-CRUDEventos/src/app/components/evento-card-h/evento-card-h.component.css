@@ -58,3 +58,13 @@
     margin-right: 20px;
     cursor: pointer;
   }
+  .ver{
+    border-radius: 30%;
+    background-color:rgb(9, 33, 43);
+    color:aliceblue;
+    height: 50px;
+    width: fit-content;
+    border:rgb(9, 33, 43);
+    margin-right: 20px;
+    cursor: pointer;
+  }

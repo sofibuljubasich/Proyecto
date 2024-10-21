@@ -20,7 +20,8 @@ body {
 .imagen-y-opciones {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Asegura que tanto la imagen como los botones estén alineados a la izquierda */
+  justify-content: center;
+  /* align-items: flex-start; Asegura que tanto la imagen como los botones estén alineados a la izquierda */
 }
 
 .imagen {
@@ -36,6 +37,7 @@ body {
   margin-top: 20px;
   display: flex;
   gap: 10px;
+  justify-content: center;
 }
 
 button {

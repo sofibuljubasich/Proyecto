@@ -53,6 +53,7 @@ namespace BE.Controllers
 
                 var voluntario = _mapper.Map<Voluntario>(request);
                 voluntario.Imagen = ImagenURL;
+                
 
 
 
