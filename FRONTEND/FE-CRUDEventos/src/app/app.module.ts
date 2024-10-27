@@ -34,6 +34,7 @@ import { TareasAsignadasComponent } from './pages/voluntario/tareas-asignadas/ta
 import { ChatsComponent } from './pages/chats/chats.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { EmailPopupComponent } from './components/email-popup/email-popup.component';
+import { HelpComponent } from './pages/corredor/help/help.component';
 
 import { ABMEventosComponent } from './pages/admin/abm-eventos/abm-eventos.component';
 import { AbmColaboradoresComponent } from './pages/admin/abm-colaboradores/abm-colaboradores.component';
@@ -96,6 +97,7 @@ import { DatePipe } from '@angular/common';
     ChangePasswordComponent,
     ChatSelectorComponent,
     FilterByNamePipe,
+    HelpComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

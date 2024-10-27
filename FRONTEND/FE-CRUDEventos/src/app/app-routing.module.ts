@@ -31,6 +31,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { MisEventosComponent } from './pages/corredor/mis-eventos/mis-eventos.component';
 import { PagoExitosoComponent } from './pages/pago-exitoso/pago-exitoso.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { HelpComponent } from './pages/corredor/help/help.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: 'verResultados/:id', component: VerResultadosComponent },
   { path: 'verEvento/:id', component: VerEventoComponent },
   { path: 'misEventos', component: MisEventosComponent },
+  { path: 'ayuda', component: HelpComponent },
   // INSCRIPTOR
   { path: 'eventosActivos', component: EventosActivosComponent },
   { path: 'inscripcionManual/:id', component: InscripcionManualComponent },
