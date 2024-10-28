@@ -118,7 +118,7 @@ namespace BE.Controllers
                 await _tareaVoluntarioService.CreateTareaVoluntario(tarea.ID, voluntarios);
 
 
-                return Ok("Tarea creada");
+                return Ok(tarea.ID);
 
             }
             catch (Exception ex)

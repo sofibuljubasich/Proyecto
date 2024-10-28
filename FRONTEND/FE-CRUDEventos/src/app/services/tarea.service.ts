@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
-import { Tarea } from '../interfaces/tarea';
+import { CreateTarea, Tarea } from '../interfaces/tarea';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +22,8 @@ export class TareaService {
       `${this.myAppUrl}${this.myApiUrl}/${task.tareaID}`,
       task
     );
+  }
+  createTarea(tarea: CreateTarea): Observable<any> {
+    return this.http.post(`${this.myAppUrl}${this.myApiUrl}`, tarea);
   }
 }

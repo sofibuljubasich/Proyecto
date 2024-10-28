@@ -25,8 +25,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -57,6 +58,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatSlideToggleModule,
     MatDialogModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MatTableModule,
@@ -83,7 +85,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatBottomSheetModule,
     MatSlideToggleModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class SharedModule {}

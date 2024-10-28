@@ -15,3 +15,12 @@ export interface Tarea {
   eventoID: number;
   voluntarios: Voluntario[];
 }
+
+export interface CreateTarea {
+  // estado: string;
+  descripcion: string;
+  fechaHora: Date;
+  ubicacion: string;
+  eventoID: number;
+  voluntarios: Voluntario[];
+}

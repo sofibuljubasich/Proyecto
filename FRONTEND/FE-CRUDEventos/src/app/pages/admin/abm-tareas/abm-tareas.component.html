@@ -1,35 +1,39 @@
 <div class="container">
     <div class="contenedor-general">
-        <div class="datos">
+        <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()" class="datos">
             <div class="descripcion">
                 <label for="descripcion">Descripcion de la tarea</label>
-                <input class="text" type="text">
+                <input formControlName="descripcion" id="descripcion" class="text" type="text">
             </div>
             <div class="botones">
                 <div class="label">
                     <label for="fecha">Fecha</label>
-                    <input type="date">
+                    <input formControlName="fecha" id="fecha" type="date">
                 </div>
                 <div class="label">
-                    <label for="lugar">Lugar</label>
-                    <input type="text">
+                    <label for="hora">Hora</label>
+                    <input formControlName="hora" id="hora" type="time">
+                </div>
+                <div class="label">
+                    <label for="ubicacion">Lugar</label>
+                    <input formControlName="ubicacion" id="ubicacion" type="text">
                 </div>
             </div>
-            <label for="lugar">Voluntarios disponibles</label>
-            <div class="lista-voluntarios">
+            <label for="voluntarios">Voluntarios disponibles</label>
+            <div class="lista-voluntarios" id="voluntarios">
 
                 <div class="content" *ngFor= "let vol of voluntarios">
-                    <mat-checkbox ></mat-checkbox>
+                    <mat-checkbox (change)="toggleVoluntario(vol.id, $event.checked)"></mat-checkbox>
                     {{ vol.nombre }} {{ vol.apellido }}
                 </div>
             </div>
             <div class="opciones">
                 
-                <button (click)="goBack()" style="background-color: rgb(9, 33, 43)" type="submit" >Guardar</button>
+                <button style="background-color: rgb(9, 33, 43)" type="submit" >Guardar</button>
                 <button (click)="goBack()" style="background-color: rgb(135, 136, 136);" type="button">Cancelar
                 </button>
               </div>
-        </div>      
+            </form>      
          
     </div>
 </div>
