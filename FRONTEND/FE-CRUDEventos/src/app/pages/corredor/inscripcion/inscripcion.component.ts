@@ -185,7 +185,10 @@ export class InscripcionComponent {
           unitPrice: Number(distanciaS!.precio),
           InscripcionID: this.inscID
         };
-        this.payment(producto)
+       // if (this.inscripcionForm.value.estadoPago!='Efectivo') {  REVISAR
+          this.payment(producto)
+       // }
+
       },
       (error) => {
         this.errorMessage = 'Error en la inscripción: ' + error;
