@@ -1,0 +1,27 @@
+<div class="categoria-container">
+    <h2>Categorías</h2>
+  
+    <!-- Formulario para Crear/Editar Categoría -->
+    <form (ngSubmit)="saveCategoria()">
+      <input type="hidden" [(ngModel)]="selectedCategoria.id" name="id" />
+  
+      <label for="edadInicio">Edad Inicio:</label>
+      <input type="number" [(ngModel)]="selectedCategoria.edadInicio" name="edadInicio" required />
+  
+      <label for="edadFin">Edad Fin:</label>
+      <input type="number" [(ngModel)]="selectedCategoria.edadFin" name="edadFin" required />
+  
+      <button type="submit">{{ selectedCategoria?.id ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" (click)="clearSelection()">Cancelar</button>
+    </form>
+  
+    <!-- Lista de Categorías -->
+    <ul>
+      <li *ngFor="let categoria of categorias">
+        {{ categoria.edadInicio }} - {{ categoria.edadFin }}
+        <button (click)="selectCategoria(categoria)">Editar</button>
+        <button (click)="deleteCategoria(categoria.id)">Eliminar</button>
+      </li>
+    </ul>
+  </div>
+  

@@ -1,0 +1,30 @@
+<div class="distancia-container">
+    <h2>Distancias</h2>
+  
+    <!-- Formulario para Crear/Editar Distancia -->
+    <form (ngSubmit)="saveDistancia()">
+      <input type="hidden" [(ngModel)]="selectedDistancia.id" name="id" />
+  
+      <label for="distanciaID">Distancia ID:</label>
+      <input type="number" [(ngModel)]="selectedDistancia.distanciaID" name="distanciaID" required />
+  
+      <label for="km">Kilómetros:</label>
+      <input type="number" [(ngModel)]="selectedDistancia.km" name="km" required />
+  
+      <label for="precio">Precio:</label>
+      <input type="number" [(ngModel)]="selectedDistancia.precio" name="precio" required />
+  
+      <button type="submit">{{ selectedDistancia?.id ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" (click)="clearSelection()">Cancelar</button>
+    </form>
+  
+    <!-- Lista de Distancias -->
+    <ul>
+      <li *ngFor="let distancia of distancias">
+        {{ distancia.distanciaID }} - {{ distancia.km }} km - {{ distancia.precio | currency }}
+        <button (click)="selectDistancia(distancia)">Editar</button>
+        <button (click)="deleteDistancia(distancia.id)">Eliminar</button>
+      </li>
+    </ul>
+  </div>
+  
