@@ -1,30 +1,68 @@
-<div class="distancia-container">
-    <h2>Distancias</h2>
-  
-    <!-- Formulario para Crear/Editar Distancia -->
-    <form (ngSubmit)="saveDistancia()">
-      <input type="hidden" [(ngModel)]="selectedDistancia.id" name="id" />
-  
-      <label for="distanciaID">Distancia ID:</label>
-      <input type="number" [(ngModel)]="selectedDistancia.distanciaID" name="distanciaID" required />
-  
-      <label for="km">Kilómetros:</label>
-      <input type="number" [(ngModel)]="selectedDistancia.km" name="km" required />
-  
-      <label for="precio">Precio:</label>
-      <input type="number" [(ngModel)]="selectedDistancia.precio" name="precio" required />
-  
-      <button type="submit">{{ selectedDistancia?.id ? 'Actualizar' : 'Crear' }}</button>
-      <button type="button" (click)="clearSelection()">Cancelar</button>
-    </form>
-  
-    <!-- Lista de Distancias -->
-    <ul>
-      <li *ngFor="let distancia of distancias">
-        {{ distancia.distanciaID }} - {{ distancia.km }} km - {{ distancia.precio | currency }}
-        <button (click)="selectDistancia(distancia)">Editar</button>
-        <button (click)="deleteDistancia(distancia.id)">Eliminar</button>
-      </li>
-    </ul>
+<div class="container">
+  <div class="contenedor-general">
+    <div class="datos">
+          <div class="header">
+            <h1>Distancias</h1>
+            <button class="agregar-button" (click)="agregarNuevaDistancia()"> + Nuevo </button>
+          </div>
+          <div class="lista-distancias">
+            <table>
+              <thead>
+                <tr>
+                  <th>Distancia (km)</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let distancia of distancias">
+                  <td>
+                    <!-- Campo editable cuando la distancia está en modo edición -->
+                    <ng-container *ngIf="editDistanceId === distancia.id; else normalView">
+                      <input class="input" type="text" [(ngModel)]="editedKm" style="text-align: center;" />
+                    </ng-container>
+                    <!-- Vista normal cuando no está en modo edición -->
+                    <ng-template #normalView>
+                      {{ distancia.km }} km
+                    </ng-template>
+                  </td>
+                  <td>
+                    <!-- Botones de Aceptar y Cancelar en modo edición -->
+                    <ng-container *ngIf="editDistanceId === distancia.id; else actionButtons">
+                      <button mat-icon-button style="transform: scale(1);" (click)="aceptarEdicion()">
+                        <mat-icon  style="color: rgb(0, 255, 21); margin-inline-start: 0px;">check</mat-icon>
+                      </button>
+                      <button mat-icon-button style="transform: scale(1);" (click)="cancelarEdicion()">
+                        <mat-icon  style="color: rgb(189, 0, 0); margin-inline-start: 0px;">close</mat-icon>
+                      </button>
+                    </ng-container>
+                    <!-- Botones de Editar y Eliminar en modo vista -->
+                    <ng-template #actionButtons>
+                      <button mat-icon-button (click)="selectDistancia(distancia)">
+                        <mat-icon style="color: rgb(210, 211, 211); margin-inline-start: 0px;">edit</mat-icon>
+                      </button>
+                      <button mat-icon-button (click)="deleteDistancia(distancia.id)">
+                        <mat-icon style="color: rgb(189, 0, 0); margin-inline-start: 0px;">delete</mat-icon>
+                      </button>
+                    </ng-template>
+                  </td>
+                </tr>
+                <tr *ngIf="isAddingNew">
+                  <td>
+                    <input class="input" type="text" [(ngModel)]="newDistanceKm" placeholder="Ingrese distancia en km" />
+                  </td>
+                  <td>
+                    <button mat-icon-button style="transform: scale(1);" (click)="aceptarNuevaDistancia()">
+                      <mat-icon  style="color: rgb(0, 255, 21); margin-inline-start: 0px;">check</mat-icon>
+                    </button>
+                    <button mat-icon-button style="transform: scale(1);" (click)="cancelarNuevaDistancia()">
+                      <mat-icon  style="color: rgb(189, 0, 0); margin-inline-start: 0px;">close</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
   </div>
-  
+</div>
+
+    

@@ -1,27 +1,73 @@
-<div class="categoria-container">
-    <h2>Categorías</h2>
-  
-    <!-- Formulario para Crear/Editar Categoría -->
-    <form (ngSubmit)="saveCategoria()">
-      <input type="hidden" [(ngModel)]="selectedCategoria.id" name="id" />
-  
-      <label for="edadInicio">Edad Inicio:</label>
-      <input type="number" [(ngModel)]="selectedCategoria.edadInicio" name="edadInicio" required />
-  
-      <label for="edadFin">Edad Fin:</label>
-      <input type="number" [(ngModel)]="selectedCategoria.edadFin" name="edadFin" required />
-  
-      <button type="submit">{{ selectedCategoria?.id ? 'Actualizar' : 'Crear' }}</button>
-      <button type="button" (click)="clearSelection()">Cancelar</button>
-    </form>
-  
-    <!-- Lista de Categorías -->
-    <ul>
-      <li *ngFor="let categoria of categorias">
-        {{ categoria.edadInicio }} - {{ categoria.edadFin }}
-        <button (click)="selectCategoria(categoria)">Editar</button>
-        <button (click)="deleteCategoria(categoria.id)">Eliminar</button>
-      </li>
-    </ul>
+<div class="container">
+  <div class="contenedor-general">
+    <div class="datos">
+          <div class="header">
+            <h1>Categorias</h1>
+            <button class="agregar-button" (click)="agregarNuevaCategoria()"> + Nuevo </button>
+          </div>
+          <div class="lista-distancias">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rango de edades</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let categoria of categorias">
+                  <td>
+                    <!-- Campo editable cuando la distancia está en modo edición -->
+                    <ng-container *ngIf="editCategoryId === categoria.id; else normalView">
+                      <div class="edit-inputs">
+                        <input class="input" type="number" [(ngModel)]="editedEI" placeholder="Edad Inicio" />
+                        <span class="separator">-</span>
+                        <input class="input" type="number" [(ngModel)]="editedEF" placeholder="Edad Fin" />
+                      </div>                      
+                    </ng-container>
+                    <!-- Vista normal cuando no está en modo edición -->
+                    <ng-template #normalView>
+                      {{ categoria.edadInicio }} - {{ categoria.edadFin }}
+                    </ng-template>
+                  </td>
+                  <td>
+                    <!-- Botones de Aceptar y Cancelar en modo edición -->
+                    <ng-container *ngIf="editCategoryId === categoria.id; else actionButtons">
+                      <button mat-icon-button style="transform: scale(1);" (click)="aceptarEdicion()">
+                        <mat-icon  style="color: rgb(0, 255, 21); margin-inline-start: 0px;">check</mat-icon>
+                      </button>
+                      <button mat-icon-button style="transform: scale(1);" (click)="cancelarEdicion()">
+                        <mat-icon  style="color: rgb(189, 0, 0); margin-inline-start: 0px;">close</mat-icon>
+                      </button>
+                    </ng-container>
+                    <!-- Botones de Editar y Eliminar en modo vista -->
+                    <ng-template #actionButtons>
+                      <button mat-icon-button (click)="selectCategoria(categoria)">
+                        <mat-icon style="color: rgb(210, 211, 211); margin-inline-start: 0px;">edit</mat-icon>
+                      </button>
+                      <button mat-icon-button (click)="deleteCategoria(categoria.id)">
+                        <mat-icon style="color: rgb(189, 0, 0); margin-inline-start: 0px;">delete</mat-icon>
+                      </button>
+                    </ng-template>
+                  </td>
+                </tr>
+                <tr *ngIf="isAddingNew">
+                  <td>
+                    <input class="input" type="number" [(ngModel)]="newEdadI" placeholder="Edad Inicio" />
+                      -
+                    <input class="input" type="number" [(ngModel)]="newEdadF" placeholder="Edad Fin" />
+                  </td>
+                  <td>
+                    <button mat-icon-button style="transform: scale(1);" (click)="aceptarNuevaCategoria()">
+                      <mat-icon  style="color: rgb(0, 255, 21); margin-inline-start: 0px;">check</mat-icon>
+                    </button>
+                    <button mat-icon-button style="transform: scale(1);" (click)="cancelarNuevaCategoria()">
+                      <mat-icon  style="color: rgb(189, 0, 0); margin-inline-start: 0px;">close</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
   </div>
+</div>
   

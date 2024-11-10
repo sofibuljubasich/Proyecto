@@ -1,0 +1,140 @@
+.container {
+    /* padding-top: 100px; */
+    position: absolute;
+    background-color: rgb(9, 33, 43);
+    width: 100%;
+    min-height: 100vh;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+  
+  .contenedor-general {
+    padding: 20px 20%; 
+  }
+  
+  .datos {
+    margin-top: 100px;
+    background-color: rgba(127, 255, 212, 0.418);
+    border-radius: 20px;
+    padding: 2% 5%;
+    max-height: 450px;
+  }
+  
+  .label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    flex: 1;
+  }
+  .descripcion .text,
+  .botones .label input {
+    height: 20px;
+    padding: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  label {
+    color: aliceblue;
+  }
+  
+  .descripcion {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .botones {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    /* margin-top: 20px; */
+    width: 100%;
+  }
+  table {
+    width: 80%;
+    border-collapse: collapse;
+    justify-self: center;
+    margin-bottom: 10px;
+
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    height: 3px;
+    width: 40%;
+  }
+  
+  th {
+    background-color: #419197;
+    color:#0f3436;
+  }
+  td{
+    color: aliceblue;
+  }
+h1{
+    color: aliceblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.agregar-button{
+    height: 3%;
+    width: 20%;
+    margin: 0px 10px;
+    color: rgb(255, 255, 255);
+    border: none;
+   margin-left: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: larger;
+    background-color: #1520b3;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;       
+    justify-content: space-between; 
+    padding: 10px;
+
+  }
+  
+  .header h1 {
+    color: white;              
+    margin: 0;                 
+    flex-grow: 1;              
+    text-align: center;        
+    font-size: 30px;
+    margin-left: 24%;
+  }
+.input{
+    background-color: transparent;
+    color: aliceblue;
+    border: none;
+    text-align: center;
+}
+.lista-distancias{
+    max-height: 370px;
+    margin-top: 20px;
+    overflow-y: scroll;
+}
+.lista-distancias::-webkit-scrollbar {
+    width: 5px; 
+
+  }
+  
+  .lista-distancias::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px; 
+  }
+  
+  .lista-distancias::-webkit-scrollbar-thumb {
+    background-color: rgb(76, 78, 78); 
+    border-radius: 10px; 
+    border: 1px solid #f0f0f0;
+  }

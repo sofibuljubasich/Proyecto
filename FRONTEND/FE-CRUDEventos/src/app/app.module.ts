@@ -49,6 +49,9 @@ import { MisEventosComponent } from './pages/corredor/mis-eventos/mis-eventos.co
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { ChatSelectorComponent } from './components/chat-selector/chat-selector.component';
 import { FilterByNamePipe } from './pipes/filter-by-name.pipe';
+import { CategoriaComponent } from './pages/admin/abm-categoria/abm-categoria.component';
+import { DistanciaComponent } from './pages/admin/abm-distancia/abm-distancia.component';
+
 //Modulos
 import { SharedModule } from './shared/shared.module';
 import { DatePipe } from '@angular/common';
@@ -98,6 +101,8 @@ import { DatePipe } from '@angular/common';
     ChatSelectorComponent,
     FilterByNamePipe,
     HelpComponent,
+    CategoriaComponent,
+    DistanciaComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

@@ -19,6 +19,11 @@ export class ToolbarBasicExample implements OnInit {
   isAuthenticated: boolean = false;
   currentUser: Usuario | null = null;
   isLoginPage: boolean = false;
+  configuracionVisible = false;
+
+  toggleConfiguracion() {
+    this.configuracionVisible = !this.configuracionVisible;
+  }
 
   ngOnInit(): void {
     this.router.events.subscribe((event: any) => {
@@ -63,10 +68,10 @@ export class ToolbarBasicExample implements OnInit {
             this.seleccionado = [false, true, false, false, false];
             break;
           case '/resultados':
-          case '/ABM-Colaboradores':
+          case '/vistaTareas':
             this.seleccionado = [false, false, true, false, false];
             break;
-          case '/vistaTareas':
+          case '/ABM-Colaboradores':
           case '/ayuda':
             this.seleccionado = [false, false, false, true, false];
             break;

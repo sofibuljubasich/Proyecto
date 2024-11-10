@@ -1,17 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { CategoriaService } from '../../services/categoria.service';
-import { Categoria } from '../../models/categoria';
+import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { CategoriaService } from 'src/app/services/categoria.service';
+import { Categoria, CategoriaResponse } from 'src/app/interfaces/categoria';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-categoria',
-  templateUrl: './categoria.component.html',
-  styleUrls: ['./categoria.component.css']
+  selector: 'app-abm-categoria',
+  templateUrl: './abm-categoria.component.html',
+  styleUrls: ['./abm-categoria.component.css'],
 })
 export class CategoriaComponent implements OnInit {
-  categorias: Categoria[] = [];
-  selectedCategoria: Categoria | null = null;
+  categorias: CategoriaResponse[] = [];
+  selectedCategoria: CategoriaResponse | null = null;
+  isAddingNew = false;
+  newEdadI = 0;
+  newEdadF = 0;
+  editCategoryId: number | null = null;
+  editedEI: number = 0;
+  editedEF: number = 0;
 
-  constructor(private categoriaService: CategoriaService) {}
+  constructor(
+    private categoriaService: CategoriaService,
+    private _location: Location
+  ) {}
 
   ngOnInit(): void {
     this.loadCategorias();
@@ -20,29 +31,68 @@ export class CategoriaComponent implements OnInit {
   loadCategorias(): void {
     this.categoriaService.getCategorias().subscribe((data) => {
       this.categorias = data;
+      console.log(this.categorias);
     });
   }
-
-  selectCategoria(categoria: Categoria): void {
-    this.selectedCategoria = { ...categoria };
+  selectCategoria(categoria: CategoriaResponse) {
+    this.editCategoryId = categoria.id;
+    this.editedEI = categoria.edadInicio;
+    this.editedEF = categoria.edadFin;
   }
 
-  clearSelection(): void {
-    this.selectedCategoria = null;
-  }
-
-  saveCategoria(): void {
-    if (this.selectedCategoria) {
-      if (this.selectedCategoria.id) {
-        this.categoriaService.updateCategoria(this.selectedCategoria).subscribe(() => this.loadCategorias());
-      } else {
-        this.categoriaService.createCategoria(this.selectedCategoria).subscribe(() => this.loadCategorias());
-      }
-      this.clearSelection();
+  aceptarEdicion() {
+    const categoria = this.categorias.find((d) => d.id === this.editCategoryId);
+    if (categoria) {
+      categoria.edadInicio = this.editedEI;
+      categoria.edadFin = this.editedEF;
+      this.categoriaService
+        .updateCategoria(categoria.id, categoria)
+        .subscribe(() => this.loadCategorias());
     }
+    this.cancelarEdicion();
+  }
+
+  cancelarEdicion() {
+    this.editCategoryId = null;
+    this.editedEI = 0;
+    this.editedEF = 0;
+  }
+  goBack() {
+    this._location.back();
   }
 
   deleteCategoria(id: number): void {
-    this.categoriaService.deleteCategoria(id).subscribe(() => this.loadCategorias());
+    this.categoriaService
+      .deleteCategoria(id)
+      .subscribe(() => this.loadCategorias());
+  }
+  agregarNuevaCategoria() {
+    this.isAddingNew = true;
+    this.newEdadI = 0;
+    this.newEdadF = 0;
+  }
+
+  aceptarNuevaCategoria() {
+    const newCategory = {
+      edadInicio: this.newEdadI,
+      edadFin: this.newEdadF,
+    } as Categoria;
+    console.log(newCategory);
+    this.categoriaService
+      .createCategoria(newCategory)
+      .subscribe(() => this.loadCategorias());
+    const nuevaCategoria = {
+      id: this.categorias.length + 1,
+      edadInicio: this.newEdadI,
+      edadFin: this.newEdadF,
+    };
+    this.categorias.push(nuevaCategoria);
+    this.isAddingNew = false;
+  }
+
+  cancelarNuevaCategoria() {
+    this.isAddingNew = false;
+    this.newEdadI = 0;
+    this.newEdadF = 0;
   }
 }

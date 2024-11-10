@@ -32,6 +32,8 @@ import { MisEventosComponent } from './pages/corredor/mis-eventos/mis-eventos.co
 import { PagoExitosoComponent } from './pages/pago-exitoso/pago-exitoso.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { HelpComponent } from './pages/corredor/help/help.component';
+import { CategoriaComponent } from './pages/admin/abm-categoria/abm-categoria.component';
+import { DistanciaComponent } from './pages/admin/abm-distancia/abm-distancia.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
@@ -60,8 +62,12 @@ const routes: Routes = [
   { path: 'chat/:id', component: ChatComponent },
   { path: 'chats', component: ChatsComponent },
   // ADMINISTRADOR
+
   { path: 'ABM-Eventos', component: ABMEventosComponent },
   { path: 'ABM-Colaboradores', component: AbmColaboradoresComponent },
+  { path: 'ABM-Categorias', component: CategoriaComponent },
+  { path: 'ABM-Distancias', component: DistanciaComponent },
+  { path: 'distancias', component: DistanciaComponent },
   { path: 'ABM-Tareas/:id', component: AbmTareasComponent },
   { path: 'ABM-Tareas', component: AbmTareasComponent },
   { path: 'reportes/:id', component: ReportesComponent },

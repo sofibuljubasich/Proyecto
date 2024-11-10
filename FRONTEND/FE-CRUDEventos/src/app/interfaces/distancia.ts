@@ -1,14 +1,8 @@
 export interface Distancia {
-    id: number;
-    distanciaID: number;
-    km: number;
-    precio: number;
-  }
+  km: number;
+}
 // Definición de la interfaz para la respuesta completa
-  export interface DistanciaResponse {
-    
-    distancia: Distancia;
-    
-  }
-  
-  
+export interface DistanciaResponse {
+  id: number;
+  km: number;
+}

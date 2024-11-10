@@ -30,8 +30,17 @@
       <ul>
         <li (click)="navegar('ABM-Eventos')" [ngClass]="{seleccionado: seleccionado[0]}">ABM Eventos</li>
         <li (click)="navegar('chats')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>
-        <li (click)="navegar('ABM-Colaboradores')"[ngClass]="{seleccionado: seleccionado[2]}">ABM Colaboradores</li>
-        <li (click)="navegar('vistaTareas')"[ngClass]="{seleccionado: seleccionado[3]}">Vista Tareas</li>
+        <li (click)="navegar('vistaTareas')"[ngClass]="{seleccionado: seleccionado[2]}">Vista Tareas</li>
+        <li (click)="toggleConfiguracion()" [ngClass]="{seleccionado: seleccionado[3]}">
+          Configuracion
+          <!-- Submenu with options -->
+          <ul *ngIf="configuracionVisible" class="submenu">
+            <li (click)="navegar('ABM-colaboradores')">ABM Colaboradores</li>
+            <li (click)="navegar('abm-tareas')">ABM Tareas</li>
+            <li (click)="navegar('abm-categorias')">ABM Categorias</li>
+            <li (click)="navegar('abm-distancias')">ABM Distancias</li>
+          </ul>
+        </li>
       </ul>
     </ng-container>
   </nav>
