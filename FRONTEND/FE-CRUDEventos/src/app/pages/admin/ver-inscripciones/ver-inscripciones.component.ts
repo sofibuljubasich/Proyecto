@@ -18,8 +18,9 @@ export class VerInscripcionesComponent {
 
   // resultados: TablaResultados[] = [];
   displayedColumns: string[] = [
-    'nro',
     'mail',
+    'nombre',
+    'dni',
     'genero',
     'distancia',
     'categoria',
@@ -45,9 +46,10 @@ export class VerInscripcionesComponent {
     this._eventoService
       .getInscriptos(this.eventoId)
       .subscribe((data: Inscrito[]) => {
-        const transformedData = data.map((inscrito, index) => ({
-          nro: index + 1,
+        const transformedData = data.map((inscrito) => ({
           mail: inscrito.corredor.email,
+          nombre: `${inscrito.corredor.nombre} ${inscrito.corredor.apellido}`,
+          dni: inscrito.corredor.dni,
           genero: inscrito.corredor.genero,
           distancia: `${inscrito.distancia.km} km`,
           categoria: `${inscrito.categoria.edadInicio} - ${inscrito.categoria.edadFin}`, // Asumiendo que "categoria" se refiere a la remera

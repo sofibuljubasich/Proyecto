@@ -20,10 +20,14 @@
                         <app-evento-card-h [eventoResp]="eventoResp"></app-evento-card-h>
                       </div>
                       <mat-icon class="custom-icon" routerLink="/altaEventos/{{eventoResp.id}}" aria-hidden="false" aria-label="Example calendar icon" fontIcon="edit_square"></mat-icon>
-                      <label class="switch">
-                        <input type="checkbox" [checked]="eventoResp.estado==='Activo'" (change)="onToggleChange(eventoResp, $event)">
-                        <span class="slider"></span>
-                      </label>
+                      <div>
+                        <p style="color: white;display: flex;justify-content: center;">{{eventoResp.estado}}</p>
+                        <label class="switch">
+                          <span class="slider"></span>
+                          <input type="checkbox" [checked]="eventoResp.estado==='Activo'" (change)="onToggleChange(eventoResp, $event)">
+                          <span class="slider"></span>
+                        </label>
+                      </div>
                     </div>
                     <div class="content">
                       <button routerLink="/verInscripciones/{{eventoResp.id}}" class="tareas-button">Inscripciones</button>

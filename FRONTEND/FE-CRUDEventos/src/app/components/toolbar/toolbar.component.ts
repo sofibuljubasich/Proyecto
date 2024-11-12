@@ -72,6 +72,8 @@ export class ToolbarBasicExample implements OnInit {
             this.seleccionado = [false, false, true, false, false];
             break;
           case '/ABM-Colaboradores':
+          case '/ABM-Categorias':
+          case '/ABM-Distancias':
           case '/ayuda':
             this.seleccionado = [false, false, false, true, false];
             break;
