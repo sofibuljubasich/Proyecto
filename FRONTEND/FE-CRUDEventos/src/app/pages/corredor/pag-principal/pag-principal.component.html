@@ -45,10 +45,10 @@
       <!-- <app-buscar></app-buscar> -->
   
       <section class="eventos">
-        <h2>Eventos próximos activos</h2>
+        <h2> Próximos Eventos</h2>
         <div class="event-list">
           <div style="text-align: center;padding: 20px;font-size: 18px;" *ngIf="eventosActivos.length === 0">
-            No se encuentran eventos de esas características.
+            No hay futuros eventos.
             <!-- <mat-spinner></mat-spinner> -->
           </div>
           <app-listado-evento [eventos]="eventosActivos"></app-listado-evento>
@@ -56,7 +56,7 @@
         </div>
     </section>
    <section class="eventos">
-        <h2>Eventos finalizados</h2>
+        <h2>Eventos Finalizados</h2>
         <div class="event-list">
           <div style="text-align: center;padding: 20px;font-size: 18px;" *ngIf="eventosInactivos.length === 0">
             No se encuentran eventos de esas características.
