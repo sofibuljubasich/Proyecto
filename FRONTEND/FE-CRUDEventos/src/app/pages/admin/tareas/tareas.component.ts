@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CommentFormComponent } from 'src/app/components/comment-form/comment-form.component';
 import { TASK_DATA } from 'src/app/interfaces/dato';
 import { Tarea } from 'src/app/interfaces/tarea';
+import { TareaVoluntarioService } from 'src/app/services/tarea-voluntario.service';
+import { TareaService } from 'src/app/services/tarea.service';
 
 @Component({
   selector: 'app-tareas',
@@ -30,7 +32,8 @@ export class TareasComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
-    // private _taskService: TareaService,
+    private _taskService: TareaService,
+    private _tvService: TareaVoluntarioService,
     private aRoute: ActivatedRoute,
     private bottomSheet: MatBottomSheet,
     private location: Location
@@ -59,7 +62,22 @@ export class TareasComponent {
   goBack(): void {
     this.location.back();
   }
-  openChat(task: Tarea): void {
-    // Lógica para redirigir a la página de chat
+  getTareaVoluntarioEstado(tareaID: number, volId: number): string {
+    let estado = 'Cargando...'; // Mensaje por defecto mientras se obtiene el estado
+
+    this._tvService.getTV(tareaID, volId.toString()).subscribe({
+      next: (data) => {
+        if (data) {
+          estado = data.estado; // Asume que solo hay un registro por tarea y voluntario
+        } else {
+          estado = 'Sin estado';
+        }
+      },
+      error: () => {
+        estado = 'Error al cargar estado';
+      },
+    });
+
+    return estado;
   }
 }
