@@ -134,7 +134,31 @@ namespace BE.Controllers
                 }
             }
 
-          //FALTA UPDATE
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, DistanciaCreateUpdateDto distanciaDto)
+        {
+            try
+            {
+                var distancia = _mapper.Map<Distancia>(distanciaDto);
+                
+                var distanciaItem = await _distanciaRepository.GetDistancia(id);
+
+                if (distanciaItem == null)
+                {
+                    return NotFound();
+                }
+                
+                await _distanciaRepository.Update(distancia);
+
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
             }
         }
 

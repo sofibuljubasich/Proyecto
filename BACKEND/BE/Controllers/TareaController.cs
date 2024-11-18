@@ -23,7 +23,27 @@ namespace BE.Controllers
             _voluntarioRepository = voluntarioRepository;
             _tareaVoluntarioService = tareaVoluntarioService;
             
-        }//ACOMODAR PR nul
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            try 
+            {
+                var tareas = await _tareaRepository.GetTareas();
+
+                if (tareas == null)
+                    return NotFound();
+
+                
+                return Ok(tareas);
+            }
+            catch(Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+        
+        }
 
         [HttpGet("{tareaID}")]
         public async Task<IActionResult> Get(int tareaID)

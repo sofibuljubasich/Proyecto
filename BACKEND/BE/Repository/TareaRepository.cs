@@ -3,6 +3,7 @@ using BE.Migrations;
 using BE.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using NPOI.SS.Formula.Functions;
 using System.Threading;
 
 namespace BE.Repository
@@ -40,7 +41,13 @@ namespace BE.Repository
 
         public async Task<List<Tarea>> GetTareas()
         {
-            return await _context.Tareas.ToListAsync();
+            var tareas = await _context.Tareas
+                .Include(t => t.Evento) 
+                .Include(t => t.TareaVoluntarios) 
+                    .ThenInclude(tv => tv.Voluntario) 
+                .ToListAsync();
+            
+            return tareas;
         }
 
         public async Task<List<Tarea>> GetTareasByEvento(int eventoID)
