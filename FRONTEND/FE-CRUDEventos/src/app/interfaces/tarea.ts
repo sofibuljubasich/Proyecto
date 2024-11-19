@@ -14,7 +14,7 @@ export interface TareaVoluntario {
 }
 
 export interface Tarea {
-  tareaID: number;
+  id: number;
   estado: string;
   descripcion: string;
   fechaHora: Date;

@@ -22,9 +22,14 @@
                 </ng-container>
 
         <!-- FechaHora Column -->
-        <ng-container matColumnDef="fechaHora">
+        <ng-container matColumnDef="fecha">
           <th mat-header-cell *matHeaderCellDef >Fecha</th>
           <td mat-cell *matCellDef="let task">{{ task.fechaHora | date }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="hora">
+          <th mat-header-cell *matHeaderCellDef >Hora</th>
+          <td mat-cell *matCellDef="let task">{{ task.fechaHora | date: 'HH:mm' }}</td>
         </ng-container>
 
         <!-- Ubicacion Column -->

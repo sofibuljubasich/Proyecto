@@ -26,7 +26,8 @@ export class TareasAsignadasComponent {
   displayedColumns: string[] = [
     'estado',
     'descripcion',
-    'fechaHora',
+    'fecha',
+    'hora',
     'ubicacion',
     'comentario',
     'voluntarios',
@@ -54,14 +55,12 @@ export class TareasAsignadasComponent {
         this.volId = userId;
       }
     });
-    this._tvService
-      .getTasksxVoluntario(this.id, this.volId)
-      .subscribe((tasks: Tarea[]) => {
-        this.filtroVoluntarios(tasks);
-        this.dataSource = new MatTableDataSource(tasks);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
+    this._taskService.getTasks(this.id).subscribe((tasks: Tarea[]) => {
+      this.filtroVoluntarios(tasks);
+      this.dataSource = new MatTableDataSource(tasks);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
   filtroVoluntarios(tasks: Tarea[]) {
     return tasks.map((task: Tarea) => {
@@ -90,14 +89,15 @@ export class TareasAsignadasComponent {
 
   openCommentForm(task: Tarea): void {
     const bottomSheetRef = this.bottomSheet.open(CommentFormComponent);
-
+    console.log(task);
     bottomSheetRef.afterDismissed().subscribe((comment) => {
       if (comment) {
-        this.taskData.tareaID = this.id;
+        console.log(comment);
+        this.taskData.tareaID = task.id;
         this.taskData.voluntarioID = this.volId;
         this.taskData.comentario = comment;
         this._tvService.addComentario(this.taskData).subscribe();
-        console.log('Comentario recibido:', comment);
+        console.log('Comentario recibido:', this.taskData);
         // Aquí puedes manejar el comentario recibido, por ejemplo, enviarlo a un servidor.
       }
     });

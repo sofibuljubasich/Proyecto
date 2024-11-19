@@ -49,6 +49,9 @@ export class ChatsComponent {
       }
     });
   }
+  refrescar(): void {
+    this.getChats();
+  }
   getChats(): void {
     this._chatService.getChats(this.usuarioID).subscribe(
       (data) => {

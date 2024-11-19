@@ -26,8 +26,8 @@ export class TareasComponent {
     'comentario',
     'editar',
   ];
-  dataSource: MatTableDataSource<Tarea> = new MatTableDataSource(TASK_DATA);
-  // dataSource = new MatTableDataSource<any>();
+  // dataSource: MatTableDataSource<Tarea> = new MatTableDataSource(TASK_DATA);
+  dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -42,23 +42,21 @@ export class TareasComponent {
   }
 
   ngOnInit(): void {
-    // this._taskService.getTasks(this.id).subscribe((tasks: Tarea[]) => {
-    //   this.dataSource = new MatTableDataSource(tasks);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    // });
-  }
-
-  openCommentForm(task: Tarea): void {
-    const bottomSheetRef = this.bottomSheet.open(CommentFormComponent);
-
-    bottomSheetRef.afterDismissed().subscribe((comment) => {
-      if (comment) {
-        console.log('Comentario recibido:', comment);
-        // Aquí puedes manejar el comentario recibido, por ejemplo, enviarlo a un servidor.
-      }
+    this._taskService.getTasks(this.id).subscribe((tasks: Tarea[]) => {
+      this.dataSource = new MatTableDataSource(tasks);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
+
+  openComment(comment: any): void {
+    if (comment) {
+      console.log('Comentario recibido:', comment);
+    } else {
+      console.log('No hay comentario');
+    }
+  }
+
   goBack(): void {
     this.location.back();
   }

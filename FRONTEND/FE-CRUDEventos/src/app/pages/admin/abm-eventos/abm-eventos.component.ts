@@ -23,7 +23,11 @@ export class ABMEventosComponent {
     console.log(nuevoEstado);
 
     // Actualiza el estado localmente
-    evento.estado = nuevoEstado;
+    if (nuevoEstado) {
+      evento.estado = 'Activo';
+    } else {
+      evento.estado = 'Inactivo';
+    }
 
     // Realizar la llamada HTTP para actualizar el estado en el backend
     this._eventoService.updateEstado(evento.id, nuevoEstado).subscribe(
@@ -58,12 +62,11 @@ export class ABMEventosComponent {
         //this.filtrarEventos(this.eventos);
       });
   }
-  enviarMail(id:number){
-    console.log(id)
+  enviarMail(id: number) {
+    console.log(id);
     const dialogRef = this.dialog.open(EmailPopupComponent, {
-      data: { id } // Pasa el eventoID al popup
+      data: { id }, // Pasa el eventoID al popup
     });
-
   }
 
   parametrosBusqueda: Busqueda = {

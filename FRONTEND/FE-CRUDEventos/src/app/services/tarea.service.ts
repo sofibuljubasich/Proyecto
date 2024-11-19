@@ -22,7 +22,7 @@ export class TareaService {
   }
   updateTask(task: Tarea): Observable<Tarea> {
     return this.http.put<Tarea>(
-      `${this.myAppUrl}${this.myApiUrl}/${task.tareaID}`,
+      `${this.myAppUrl}${this.myApiUrl}/${task.id}`,
       task
     );
   }

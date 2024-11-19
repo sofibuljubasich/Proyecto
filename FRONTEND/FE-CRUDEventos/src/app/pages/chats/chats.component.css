@@ -45,6 +45,15 @@
   ::placeholder{
     color: #1d1d1d;
   }
+  .refresh{
+    background-color: transparent;
+    color: aliceblue;
+    border-style: none;
+  }
+  .refresh:hover{
+    border-radius: 50%;
+    background-color: rgb(204, 204, 204,0.4);
+  }
   .icono {
     background:  #58629b;
     color: #fff;
