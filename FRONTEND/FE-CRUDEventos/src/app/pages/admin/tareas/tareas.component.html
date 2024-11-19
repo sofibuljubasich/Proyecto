@@ -1,6 +1,6 @@
 <div class="container">
     <main class="main">
-      <button (click)="goBack()" style="color: aliceblue; text-decoration: underline; border: none; background-color: transparent; width: fit-content;">
+      <button (click)="goBack()" style="color: aliceblue;margin-top: 20px; text-decoration: underline; border: none; background-color: transparent; width: fit-content;">
         <--Regresar
       </button>
         <div class="agregar-container">
@@ -35,7 +35,7 @@
             <th mat-header-cell *matHeaderCellDef>Comentario</th>
             <td mat-cell *matCellDef="let task">
                 <div *ngFor="let volunteer of task.voluntarios">
-                  <button mat-icon-button (click)="openCommentForm(task)">
+                  <button mat-icon-button (click)="openComment(task.comentario)">
                     <mat-icon>mail</mat-icon>
                   </button>
                 </div>
@@ -55,7 +55,14 @@
                     <!-- Estado Column -->
                     <ng-container matColumnDef="estado">
                         <th  mat-header-cell *matHeaderCellDef >Estado</th>
-                        <td mat-cell *matCellDef="let task">{{ task.estado }}</td>
+                        <td mat-cell *matCellDef="let task">
+                          <div class="volunteer-list">
+                            <div *ngFor="let volunteer of task.voluntarios">
+                              {{ task.estado }}
+                              <!-- {{ getTareaVoluntarioEstado(task.tareaID, volunteer.id) }} -->
+                            </div>
+                          </div>
+                        </td>
                       </ng-container>
   
            <!-- Chat Column -->

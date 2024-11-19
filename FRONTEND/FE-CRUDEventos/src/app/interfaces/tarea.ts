@@ -6,8 +6,15 @@ export interface Voluntario {
   telefono: string;
 }
 
+export interface TareaVoluntario {
+  idTarea: number;
+  idVol: number;
+  estado: string;
+  comentario: string;
+}
+
 export interface Tarea {
-  tareaID: number;
+  id: number;
   estado: string;
   descripcion: string;
   fechaHora: Date;

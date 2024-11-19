@@ -136,7 +136,7 @@ namespace BE.Controllers
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, DistanciaCreateUpdateDto distanciaDto)
-        {
+        { 
             try
             {
                 var distancia = _mapper.Map<Distancia>(distanciaDto);

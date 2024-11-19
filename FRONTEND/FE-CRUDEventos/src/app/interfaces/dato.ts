@@ -60,7 +60,7 @@ import { Tarea } from './tarea';
 // ];
 export const TASK_DATA: Tarea[] = [
   {
-    tareaID: 1,
+    id: 1,
     estado: 'Pendiente',
     descripcion: 'Armado Kit',
     fechaHora: new Date('2024-03-16T00:22:34.368'),
@@ -84,7 +84,7 @@ export const TASK_DATA: Tarea[] = [
     ],
   },
   {
-    tareaID: 2,
+    id: 2,
     estado: 'Realizada',
     descripcion: 'Montaje de escenario',
     fechaHora: new Date('2024-03-16T08:00:00.000'),
@@ -101,7 +101,7 @@ export const TASK_DATA: Tarea[] = [
     ],
   },
   {
-    tareaID: 3,
+    id: 3,
     estado: 'Pendiente',
     descripcion: 'Control de accesos',
     fechaHora: new Date('2024-03-16T09:00:00.000'),
@@ -125,7 +125,7 @@ export const TASK_DATA: Tarea[] = [
     ],
   },
   {
-    tareaID: 4,
+    id: 4,
     estado: 'Pendiente',
     descripcion: 'Reparto de folletería',
     fechaHora: new Date('2024-03-16T10:00:00.000'),
@@ -142,7 +142,7 @@ export const TASK_DATA: Tarea[] = [
     ],
   },
   {
-    tareaID: 5,
+    id: 5,
     estado: 'Realizada',
     descripcion: 'Supervisión técnica',
     fechaHora: new Date('2024-03-16T11:00:00.000'),

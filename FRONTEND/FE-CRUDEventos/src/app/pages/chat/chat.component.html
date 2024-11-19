@@ -1,7 +1,9 @@
 
 <div class="fondo">
     <div class="signup-container">
-      <button routerLink="/chats" style="cursor:pointer; color: aliceblue; text-decoration:underline; border: none;background-color:transparent;width: fit-content;"><--Regresar</button>
+      <button (click)="goBack()" style="color: aliceblue; text-decoration: underline; border: none; background-color: transparent; width: fit-content;">
+        <--Regresar
+      </button>
             <div class="chat-header" *ngIf="otro">
               <img [src]="imagenURL" alt="Foto del chat" class="chat-image" />
               <div class="chat-info">

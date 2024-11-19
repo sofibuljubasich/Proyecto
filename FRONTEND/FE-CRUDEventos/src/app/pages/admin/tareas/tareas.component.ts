@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CommentFormComponent } from 'src/app/components/comment-form/comment-form.component';
 import { TASK_DATA } from 'src/app/interfaces/dato';
 import { Tarea } from 'src/app/interfaces/tarea';
+import { TareaVoluntarioService } from 'src/app/services/tarea-voluntario.service';
+import { TareaService } from 'src/app/services/tarea.service';
 
 @Component({
   selector: 'app-tareas',
@@ -24,13 +26,14 @@ export class TareasComponent {
     'comentario',
     'editar',
   ];
-  dataSource: MatTableDataSource<Tarea> = new MatTableDataSource(TASK_DATA);
-  // dataSource = new MatTableDataSource<any>();
+  // dataSource: MatTableDataSource<Tarea> = new MatTableDataSource(TASK_DATA);
+  dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
-    // private _taskService: TareaService,
+    private _taskService: TareaService,
+    private _tvService: TareaVoluntarioService,
     private aRoute: ActivatedRoute,
     private bottomSheet: MatBottomSheet,
     private location: Location
@@ -39,27 +42,40 @@ export class TareasComponent {
   }
 
   ngOnInit(): void {
-    // this._taskService.getTasks(this.id).subscribe((tasks: Tarea[]) => {
-    //   this.dataSource = new MatTableDataSource(tasks);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    // });
-  }
-
-  openCommentForm(task: Tarea): void {
-    const bottomSheetRef = this.bottomSheet.open(CommentFormComponent);
-
-    bottomSheetRef.afterDismissed().subscribe((comment) => {
-      if (comment) {
-        console.log('Comentario recibido:', comment);
-        // Aquí puedes manejar el comentario recibido, por ejemplo, enviarlo a un servidor.
-      }
+    this._taskService.getTasks(this.id).subscribe((tasks: Tarea[]) => {
+      this.dataSource = new MatTableDataSource(tasks);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
+
+  openComment(comment: any): void {
+    if (comment) {
+      console.log('Comentario recibido:', comment);
+    } else {
+      console.log('No hay comentario');
+    }
+  }
+
   goBack(): void {
     this.location.back();
   }
-  openChat(task: Tarea): void {
-    // Lógica para redirigir a la página de chat
+  getTareaVoluntarioEstado(tareaID: number, volId: number): string {
+    let estado = 'Cargando...'; // Mensaje por defecto mientras se obtiene el estado
+
+    this._tvService.getTV(tareaID, volId.toString()).subscribe({
+      next: (data) => {
+        if (data) {
+          estado = data.estado; // Asume que solo hay un registro por tarea y voluntario
+        } else {
+          estado = 'Sin estado';
+        }
+      },
+      error: () => {
+        estado = 'Error al cargar estado';
+      },
+    });
+
+    return estado;
   }
 }

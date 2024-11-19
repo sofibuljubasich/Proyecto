@@ -86,7 +86,9 @@ export class ChatComponent implements AfterViewChecked {
   }
 
   scrollToBottom(): void {
-    const chatMessages = document.querySelector('.chat-messages') as HTMLElement;
+    const chatMessages = document.querySelector(
+      '.chat-messages'
+    ) as HTMLElement;
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
@@ -118,5 +120,4 @@ export class ChatComponent implements AfterViewChecked {
       );
     }
   }
-
 }
