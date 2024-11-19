@@ -119,6 +119,16 @@ namespace BE.Services
             });
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Evento>> GetEventosByVoluntario(int voluntarioID)
+        {
+            var eventos = await _context.TareaVoluntario.Where(tv => tv.VoluntarioID == voluntarioID) 
+                .Select(tv => tv.Tarea.Evento) 
+                .Distinct() 
+                .ToListAsync();
+                
+        return eventos;
+        }
     }
 }
 

@@ -4,7 +4,7 @@ namespace BE.Interfaces
 {
     public interface ITareaVoluntarioRepository
     {
-
+        Task<List<Evento>> GetEventosByVoluntario(int voluntarioID);
         Task<TareaVoluntario> Get(int tareaID, int voluntarioID);
         Task CreateTareaVoluntario(int tareaID, List<Voluntario> voluntarios);
 

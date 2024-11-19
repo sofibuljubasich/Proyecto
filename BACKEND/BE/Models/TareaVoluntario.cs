@@ -7,7 +7,7 @@ namespace BE.Models
     public class TareaVoluntario
     {
             
-                [ForeignKey("Tarea")]
+        [ForeignKey("Tarea")]
         public int TareaID { get; set; }
         public Tarea Tarea { get; set; }    
 

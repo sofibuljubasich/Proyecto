@@ -87,18 +87,30 @@ namespace BE.Controllers
 
                 var listTareas = await _tareaRepository.GetTareasByEvento(eventoID);
 
-                var listTareasDto = _mapper.Map<List<TareaDto>>(listTareas);  
+                
+                //var listTareasDto = _mapper.Map<List<TareaDto>>(listTareas);  
 
-                foreach (var tarea in listTareasDto) 
+                var tareas = new List<TareaEstadoDto>();
+
+                foreach(var t in listTareas)
                 {
-                    var voluntarios = await _tareaVoluntarioService.GetVoluntariosByTarea(tarea.ID);
+                    var TareaEstadoDto = new TareaEstadoDto
+                    {
+                        ID = t.ID,
+                        Descripcion = t.Descripcion,
+                        FechaHora = t.FechaHora,
+                        Ubicacion = t.Ubicacion,
+                        TareaVoluntarios = _mapper.Map<List<TareaVoluntarioDto>>(t.TareaVoluntarios)
 
-                    tarea.Voluntarios = _mapper.Map<List<VoluntarioDto>>(voluntarios);
-                    
+                    };
+
+                    tareas.Add(TareaEstadoDto); 
+
                 }
+
                 
 
-                return Ok(listTareasDto);
+                return Ok(tareas);
             }
             catch (Exception ex)
             {

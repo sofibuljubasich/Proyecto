@@ -41,6 +41,19 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("{voluntarioId}/eventos")]
+        public async Task<IActionResult> GetEventosByVoluntario(int voluntarioID)
+        {
+            var eventos = await _tareaVoluntarioRepository.GetEventosByVoluntario(voluntarioID);
+
+            if (eventos is null)
+            {
+                return NotFound("No se encontraron eventos para el voluntario especificado.");
+            }
+
+            var eventosDto = _mapper.Map<List<EventoDto>>(eventos);     
+            return Ok(eventosDto);
+        }
 
         [HttpGet, Route("tareas/{eventoID}/{voluntarioID}")]
         public async Task<IActionResult> GetTareasByEventoVoluntario(int eventoID, int voluntarioID)
@@ -64,7 +77,7 @@ namespace BE.Controllers
                     return NotFound("El voluntario no tiene tareas asignadas en ese evento");
                 }
 
-                var listTareasDto = _mapper.Map<List<TareaGetDto>>(listTareas);
+                var listTareasDto = _mapper.Map<List<TareaEstadoDto>>(listTareas);
 
 
                 return Ok(listTareasDto);
