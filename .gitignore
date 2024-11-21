@@ -8,7 +8,11 @@
 *.user
 *.userosscache
 *.sln.docstates
-
+BACKEND/BE/appsettings.json
+appsettings.json
+20241002015947_insc.cs
+20241002015947_insc.Designer.cs
+ver-evento.component.html
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -231,3 +235,4 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+BACKEND/BE/obj/Debug/net6.0/BE.csproj.CoreCompileInputs.cache

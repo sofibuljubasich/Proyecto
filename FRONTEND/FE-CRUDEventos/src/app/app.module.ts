@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -55,6 +56,7 @@ import { DistanciaComponent } from './pages/admin/abm-distancia/abm-distancia.co
 //Modulos
 import { SharedModule } from './shared/shared.module';
 import { DatePipe } from '@angular/common';
+//import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -103,6 +105,7 @@ import { DatePipe } from '@angular/common';
     HelpComponent,
     CategoriaComponent,
     DistanciaComponent,
+    
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
@@ -111,6 +114,9 @@ import { DatePipe } from '@angular/common';
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
+    EditorModule,
+    
+
   ],
 })
 export class AppModule {}

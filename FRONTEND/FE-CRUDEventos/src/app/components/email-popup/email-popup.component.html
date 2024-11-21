@@ -6,10 +6,25 @@
           <label for="asunto">Asunto</label>
           <input type="text" id="asunto" [(ngModel)]="asunto" name="asunto" required>
         </div>
-        <div class="form-group">
-          <label for="mensaje">Mensaje</label>
-          <textarea id="mensaje" [(ngModel)]="mensaje" name="mensaje" required></textarea>
-        </div>
+        
+      
+       <!-- Editor de TinyMCE -->
+       <div class="form-group">
+        <label for="mensaje">Mensaje</label>
+        <editor
+          apiKey="gu44nmd8ifc16v9ze0u4tey3hbzwk88pcmmenye3d7r5tv26"
+          id = "mensaje"
+          [(ngModel)]="mensaje"
+          name="mensaje"
+          [init]="{
+            height: 500,
+            menubar: 'file edit insert view format table tools',
+            plugins: 'emoticons table image link media code preview fullscreen',
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | link image media'
+          }">
+        </editor>
+      </div>
+
         <div class="form-actions">
           <button type="button" class="cancel-btn" (click)="closeModal()">Cancelar</button>
           <button type="submit" class="send-btn">Enviar</button>

@@ -47,7 +47,8 @@ namespace BE.Profiles
             CreateMap<Tarea,TareaCreateDto>().ReverseMap();
             CreateMap<Tarea,TareaUpdateDto>().ReverseMap();
             CreateMap<Tarea, TareaDto>().ReverseMap();
-            CreateMap<Tarea,TareaGetDto>().ReverseMap();    
+            CreateMap<Tarea,TareaGetDto>().ReverseMap();
+            CreateMap<Tarea, TareaEstadoDto>().ReverseMap();
 
             CreateMap<TareaVoluntario, TareaGetDto>().ReverseMap();
             CreateMap<TareaVoluntario, TareaVoluntarioDto>().ReverseMap();  
