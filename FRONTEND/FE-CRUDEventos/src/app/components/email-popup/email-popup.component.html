@@ -16,12 +16,7 @@
           id = "mensaje"
           [(ngModel)]="mensaje"
           name="mensaje"
-          [init]="{
-            height: 500,
-            menubar: 'file edit insert view format table tools',
-            plugins: 'emoticons table image link media code preview fullscreen',
-            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | link image media'
-          }">
+          [init]="tinyMceConfig">
         </editor>
       </div>
 

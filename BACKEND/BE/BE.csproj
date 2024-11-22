@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Contenido\" />
+    <Folder Include="wwwroot\Imagenes\correo\" />
   </ItemGroup>
 
 </Project>

@@ -13,17 +13,27 @@ export class EmailPopupComponent {
   mensaje: string = '';
   eventoID!: number;
 
+  // Configuración para TinyMCE
+  tinyMceConfig: any = {
+    height: 500,
+    menubar: 'file edit insert view format table tools',
+    plugins: 'emoticons table link media code preview fullscreen',
+    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | link image media',
+      };
+
   constructor(
     public dialogRef: MatDialogRef<EmailPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _eventoService: EventoService,
     private snackBar: MatSnackBar
-  ) {this.eventoID = data.id;}
+  ) {
+    this.eventoID = data.id;
+  }
 
   enviarEmail(): void {
-    console.log(this.eventoID)
+    console.log(this.eventoID);
     this._eventoService.enviarEmail(this.eventoID, this.asunto, this.mensaje).subscribe({
-      next: (response:any) => {
+      next: (response: any) => {
         console.log('Response from server:', response);
         this.snackBar.open(response, 'Cerrar', {
           duration: 3000, // Duración en milisegundos
@@ -38,10 +48,12 @@ export class EmailPopupComponent {
       }
     });
   }
+
   resetForm(): void {
     this.asunto = '';
     this.mensaje = '';
   }
+
   closeModal(): void {
     this.dialogRef.close();
     const modal = document.querySelector('.modal') as HTMLElement;

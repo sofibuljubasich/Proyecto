@@ -168,6 +168,37 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost, Route("UploadImage")]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            try
+            {
+                if (file == null || file.Length == 0)
+                {
+                    return BadRequest("No se recibió ningún archivo.");
+                }
+
+                // Generar un nombre único para el archivo
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var uploadPath = Path.Combine("wwwroot/images/correo", fileName);
+
+                // Guardar el archivo en el servidor
+                using (var stream = new FileStream(uploadPath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                // Devolver la URL de la imagen
+                var imageUrl = $"{Request.Scheme}://{Request.Host}/images/correo/{fileName}";
+                return Ok(new { location = imageUrl });
+                //return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
 
 
