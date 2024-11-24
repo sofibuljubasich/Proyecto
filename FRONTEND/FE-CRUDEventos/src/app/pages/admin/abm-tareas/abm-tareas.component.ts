@@ -17,6 +17,7 @@ export class AbmTareasComponent implements OnInit {
   tareaForm: FormGroup;
   voluntarios: Voluntario[] = [];
   eventoId: number;
+  nombreEvento!: string;
 
   constructor(
     private _volService: VoluntarioService,
@@ -32,6 +33,9 @@ export class AbmTareasComponent implements OnInit {
       hora: ['', Validators.required],
       ubicacion: ['', Validators.required],
       voluntariosID: [[]],
+    });
+    this.aRoute.queryParams.subscribe((params) => {
+      this.nombreEvento = params['nombre'] || 'Evento Desconocido'; // Valor por defecto
     });
   }
 

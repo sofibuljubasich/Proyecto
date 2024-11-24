@@ -18,6 +18,7 @@ import { TareaService } from 'src/app/services/tarea.service';
 })
 export class TareasComponent {
   id: number;
+  nombreEvento!: string;
   displayedColumns: string[] = [
     'descripcion',
     'voluntarios',
@@ -39,6 +40,9 @@ export class TareasComponent {
     private location: Location
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
+    this.aRoute.queryParams.subscribe((params) => {
+      this.nombreEvento = params['nombre'] || 'Evento Desconocido'; // Valor por defecto
+    });
   }
 
   ngOnInit(): void {
@@ -47,6 +51,7 @@ export class TareasComponent {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+    
   }
 
   openComment(comment: any): void {

@@ -33,7 +33,12 @@ export class EventoCardHComponent implements OnInit {
       }
     });
   }
-
+  verInscriptos(eventoId: number, eventoNombre: string): void {
+    this.router.navigate(['/listaInscriptos', eventoId], {
+      queryParams: { nombre: eventoNombre },
+    });
+  }
+  
   formatDate(dateString: Date): string {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, '0');

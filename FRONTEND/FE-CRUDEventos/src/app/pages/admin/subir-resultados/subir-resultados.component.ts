@@ -12,6 +12,7 @@ import { EventoService } from 'src/app/services/evento.service';
 })
 export class SubirResultadosComponent {
   idEvento!: number; // Recibe el ID del evento
+  nombreEvento!: string;
   file!: File | null;
 
   constructor(
@@ -23,6 +24,9 @@ export class SubirResultadosComponent {
     private location: Location
   ) {
     this.idEvento = Number(this.aRoute.snapshot.paramMap.get('id'));
+    this.aRoute.queryParams.subscribe((params) => {
+      this.nombreEvento = params['nombre'] || 'Evento Desconocido'; // Valor por defecto
+    });
   }
 
   onFileSelected(event: Event): void {

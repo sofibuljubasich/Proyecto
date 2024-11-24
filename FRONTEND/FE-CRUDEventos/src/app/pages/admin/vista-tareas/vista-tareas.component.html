@@ -16,7 +16,7 @@
                       <div class="evento">
                         <app-evento-card-h [eventoResp]="eventoResp"></app-evento-card-h>
                       </div>
-                      <button routerLink="/tareas-creadas/{{eventoResp.id}}" class="tareas-button">Tareas</button>
+                      <button routerLink="/tareas-creadas/{{eventoResp.id}}"  [queryParams]="{ nombre: eventoResp.nombre }" class="tareas-button">Tareas</button>
                     </div>
                   </div>
                 </ng-container>
