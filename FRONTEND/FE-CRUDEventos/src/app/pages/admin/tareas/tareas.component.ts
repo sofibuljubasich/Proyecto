@@ -5,8 +5,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { CommentFormComponent } from 'src/app/components/comment-form/comment-form.component';
-import { TASK_DATA } from 'src/app/interfaces/dato';
 import { Tarea } from 'src/app/interfaces/tarea';
 import { TareaVoluntarioService } from 'src/app/services/tarea-voluntario.service';
 import { TareaService } from 'src/app/services/tarea.service';
@@ -43,6 +41,7 @@ export class TareasComponent {
 
   ngOnInit(): void {
     this._taskService.getTasks(this.id).subscribe((tasks: Tarea[]) => {
+      console.log(tasks);
       this.dataSource = new MatTableDataSource(tasks);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

@@ -6,21 +6,19 @@ export interface Voluntario {
   telefono: string;
 }
 
-export interface TareaVoluntario {
-  idTarea: number;
-  idVol: number;
+export interface TareaVoluntarios {
+  tareaID: number;
+  voluntarioID: string;
   estado: string;
   comentario: string;
 }
 
 export interface Tarea {
   id: number;
-  estado: string;
   descripcion: string;
   fechaHora: Date;
   ubicacion: string;
-  eventoID: number;
-  voluntarios: Voluntario[];
+  tareaVoluntarios: TareaVoluntarios[];
 }
 
 export interface CreateTarea {

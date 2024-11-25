@@ -105,7 +105,6 @@ import { DatePipe } from '@angular/common';
     HelpComponent,
     CategoriaComponent,
     DistanciaComponent,
-    
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
@@ -115,8 +114,6 @@ import { DatePipe } from '@angular/common';
     AppRoutingModule,
     SharedModule,
     EditorModule,
-    
-
   ],
 })
 export class AppModule {}

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Tarea, TareaVoluntario, Voluntario } from '../interfaces/tarea';
+import { Tarea, TareaVoluntarios, Voluntario } from '../interfaces/tarea';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +12,11 @@ export class TareaVoluntarioService {
   private myAppUrl: string = environment.endpoint;
   private myApiUrl: string = 'api/TareaVoluntario';
 
-  getTV(tareaID: number, volId: string): Observable<TareaVoluntario> {
+  getTV(tareaID: number, volId: string): Observable<TareaVoluntarios> {
     let params = new HttpParams();
     params = params.set('tareaID', tareaID);
     params = params.set('voluntarioID', volId);
-    return this.http.get<TareaVoluntario>(`${this.myAppUrl}${this.myApiUrl}`, {
+    return this.http.get<TareaVoluntarios>(`${this.myAppUrl}${this.myApiUrl}`, {
       params,
     });
   }

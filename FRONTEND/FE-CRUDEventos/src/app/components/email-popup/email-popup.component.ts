@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-email-popup',
   templateUrl: './email-popup.component.html',
-  styleUrl: './email-popup.component.css'
+  styleUrl: './email-popup.component.css',
 })
 export class EmailPopupComponent {
   asunto: string = '';
@@ -15,11 +15,12 @@ export class EmailPopupComponent {
 
   // Configuración para TinyMCE
   tinyMceConfig: any = {
-    height: 500,
+    height: 250,
     menubar: 'file edit insert view format table tools',
     plugins: 'emoticons table link media code preview fullscreen',
-    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | link image media',
-      };
+    toolbar:
+      'undo redo | bold italic | alignleft aligncenter alignright | link image media',
+  };
 
   constructor(
     public dialogRef: MatDialogRef<EmailPopupComponent>,
@@ -32,21 +33,23 @@ export class EmailPopupComponent {
 
   enviarEmail(): void {
     console.log(this.eventoID);
-    this._eventoService.enviarEmail(this.eventoID, this.asunto, this.mensaje).subscribe({
-      next: (response: any) => {
-        console.log('Response from server:', response);
-        this.snackBar.open(response, 'Cerrar', {
-          duration: 3000, // Duración en milisegundos
-        });
-        this.resetForm();
-        this.dialogRef.close();
-      },
-      error: (error) => {
-        this.snackBar.open('Error al enviar el email', 'Cerrar', {
-          duration: 3000, // Duración en milisegundos
-        });
-      }
-    });
+    this._eventoService
+      .enviarEmail(this.eventoID, this.asunto, this.mensaje)
+      .subscribe({
+        next: (response: any) => {
+          console.log('Response from server:', response);
+          this.snackBar.open(response, 'Cerrar', {
+            duration: 3000, // Duración en milisegundos
+          });
+          this.resetForm();
+          this.dialogRef.close();
+        },
+        error: (error) => {
+          this.snackBar.open('Error al enviar el email', 'Cerrar', {
+            duration: 3000, // Duración en milisegundos
+          });
+        },
+      });
   }
 
   resetForm(): void {

@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Tarea, Voluntario } from 'src/app/interfaces/tarea';
 import { TareaService } from 'src/app/services/tarea.service';
-import { TASK_DATA } from 'src/app/interfaces/dato';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommentFormComponent } from 'src/app/components/comment-form/comment-form.component';
 import { Location } from '@angular/common';
@@ -64,8 +63,8 @@ export class TareasAsignadasComponent {
   }
   filtroVoluntarios(tasks: Tarea[]) {
     return tasks.map((task: Tarea) => {
-      task.voluntarios = task.voluntarios.filter(
-        (voluntario) => voluntario.id.toString() !== this.volId
+      task.tareaVoluntarios = task.tareaVoluntarios.filter(
+        (voluntario) => voluntario.voluntarioID.toString() !== this.volId
       );
       return task;
     });
@@ -80,11 +79,19 @@ export class TareasAsignadasComponent {
   }
 
   toggleTask(task: Tarea): void {
-    task.estado = task.estado === 'Pendiente' ? 'Realizada' : 'Pendiente';
-    this.taskData2.tareaID = this.id;
-    this.taskData2.voluntarioID = this.volId;
-    this.taskData2.estado = task.estado;
-    this._tvService.updateEstado(this.taskData2).subscribe();
+    const voluntario = task.tareaVoluntarios.find(
+      (v) => v.voluntarioID === this.volId
+    );
+    if (voluntario) {
+      const nuevoEstado =
+        voluntario.estado === 'Pendiente' ? 'Realizada' : 'Pendiente';
+      voluntario.estado = nuevoEstado;
+      this.taskData2.tareaID = this.id;
+      this.taskData2.voluntarioID = this.volId;
+      this.taskData2.estado = nuevoEstado;
+
+      this._tvService.updateEstado(this.taskData2).subscribe();
+    }
   }
 
   openCommentForm(task: Tarea): void {
