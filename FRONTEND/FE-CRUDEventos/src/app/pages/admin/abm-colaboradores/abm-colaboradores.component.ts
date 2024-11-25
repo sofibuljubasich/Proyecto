@@ -67,7 +67,8 @@ export class AbmColaboradoresComponent {
         nro: index + 1, // Número de orden
         email: voluntario.email, // Email del voluntario
         nombre: `${voluntario.nombre} ${voluntario.apellido}`, // Nombre completo
-        rol: voluntario.rolID // ID del rol
+        rol: voluntario.rolID, // ID del rol
+        telefono: voluntario.telefono
       }));
       this.nuevoid=transformedData.length
       console.log(transformedData)

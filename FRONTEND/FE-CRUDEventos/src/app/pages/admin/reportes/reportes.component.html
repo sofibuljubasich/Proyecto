@@ -1,1 +1,87 @@
-<p>reportes works!</p>
+<div class="dashboard-container">
+  <!-- Condicional: Mostrar datos del reporte de un evento específico -->
+  <ng-container *ngIf="eventoReporte; else reporteGlobalTemplate">
+    <h2>Dashboard {{nombreEvento}}</h2>
+
+    <!-- Tarjetas resumen del evento -->
+    <div class="summary-cards">
+      <div class="card">
+        <h3>Total Recaudado</h3>
+        <p>{{ eventoReporte.totalRecaudado | currency }}</p>
+      </div>
+      <div class="card">
+        <h3>Total Inscritos</h3>
+        <p>{{ eventoReporte.cantidadInscriptos }}</p>
+      </div>
+    </div>
+
+    <!-- Gráficos en cuadrícula -->
+    <div class="charts-grid">
+      <div class="chart">
+        <h3>Participantes por Categoría</h3>
+        <canvas
+          baseChart
+          [datasets]="[{ data: categoriaChartData, label: 'Participantes' }]"
+          [labels]="categoriaChartLabels"
+          [type]="'bar'"
+          [options]="{ responsive: true }"
+        ></canvas>
+      </div>
+      <div class="chart">
+        <h3>Participantes por Distancia</h3>
+        <canvas
+          baseChart
+          [datasets]="[{ data: distanciaChartData, label: 'Participantes' }]"
+          [labels]="distanciaChartLabels"
+          [type]="'bar'"
+          [options]="{ responsive: true }"
+        ></canvas>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Plantilla para reporte global -->
+  <ng-template #reporteGlobalTemplate>
+    <h2>Dashboard Global</h2>
+
+    <!-- Tarjetas resumen global -->
+    <div class="summary-cards">
+      <div class="card">
+        <h3>Total Global Recaudado</h3>
+        <p>{{ reporteGlobal?.totalRecaudadoGlobal | currency }}</p>
+      </div>
+      <div class="card">
+        <h3>Total Participantes</h3>
+        <p>{{ reporteGlobal?.totalInscriptosGlobal }}</p>
+      </div>
+      <div class="card">
+        <h3>Total Eventos</h3>
+        <p>{{ reporteGlobal?.cantidadEventos }}</p>
+      </div>
+    </div>
+
+    <!-- Gráficos en cuadrícula -->
+    <div class="charts-grid">
+      <div class="chart">
+        <h3>Inscriptos por Evento</h3>
+        <canvas
+          baseChart
+          [datasets]="[{ data: participantesPorEventoChartData, label: 'Inscriptos' }]"
+          [labels]="eventosChartLabels"
+          [type]="'bar'"
+          [options]="{ responsive: true }"
+        ></canvas>
+      </div>
+      <div class="chart">
+        <h3>Recaudación por Evento</h3>
+        <canvas
+          baseChart
+          [datasets]="[{ data: recaudadoPorEventoChartData, label: 'Recaudación' }]"
+          [labels]="eventosChartLabels"
+          [type]="'bar'"
+          [options]="{ responsive: true }"
+        ></canvas>
+      </div>
+    </div>
+  </ng-template>
+</div>

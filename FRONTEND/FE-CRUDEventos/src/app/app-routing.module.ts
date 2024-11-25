@@ -71,6 +71,7 @@ const routes: Routes = [
   { path: 'ABM-Tareas/:id', component: AbmTareasComponent },
   { path: 'ABM-Tareas', component: AbmTareasComponent },
   { path: 'reportes/:id', component: ReportesComponent },
+  { path: 'reportes', component: ReportesComponent } ,
   { path: 'alta-resultados/:id', component: SubirResultadosComponent },
   { path: 'verInscripciones/:id', component: VerInscripcionesComponent },
   { path: 'vistaTareas', component: VistaTareasComponent },

@@ -55,6 +55,7 @@ builder.Services.AddScoped<IMensajeRepository,MensajeRepository>();
 builder.Services.AddHttpClient();
 builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddScoped<IReporteService, ReporteService>();
 
 builder.Services.AddEndpointsApiExplorer();
 

@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditorModule } from '@tinymce/tinymce-angular';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { NgChartsModule } from 'ng2-charts';
 //Components
 import { AgregarEditarEventoComponent } from './pages/admin/agregar-editar-evento/agregar-editar-evento.component';
 import { ListadoEventoComponent } from './components/listado-evento/listado-evento.component';
@@ -106,6 +105,7 @@ import { DatePipe } from '@angular/common';
     CategoriaComponent,
     DistanciaComponent,
     
+    
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
@@ -115,7 +115,7 @@ import { DatePipe } from '@angular/common';
     AppRoutingModule,
     SharedModule,
     EditorModule,
-    
+    NgChartsModule,
 
   ],
 })
