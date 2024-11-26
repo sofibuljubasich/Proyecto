@@ -58,6 +58,7 @@ builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddScoped<IReporteService, ReporteService>();
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHostedService<EventoService>();
 
 // jwt
 builder.Services
