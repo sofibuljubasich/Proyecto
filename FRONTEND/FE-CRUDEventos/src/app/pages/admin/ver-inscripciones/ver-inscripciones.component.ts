@@ -15,6 +15,7 @@ import { InscripcionService } from 'src/app/services/inscripcion.service';
 })
 export class VerInscripcionesComponent {
   eventoId!: number;
+  nombreEvento!: string;
 
   // resultados: TablaResultados[] = [];
   displayedColumns: string[] = [
@@ -39,7 +40,17 @@ export class VerInscripcionesComponent {
   }
 
   ngOnInit() {
-    this.getInscriptos();
+    
+      // Obtener el ID del evento desde los parámetros de la URL
+      this.eventoId = Number(this.aRoute.snapshot.paramMap.get('id'));
+    
+      // Obtener el nombre del evento desde los query params
+      this.aRoute.queryParams.subscribe((params) => {
+        this.nombreEvento = params['nombre'] || 'Evento desconocido'; // Asigna un valor predeterminado si no existe
+      });
+    
+      this.getInscriptos();
+    
   }
   getInscriptos(): void {
     console.log(this.eventoId);

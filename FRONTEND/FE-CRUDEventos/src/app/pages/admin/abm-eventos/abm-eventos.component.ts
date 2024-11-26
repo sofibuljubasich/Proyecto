@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { EventoService } from 'src/app/services/evento.service';
 import { TipoEventoService } from 'src/app/services/tipo-evento.service';
 import { UserService } from 'src/app/services/user.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-abm-eventos',
   templateUrl: './abm-eventos.component.html',
@@ -46,12 +46,22 @@ export class ABMEventosComponent {
     private _authService: AuthService,
     private _userService: UserService,
     private aRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
     this.obtenerEventos();
   }
+  verInscripciones(id: number, nombre: string): void {
+    console.log('Evento seleccionado:', nombre);
+    // Puedes redirigir o realizar otra acción con los datos.
+    // Ejemplo: usar el Router para pasar parámetros
+    this._router.navigate(['/verInscripciones', id], {
+      queryParams: { nombre: nombre },
+    });
+  }
+  
 
   obtenerEventos(): void {
     this._eventoService

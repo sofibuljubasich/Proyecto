@@ -1,6 +1,8 @@
 <div class="container">
     <div class="contenedor-general">
+        
         <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()" class="datos">
+            <h2 class="form-title">Tarea Evento {{nombreEvento}}</h2>
             <div class="descripcion">
                 <label for="descripcion">Descripcion de la tarea</label>
                 <input formControlName="descripcion" id="descripcion" class="text" type="text">

@@ -17,6 +17,7 @@ using NPOI.XSSF.UserModel;
 using NPOI.HSSF.UserModel;
 using ClosedXML;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace BE.Controllers
 {
@@ -581,6 +582,9 @@ namespace BE.Controllers
                 worksheet.Cell(1, 5).Value = "FechaNacimiento";
                 worksheet.Cell(1, 6).Value = "DistanciaKM";
                 worksheet.Cell(1, 7).Value = "Remera";
+                worksheet.Cell(1, 8).Value = "Posicion Categoria";
+                worksheet.Cell(1, 9).Value = "Posicion General";
+                worksheet.Cell(1, 10).Value = "Posicion Tiempo";
 
                 // Llenar datos desde la base de datos
                 for (int i = 0; i < inscripciones.Count; i++)
@@ -666,9 +670,9 @@ namespace BE.Controllers
 
 
                     var corredor = fila.GetCell(0).ToString();
-                    var PosicionCategoria = fila.GetCell(1).ToString();
-                    var PosicionGeneral = fila.GetCell(2).ToString();
-                    var Tiempo = fila.GetCell(3).ToString();
+                    var PosicionCategoria = fila.GetCell(8).ToString();
+                    var PosicionGeneral = fila.GetCell(9).ToString();
+                    var Tiempo = fila.GetCell(10).ToString();
                    
                     int corredorID = int.Parse(corredor);
                     //TimeSpan tiempo = int.Parse(Tiempo);

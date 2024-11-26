@@ -30,9 +30,11 @@
                       </div>
                     </div>
                     <div class="content">
-                      <button routerLink="/verInscripciones/{{eventoResp.id}}" class="tareas-button">Inscripciones</button>
-                      <button routerLink="/reportes/{{eventoResp.id}}" class="tareas-button">Reportes</button>
-                      <button routerLink="/alta-resultados/{{eventoResp.id}}" class="tareas-button">Resultados</button>
+                      <button (click)="verInscripciones(eventoResp.id, eventoResp.nombre)" 
+                      class="tareas-button">
+                Inscripciones</button>
+                      <button routerLink="/reportes/{{eventoResp.id}}" [queryParams]="{ nombre: eventoResp.nombre }" class="tareas-button">Reportes</button>
+                      <button routerLink="/alta-resultados/{{eventoResp.id}}" [queryParams]="{ nombre: eventoResp.nombre }"  class="tareas-button">Resultados</button>
                       <button (click)="enviarMail(eventoResp.id)" class="tareas-button">Enviar mail</button>
                     </div>
                   </div>

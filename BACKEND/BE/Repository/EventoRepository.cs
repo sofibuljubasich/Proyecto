@@ -26,7 +26,27 @@ namespace BE.Repository
             return evento;      
             
         }
+        public async Task ActualizarEstadoEventosAsync()
+        {
+            var fechaActual = DateTime.Today;
 
+            // Seleccionar eventos cuya fecha es igual a la fecha actual
+            var eventos = await _context.Eventos
+                .Where(e => e.Fecha.Date == fechaActual && e.Estado != "Inactivo")
+                .ToListAsync();
+
+            // Actualizar el estado de los eventos
+            foreach (var evento in eventos)
+            {
+                evento.Estado = "Inactivo";
+            }
+
+            // Guardar cambios
+            if (eventos.Any())
+            {
+                await _context.SaveChangesAsync();
+            }
+        }
         public async Task Delete(Evento evento)
         {
             var eventoToDelete = await _context.Eventos.SingleAsync(e => e.ID == evento.ID);

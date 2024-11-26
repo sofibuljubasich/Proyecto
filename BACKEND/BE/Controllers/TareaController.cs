@@ -100,7 +100,15 @@ namespace BE.Controllers
                         Descripcion = t.Descripcion,
                         FechaHora = t.FechaHora,
                         Ubicacion = t.Ubicacion,
-                        TareaVoluntarios = _mapper.Map<List<TareaVoluntarioDto>>(t.TareaVoluntarios)
+                        TareaVoluntarios = t.TareaVoluntarios.Select(tv => new TareaVoluntarioDto
+                        {
+                            TareaID = tv.TareaID,
+                            VoluntarioID = tv.VoluntarioID,
+                            Nombre = tv.Voluntario.Nombre,
+                            Apellido = tv.Voluntario.Apellido,
+                            Estado = tv.Estado,
+                            Comentario = tv.Comentario
+                        }).ToList()
 
                     };
 
