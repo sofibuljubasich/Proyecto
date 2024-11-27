@@ -1,7 +1,7 @@
 <div class="container">
     <main class="main">
-      <button routerLink="/eventosActivos" style="color: aliceblue; text-decoration:underline; border: none;background-color:transparent;width: fit-content;"><--Regresar</button>
-      <h1>Inscriptos {{ eventoNombre }}</h1>  
+      <button routerLink="/eventosActivos" style="color: aliceblue; text-decoration:underline; border: none;background-color:transparent;width: fit-content;"><--Regresar</button> 
+      <div class="header"><h2>Inscriptos {{ eventoNombre }} </h2></div>
       <div class="tabla" >
           
             <div class="filtro">
@@ -16,35 +16,42 @@
         <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
             <!-- Dorsal Column -->
             <ng-container matColumnDef="nro">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by nro">
+              <th mat-header-cell *matHeaderCellDef >
                 Nro
               </th>
               <td mat-cell *matCellDef="let element"> {{element.nro}} </td>
             </ng-container>
-          
+
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef >
+                Nombre y Apellido
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+            </ng-container>
+
             <!-- Nombre Column -->
             <ng-container matColumnDef="mail">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by mail">
+              <th mat-header-cell *matHeaderCellDef >
                 Email
               </th>
               <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
             </ng-container>
 
             <ng-container matColumnDef="dni">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by dni">
+              <th mat-header-cell *matHeaderCellDef >
                 DNI
               </th>
               <td mat-cell *matCellDef="let element"> {{element.dni}} </td>
             </ng-container>
             <ng-container matColumnDef="fechaNacimiento">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by fechaNacimiento">
+              <th mat-header-cell *matHeaderCellDef >
                 Fecha Nacimiento
               </th>
               <td mat-cell *matCellDef="let element"> {{element.fechaNacimiento | date:'dd-MM-yyyy'}} </td>
             </ng-container>
             <!-- Genero Column -->
             <ng-container matColumnDef="genero">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by genero">
+              <th mat-header-cell *matHeaderCellDef>
                 Genero
               </th>
               <td mat-cell *matCellDef="let element"> {{element.genero}} </td>
@@ -52,7 +59,7 @@
           
             <!-- Categoria Column -->
             <ng-container matColumnDef="categoria">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by categoria">
+              <th mat-header-cell *matHeaderCellDef >
                 Categoria
               </th>
               <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
@@ -60,7 +67,7 @@
           
             <!-- Distancia Column -->
             <ng-container matColumnDef="distancia">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by distancia">
+                <th mat-header-cell *matHeaderCellDef >
                   Distancia
                 </th>
                 <td mat-cell *matCellDef="let element"> {{element.distancia}} </td>
@@ -68,7 +75,7 @@
 
             <!-- Tiempo Column -->
             <ng-container matColumnDef="estado">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by estado">
+              <th mat-header-cell *matHeaderCellDef >
                 Estado de pago
               </th>
               <td mat-cell *matCellDef="let element">
@@ -81,7 +88,7 @@
           
             <!-- Posicion General Column -->
             <ng-container matColumnDef="metodo">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by metodo">
+              <th mat-header-cell *matHeaderCellDef >
                 Metodo de pago
               </th>
               <td mat-cell *matCellDef="let element"> {{element.metodo}} </td>
@@ -89,7 +96,7 @@
           
             <!-- Posicion Categoria Column -->
             <ng-container matColumnDef="entregaKit">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by entregaKit">
+              <th mat-header-cell *matHeaderCellDef >
                 Retiro de kit
               </th>
               <td mat-cell *matCellDef="let element"> 

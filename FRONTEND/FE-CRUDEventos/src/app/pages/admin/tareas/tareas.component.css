@@ -81,7 +81,14 @@ button{
 
     cursor: pointer;
 }
-
+.header{
+  display: flex;
+  justify-content: center;
+  color: aliceblue;
+  h2{
+    font-size: 30px;
+  }
+}
 .volunteer-list {
   display: flex;
   flex-direction: column; /* Alinea los elementos verticalmente */
@@ -95,4 +102,62 @@ button{
 /* tasks.component.css */
 th {
   justify-content: center; 
+}
+.comment-bubble {
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 200px;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.mat-cell {
+  position: relative;
+}
+
+button.mat-icon-button {
+  position: relative;
+}
+
+.icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.red-circle {
+  position: absolute;
+  top: 7px;
+  right: 3px;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  border: 2px solid white; /* Opcional: para un borde blanco alrededor */
+  z-index: 10;
+}
+
+.comment-bubble {
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 200px;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.comment-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #ccc transparent;
 }

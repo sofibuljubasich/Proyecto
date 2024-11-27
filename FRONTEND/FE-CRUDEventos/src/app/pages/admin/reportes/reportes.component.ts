@@ -31,12 +31,10 @@ export class ReportesComponent implements OnInit {
     private route: ActivatedRoute,
     private aRoute: ActivatedRoute,
     private reporteService: ReporteService
-  
   ) {
     this.aRoute.queryParams.subscribe((params) => {
       this.nombreEvento = params['nombre'] || 'Evento Desconocido'; // Valor por defecto
     });
-
   }
 
   ngOnInit(): void {
@@ -55,7 +53,7 @@ export class ReportesComponent implements OnInit {
     this.reporteService.obtenerReporteEvento(eventoId).subscribe(
       (reporte: ReporteEventoDTO) => {
         this.eventoReporte = reporte;
-  
+
         // Asignar datos para los gráficos
         this.categoriaChartLabels = reporte.categorias.map(
           (cat) => `Edad ${cat.edadInicio}-${cat.edadFin}`
@@ -63,7 +61,7 @@ export class ReportesComponent implements OnInit {
         this.categoriaChartData = reporte.categorias.map(
           (cat) => cat.totalParticipantes
         );
-  
+
         this.distanciaChartLabels = reporte.distancias.map(
           (dist) => `${dist.nombreDistancia} KM`
         );
@@ -81,7 +79,7 @@ export class ReportesComponent implements OnInit {
       (reporte) => {
         this.reporteGlobal = reporte;
         this.eventoReporte = null; // Limpiar datos de eventos específicos
-        
+
         console.log('Reporte recibido:', this.reporteGlobal);
         // Configurar datos para gráficos globales
         this.eventosChartLabels = reporte.eventos.map(

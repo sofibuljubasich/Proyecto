@@ -42,7 +42,9 @@ export class AgregarEditarEventoComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerEvento();
   }
-
+  selectTipo(tipo: string) {
+    this.eventoForm.get('tipo')?.setValue(tipo); // Establece el valor seleccionado
+  }
   obtenerEvento() {
     if (this.id) {
       this._eventoService.getEvento(this.id).subscribe((data) => {

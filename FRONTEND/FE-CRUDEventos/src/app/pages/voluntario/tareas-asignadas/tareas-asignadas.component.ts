@@ -55,19 +55,20 @@ export class TareasAsignadasComponent {
       }
     });
     this._taskService.getTasks(this.id).subscribe((tasks: Tarea[]) => {
-      this.filtroVoluntarios(tasks);
+      this.filtroVoluntarios1(tasks);
+      console.log(tasks);
+
       this.dataSource = new MatTableDataSource(tasks);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
-  filtroVoluntarios(tasks: Tarea[]) {
-    return tasks.map((task: Tarea) => {
-      task.tareaVoluntarios = task.tareaVoluntarios.filter(
-        (voluntario) => voluntario.voluntarioID.toString() !== this.volId
-      );
-      return task;
-    });
+  filtroVoluntarios1(tasks: Tarea[]) {
+    return tasks.filter((task) =>
+      task.tareaVoluntarios.some(
+        (voluntario) => voluntario.voluntarioID === this.volId
+      )
+    );
   }
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -89,7 +90,7 @@ export class TareasAsignadasComponent {
       this.taskData2.tareaID = this.id;
       this.taskData2.voluntarioID = this.volId;
       this.taskData2.estado = nuevoEstado;
-
+      console.log(this.taskData2);
       this._tvService.updateEstado(this.taskData2).subscribe();
     }
   }

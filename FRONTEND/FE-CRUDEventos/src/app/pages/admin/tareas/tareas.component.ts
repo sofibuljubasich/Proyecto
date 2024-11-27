@@ -27,6 +27,9 @@ export class TareasComponent {
   ];
   // dataSource: MatTableDataSource<Tarea> = new MatTableDataSource(TASK_DATA);
   dataSource = new MatTableDataSource<any>();
+  commentVisible = false; // Controla si la burbuja se debe mostrar
+  currentComment: string | null = null; // Almacena el comentario actual
+  currentID: number | null = null; // Almacena el comentario actual
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -50,15 +53,52 @@ export class TareasComponent {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-    
   }
 
-  openComment(comment: any): void {
-    if (comment) {
-      console.log('Comentario recibido:', comment);
+  // openComment(comment: any, id: any): void {
+  //   console.log(id, comment);
+  //   if (this.currentID === id) {
+  //     // Si el comentario es el mismo que ya está visible, cerramos la burbuja
+  //     this.commentVisible = !this.commentVisible;
+  //   } else {
+  //     this.currentComment = comment || null;
+  //     this.currentID = id;
+  //     this.commentVisible = true;
+  //   }
+  // }
+  visibleComments: { [key: string]: string } = {};
+
+  private generateKey(tareaID: number, voluntarioID: number): string {
+    return `${tareaID}-${voluntarioID}`;
+  }
+
+  // Alterna la visibilidad del comentario
+  toggleComment(
+    tareaID: number,
+    voluntarioID: number,
+    comentario: string | null
+  ): void {
+    const key = this.generateKey(tareaID, voluntarioID);
+
+    if (this.visibleComments[key]) {
+      // Si ya está visible, lo ocultamos
+      delete this.visibleComments[key];
     } else {
-      console.log('No hay comentario');
+      // Si no está visible, lo mostramos con el comentario correspondiente
+      this.visibleComments[key] = comentario || 'No hay comentario';
     }
+  }
+
+  // Verifica si un comentario es visible
+  isCommentVisible(tareaID: number, voluntarioID: number): boolean {
+    const key = this.generateKey(tareaID, voluntarioID);
+    return !!this.visibleComments[key];
+  }
+
+  // Obtiene el comentario asociado a una tarea-voluntario
+  getComment(tareaID: number, voluntarioID: number): string {
+    const key = this.generateKey(tareaID, voluntarioID);
+    return this.visibleComments[key] || 'No hay comentario';
   }
 
   goBack(): void {

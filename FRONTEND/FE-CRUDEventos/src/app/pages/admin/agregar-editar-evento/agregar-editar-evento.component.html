@@ -34,7 +34,17 @@
         <div class="tipo">
           <mat-icon class="custom-icon" aria-hidden="false" aria-label="Event type icon" fontIcon="directions_run"></mat-icon>
           <p class="label">Tipo de evento:</p>
-          <input formControlName="tipo" [readonly]="!isEditing" />
+          <div class="dropdown">
+            <button class="dropdown-btn" [ngClass]="{'readonly': !isEditing}">
+              {{ eventoForm.get('tipo')?.value || 'Seleccionar tipo' }}
+            </button>
+            <div *ngIf="isEditing" class="dropdown-content">
+              <a href="javascript:void(0)" (click)="selectTipo('Maratón')">Maratón</a>
+              <a href="javascript:void(0)" (click)="selectTipo('Correcaminata')">Correcaminata</a>
+              <a href="javascript:void(0)" (click)="selectTipo('Participativo')">Participativo</a>
+              <a href="javascript:void(0)" (click)="selectTipo('Caminata')">Caminata</a>
+            </div>
+          </div>
         </div>
       </div>
       
