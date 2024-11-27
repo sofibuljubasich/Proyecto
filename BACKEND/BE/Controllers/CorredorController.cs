@@ -26,6 +26,13 @@ namespace BE.Controllers
             _config = config;
             _mapper = mapper;
         }
+        [HttpGet("existe/{dni}")]
+public async Task<IActionResult> ExisteUsuarioConDNI(string dni)
+{
+            bool existe = await _corredorRepository.ExisteCorredorConDNI(dni);  
+
+    return Ok(existe);
+}
 
 
 

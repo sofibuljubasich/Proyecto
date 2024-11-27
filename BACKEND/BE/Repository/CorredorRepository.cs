@@ -20,7 +20,11 @@ namespace BE.Repository
             return user != null;
         }
 
-       
+
+        public async Task<bool> ExisteCorredorConDNI(string dni)
+        {
+            return await _context.Corredores.AnyAsync(c=> c.Dni == dni);
+        }
 
 
         public async Task<Corredor> GetCorredor(int id)

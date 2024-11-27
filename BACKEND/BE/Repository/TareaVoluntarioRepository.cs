@@ -1,4 +1,5 @@
-﻿using BE.Interfaces;
+﻿using BE.Dto;
+using BE.Interfaces;
 using BE.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -60,23 +61,25 @@ namespace BE.Services
                                                  .ToListAsync();
         }
 
-        public async Task<List<Tarea>> GetTareasByEventoVoluntario(int eventoID, int voluntarioID)
+        public async Task<List<TareaVoluntarioEventoDto>> GetTareasByEventoVoluntario(int eventoID, int voluntarioID)
         {
-            /* var tareas = await _context.Voluntarios
-                             .Where(v => v.ID == voluntarioID)
-                             .SelectMany(v => v.Tareas)
-                             .Include(t => t.Evento).Where(e=>e.EventoID == eventoID) 
-                             .ToListAsync();
-             return tareas
-             return await _context.TareaVoluntario.Where(tv=>tv.VoluntarioID == voluntarioID)
-                                                 .Include(tv=> tv.Tarea)
-                                                 .Select(tv=>tv.Tarea)
-                                                 .ToListAsync();    
-            
-            ;*/
-            return await _context.TareaVoluntario.Where(tv => tv.VoluntarioID == voluntarioID && tv.Tarea.EventoID == eventoID)
-                                                 .Include(tv => tv.Tarea)
-                                                 .Select(tv => tv.Tarea).ToListAsync();
+            var tareasConComentarios = await _context.TareaVoluntario
+          .Where(tv => tv.VoluntarioID == voluntarioID && tv.Tarea.EventoID == eventoID)
+          .Select(tv => new TareaVoluntarioEventoDto
+          {
+              tarea = new TareaGetDto
+              {
+                  ID = tv.Tarea.ID,
+                  Descripcion = tv.Tarea.Descripcion,
+                  FechaHora = tv.Tarea.FechaHora,
+                  Ubicacion = tv.Tarea.Ubicacion
+              },
+              Comentario = tv.Comentario,
+              Estado = tv.Estado
+          })
+          .ToListAsync();
+
+            return tareasConComentarios;
         }
 
         public async Task DeleteTareasByVoluntario(TareaVoluntario tareaVoluntario)
@@ -122,12 +125,13 @@ namespace BE.Services
 
         public async Task<List<Evento>> GetEventosByVoluntario(int voluntarioID)
         {
-            var eventos = await _context.TareaVoluntario.Where(tv => tv.VoluntarioID == voluntarioID) 
-                .Select(tv => tv.Tarea.Evento) 
-                .Distinct() 
+            var eventos = await _context.TareaVoluntario
+                .Where(tv => tv.VoluntarioID == voluntarioID && tv.Tarea.Evento.Estado == "Activo") // Filtrar por estado activo
+                .Select(tv => tv.Tarea.Evento)
+                .Distinct()
                 .ToListAsync();
-                
-        return eventos;
+
+            return eventos;
         }
     }
 }

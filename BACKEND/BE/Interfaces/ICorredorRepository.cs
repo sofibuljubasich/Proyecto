@@ -6,7 +6,7 @@ namespace BE.Repository
     {
 
         Task<Corredor> GetCorredor(int id);
-
+        Task<bool> ExisteCorredorConDNI(string dni);
         Task<Corredor> GetCorredorByDni(string dni);
         Task<Corredor> CreateCorredor(Corredor corredor);
         Task UpdateCorredor(Corredor corredor);

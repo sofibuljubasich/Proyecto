@@ -41,7 +41,7 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("{voluntarioId}/eventos")]
+        [HttpGet("{voluntarioID}/eventos")]
         public async Task<IActionResult> GetEventosByVoluntario(int voluntarioID)
         {
             var eventos = await _tareaVoluntarioRepository.GetEventosByVoluntario(voluntarioID);
@@ -77,10 +77,10 @@ namespace BE.Controllers
                     return NotFound("El voluntario no tiene tareas asignadas en ese evento");
                 }
 
-                var listTareasDto = _mapper.Map<List<TareaEstadoDto>>(listTareas);
+                //var listTareasDto = _mapper.Map<List<TareaEstadoDto>>(listTareas);
 
 
-                return Ok(listTareasDto);
+                return Ok(listTareas);
             }
             catch (Exception ex)
             {

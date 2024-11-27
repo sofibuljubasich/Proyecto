@@ -1,4 +1,5 @@
-﻿using BE.Models;
+﻿using BE.Dto;
+using BE.Models;
 
 namespace BE.Interfaces
 {
@@ -11,7 +12,7 @@ namespace BE.Interfaces
         Task<List<Voluntario>> GetVoluntariosByTarea(int tareaID);
 
         Task<List<Tarea>> GetTareasByVoluntario(int voluntarioID);
-        Task<List<Tarea>> GetTareasByEventoVoluntario(int eventoID, int voluntarioID);
+        Task<List<TareaVoluntarioEventoDto>> GetTareasByEventoVoluntario(int eventoID, int voluntarioID);
 
         Task DeleteTareasByVoluntario(TareaVoluntario tareaVoluntario);
 
