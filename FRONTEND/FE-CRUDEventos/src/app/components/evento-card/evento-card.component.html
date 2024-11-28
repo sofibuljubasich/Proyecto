@@ -31,7 +31,8 @@
           <button mat-icon-button style="transform: scale(2);" routerLink="/verEvento/{{eventoResp.id}}">
             <mat-icon  style="color: rgb(0, 0, 0); margin-inline-start: 0px;">info</mat-icon>
           </button>
-          <button (click)="onInscribirse()" class="signup-button" >Inscribirse</button>
+          <button *ngIf="!estaInscrita(eventoResp)" (click)="onInscribirse()" class="signup-button" >Inscribirse</button>
+          <button *ngIf="estaInscrita(eventoResp)" (click)="ver()" class="signup-button" >Ver</button>
         </div>
       </ng-container>
       <ng-container *ngIf="eventoResp.estado === 'Inactivo'">

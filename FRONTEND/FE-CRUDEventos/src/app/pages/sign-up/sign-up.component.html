@@ -46,6 +46,9 @@
           <div *ngIf="isFieldInvalid(signupFormPart1,'dni')" class="error-message">
             El dni es requerido y debe tener 8 dígitos.
           </div>
+          <div *ngIf="dniError" class="error-message">
+            {{ dniError }}
+          </div>
         </div>
         <div class="dato">
           <label for="telefono">Teléfono:</label>
@@ -150,9 +153,15 @@
   <div class="data">
     <label for="password">Contraseña:</label>
     <input type="password" id="password" formControlName="password">
-    <div *ngIf="isFieldInvalid(signupFormPart3, 'password')" class="error-message">
-      Contraseña es requerida.
+    <div *ngIf="signupFormPart3.get('password')?.errors?.['required'] && signupFormPart3.get('password')?.touched" class="error-message">
+      Contraseña requerida.
     </div>
+    <div *ngIf="signupFormPart3.get('password')?.errors?.['minlength'] && signupFormPart3.get('password')?.touched" class="error-message">
+      La contraseña debe tener más de 6 caracteres.
+    </div>
+    <!-- <div *ngIf="isFieldInvalid(signupFormPart3, 'password')" class="error-message">
+      Contraseña es requerida.
+    </div> -->
   </div>
   <div class="data">
     <label for="confirmPassword">Confirmar contraseña:</label>

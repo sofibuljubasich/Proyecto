@@ -22,6 +22,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { CorredorService } from 'src/app/services/corredor.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -40,13 +41,16 @@ export class SignUpComponent implements OnInit {
   selectedFile: File | null = null;
   selectedFileUrl: string | null = null; // URL de la imagen seleccionada
   rol: number = 1;
+  existingDnis: string[] = [];
+  dniError: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private _authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _corredorService: CorredorService
   ) {}
 
   ngOnInit(): void {
@@ -132,11 +136,23 @@ export class SignUpComponent implements OnInit {
   }
 
   onNext() {
-    if (this.signupFormPart1.valid) {
-      this.showStep = 2;
-    } else {
+    this.dniError = null;
+    if (this.signupFormPart1.invalid) {
       this.signupFormPart1.markAllAsTouched();
+      return;
     }
+
+    const dni = this.signupFormPart1.get('dni')?.value;
+
+    this._corredorService.verificarDni(dni).subscribe({
+      next: (isRegistered) => {
+        if (isRegistered) {
+          this.dniError = 'Ya se encuentra registrado un usuario con ese DNI.';
+        } else {
+          this.showStep = 2;
+        }
+      },
+    });
   }
 
   onSubmit() {
