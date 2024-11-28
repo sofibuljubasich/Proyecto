@@ -6,7 +6,7 @@ body {
     margin-top: 5%;
   }
   .tabla{
-    width: 50%;
+    /* width: 50%; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -103,4 +103,7 @@ body {
 }
 .info{
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
 }

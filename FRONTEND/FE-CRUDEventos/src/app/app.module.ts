@@ -5,6 +5,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgChartsModule } from 'ng2-charts';
+
 //Components
 import { AgregarEditarEventoComponent } from './pages/admin/agregar-editar-evento/agregar-editar-evento.component';
 import { ListadoEventoComponent } from './components/listado-evento/listado-evento.component';
@@ -104,8 +105,7 @@ import { DatePipe } from '@angular/common';
     HelpComponent,
     CategoriaComponent,
     DistanciaComponent,
-    
-    
+    ReportesComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
@@ -116,7 +116,6 @@ import { DatePipe } from '@angular/common';
     SharedModule,
     EditorModule,
     NgChartsModule,
-
   ],
 })
 export class AppModule {}

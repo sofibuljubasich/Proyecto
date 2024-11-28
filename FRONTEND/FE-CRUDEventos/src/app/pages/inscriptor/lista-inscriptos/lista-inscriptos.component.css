@@ -32,12 +32,12 @@ html, body {
       
   }
   .tabla{
-      padding: 0px 9% ;
+      padding: 30px 9% ;
       /* text-align: center; */
       justify-items: center;
   }
   .mat-mdc-form-field {
-      font-size: 14px;
+      font-size: 10px;
       width: 100%;
       
     }
@@ -52,6 +52,7 @@ table th{
     td, th {
       width:fit-content;
       text-align: center;
+      font-size: 10px;
       /* background-color: #97bce688; */
       color: rgb(9, 36, 59);
     }
@@ -72,3 +73,34 @@ button{
     border-radius: 10px;
     cursor: pointer;
 }
+.header{
+  display: flex;
+  justify-content: center;
+  color: aliceblue;
+  h2{
+    font-size: 30px;
+  }
+}
+.mdc-data-table__cell{
+    padding: 0px;
+}
+.mdc-data-table__header-cell{
+  padding: 0px;
+}
+.mat-sort-header-container {
+  justify-content: center;
+}
+.mat-header-cell {
+  justify-content: center;
+}
+.mat-mdc-select-value-text {
+font-size: 10px;
+}
+mat-mdc-select-value {font-size: 10px;
+}
+mat-option {
+  font-size: 10px;
+  }
+  mat-select {
+    font-size: 10px;
+    }

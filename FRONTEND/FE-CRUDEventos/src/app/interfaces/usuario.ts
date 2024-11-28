@@ -40,6 +40,8 @@ export interface Corredor {
 
 export interface Inscrito {
   id: number;
+  nombre: string;
+  apellido: string;
   fecha: string;
   dorsal: number;
   remera: string;

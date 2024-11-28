@@ -19,8 +19,10 @@ export class ListaInscriptosComponent {
   // resultados: TablaResultados[] = [];
   displayedColumns: string[] = [
     'nro',
+    'nombre',
     'mail',
-    'dni','fechaNacimiento',
+    'dni',
+    'fechaNacimiento',
     'genero',
     'distancia',
     'categoria',
@@ -29,7 +31,7 @@ export class ListaInscriptosComponent {
     'entregaKit',
   ];
   dataSource = new MatTableDataSource<any>();
-  eventoNombre!: string; 
+  eventoNombre!: string;
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private _eventoService: EventoService,
@@ -42,12 +44,12 @@ export class ListaInscriptosComponent {
   ngOnInit() {
     // Obtén el ID del evento de la URL
     this.eventoId = Number(this.aRoute.snapshot.paramMap.get('id'));
-  
+
     // Obtén el nombre del evento de los queryParams
     this.aRoute.queryParams.subscribe((params) => {
       this.eventoNombre = params['nombre']; // Asume que "nombre" es la clave del parámetro
     });
-  
+
     // Llama a la función para obtener los inscriptos
     this.getInscriptos();
   }
@@ -59,6 +61,7 @@ export class ListaInscriptosComponent {
         const transformedData = data.map((inscrito, index) => ({
           nro: index + 1,
           mail: inscrito.corredor.email,
+          nombre: `${inscrito.corredor.nombre}  ${inscrito.corredor.apellido}`,
           dni: inscrito.corredor.dni,
           fechaNacimiento: inscrito.corredor.fechaNacimiento,
           genero: inscrito.corredor.genero,
