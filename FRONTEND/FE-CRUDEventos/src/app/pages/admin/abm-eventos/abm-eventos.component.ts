@@ -20,7 +20,6 @@ export class ABMEventosComponent {
   onToggleChange(evento: any, event: Event): void {
     const input = event.target as HTMLInputElement;
     const nuevoEstado = input.checked; // Obtén el valor booleano del checkbox
-    console.log(nuevoEstado);
 
     // Actualiza el estado localmente
     if (nuevoEstado) {
@@ -61,7 +60,6 @@ export class ABMEventosComponent {
       queryParams: { nombre: nombre },
     });
   }
-  
 
   obtenerEventos(): void {
     this._eventoService

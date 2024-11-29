@@ -1,16 +1,16 @@
 <div class="container">
     <main class="main">
-        <form #buscarForm="ngForm" (change)="obtenerEventos()">
+        <form #buscarForm="ngForm" >
             <section class="buscador">      
                 <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
-                <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
+                <input type="text" name="texto" [(ngModel)]="searchText" (input)="filtrarEventos()" placeholder="Buscar evento" autocomplete="off">
                 <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
             </section>
         </form>
         <!-- <div class="evento-wrapper"> -->
             <div class="evento-container">
               <ng-container *ngIf="eventos">
-                <ng-container *ngFor="let eventoResp of eventos">
+                <ng-container *ngFor="let eventoResp of eventosActivos">
                   <div class="evento-content">
                     <div class="content">
                       <div class="evento">

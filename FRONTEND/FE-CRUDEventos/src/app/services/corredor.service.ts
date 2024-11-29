@@ -16,10 +16,14 @@ export class CorredorService {
     return this.http.get<Usuario>(`${this.myAppUrl}${this.myApiUrl}/${dni}`);
   }
   getCorredor(id: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.myAppUrl}${this.myApiUrl}/GetCorredor/${id}`);
+    return this.http.get<Usuario>(
+      `${this.myAppUrl}${this.myApiUrl}/GetCorredor/${id}`
+    );
   }
-  verificarDni(dni:string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.myAppUrl}${this.myApiUrl}/${dni}`);
+  verificarDni(dni: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.myAppUrl}${this.myApiUrl}/existe/${dni}`
+    );
   }
   getUserAge(currentUser: Usuario): number | null {
     console.log('fechaNac', currentUser.fechaNacimiento);

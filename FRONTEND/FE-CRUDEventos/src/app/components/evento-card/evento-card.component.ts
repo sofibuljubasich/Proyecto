@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Evento, EventoResponse } from 'src/app/interfaces/evento';
 import { AuthService } from 'src/app/services/auth.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
+import { UserService } from 'src/app/services/user.service';
 
 /**
  * @title Card with multiple sections
@@ -23,7 +24,19 @@ export class EventoCardComponent implements OnInit {
   isInscrito!: boolean;
 
   ngOnInit(): void {
-    this.obtenerMisEventos;
+    this._authService.userId$.subscribe((userId) => {
+      if (userId) {
+        this._userService.getUsuario(userId).subscribe({
+          next: (user) => {
+            this.currentUser = user;
+            this.obtenerMisEventos();
+          },
+          error: (error) => {
+            console.error('Failed to fetch user data:', error);
+          },
+        });
+      }
+    });
     this.imagenURL = `https://localhost:7296${this.eventoResp.imagen}`;
     this.formattedDate = this.formatDate(this.eventoResp.fecha);
     this.formattedName = this.capitalizeFirstLetter(this.eventoResp.nombre);
@@ -33,6 +46,7 @@ export class EventoCardComponent implements OnInit {
     // Redirigir o mostrar detalles
   }
   estaInscrita(evento: any): boolean {
+    // console.log(evento);
     return this.misEventos.some((e) => e.id === evento.id);
   }
   obtenerMisEventos(): void {
@@ -40,6 +54,7 @@ export class EventoCardComponent implements OnInit {
       .getInscxUsuario(this.currentUser.id)
       .subscribe((data: any[]) => {
         this.misEventos = data;
+        console.log(this.misEventos);
       });
   }
   formatDate(dateString: Date): string {
@@ -70,7 +85,8 @@ export class EventoCardComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private router: Router,
-    private _inscripcionService: InscripcionService
+    private _inscripcionService: InscripcionService,
+    private _userService: UserService
   ) {}
   onInscribirse(): void {
     if (this._authService.isAuthenticated()) {

@@ -52,15 +52,17 @@ export class TareasAsignadasComponent {
     this._authService.userId$.subscribe((userId) => {
       if (userId) {
         this.volId = userId;
-      }
-    });
-    this._taskService.getTasks(this.id).subscribe((tasks: Tarea[]) => {
-      this.filtroVoluntarios1(tasks);
-      console.log(tasks);
+        this._tvService
+          .getTasksxVoluntario(this.id, this.volId)
+          .subscribe((tasks: Tarea[]) => {
+            this.filtroVoluntarios1(tasks);
+            console.log(tasks);
 
-      this.dataSource = new MatTableDataSource(tasks);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+            this.dataSource = new MatTableDataSource(tasks);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          });
+      }
     });
   }
   filtroVoluntarios1(tasks: Tarea[]) {
