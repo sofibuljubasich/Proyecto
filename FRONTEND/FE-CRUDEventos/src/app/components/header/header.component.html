@@ -17,7 +17,7 @@
                 <!-- <img src="../../../../images/perfil-empty.jpg" alt="Event Image" class="imagen"> -->
                 <img [src]="imagenURL" [matMenuTriggerFor]="menu" alt="Event Image" class="imagen">
                 <mat-menu style="justify-content: center;" #menu="matMenu">
-                    <button  mat-menu-item>
+                    <button routerLink="/perfil" [queryParams]="{ id: currentUser?.id}" mat-menu-item>
                       <mat-icon style="justify-content: center;">person</mat-icon>
                       <span>Ver perfil</span>
                     </button>

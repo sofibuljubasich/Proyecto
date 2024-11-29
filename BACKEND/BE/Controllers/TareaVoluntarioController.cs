@@ -59,15 +59,6 @@ namespace BE.Controllers
         public async Task<IActionResult> GetTareasByEventoVoluntario(int eventoID, int voluntarioID)
         {
 
-            /* {
-    "id": 3,
-    "descripcion": "nueva",
-    "fechaHora": "2024-03-16T14:36:44.297",
-    "ubicacion": "nueva",
-    "eventoID": 5,
-    "evento": null,
-    "tareaVoluntarios": null */
-
             try
             {
                 var listTareas = await _tareaVoluntarioRepository.GetTareasByEventoVoluntario(eventoID, voluntarioID);

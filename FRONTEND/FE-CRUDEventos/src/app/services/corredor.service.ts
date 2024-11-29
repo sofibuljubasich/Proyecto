@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
-import { Usuario } from '../interfaces/usuario';
+import { Usuario, CorredorUpdate } from '../interfaces/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -34,4 +34,8 @@ export class CorredorService {
     }
     return null;
   }
+  Update(corredorID: number, corredorDto: CorredorUpdate): Observable<any> {
+    return this.http.put(`${this.myAppUrl}${this.myApiUrl}/${corredorID}`, corredorDto);
+  }
 }
+

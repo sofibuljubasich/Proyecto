@@ -1,0 +1,70 @@
+<div class="container">
+    <h1>Mi Perfil</h1>
+    <form [formGroup]="perfilForm" (ngSubmit)="guardarCambios()">
+      <!-- Email (No Editable) -->
+      <div>
+        <label for="email">Email:</label>
+        <input formControlName="email" id="email" type="email" [disabled]="true" />
+      </div>
+  
+      <!-- Nombre -->
+      <div>
+        <label for="nombre">Nombre:</label>
+        <input formControlName="nombre" id="nombre" type="text" [readonly]="!isEditing" />
+      </div>
+  
+      <!-- Apellido -->
+      <div>
+        <label for="apellido">Apellido:</label>
+        <input formControlName="apellido" id="apellido" type="text" [readonly]="!isEditing" />
+      </div>
+  
+      <!-- Teléfono -->
+      <div>
+        <label for="telefono">Teléfono:</label>
+        <input formControlName="telefono" id="telefono" type="text" [readonly]="!isEditing" />
+      </div>
+  
+      <!-- Fecha de Nacimiento -->
+      <div>
+        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+        <input formControlName="fechaNacimiento" id="fechaNacimiento" type="date" [readonly]="!isEditing" />
+      </div>
+  
+      <!-- Localidad -->
+      <div>
+        <label for="localidad">Localidad:</label>
+        <input formControlName="localidad" id="localidad" type="text" [readonly]="!isEditing" />
+      </div>
+  
+      <!-- DNI -->
+      <div>
+        <label for="dni">DNI:</label>
+        <input formControlName="dni" id="dni" type="text" [readonly]="!isEditing" />
+      </div>
+  
+      <!-- Género -->
+      <div>
+        <label for="genero">Género:</label>
+        <select formControlName="genero" id="genero" [disabled]="!isEditing">
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+  
+      <!-- Obra Social -->
+      <div>
+        <label for="obraSocial">Obra Social:</label>
+        <input formControlName="obraSocial" id="obraSocial" type="text" [readonly]="!isEditing" />
+      </div>
+  
+      <!-- Botones -->
+      <div class="botones">
+        <button type="button" *ngIf="!isEditing" (click)="habilitarEdicion()">Editar</button>
+        <button type="submit" *ngIf="isEditing">Guardar</button>
+        <button type="button" *ngIf="isEditing" (click)="cancelarEdicion()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+  

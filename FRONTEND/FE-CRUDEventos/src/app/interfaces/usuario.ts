@@ -38,6 +38,19 @@ export interface Corredor {
   obraSocial: string;
 }
 
+export interface CorredorUpdate {
+  id: number;
+  email: string;
+  nombre: string;
+  apellido: string;
+  telefono: string;
+  fechaNacimiento: string;
+  localidad: string;
+  dni: string;
+  genero: string;
+  obraSocial: string;
+  imagen: string;
+}
 export interface Inscrito {
   id: number;
   nombre: string;

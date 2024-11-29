@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { NgChartsModule } from 'ng2-charts';
 
 //Components
+import { PerfilComponent} from './pages/corredor/perfil/perfil.component';
 import { AgregarEditarEventoComponent } from './pages/admin/agregar-editar-evento/agregar-editar-evento.component';
 import { ListadoEventoComponent } from './components/listado-evento/listado-evento.component';
 import { VerEventoComponent } from './pages/corredor/ver-evento/ver-evento.component';
@@ -61,6 +62,7 @@ import { DatePipe } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
+    PerfilComponent,
     AgregarEditarEventoComponent,
     ListadoEventoComponent,
     VerEventoComponent,

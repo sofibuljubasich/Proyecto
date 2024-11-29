@@ -88,25 +88,53 @@ public async Task<IActionResult> ExisteUsuarioConDNI(string dni)
             }
         }
         [HttpPut("{corredorID}")]
-        public async Task<IActionResult> Update(int corredorID, [FromBody]CorredorUpdateDto corredorDto)
+        public async Task<IActionResult> Update(int corredorID, [FromBody]CorredorUpdateDto updateDto)
         {
             try
             {
 
                 var corredor = await _corredorRepository.GetCorredor(corredorID);
 
+
                 if (corredor == null)
                 {
                     return NotFound();
                 }
 
+                string ImagenURL;
+
+                if (!string.IsNullOrEmpty(updateDto.Email)) corredor.Email = updateDto.Email;
+                if (!string.IsNullOrEmpty(updateDto.Nombre)) corredor.Nombre = updateDto.Nombre;
+                if (!string.IsNullOrEmpty(updateDto.Apellido)) corredor.Apellido = updateDto.Apellido;
+               
+                if (updateDto.FechaNacimiento.HasValue) corredor.FechaNacimiento = updateDto.FechaNacimiento.Value;
+                if (!string.IsNullOrEmpty(updateDto.Telefono)) corredor.Telefono = updateDto.Telefono;
+                if (!string.IsNullOrEmpty(updateDto.Localidad)) corredor.Localidad = updateDto.Localidad;
+                if (!string.IsNullOrEmpty(updateDto.Dni)) corredor.Dni = updateDto.Dni;
+                if (!string.IsNullOrEmpty(updateDto.Genero)) corredor.Genero = updateDto.Genero;
+                if (!string.IsNullOrEmpty(updateDto.ObraSocial)) corredor.ObraSocial = updateDto.ObraSocial;
+
+                if (updateDto.Imagen != null && updateDto.Imagen.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(updateDto.Imagen.FileName);
+                    var path = Path.Combine("wwwroot/imagenes/profile", fileName);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await updateDto.Imagen.CopyToAsync(stream);
+                    }
+
+                    ImagenURL = "/Imagenes/profile/" + fileName;
+
+                    corredor.Imagen = ImagenURL;
+                }
 
 
 
 
                 await _corredorRepository.UpdateCorredor(corredor);
 
-                return Ok("Corredor actualizada");
+                return Ok();
 
             }
             catch (Exception ex)

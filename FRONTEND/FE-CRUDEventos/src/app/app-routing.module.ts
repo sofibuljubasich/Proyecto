@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Componentes
+import { PerfilComponent } from './pages/corredor/perfil/perfil.component';
 import { VerEventoComponent } from './pages/corredor/ver-evento/ver-evento.component';
 import { PagPrincipalComponent } from './pages/corredor/pag-principal/pag-principal.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
@@ -51,6 +52,7 @@ const routes: Routes = [
   { path: 'verEvento/:id', component: VerEventoComponent },
   { path: 'misEventos', component: MisEventosComponent },
   { path: 'ayuda', component: HelpComponent },
+  {path: 'perfil', component: PerfilComponent},
   // INSCRIPTOR
   { path: 'eventosActivos', component: EventosActivosComponent },
   { path: 'inscripcionManual/:id', component: InscripcionManualComponent },

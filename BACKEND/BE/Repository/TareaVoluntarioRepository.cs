@@ -65,6 +65,7 @@ namespace BE.Services
         {
             var tareasConComentarios = await _context.TareaVoluntario
           .Where(tv => tv.VoluntarioID == voluntarioID && tv.Tarea.EventoID == eventoID)
+          .Include(tv => tv.Voluntario)
           .Select(tv => new TareaVoluntarioEventoDto
           {
               tarea = new TareaGetDto
@@ -75,7 +76,10 @@ namespace BE.Services
                   Ubicacion = tv.Tarea.Ubicacion
               },
               Comentario = tv.Comentario,
-              Estado = tv.Estado
+              Estado = tv.Estado,
+              VoluntarioNombre = tv.Voluntario.Nombre,
+              VoluntarioApellido = tv.Voluntario.Apellido
+              
           })
           .ToListAsync();
 
