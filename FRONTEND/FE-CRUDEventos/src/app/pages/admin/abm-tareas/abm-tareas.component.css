@@ -82,7 +82,19 @@
     justify-content: center;
     gap: 10px;
   }
-  
+  .form-title{
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    h2{
+      font-size: 2rem;
+      text-shadow: 
+        -1px -1px 0 rgb(9, 33, 43), /* Sombra superior izquierda */
+         1px -1px 0 rgb(9, 33, 43), /* Sombra superior derecha */
+        -1px  1px 0 rgb(9, 33, 43), /* Sombra inferior izquierda */
+         1px  1px 0 rgb(9, 33, 43); /* Sombra inferior derecha */
+    }
+  }
   button {
     width: 100%;
     max-width: 200px; /* Limita el ancho en pantallas más grandes */

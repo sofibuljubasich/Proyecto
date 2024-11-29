@@ -3,6 +3,7 @@ import { Busqueda } from 'src/app/interfaces/busqueda';
 import { EventoResponse } from 'src/app/interfaces/evento';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventoService } from 'src/app/services/evento.service';
+import { TareaVoluntarioService } from 'src/app/services/tarea-voluntario.service';
 import { TipoEventoService } from 'src/app/services/tipo-evento.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -15,18 +16,20 @@ export class EventosVolComponent {
   eventos: any[] = [];
   eventosActivos: any[] = [];
   userRole: number = 3;
+  searchText: string = '';
 
   constructor(
     private _eventoService: EventoService,
     private _tipoService: TipoEventoService,
     private _authService: AuthService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _vtService: TareaVoluntarioService
   ) {}
 
   ngOnInit(): void {
-    this.obtenerEventos();
     this._authService.userId$.subscribe((userId) => {
       if (!!userId) {
+        this.obtenerEventos(userId);
         this._userService.getUsuario(userId).subscribe({
           next: (user) => {
             this.userRole = user.rolID;
@@ -39,28 +42,22 @@ export class EventosVolComponent {
     });
   }
 
-  obtenerEventos(): void {
-    this._eventoService.buscar(this.parametrosBusqueda).subscribe(
-      (data: any[]) =>{
-      this.eventos = data;
-      this.filtrarEventos(this.eventos);
+  obtenerEventos(userId: string): void {
+    this._vtService.getEventosxVoluntario(userId).subscribe((data: any[]) => {
+      console.log(data);
+      this.filtrarActivos(data);
     });
   }
 
-  parametrosBusqueda: Busqueda = {
-    texto: '',
-    fechaIni: '',
-    fechaFin: '',
-    tipoEvento: '',
-    lugar: '',
-  };
-
-
   // ver que los eventos inactivos tengan resultados
-  filtrarEventos(ev:any[]): void {
-    this.eventosActivos = ev.filter(
-      // fijarse q tengan resultados
-      (evento) => evento.evento.estado !== 'Inactivo'
+  filtrarActivos(ev: any[]): void {
+    this.eventosActivos = ev.filter((evento) => evento.estado !== 'Inactivo');
+  }
+  filtrarEventos(): void {
+    // Aplica el filtro basado en el texto ingresado
+    const texto = this.searchText.toLowerCase();
+    this.eventosActivos = this.eventos.filter((evento) =>
+      evento.nombre.toLowerCase().includes(texto)
     );
   }
 }

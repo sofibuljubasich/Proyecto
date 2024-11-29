@@ -3,6 +3,7 @@ import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Tarea, TareaVoluntarios, Voluntario } from '../interfaces/tarea';
+import { Evento } from '../interfaces/evento';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +21,20 @@ export class TareaVoluntarioService {
       params,
     });
   }
-  getTasksxVoluntario(tareaID: number, volId: string): Observable<Tarea[]> {
+  getEventosxVoluntario(volId: string): Observable<Evento[]> {
+    return this.http.get<Evento[]>(
+      `${this.myAppUrl}${this.myApiUrl}/${volId}/eventos`
+    );
+  }
+  getTasksxVoluntario(eventoID: number, volId: string): Observable<Tarea[]> {
     return this.http.get<Tarea[]>(
-      `${this.myAppUrl}${this.myApiUrl}/tareas/${tareaID}/${volId}`
+      `${this.myAppUrl}${this.myApiUrl}/tareas/${eventoID}/${volId}`
+    );
+  }
+  updateVoluntarios(tareaId: number, vol: any): Observable<any> {
+    return this.http.get<any>(
+      `${this.myAppUrl}${this.myApiUrl}/UpdateVoluntarios/${tareaId}`,
+      vol
     );
   }
   getAllxVoluntario(volId: string): Observable<Tarea[]> {

@@ -2,7 +2,10 @@
     <div class="contenedor-general">
         
         <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()" class="datos">
-            <h2 class="form-title">Tarea Evento {{nombreEvento}}</h2>
+            <div class="form-title">
+                <h2> {{ isEditMode ? 'Editar Tarea' : 'Agregar Tarea' }}</h2> 
+            </div>
+
             <div class="descripcion">
                 <label for="descripcion">Descripcion de la tarea</label>
                 <input formControlName="descripcion" id="descripcion" class="text" type="text">
@@ -24,10 +27,18 @@
             <label for="voluntarios">Voluntarios disponibles</label>
             <div class="lista-voluntarios" id="voluntarios">
 
-                <div class="content" *ngFor= "let vol of voluntarios">
+                <!-- <div class="content" *ngFor= "let vol of voluntarios">
                     <mat-checkbox (change)="toggleVoluntario(vol.id, $event.checked)"></mat-checkbox>
                     {{ vol.nombre }} {{ vol.apellido }}
-                </div>
+                </div> -->
+                <div class="content" *ngFor="let vol of voluntarios">
+                    <mat-checkbox
+                      [checked]="tareaForm.get('voluntariosID')?.value.includes(vol.id)"
+                      (change)="toggleVoluntario(vol.id, $event.checked)"
+                    >
+                      {{ vol.nombre }} {{ vol.apellido }}
+                    </mat-checkbox>
+                  </div>
             </div>
             <div class="opciones">
                 <button (click)="goBack()" style="background-color: transparent;font-weight: bold; background-color: rgb(175, 175, 175, 0.4); color:  rgb(9, 33, 43);" type="button">Cancelar

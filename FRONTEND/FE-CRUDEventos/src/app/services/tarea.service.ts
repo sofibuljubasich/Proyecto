@@ -12,19 +12,16 @@ export class TareaService {
   private myAppUrl: string = environment.endpoint;
   private myApiUrl: string = 'api/Tarea';
 
-  getTask(id: number): Observable<Tarea> {
-    return this.http.get<Tarea>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
+  getTask(id: number): Observable<any> {
+    return this.http.get<any>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
   }
   getTasks(id: number): Observable<Tarea[]> {
     return this.http.get<Tarea[]>(
       `${this.myAppUrl}${this.myApiUrl}/evento/${id}`
     );
   }
-  updateTask(task: Tarea): Observable<Tarea> {
-    return this.http.put<Tarea>(
-      `${this.myAppUrl}${this.myApiUrl}/${task.id}`,
-      task
-    );
+  updateTask(id: number, task: any): Observable<Tarea> {
+    return this.http.put<Tarea>(`${this.myAppUrl}${this.myApiUrl}/${id}`, task);
   }
   createTarea(tarea: CreateTarea): Observable<any> {
     return this.http.post(`${this.myAppUrl}${this.myApiUrl}`, tarea);
