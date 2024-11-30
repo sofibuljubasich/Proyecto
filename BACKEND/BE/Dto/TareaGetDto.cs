@@ -9,5 +9,7 @@
 
         public string Ubicacion { get; set; } = null!;
         public int EventoID { get; set; }
+
+        public virtual ICollection<OtroVoluntarioDto> OtrosVoluntarios { get; set; }
     }
 }

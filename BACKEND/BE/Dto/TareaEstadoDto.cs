@@ -13,8 +13,7 @@ public class TareaEstadoDto
 
     public string Ubicacion { get; set; } = null!;
 
-    public string Nombre { get; set; }
-    public string Apellido { get; set; } 
+    
         //public virtual ICollection<Voluntario> Voluntarios { get; set; }
 
   

@@ -70,6 +70,11 @@ namespace BE.Controllers
 
                 //var listTareasDto = _mapper.Map<List<TareaEstadoDto>>(listTareas);
 
+                foreach (var t in listTareas)
+                {
+                    t.tarea.OtrosVoluntarios = t.tarea.OtrosVoluntarios.Where(v=>v.ID!=voluntarioID).ToList();
+                    
+                }
 
                 return Ok(listTareas);
             }

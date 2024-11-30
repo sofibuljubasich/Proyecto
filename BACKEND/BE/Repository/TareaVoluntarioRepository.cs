@@ -73,7 +73,14 @@ namespace BE.Services
                   ID = tv.Tarea.ID,
                   Descripcion = tv.Tarea.Descripcion,
                   FechaHora = tv.Tarea.FechaHora,
-                  Ubicacion = tv.Tarea.Ubicacion
+                  Ubicacion = tv.Tarea.Ubicacion,
+                  OtrosVoluntarios = 
+                    tv.Tarea.TareaVoluntarios.Select(tv2 => new OtroVoluntarioDto
+                  {
+                      Nombre = tv2.Voluntario.Nombre,
+                      Apellido = tv2.Voluntario.Apellido,
+                      ID = tv2.VoluntarioID
+                  }).ToList()
               },
               Comentario = tv.Comentario,
               Estado = tv.Estado,
