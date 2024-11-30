@@ -59,7 +59,7 @@ export class PerfilComponent implements OnInit {
   habilitarEdicion(): void {
     this.isEditing = true;
     this.perfilForm.enable(); // Habilita todos los campos para editar
-    this.perfilForm.get('email')?.disable(); // El email no debe ser editable
+    //this.perfilForm.get('email')?.disable(); // El email no debe ser editable
   }
 
   // Método para guardar los cambios

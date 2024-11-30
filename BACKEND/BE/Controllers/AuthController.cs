@@ -109,8 +109,14 @@ namespace BE.Controllers
                 user.ConfirmedEmail = false;
                 user.ConfirmationToken = token;
                 var confirmationLink = $"https://localhost:7296/api/Auth/confirm-email?token={token}&email={user.Email}";
-                await _emailService.SendEmailAsync(user.Email, "Confirma tu cuenta",
-            $"Por favor confirma tu cuenta haciendo clic en el enlace: <a href='{confirmationLink}'>Confirmar Email</a>");
+
+                // Cargar la plantilla HTML
+                string emailHtmlTemplate = System.IO.File.ReadAllText("Services/activation.html");
+
+                // Reemplazar los valores dinámicos
+                emailHtmlTemplate = emailHtmlTemplate.Replace("https://example.com/confirmacion?token=123456", confirmationLink);
+
+                await _emailService.SendEmailAsync(user.Email, "Activa tu cuenta",emailHtmlTemplate);
 
                 var result = await _corredorRepository.CreateCorredor(user);    
 
@@ -148,9 +154,18 @@ namespace BE.Controllers
                 var PasswordResetToken =   await _userRepository.RequestPasswordResetAsync(email);
 
                 // Enviar correo de restablecimiento de contraseña
-                var resetLink = $"http://localhost:4200/reset-password?token={PasswordResetToken}&email={email}";
+                string resetLink = $"http://localhost:4200/reset-password?token={PasswordResetToken}&email={email}";
+
+                string emailHtmlTemplate = System.IO.File.ReadAllText("Services/recuperacion.html");
+
+                // Reemplazar los valores dinámicos
+                emailHtmlTemplate = emailHtmlTemplate.Replace("https://example.com/reset-password?token=123456", resetLink);
+
+
                 await _emailService.SendEmailAsync(email, "Restablecer tu contraseña",
-                    $"Puedes restablecer tu contraseña haciendo clic en el enlace: <a href='{resetLink}'>Restablecer Contraseña</a>");
+                    emailHtmlTemplate);
+                
+                
                 return Ok("Si existe una cuenta con ese correo electrónico, se ha enviado un enlace de restablecimiento de contraseña.");
             }
             catch (Exception ex)
