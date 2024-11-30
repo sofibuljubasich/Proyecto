@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-reset-password',
@@ -19,6 +20,11 @@ export class ResetPasswordComponent {
   userRol!: number;
   showStep: number = 1;
   token!: string ;
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
+  }
   constructor(
     private fb: FormBuilder,
     private _authService: AuthService,

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Componentes
+import { ConfirmationComponent } from './pages/confirmacion/confirmacion.component';
 import { PerfilComponent } from './pages/corredor/perfil/perfil.component';
 import { VerEventoComponent } from './pages/corredor/ver-evento/ver-evento.component';
 import { PagPrincipalComponent } from './pages/corredor/pag-principal/pag-principal.component';
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'change-password', component: ChangePasswordComponent },
   { path: 'pago-exitoso', component: PagoExitosoComponent },
+  { path:'confirmacionCuenta', component: ConfirmationComponent},
   // CORREDOR
   { path: 'inicio', component: PagPrincipalComponent },
   { path: 'proximos-eventos', component: ProximosEventosComponent },

@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { NgChartsModule } from 'ng2-charts';
 
 //Components
+import { ConfirmationComponent } from './pages/confirmacion/confirmacion.component';
 import { PerfilComponent} from './pages/corredor/perfil/perfil.component';
 import { AgregarEditarEventoComponent } from './pages/admin/agregar-editar-evento/agregar-editar-evento.component';
 import { ListadoEventoComponent } from './components/listado-evento/listado-evento.component';
@@ -108,6 +109,7 @@ import { DatePipe } from '@angular/common';
     CategoriaComponent,
     DistanciaComponent,
     ReportesComponent,
+    ConfirmationComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

@@ -20,7 +20,7 @@ namespace BE.Interfaces
 
         Task AddEstado(TareaVoluntario tareaVoluntario);
 
-        Task RemoveVoluntarios(List<Voluntario> voluntarios);
+        Task RemoveVoluntarios(List<TareaVoluntario> tareasvoluntarios);
         
         Task AddVoluntario(int TareaID, int voluntarioID);  
         //Actualizar

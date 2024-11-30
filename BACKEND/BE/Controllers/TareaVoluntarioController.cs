@@ -110,45 +110,57 @@ namespace BE.Controllers
         [HttpPut("UpdateVoluntarios/{tareaID}")]
         public async Task<IActionResult> UpdateVoluntarios(int tareaID, List<int> voluntariosID)
         {
-            try
-            {
-                // Buscar la tarea por ID y cargar las asignaciones de voluntarios actuales
-                var tareaVoluntarios = await _tareaVoluntarioRepository.GetVoluntariosByTarea(tareaID);
-
-                if (tareaVoluntarios == null)
+            
+                try
                 {
-                    return NotFound("Tarea no encontrada");
-                }
+                    // Buscar la tarea por ID y cargar las asignaciones de voluntarios actuales
+                    var tareaVoluntarios = await _tareaVoluntarioRepository.GetVoluntariosByTarea(tareaID);
 
-                // Obtener los IDs de los voluntarios actualmente asignados
-                var currentVoluntariosIds = tareaVoluntarios.Select(tv => tv.ID).ToList();
+                    if (tareaVoluntarios == null)
+                    {
+                        return NotFound("Tarea no encontrada");
+                    }
 
-                // Remover los voluntarios que ya no están en la nueva lista
-                var voluntariosToRemove = tareaVoluntarios
-                    .Where(tv => !voluntariosID.Contains(tv.ID))
-                    .ToList();
+                    // Obtener los IDs de los voluntarios actualmente asignados a la tarea
+                    var currentVoluntariosIds = tareaVoluntarios.Select(tv => tv.ID).ToList();
 
-                if (voluntariosToRemove.Any())
-                {
-                    await _tareaVoluntarioRepository.RemoveVoluntarios(voluntariosToRemove);
-                    // _context.TareaVoluntarios.RemoveRange(voluntariosToRemove);
-                }
+                    // Remover los voluntarios que ya no están en la nueva lista
+                    var voluntariosToRemove = tareaVoluntarios
+                        .Where(tv => !voluntariosID.Contains(tv.ID))
+                        .ToList();
 
-                // Agregar nuevos voluntarios que no estén ya asignados
-                foreach (var voluntarioID in voluntariosID)
-                {
-                    if (!currentVoluntariosIds.Contains(voluntarioID))
+                  
+                    if (voluntariosToRemove.Any())
+                    {
+                        List<TareaVoluntario> tareavoluntariosToRemove = voluntariosToRemove
+                            .Select(v => new TareaVoluntario
+                             {
+                                        TareaID = tareaID,
+                                        VoluntarioID = v.ID
+                               })
+                               .ToList();
+
+
+                        await _tareaVoluntarioRepository.RemoveVoluntarios(tareavoluntariosToRemove);
+                    }
+
+                    // Agregar nuevos voluntarios que no estén ya asignados a la tarea
+                    var voluntariosToAdd = voluntariosID
+                        .Where(voluntarioID => !currentVoluntariosIds.Contains(voluntarioID))
+                        .ToList();
+
+                    foreach (var voluntarioID in voluntariosToAdd)
                     {
                         await _tareaVoluntarioRepository.AddVoluntario(tareaID, voluntarioID);
-
                     }
-                }
 
                     return Ok("Tarea actualizada");
-            }catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            
         }
         [HttpGet, Route("tareas/{voluntarioID}")]
         public async Task<IActionResult> GetByVoluntario(int voluntarioID)
