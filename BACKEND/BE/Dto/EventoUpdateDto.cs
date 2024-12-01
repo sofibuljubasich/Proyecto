@@ -25,13 +25,14 @@ namespace BE.Dto
 
 
 
-        public virtual ICollection<EventoDistanciaUpdateDto> EventoDistancias { get; set; }
+        public List<EventoDistanciaUpdateDto> EventoDistancias { get; set; }
+
+
+        public  List<int> CategoriasID { get; set; }
 
 
 
 
-
- 
- //       public int TipoID { get; set; }
+        //       public int TipoID { get; set; }
     }
 }

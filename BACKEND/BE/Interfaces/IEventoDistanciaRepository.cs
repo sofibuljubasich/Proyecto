@@ -10,6 +10,10 @@ namespace BE.Interfaces
 
         Task<List<EventoDistancia>> GetDistanciasByEvento(int eventoID);
 
-        Task Update(int eventoID,ICollection<EventoDistancia> EventoDistancias);
+        Task Update(List<EventoDistancia> DistanciaPrecio);
+
+        Task RemoveRange(List<EventoDistancia> distanciasAEliminar);
+
+        Task Actualizar(List<EventoDistancia> eventoDistancias);    
     }
 }

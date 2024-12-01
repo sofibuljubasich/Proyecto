@@ -1,7 +1,9 @@
 ﻿using BE.Dto;
 using BE.Interfaces;
 using BE.Models;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Intrinsics.Arm;
 
 namespace BE.Repository
 {
@@ -13,6 +15,15 @@ namespace BE.Repository
         { 
             _context = context;
         }
+
+        public async Task Actualizar(List<EventoDistancia> eventoDistancias)
+        {
+           
+            _context.EventoDistancia.AddRange(eventoDistancias);
+
+            await _context.SaveChangesAsync();  
+        }
+
         public async Task Create(EventoDistancia ed)
         {
             _context.EventoDistancia.Add(ed);
@@ -27,22 +38,18 @@ namespace BE.Repository
 
         }
 
-        public async Task  Update(int eventoID, ICollection<EventoDistancia> EventoDistancias)
+        public async Task RemoveRange(List<EventoDistancia> distanciasAEliminar)
         {
-            _context.UpdateRange(EventoDistancias);
-            await _context.SaveChangesAsync();  
-            /*foreach (var ed in EventoDistancias) 
-            { 
-                EventoDistancia edDb =  _context.EventoDistancia.First(e=>e.ID == ed.ID);
-                _context.UpdateRange(EventoDistancias);
-                if (edDb is not null)
-                {
-                    edDb.Distancia.ID = ed.DistanciaID;
-                    edDb.Precio = ed.Precio;
-                    edDb.EventoID = eventoID;
+            _context.EventoDistancia.RemoveRange(distanciasAEliminar);
 
-                    await _context.SaveChangesAsync();
-                }*/
+            await _context.SaveChangesAsync();  
+        }
+
+        public async Task  Update(List<EventoDistancia> eventoDistancias)
+        {
+            _context.EventoDistancia.UpdateRange(eventoDistancias);
+            await _context.SaveChangesAsync();
+
 
         }
 

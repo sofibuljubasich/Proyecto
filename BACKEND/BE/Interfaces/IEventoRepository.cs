@@ -17,7 +17,7 @@ namespace BE.Interfaces
 
             Task<Evento> Create(Evento evento);
 
-        Task Update(int eventoID, EventoUpdateDto evento);
+        Task Update( Evento evento);
 
         Task<List<string>> GetLugares();
 

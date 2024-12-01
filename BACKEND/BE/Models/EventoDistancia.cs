@@ -6,8 +6,8 @@ namespace BE.Models
     {
         
         public int ID { get; set; } 
+        
         [ForeignKey("Evento")]
-
         public int EventoID { get; set; }
         public Distancia Distancia { get; set; }
 

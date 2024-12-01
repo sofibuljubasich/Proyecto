@@ -39,7 +39,7 @@ namespace BE.Repository
         public async Task<List<EventoDistancia>> GetDistanciasByEvento(int eventoID)
         {
 
-            return await _context.EventoDistancia.Where(ed => ed.EventoID == eventoID).ToListAsync();
+            return await _context.EventoDistancia.Include(d=>d.Distancia).Where(ed => ed.EventoID == eventoID).ToListAsync();
             //return await _context.Distancias.Where(d => d.EventoDistancias.Any(e => e.EventoID == eventoID)).ToListAsync();
             
         }

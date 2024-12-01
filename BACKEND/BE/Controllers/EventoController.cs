@@ -342,30 +342,125 @@ namespace BE.Controllers
             }
         }
 
-        //Por Rol
-        //ACOMODAR
-        [HttpPut("{eventoID}")]
-
+        [HttpPut("Update/{eventoID}")]
         public async Task<IActionResult> Update(int eventoID, EventoUpdateDto eventoDto)
         {
             try
             {
+                // Obtener el evento a actualizar
+                var evento = await _eventoRepository.GetEvento(eventoID);
+
+                if (evento == null)
+                {
+                    return NotFound("Evento no encontrado");
+                }
+
+                // Actualizar propiedades del evento solo si no son nulas en el DTO
+                if (eventoDto.Nombre != null)
+                {
+                    evento.Nombre = eventoDto.Nombre;
+                }
+
+                if (eventoDto.Fecha != null)
+                {
+                    evento.Fecha = eventoDto.Fecha;
+                }
+
+                if (eventoDto.Hora != null)
+                {
+                    evento.Hora = eventoDto.Hora;
+                }
+
+                if (eventoDto.Lugar != null)
+                {
+                    evento.Lugar = eventoDto.Lugar;
+                }
+
+                if (eventoDto.Estado != null)
+                {
+                    evento.Estado = eventoDto.Estado;
+                }
+
+                string ImagenURL;
+                if (eventoDto.Imagen != null && eventoDto.Imagen.Length > 0)
+                {
 
 
-                var edlist = _mapper.Map<ICollection<EventoDistancia>>(eventoDto.EventoDistancias);
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(eventoDto.Imagen.FileName);
+                    var path = Path.Combine("wwwroot/imagenes/events", fileName);
 
-                await _eventoRepository.Update(eventoID, eventoDto);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await eventoDto.Imagen.CopyToAsync(stream);
+                    }
 
-                //Actualiza evento-distancia
-                await _eventoDistanciaRepository.Update(eventoID, edlist);
-                return Ok("Evento actualizado");
+                    ImagenURL = "/Imagenes/events/" + fileName;
+                    evento.Imagen = ImagenURL;
 
+                }
+                else
+                {
+                    // Asignar una imagen por defecto
+                    ImagenURL = "/Imagenes/events/event-empty.jpg";
+                }
+            
+
+                // Guardar los cambios del evento primero
+                await _eventoRepository.Update(evento);
+/*
+                // Actualizar las relaciones de Evento-Distancia
+                if (eventoDto.EventoDistancias != null && eventoDto.EventoDistancias.Any())
+                {
+                    
+
+                    await _eventoDistanciaRepository.Update(eventoID, eventoDto.EventoDistancias);
+                }
+*/
+                // Actualizar Categorías del Evento
+                if (eventoDto.CategoriasID != null)
+                {
+                    var currentCategories = evento.Categorias.Select(c => c.ID).ToList();
+
+                    var categoriesToRemove = currentCategories
+                        .Where(catId => !eventoDto.CategoriasID.Contains(catId))
+                        .ToList();
+
+                    var categoriesToAdd = eventoDto.CategoriasID
+                        .Where(catId => !currentCategories.Contains(catId))
+                        .ToList();
+
+                    foreach (var categoryId in categoriesToRemove)
+                    {
+                        var categoriaToRemove = evento.Categorias.FirstOrDefault(c => c.ID == categoryId);
+                        if (categoriaToRemove != null)
+                        {
+                            evento.Categorias.Remove(categoriaToRemove);
+                        }
+                    }
+
+                    foreach (var categoryId in categoriesToAdd)
+                    {
+                        var categoriaToAdd = await _categoriaRepository.GetCategoria(categoryId);
+                        if (categoriaToAdd != null)
+                        {
+                            evento.Categorias.Add(categoriaToAdd);
+                        }
+                    }
+                }
+
+                // Guardar los cambios finales del evento
+                await _eventoRepository.Update(evento);
+
+                return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"Ocurrió un error al actualizar el evento: {ex.Message}");
             }
         }
+
+
+       
 
         [HttpGet, Route("resultados/{eventoID}")]
         public async Task<IActionResult> GetResultados(int eventoID)

@@ -37,9 +37,23 @@ namespace BE.Controllers
 
                 var distancias = await _distanciaRepository.GetDistanciasByEvento(eventoID);
 
-                    var distanciasDto = _mapper.Map<IEnumerable<EventoDistanciaDto>>(distancias);
+                List<EventoDistanciaDto> distanciasDto = new List<EventoDistanciaDto>();
 
-                    return Ok(distanciasDto);
+                foreach (var d in distancias) 
+                {
+                    var distancia = new EventoDistanciaDto
+                    {
+                        ID = d.ID,
+                        DistanciaID = d.Distancia.ID,
+                        KM = d.Distancia.KM,
+                        Precio = d.Precio
+                    };
+                    distanciasDto.Add(distancia);   
+                
+                }
+               
+
+                return Ok(distanciasDto);
                 }
                 catch (Exception ex)
                 {

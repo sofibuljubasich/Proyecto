@@ -77,20 +77,12 @@ namespace BE.Repository
 
         }
 
-        public async Task Update(int eventoID, EventoUpdateDto evento)
+        public async Task Update(Evento evento)
         {
-            Evento? dbEvento = _context.Eventos.First(e=>e.ID ==  eventoID);
-
-            if (dbEvento is not null)
-            {
-                dbEvento.Nombre = evento.Nombre;
-                dbEvento.Lugar = evento.Lugar;
-                dbEvento.Fecha = evento.Fecha;
-                dbEvento.Estado = evento.Estado;
-              //  dbEvento.EventoDistancias = evento.EventoDistancias;
-                //  _context.Update(evento);
+            
+                _context.Eventos.Update(evento);
                 await _context.SaveChangesAsync();
-            }
+            
         }
 
    
