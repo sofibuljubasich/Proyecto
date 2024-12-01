@@ -139,18 +139,24 @@ namespace BE.Controllers
         { 
             try
             {
-                var distancia = _mapper.Map<Distancia>(distanciaDto);
                 
-                var distanciaItem = await _distanciaRepository.GetDistancia(id);
+                
+               var distanciaItem = await _distanciaRepository.GetDistancia(id);
 
                 if (distanciaItem == null)
                 {
                     return NotFound();
                 }
-                
-                await _distanciaRepository.Update(distancia);
 
-                return NoContent();
+                Distancia d = new Distancia
+                {
+                    ID = id,
+                    KM = distanciaDto.KM,
+                };
+                
+                await _distanciaRepository.Update(d);
+
+                return Ok();
 
             }
             catch (Exception ex)
