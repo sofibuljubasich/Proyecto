@@ -61,13 +61,16 @@ export class ToolbarBasicExample implements OnInit {
           case '/inicio':
           case '/eventos':
           case '/ABM-Eventos':
+          case '/eventosActivos':
             this.seleccionado = [true, false, false, false, false];
             break;
           case '/proximos-eventos':
           case '/chats':
+          case '/ayudaI':
             this.seleccionado = [false, true, false, false, false];
             break;
           case '/resultados':
+          case '/ayudaV':
           case '/vistaTareas':
             this.seleccionado = [false, false, true, false, false];
             break;
@@ -78,6 +81,7 @@ export class ToolbarBasicExample implements OnInit {
             this.seleccionado = [false, false, false, true, false];
             break;
           case '/misEventos':
+          case '/ayudaA':
             this.seleccionado = [false, false, false, false, true];
             break;
           default:

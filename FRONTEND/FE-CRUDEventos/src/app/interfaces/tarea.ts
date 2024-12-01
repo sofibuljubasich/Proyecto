@@ -27,5 +27,5 @@ export interface CreateTarea {
   fechaHora: Date;
   ubicacion: string;
   eventoID: number;
-  voluntarios: Voluntario[];
+  voluntariosID: Voluntario[];
 }

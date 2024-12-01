@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './help.component.html',
   styleUrl: './help.component.css',
 })
-export class HelpComponent {
+export class HelpIComponent {
   faqs = [
     {
       question: '¿Cómo registro una inscripción?',
@@ -22,7 +22,6 @@ export class HelpComponent {
     {
       question: '¿Cómo actualizo el estado del pago de una inscripción?',
       answer:
-      
         'En el menú principal seleccionar el evento en el cuál se quiere modificar la inscripción. Allí, buscar el corredor deseado y mediante el desplegable de la columna "Estado del Pago" seleccionar el estado deseado.',
       expanded: false,
     },

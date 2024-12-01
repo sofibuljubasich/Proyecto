@@ -35,6 +35,9 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { HelpComponent } from './pages/corredor/help/help.component';
 import { CategoriaComponent } from './pages/admin/abm-categoria/abm-categoria.component';
 import { DistanciaComponent } from './pages/admin/abm-distancia/abm-distancia.component';
+import { HelpAComponent } from './pages/admin/help/help.component';
+import { HelpIComponent } from './pages/inscriptor/help/help.component';
+import { HelpVComponent } from './pages/voluntario/help/help.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
@@ -52,17 +55,21 @@ const routes: Routes = [
   { path: 'verEvento/:id', component: VerEventoComponent },
   { path: 'misEventos', component: MisEventosComponent },
   { path: 'ayuda', component: HelpComponent },
-  {path: 'perfil', component: PerfilComponent},
+  { path: 'perfil', component: PerfilComponent },
   // INSCRIPTOR
   { path: 'eventosActivos', component: EventosActivosComponent },
   { path: 'inscripcionManual/:id', component: InscripcionManualComponent },
   { path: 'listaInscriptos/:id', component: ListaInscriptosComponent },
   { path: 'crearCorredor', component: CrearCorredorComponent },
+  { path: 'ayudaI', component: HelpIComponent },
+
   // VOLUNTARIO
   { path: 'eventos', component: EventosVolComponent },
   { path: 'tareasAsignadas/:id', component: TareasAsignadasComponent },
   { path: 'chat/:id', component: ChatComponent },
   { path: 'chats', component: ChatsComponent },
+  { path: 'ayudaV', component: HelpVComponent },
+
   // ADMINISTRADOR
 
   { path: 'ABM-Eventos', component: ABMEventosComponent },
@@ -73,13 +80,14 @@ const routes: Routes = [
   { path: 'ABM-Tareas/:id', component: AbmTareasComponent },
   { path: 'ABM-Tareas', component: AbmTareasComponent },
   { path: 'reportes/:id', component: ReportesComponent },
-  { path: 'reportes', component: ReportesComponent } ,
+  { path: 'reportes', component: ReportesComponent },
   { path: 'alta-resultados/:id', component: SubirResultadosComponent },
   { path: 'verInscripciones/:id', component: VerInscripcionesComponent },
   { path: 'vistaTareas', component: VistaTareasComponent },
   { path: 'tareas-creadas/:id', component: TareasComponent },
   { path: 'altaEventos/:id', component: AgregarEditarEventoComponent },
   { path: 'altaEvento', component: AgregarEditarEventoComponent },
+  { path: 'ayudaA', component: HelpAComponent },
   // { path: 'voluntarios/:id', component: VoluntariosComponent },
 
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },

@@ -23,6 +23,14 @@
       <ul>
         <li (click)="navegar('eventos')" [ngClass]="{seleccionado: seleccionado[0]}">Eventos</li>
         <li (click)="navegar('chats')" [ngClass]="{seleccionado: seleccionado[1]}">Chats</li>
+        <li (click)="navegar('ayudaV')" [ngClass]="{seleccionado: seleccionado[2]}">Ayuda</li>
+      </ul>
+    </ng-container>
+     <!-- INSCRIPTOR=4 -->
+     <ng-container *ngIf="userRole === 4">
+      <ul>
+        <li (click)="navegar('eventosActivos')" [ngClass]="{seleccionado: seleccionado[0]}">Eventos</li>
+        <li (click)="navegar('ayudaI')" [ngClass]="{seleccionado: seleccionado[1]}">Ayuda</li>
       </ul>
     </ng-container>
     <!-- ADMIN=2 -->
@@ -40,6 +48,7 @@
             <li (click)="navegar('ABM-Distancias')">ABM Distancias</li>
           </ul>
         </li>
+        <li (click)="navegar('ayudaA')" [ngClass]="{seleccionado: seleccionado[4]}">Ayuda</li>
       </ul>
     </ng-container>
   </nav>

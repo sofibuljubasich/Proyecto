@@ -8,11 +8,11 @@
           <button 
            class="agregar" 
             [routerLink]="'/ABM-Tareas'" 
-            [queryParams]="{ nombre: nombreEvento }">
+            [queryParams]="{id: id }">
   + Agregar tarea
 </button>
         </div>
-      <div class="tabla">
+      <div class="tabla" *ngIf="dataSource && dataSource.data.length > 0; else noTasks">
   
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
@@ -101,6 +101,11 @@
         </table>
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" class="paginator"></mat-paginator>
       </div>
+      <ng-template  #noTasks>
+        <div style="display: flex;justify-content: center;height: 300px;align-items: center;color: antiquewhite; " >
+          <p style="font-size: 20px;">No hay tareas creadas para este evento.</p>
+        </div>
+      </ng-template>
     </main>
   </div>
   

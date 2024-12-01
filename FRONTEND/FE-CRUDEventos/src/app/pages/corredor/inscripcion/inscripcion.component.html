@@ -85,7 +85,7 @@
 
         <div class="opciones">
             <button routerLink="inicio" style="grid-column: 2;border: none; text-decoration: underline;background:none;width: 40%;"> <- Regresar</button>
-            <button *ngIf="pagoSelect != 'Mercado Pago'" mat-raised-button (click)="onInscribirse()" color="primary">Inscribirse</button>
+            <button *ngIf="pagoSelect != 'Mercado Pago'" mat-raised-button (click)="onEfectivo()" color="primary">Inscribirse</button>
             <button class="boton-mp" *ngIf="pagoSelect === 'Mercado Pago'" mat-raised-button (click)="pagar()" color="primary">
                 <span class="mdc-button__label" style="display: flex; align-items: center;">
                     <img src="../../../../images/mercado-pago.png" class="payment-icon" alt="Mercado Pago">

@@ -17,7 +17,7 @@ export class AbmTareasComponent implements OnInit {
   voluntariosSeleccionados: number[] = [];
   tareaForm: FormGroup;
   voluntarios: Voluntario[] = [];
-  nombreEvento!: string;
+  eventoId!: number;
   isEditMode: boolean = false; // Saber si estamos editando o creando
   tareaId: number | null = null; // ID de la tarea a editar, si aplica
 
@@ -51,20 +51,23 @@ export class AbmTareasComponent implements OnInit {
     this._tareaService.getTask(id).subscribe((data: any) => {
       const fechaHora = new Date(data.fechaHora);
       console.log(data.id, data.voluntarios);
+      this.eventoId = data.eventoID;
       const mappedData = {
         descripcion: data.descripcion,
         fecha: fechaHora.toISOString().split('T')[0], // Convertimos a formato ISO y extraemos la fecha
         hora: fechaHora.toTimeString().slice(0, 5), // Extraemos la hora (hh:mm)
         ubicacion: data.ubicacion,
-        evento: data.eventoID,
         voluntariosID: data.voluntarios.map((vol: any) => vol.id), // Solo los IDs de los voluntarios
       };
-      console.log(mappedData);
+      console.log('mapped: ', mappedData);
       this.tareaForm.patchValue(mappedData);
     });
   }
 
   ngOnInit() {
+    this.aRoute.queryParams.subscribe((params) => {
+      this.eventoId = +params['id'];
+    });
     this.obtenerVoluntarios();
   }
   toggleVoluntario(volId: number, isChecked: boolean): void {
@@ -96,6 +99,7 @@ export class AbmTareasComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log(this.eventoId);
     if (this.tareaForm.invalid) {
       return;
     }
@@ -105,10 +109,7 @@ export class AbmTareasComponent implements OnInit {
         `${this.tareaForm.value.fecha}T${this.tareaForm.value.hora}:00`
       ),
       ubicacion: this.tareaForm.value.ubicacion,
-      eventoID: this.tareaForm.value.evento,
-    };
-    const tvData = {
-      voluntariosID: this.tareaForm.value.voluntariosID,
+      eventoID: this.eventoId,
     };
     const tarea = {
       descripcion: this.tareaForm.value.descripcion,
@@ -116,8 +117,8 @@ export class AbmTareasComponent implements OnInit {
         `${this.tareaForm.value.fecha}T${this.tareaForm.value.hora}:00`
       ),
       ubicacion: this.tareaForm.value.ubicacion,
-      eventoID: this.tareaForm.value.evento,
-      voluntarios: this.tareaForm.value.voluntariosID,
+      eventoID: this.eventoId,
+      voluntariosID: this.tareaForm.value.voluntariosID,
     };
 
     tareaID: this.tareaId; // El ID de la tarea que estás editando
@@ -126,23 +127,21 @@ export class AbmTareasComponent implements OnInit {
         .updateTask(this.tareaId, tareaData)
         .subscribe(() => {});
       this._vtService
-        .updateVoluntarios(this.tareaId, tvData)
-        .subscribe(() => {});
-      console.log('Actualizar tarea:', { id: this.tareaId, ...tareaData });
+        .updateVoluntarios(this.tareaId, this.tareaForm.value.voluntariosID)
+        .subscribe(() => {
+          this.goBack();
+        });
     } else {
       this._tareaService.createTarea(tarea).subscribe({
         next: (response) => {
-          this.tareaForm.reset();
+          this.goBack();
+          // this.tareaForm.reset();
         },
         error: (error) => {
           console.error('Error al crear la tarea', error);
           alert('Ocurrió un error al crear la tarea.');
         },
       });
-      console.log('Crear nueva tarea:', tareaData);
     }
-
-    // Navega de regreso o muestra un mensaje de éxito
-    this.goBack(); // Cambia la ruta según tu aplicación
   }
 }

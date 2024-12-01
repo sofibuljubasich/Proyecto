@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -40,7 +41,7 @@ export class InscripcionComponent {
   imagenURL!: string;
   preferenceId!: any;
   inscID!: number;
-  isSuccess: boolean=false;
+  isSuccess: boolean = false;
 
   metodosPago = [
     { value: 'Efectivo', viewValue: 'Efectivo' },
@@ -65,11 +66,14 @@ export class InscripcionComponent {
     private _authService: AuthService,
     private _corredorService: CorredorService,
     private _paymentService: PaymentService,
-    private _inscService:InscripcionService
+    private _inscService: InscripcionService,
+    private location: Location
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
   }
-
+  goBack(): void {
+    this.location.back();
+  }
   ngOnInit(): void {
     this.mp = new MercadoPago('APP_USR-136e7dcf-f8a5-4da2-9373-8ef757b3954a', {
       locale: 'es-AR', // Configura tu región
@@ -143,27 +147,17 @@ export class InscripcionComponent {
     this.onInscribirse();
   }
 
-  
   onInscribirse(): void {
-    if (!this.talleSelect || !this.distanciaSelect || !this.pagoSelect) {
-      this.errorMessage = 'Todos los campos son obligatorios';
-      setTimeout(() => (this.errorMessage = ''), 3000); // Limpiar mensaje de error después de 3 segundos
-      return;
-    }
     const distanciaS = this.eventoData.distancias.find(
       (evento) => evento.distanciaID === this.distanciaSelect
     );
     const estado = 'Pendiente';
-    //if (this.pagoSelect != 'Efectivo') {
-    //  const estado = 'Pagado';
-    //}
 
     const inscripcionData = {
       remera: this.talleSelect,
       formaPago: this.pagoSelect,
       estadoPago: estado,
       distanciaID: this.distanciaSelect,
-      // usuarioID: 10,
       usuarioID: this.currentUser.id,
       precio: distanciaS!.precio,
       eventoID: this.eventoData.evento.id,
@@ -173,9 +167,8 @@ export class InscripcionComponent {
 
     this._inscripcionService.inscribir(inscripcionData).subscribe(
       (response) => {
-        console.log('Esta es el response de la inscripcion',response)
-        this.inscID=response.id,
-        console.log(this.inscID)
+        console.log('Esta es el response de la inscripcion', response);
+        (this.inscID = response.id), console.log(this.inscID);
         this.snackBar.open('Usuario inscrito exitosamente', 'Cerrar', {
           duration: 3000,
         });
@@ -183,12 +176,11 @@ export class InscripcionComponent {
           title: this.eventoData.evento.nombre,
           quantity: 1,
           unitPrice: Number(distanciaS!.precio),
-          InscripcionID: this.inscID
+          InscripcionID: this.inscID,
         };
-       // if (this.inscripcionForm.value.estadoPago!='Efectivo') {  REVISAR
-          this.payment(producto)
-       // }
-
+        // if (this.inscripcionForm.value.estadoPago!='Efectivo') {  REVISAR
+        this.payment(producto);
+        // }
       },
       (error) => {
         this.errorMessage = 'Error en la inscripción: ' + error;
@@ -196,7 +188,7 @@ export class InscripcionComponent {
       }
     );
   }
-  payment(producto:any): void{
+  payment(producto: any): void {
     this._paymentService.createPreference(producto).subscribe(
       (response: any) => {
         console.log(response);
@@ -215,7 +207,6 @@ export class InscripcionComponent {
             id: this.preferenceId,
           },
           autoOpen: true, // Abrir el checkout inmediatamente
-
         });
       },
       (error) => {
@@ -223,5 +214,36 @@ export class InscripcionComponent {
       }
     );
   }
-  
+  onEfectivo(): void {
+    if (!this.talleSelect || !this.distanciaSelect || !this.pagoSelect) {
+      this.errorMessage = 'Todos los campos son obligatorios';
+      setTimeout(() => (this.errorMessage = ''), 3000); // Limpiar mensaje de error después de 3 segundos
+      return;
+    }
+    const distanciaS = this.eventoData.distancias.find(
+      (evento) => evento.distanciaID === this.distanciaSelect
+    );
+    const inscripcionData = {
+      remera: this.talleSelect,
+      formaPago: this.pagoSelect,
+      estadoPago: 'Pendiente',
+      distanciaID: this.distanciaSelect,
+      usuarioID: this.currentUser.id,
+      precio: distanciaS!.precio,
+      eventoID: this.id,
+    };
+    console.log(inscripcionData);
+    this._inscripcionService.inscribir(inscripcionData).subscribe(
+      (response) => {
+        this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {
+          duration: 3000,
+        });
+        this.goBack();
+      },
+      (error) => {
+        this.errorMessage = 'Error en la inscripción: ' + error;
+        setTimeout(() => (this.errorMessage = ''), 3000);
+      }
+    );
+  }
 }

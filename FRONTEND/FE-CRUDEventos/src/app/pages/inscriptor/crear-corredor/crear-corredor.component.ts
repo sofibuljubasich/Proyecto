@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 import { Location } from '@angular/common';
+import { CorredorService } from 'src/app/services/corredor.service';
 
 @Component({
   selector: 'app-crear-corredor',
@@ -25,13 +26,16 @@ export class CrearCorredorComponent implements OnInit {
   signupForm!: FormGroup;
   errorMessage: string | null = null;
   showError: boolean = false;
+  existingDnis: string[] = [];
+  dniError: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private _authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private _corredorService: CorredorService
   ) {}
 
   ngOnInit(): void {
@@ -97,11 +101,23 @@ export class CrearCorredorComponent implements OnInit {
   }
 
   onNext() {
-    if (this.signupFormPart1.valid) {
-      this.showStep = 3;
-    } else {
+    this.dniError = null;
+    if (this.signupFormPart1.invalid) {
       this.signupFormPart1.markAllAsTouched();
+      return;
     }
+
+    const dni = this.signupFormPart1.get('dni')?.value;
+
+    this._corredorService.verificarDni(dni).subscribe({
+      next: (isRegistered) => {
+        if (isRegistered) {
+          this.dniError = 'Ya se encuentra registrado un usuario con ese DNI.';
+        } else {
+          this.showStep = 3;
+        }
+      },
+    });
   }
 
   onSubmit() {

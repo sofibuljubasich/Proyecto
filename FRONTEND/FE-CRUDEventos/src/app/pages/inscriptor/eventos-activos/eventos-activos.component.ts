@@ -23,11 +23,12 @@ export class EventosActivosComponent {
   }
 
   obtenerEventos(): void {
-    this._eventoService.buscar(this.parametrosBusqueda).subscribe(
-      (data: any[]) =>{
-      this.eventos = data;
-      this.filtrarEventos(this.eventos);
-    });
+    this._eventoService
+      .buscar(this.parametrosBusqueda)
+      .subscribe((data: any[]) => {
+        this.eventos = data;
+        this.filtrarEventos(this.eventos);
+      });
   }
 
   parametrosBusqueda: Busqueda = {
@@ -38,12 +39,12 @@ export class EventosActivosComponent {
     lugar: '',
   };
 
-
   // ver que los eventos inactivos tengan resultados
-  filtrarEventos(ev:any[]): void {
+  filtrarEventos(ev: any[]): void {
     this.eventosActivos = ev.filter(
       // fijarse q tengan resultados
-      (evento) => evento.evento.estado !== 'Inactivo'
+      (evento) => evento.estado !== 'Inactivo'
     );
+    console.log(this.eventosActivos);
   }
 }

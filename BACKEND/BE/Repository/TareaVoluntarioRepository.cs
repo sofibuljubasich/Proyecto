@@ -129,7 +129,8 @@ namespace BE.Services
             _context.Add(new TareaVoluntario
             {
                 TareaID = tareaID,
-                VoluntarioID = voluntarioID
+                VoluntarioID = voluntarioID,
+                Estado= "Pendiente"
             });
             await _context.SaveChangesAsync();
         }

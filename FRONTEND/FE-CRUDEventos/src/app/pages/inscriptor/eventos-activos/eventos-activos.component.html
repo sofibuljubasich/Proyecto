@@ -7,8 +7,8 @@
                 <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
             </section>
         </form>
-        <ng-container *ngIf="eventos" >
-            <ng-container *ngFor= "let eventoResp of eventos">
+        <ng-container *ngIf="eventosActivos" >
+            <ng-container *ngFor= "let eventoResp of eventosActivos">
                 <div  class="evento-container">
                     <div class="evento-content">
                         <app-evento-card-h [eventoResp]="eventoResp"></app-evento-card-h>

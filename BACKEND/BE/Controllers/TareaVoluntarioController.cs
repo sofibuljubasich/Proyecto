@@ -144,7 +144,7 @@ namespace BE.Controllers
                     }
                 }
 
-                    return Ok("Tarea actualizada");
+                    return Ok();
             }catch (Exception ex)
             {
                 return BadRequest(ex.Message);

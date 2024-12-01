@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -14,7 +14,7 @@ import { TareaService } from 'src/app/services/tarea.service';
   templateUrl: './tareas.component.html',
   styleUrl: './tareas.component.css',
 })
-export class TareasComponent {
+export class TareasComponent implements OnInit {
   id: number;
   nombreEvento!: string;
   displayedColumns: string[] = [
