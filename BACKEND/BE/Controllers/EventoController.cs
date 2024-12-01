@@ -343,7 +343,7 @@ namespace BE.Controllers
         }
 
         [HttpPut("Update/{eventoID}")]
-        public async Task<IActionResult> Update(int eventoID, EventoUpdateDto eventoDto)
+        public async Task<IActionResult> Update(int eventoID,[FromForm] EventoUpdateDto eventoDto)
         {
             try
             {
@@ -379,6 +379,11 @@ namespace BE.Controllers
                 if (eventoDto.Estado != null)
                 {
                     evento.Estado = eventoDto.Estado;
+                }
+
+                if (eventoDto.TipoID != null) 
+                {
+                    evento.TipoID = eventoDto.TipoID;   
                 }
 
                 string ImagenURL;

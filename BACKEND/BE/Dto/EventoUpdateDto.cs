@@ -1,6 +1,8 @@
 ﻿using BE.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Newtonsoft.Json;
 
 namespace BE.Dto
 {
@@ -14,10 +16,13 @@ namespace BE.Dto
         public DateTime Fecha { get; set; }
 
         public string Lugar { get; set; }
-     // public TimeOnly Hora { get; set; }
+        // public TimeOnly Hora { get; set; }
 
+        [JsonConverter(typeof(TimeSpanToStringConverter))]
         public TimeSpan Hora { get; set; }
         public string Estado { get; set; }
+
+        public int TipoID { get; set; }
 
         public IFormFile? Imagen { get; set; }
 
