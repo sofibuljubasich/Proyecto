@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Corredor } from 'src/app/interfaces/usuario'; // Interfaz proporcionada
 import { CorredorService } from 'src/app/services/corredor.service'; // Un servicio para manejar usuarios
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-perfil',
@@ -13,11 +15,20 @@ export class PerfilComponent implements OnInit {
   perfilForm: FormGroup;
   corredor: Corredor | null = null; // Datos del usuario
   isEditing: boolean = false;
-  idCorredor: number  = 0;
-  constructor(private fb: FormBuilder, private _corredorService: CorredorService, private aRoute: ActivatedRoute) {
+  idCorredor: number = 0;
+  constructor(
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private _corredorService: CorredorService,
+    private aRoute: ActivatedRoute
+  ) {
     // Inicializa el formulario reactivo
     this.perfilForm = this.fb.group({
-      email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
+      email: [
+        { value: '', disabled: true },
+        [Validators.required, Validators.email],
+      ],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       telefono: ['', Validators.required],
@@ -28,16 +39,13 @@ export class PerfilComponent implements OnInit {
       obraSocial: [''],
     });
     this.aRoute.queryParams.subscribe((params) => {
-        this.idCorredor = params['id'] || 0 ; // Valor por defecto
-      });
+      this.idCorredor = params['id'] || 0; // Valor por defecto
+    });
   }
 
   ngOnInit(): void {
-  
-          this.cargarPerfil(); // Llama a cargarPerfil con el id del corredor
-    
-    
-    }
+    this.cargarPerfil(); // Llama a cargarPerfil con el id del corredor
+  }
 
   // Método para cargar el perfil del usuario
   cargarPerfil(): void {
@@ -47,8 +55,8 @@ export class PerfilComponent implements OnInit {
       next: (corredor) => {
         this.corredor = corredor;
         if (corredor.fechaNacimiento) {
-            corredor.fechaNacimiento = corredor.fechaNacimiento.split('T')[0];
-          }
+          corredor.fechaNacimiento = corredor.fechaNacimiento.split('T')[0];
+        }
         this.perfilForm.patchValue(corredor); // Carga los datos en el formulario
       },
       error: (err) => console.error('Error al cargar el perfil', err),
@@ -66,14 +74,20 @@ export class PerfilComponent implements OnInit {
   guardarCambios(): void {
     if (this.perfilForm.valid) {
       const datosActualizados = this.perfilForm.value;
-      this._corredorService.Update(this.idCorredor,datosActualizados).subscribe({
-        next: () => {
-          this.isEditing = false;
-          this.perfilForm.disable();
-          alert('Perfil actualizado exitosamente');
-        },
-        error: (err) => console.error('Error al actualizar el perfil', err),
-      });
+      this._corredorService
+        .Update(this.idCorredor, datosActualizados)
+        .subscribe({
+          next: () => {
+            this.isEditing = false;
+            this.perfilForm.disable();
+            this.snackBar.open('Perfil actualizado exitosamente', 'Cerrar', {
+              duration: 400,
+            });
+            window.location.reload();
+            // this.router.navigate(['/inicio']);
+          },
+          error: (err) => console.error('Error al actualizar el perfil', err),
+        });
     }
   }
 

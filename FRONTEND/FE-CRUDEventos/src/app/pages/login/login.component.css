@@ -6,7 +6,7 @@
   align-items: center;
   position: fixed;
   width: 100%;
-  z-index: 1000;
+  /* z-index: 1000; */
   height: auto;
   top: 0px;
   left: 0px;
@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #78D6C6;
+  /* background-color: #78D6C6; */
 }
 .ojito{
   position: absolute;
@@ -165,7 +165,7 @@ width: 100vw;
 height: 100vh;
 top: 0;
 left: 0;
-z-index: 1000;
+/* z-index: 1000; */
 background: #010428;
 overflow: hidden;
 }

@@ -52,7 +52,7 @@ export class EventoService {
   }
 
   // Actualizar un evento existente
-  updateEvento(id: number, evento: Evento) {
+  updateEvento(id: number, evento: FormData) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<Evento>(
       `${this.myAppUrl}${this.myApiUrl}${id}`,

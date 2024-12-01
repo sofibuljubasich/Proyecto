@@ -25,7 +25,11 @@ export class CategoriaService {
       `${this.myAppUrl}${this.myApiUrl}/${id}`
     );
   }
-
+  getCategoriaxEvento(idEvento: number): Observable<CategoriaResponse[]> {
+    return this.http.get<CategoriaResponse[]>(
+      `${this.myAppUrl}${this.myApiUrl}/evento/${idEvento}`
+    );
+  }
   createCategoria(categoria: Categoria): Observable<any> {
     return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, categoria);
   }

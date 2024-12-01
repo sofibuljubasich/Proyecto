@@ -14,13 +14,13 @@
         <!-- Nombre -->
         <div class="dato">
           <label for="nombre">Nombre:</label>
-          <input formControlName="nombre" id="nombre" type="text" [readonly]="!isEditing" />
+          <input formControlName="nombre" id="nombre" type="text" [readonly]="!isEditing" [disabled]="!isEditing"/>
         </div>
         
         <!-- Apellido -->
         <div class="dato">
           <label for="apellido">Apellido:</label>
-          <input formControlName="apellido" id="apellido" type="text" [readonly]="!isEditing" />
+          <input formControlName="apellido" id="apellido" type="text" [readonly]="!isEditing" [disabled]="!isEditing" />
         </div>
       </div>
       <div class="datos" >
@@ -28,14 +28,14 @@
         <!-- Teléfono -->
         <div class="dato">
           <label for="telefono">Teléfono:</label>
-          <input formControlName="telefono" id="telefono" type="text" [readonly]="!isEditing" />
+          <input formControlName="telefono" id="telefono" type="text" [readonly]="!isEditing" [disabled]="!isEditing"/>
         </div>
 
         
         <!-- Localidad -->
         <div class="dato">
           <label for="localidad">Localidad:</label>
-          <input formControlName="localidad" id="localidad" type="text" [readonly]="!isEditing" />
+          <input formControlName="localidad" id="localidad" type="text" [readonly]="!isEditing" [disabled]="!isEditing"/>
         </div>
       </div>
         
@@ -44,13 +44,13 @@
         <!-- Fecha de Nacimiento -->
         <div class="dato">
           <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-          <input formControlName="fechaNacimiento" id="fechaNacimiento" type="date" [readonly]="!isEditing" />
+          <input formControlName="fechaNacimiento" id="fechaNacimiento" type="date" [readonly]="!isEditing" [disabled]="!isEditing"/>
         </div>
         
         <!-- Obra Social -->
         <div class="dato">
           <label for="obraSocial">Obra Social:</label>
-          <input formControlName="obraSocial" id="obraSocial" type="text" [readonly]="!isEditing" />
+          <input formControlName="obraSocial" id="obraSocial" type="text" [readonly]="!isEditing" [disabled]="!isEditing" />
         </div>
       </div>        
       <div class="datos" >
@@ -58,14 +58,14 @@
         <!-- DNI -->
         <div class="dato">
           <label for="dni">DNI:</label>
-          <input formControlName="dni" id="dni" type="text" [readonly]="!isEditing" />
+          <input formControlName="dni" id="dni" type="text" [readonly]="!isEditing" [disabled]="!isEditing"/>
         </div>
         
         <!-- Género -->
         <div class="dato">
           <label for="genero">Género:</label>
           <div class="custom-datepicker">
-            <select formControlName="genero" id="genero" [disabled]="!isEditing" required matIconSuffix>
+            <select formControlName="genero" id="genero" [disabled]="!isEditing" [disabled]="!isEditing" required matIconSuffix>
               <option style="color: black;" value="masculino">Masculino</option>
               <option style="color: black;" value="femenino">Femenino</option>
             </select>
