@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 import { NgChartsModule } from 'ng2-charts';
 
 //Components
+import { PerfilComponent } from './pages/corredor/perfil/perfil.component';
 import { ConfirmationComponent } from './pages/confirmacion/confirmacion.component';
-import { PerfilComponent} from './pages/corredor/perfil/perfil.component';
 import { AgregarEditarEventoComponent } from './pages/admin/agregar-editar-evento/agregar-editar-evento.component';
 import { ListadoEventoComponent } from './components/listado-evento/listado-evento.component';
 import { VerEventoComponent } from './pages/corredor/ver-evento/ver-evento.component';
@@ -38,6 +38,9 @@ import { ChatsComponent } from './pages/chats/chats.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { EmailPopupComponent } from './components/email-popup/email-popup.component';
 import { HelpComponent } from './pages/corredor/help/help.component';
+import { HelpAComponent } from './pages/admin/help/help.component';
+import { HelpVComponent } from './pages/voluntario/help/help.component';
+import { HelpIComponent } from './pages/inscriptor/help/help.component';
 
 import { ABMEventosComponent } from './pages/admin/abm-eventos/abm-eventos.component';
 import { AbmColaboradoresComponent } from './pages/admin/abm-colaboradores/abm-colaboradores.component';
@@ -110,6 +113,9 @@ import { DatePipe } from '@angular/common';
     DistanciaComponent,
     ReportesComponent,
     ConfirmationComponent,
+    HelpAComponent,
+    HelpIComponent,
+    HelpVComponent,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

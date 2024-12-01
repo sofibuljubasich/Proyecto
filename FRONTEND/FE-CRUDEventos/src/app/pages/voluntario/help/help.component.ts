@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './help.component.html',
   styleUrl: './help.component.css',
 })
-export class HelpComponent {
+export class HelpVComponent {
   faqs = [
     {
       question: '¿Cómo puedo registrarme?',

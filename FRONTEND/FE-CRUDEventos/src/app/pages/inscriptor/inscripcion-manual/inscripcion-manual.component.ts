@@ -147,18 +147,19 @@ export class InscripcionManualComponent {
       return;
     }
     const distanciaS = this.eventoData.distancias.find(
-      (evento) => evento.km === this.distanciaSelect
+      (evento) => evento.distanciaID === this.distanciaSelect
     );
     const inscripcionData = {
       remera: this.talleSelect,
       formaPago: this.pagoSelect,
       estadoPago: 'Pendiente',
-      distanciaID: distanciaS!.id,
+      distanciaID: this.distanciaSelect,
       // usuarioID: 10,
       usuarioID: this.idCorredor,
       precio: distanciaS!.precio,
       eventoID: this.id,
     };
+    console.log(inscripcionData);
     this._inscripcionService.inscribir(inscripcionData).subscribe(
       (response) => {
         this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {

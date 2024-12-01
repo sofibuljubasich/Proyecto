@@ -154,13 +154,11 @@ namespace BE.Controllers
                         await _tareaVoluntarioRepository.AddVoluntario(tareaID, voluntarioID);
                     }
 
-                    return Ok("Tarea actualizada");
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
-            
+                    return Ok();
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet, Route("tareas/{voluntarioID}")]
         public async Task<IActionResult> GetByVoluntario(int voluntarioID)

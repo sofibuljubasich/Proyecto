@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Tarea, TareaVoluntarios, Voluntario } from '../interfaces/tarea';
 import { Evento } from '../interfaces/evento';
 
@@ -31,10 +31,10 @@ export class TareaVoluntarioService {
       `${this.myAppUrl}${this.myApiUrl}/tareas/${eventoID}/${volId}`
     );
   }
-  updateVoluntarios(tareaId: number, vol: any): Observable<any> {
-    return this.http.get<any>(
+  updateVoluntarios(tareaId: number, voluntariosId: number[]): Observable<any> {
+    return this.http.put<any>(
       `${this.myAppUrl}${this.myApiUrl}/UpdateVoluntarios/${tareaId}`,
-      vol
+      voluntariosId
     );
   }
   getAllxVoluntario(volId: string): Observable<Tarea[]> {
@@ -42,10 +42,12 @@ export class TareaVoluntarioService {
       `${this.myAppUrl}${this.myApiUrl}/tareas/${volId}`
     );
   }
-  updateEstado(taskData: any): Observable<any> {
-    return this.http.patch<any>(
+  updateEstado(taskData: any): Observable<void> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.patch<void>(
       `${this.myAppUrl}${this.myApiUrl}/UpdateEstado`,
-      taskData
+      taskData,
+      { headers }
     );
   }
   addComentario(taskData: any): Observable<any> {

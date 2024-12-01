@@ -43,7 +43,7 @@
                     <mat-label>Distancia:</mat-label>
                     <mat-select [(ngModel)]="distanciaSelect" name="distancia">
                         @for (dist of eventoData.distancias; track eventoData.distancias) {
-                            <mat-option [value]="dist.km">{{dist.km}} km  -  ${{dist.precio}}</mat-option>
+                            <mat-option [value]="dist.distanciaID">{{dist.km}} km  -  ${{dist.precio}}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>

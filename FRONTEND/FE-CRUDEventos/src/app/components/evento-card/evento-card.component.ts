@@ -54,7 +54,6 @@ export class EventoCardComponent implements OnInit {
       .getInscxUsuario(this.currentUser.id)
       .subscribe((data: any[]) => {
         this.misEventos = data;
-        console.log(this.misEventos);
       });
   }
   formatDate(dateString: Date): string {

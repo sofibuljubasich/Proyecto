@@ -18,8 +18,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class TareasAsignadasComponent {
   // tasks: Tarea[] = [];
-  taskData = { tareaID: 0, voluntarioID: '', comentario: '' };
-  taskData2 = { tareaID: 0, voluntarioID: '', estado: '' };
+  taskData = { tareaID: 0, voluntarioID: 0, comentario: '' };
+  taskData2 = { tareaID: 0, voluntarioID: 0, estado: '' };
   id: number;
   volId!: string;
   displayedColumns: string[] = [
@@ -52,10 +52,10 @@ export class TareasAsignadasComponent {
     this._authService.userId$.subscribe((userId) => {
       if (userId) {
         this.volId = userId;
+        console.log(this.id, this.volId);
         this._tvService
           .getTasksxVoluntario(this.id, this.volId)
-          .subscribe((tasks: Tarea[]) => {
-            this.filtroVoluntarios1(tasks);
+          .subscribe((tasks: any[]) => {
             console.log(tasks);
 
             this.dataSource = new MatTableDataSource(tasks);
@@ -81,20 +81,14 @@ export class TareasAsignadasComponent {
     }
   }
 
-  toggleTask(task: Tarea): void {
-    const voluntario = task.tareaVoluntarios.find(
-      (v) => v.voluntarioID === this.volId
-    );
-    if (voluntario) {
-      const nuevoEstado =
-        voluntario.estado === 'Pendiente' ? 'Realizada' : 'Pendiente';
-      voluntario.estado = nuevoEstado;
-      this.taskData2.tareaID = this.id;
-      this.taskData2.voluntarioID = this.volId;
-      this.taskData2.estado = nuevoEstado;
-      console.log(this.taskData2);
-      this._tvService.updateEstado(this.taskData2).subscribe();
-    }
+  toggleTask(task: any): void {
+    const nuevoEstado = task.estado === 'Pendiente' ? 'Realizada' : 'Pendiente';
+    task.estado = nuevoEstado;
+    this.taskData2.tareaID = task.tarea.id;
+    this.taskData2.voluntarioID = parseInt(this.volId, 10);
+    this.taskData2.estado = nuevoEstado;
+    console.log(this.taskData2);
+    this._tvService.updateEstado(this.taskData2).subscribe();
   }
 
   openCommentForm(task: Tarea): void {
@@ -104,7 +98,7 @@ export class TareasAsignadasComponent {
       if (comment) {
         console.log(comment);
         this.taskData.tareaID = task.id;
-        this.taskData.voluntarioID = this.volId;
+        this.taskData.voluntarioID = parseInt(this.volId, 10);
         this.taskData.comentario = comment;
         this._tvService.addComentario(this.taskData).subscribe();
         console.log('Comentario recibido:', this.taskData);

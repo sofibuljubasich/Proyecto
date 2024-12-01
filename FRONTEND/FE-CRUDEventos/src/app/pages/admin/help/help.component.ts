@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './help.component.html',
   styleUrl: './help.component.css',
 })
-export class HelpComponent {
+export class HelpAComponent {
   faqs = [
     {
       question: '¿Cómo puedo registrar usuarios Inscriptores y/o Voluntarios?',
@@ -16,7 +16,7 @@ export class HelpComponent {
     {
       question: '¿Cómo inhabilito un evento?',
       answer:
-        'Para inhabilitar un evento, deberás seleccionar el botón de "Activo" del Evento deseado' ,
+        'Para inhabilitar un evento, deberás seleccionar el botón de "Activo" del Evento deseado',
       expanded: false,
     },
     {
@@ -27,8 +27,7 @@ export class HelpComponent {
     },
     {
       question: '¿Cómo exporto la información de los kits de un evento?',
-      answer:
-        '',
+      answer: '',
       expanded: false,
     },
   ];
