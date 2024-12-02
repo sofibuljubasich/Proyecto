@@ -198,6 +198,18 @@ namespace BE.Repository
 
 
         }
+
+        public async Task CargarImagen(string ImagenURL, int eventoID)
+        {
+            var evento = await _context.Eventos.SingleOrDefaultAsync(e=>e.ID == eventoID);
+
+            if (evento != null)
+            {
+                evento.Imagen = ImagenURL;  
+
+                await _context.SaveChangesAsync();  
+            }
+        }
     }
 }
 

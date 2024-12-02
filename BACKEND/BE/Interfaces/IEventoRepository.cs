@@ -37,7 +37,8 @@ namespace BE.Interfaces
         Task<List<string>>
             GetInscriptosEmails(int eventoID);
 
-       Task CargarResultado(int
+        Task CargarImagen(string ImagenURL, int eventoID);
+        Task CargarResultado(int
            eventoID,int
            corredorID,string?
            posicionCat,string?

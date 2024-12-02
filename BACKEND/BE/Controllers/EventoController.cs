@@ -265,41 +265,20 @@ namespace BE.Controllers
 
         //Por Rol
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] EventoCreateDto eventoDto)
+        public async Task<IActionResult> Create(EventoCreateDto eventoDto)
         {
             try
             {
                 var distancias = eventoDto.EventoDistancias;
 
-                string ImagenURL;
-
-                if (eventoDto.Imagen != null && eventoDto.Imagen.Length > 0)
-                {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(eventoDto.Imagen.FileName);
-                    var path = Path.Combine("wwwroot/imagenes/events", fileName);
-
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await eventoDto.Imagen.CopyToAsync(stream);
-                    }
-
-                    ImagenURL = "/Imagenes/events/" + fileName;
-                }
-                else
-                {
-                    // Asignar una imagen por defecto
-                    ImagenURL = "/Imagenes/events/event-empty.jpg";
-                }
-
-
-
+ 
 
                 var newEvento = new Evento()
                 {
                     Nombre = eventoDto.Nombre,
                     Lugar = eventoDto.Lugar,
                     Fecha = eventoDto.Fecha,
-                    Imagen = ImagenURL,
+                    Imagen = null,
                     Estado = "Activo",
                     TipoID = eventoDto.TipoID,
                     Categorias = eventoDto.Categorias
@@ -342,8 +321,42 @@ namespace BE.Controllers
             }
         }
 
+        [HttpPost("UploadImage")]
+         public async Task<IActionResult> GuardarImagen([FromForm] IFormFile imagen, int eventoID)
+        {
+            try
+            {
+                string ImagenURL;
+
+                if (imagen != null && imagen.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
+                    var path = Path.Combine("wwwroot/imagenes/events", fileName);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await imagen.CopyToAsync(stream);
+                    }
+
+                    ImagenURL = "/Imagenes/events/" + fileName;
+                }
+                else
+                {
+                    // Asignar una imagen por defecto
+                    ImagenURL = "/Imagenes/events/event-empty.jpg";
+                }
+
+                await _eventoRepository.CargarImagen(ImagenURL, eventoID);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPut("Update/{eventoID}")]
-        public async Task<IActionResult> Update(int eventoID,[FromForm] EventoUpdateDto eventoDto)
+        public async Task<IActionResult> Update(int eventoID,EventoUpdateDto eventoDto)
         {
             try
             {
@@ -386,32 +399,10 @@ namespace BE.Controllers
                     evento.TipoID = eventoDto.TipoID;   
                 }
 
-                string ImagenURL;
-                if (eventoDto.Imagen != null && eventoDto.Imagen.Length > 0)
-                {
-
-
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(eventoDto.Imagen.FileName);
-                    var path = Path.Combine("wwwroot/imagenes/events", fileName);
-
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await eventoDto.Imagen.CopyToAsync(stream);
-                    }
-
-                    ImagenURL = "/Imagenes/events/" + fileName;
-                    evento.Imagen = ImagenURL;
-
-                }
-                else
-                {
-                    // Asignar una imagen por defecto
-                    ImagenURL = "/Imagenes/events/event-empty.jpg";
-                }
-            
+               
 
                 // Guardar los cambios del evento primero
-                await _eventoRepository.Update(evento);
+               // await _eventoRepository.Update(evento);
 /*
                 // Actualizar las relaciones de Evento-Distancia
                 if (eventoDto.EventoDistancias != null && eventoDto.EventoDistancias.Any())

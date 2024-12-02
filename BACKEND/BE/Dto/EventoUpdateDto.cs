@@ -24,7 +24,7 @@ namespace BE.Dto
 
         public int TipoID { get; set; }
 
-        public IFormFile? Imagen { get; set; }
+       // public IFormFile? Imagen { get; set; }
 
 
 
