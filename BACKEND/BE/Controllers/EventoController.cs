@@ -270,6 +270,7 @@ namespace BE.Controllers
             {
                 var distancias = eventoDto.EventoDistancias;
 
+                var categorias = await _categoriaRepository.GetCategoriasCreateEvento(eventoDto.Categorias);
 
 
                 var newEvento = new Evento()
@@ -280,7 +281,7 @@ namespace BE.Controllers
                     Imagen = null,
                     Estado = "Activo",
                     TipoID = eventoDto.TipoID,
-                    Categorias = _mapper.Map<List<Categoria>>(eventoDto.Categorias)
+                    Categorias = categorias
 
 
                 };

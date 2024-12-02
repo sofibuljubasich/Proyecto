@@ -1,4 +1,5 @@
-﻿using BE.Models;
+﻿using BE.Dto;
+using BE.Models;
 
 namespace BE.Interfaces
 {
@@ -14,5 +15,6 @@ namespace BE.Interfaces
         Task UpdateCategoria(Categoria categoria);
 
         Task DeleteCategoria(Categoria categoria);
+        Task<ICollection<Categoria>> GetCategoriasCreateEvento(ICollection<CategoriaDto> categorias);
     }
 }

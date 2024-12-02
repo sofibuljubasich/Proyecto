@@ -1,4 +1,5 @@
-﻿using BE.Interfaces;
+﻿using BE.Dto;
+using BE.Interfaces;
 using BE.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -64,6 +65,14 @@ namespace BE.Repository
 
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<ICollection<Categoria>> GetCategoriasCreateEvento(ICollection<CategoriaDto> categorias)
+        {
+            return await _context.Categorias.Where(c => categorias.Select(dtoCat => dtoCat.ID).Contains(c.ID))
+                .ToListAsync();
+
+
         }
     }
 }
