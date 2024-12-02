@@ -263,7 +263,6 @@ namespace BE.Controllers
             }
         }
 
-        //Por Rol
         [HttpPost]
         public async Task<IActionResult> Create(EventoCreateDto eventoDto)
         {
@@ -271,7 +270,7 @@ namespace BE.Controllers
             {
                 var distancias = eventoDto.EventoDistancias;
 
- 
+
 
                 var newEvento = new Evento()
                 {
@@ -281,11 +280,10 @@ namespace BE.Controllers
                     Imagen = null,
                     Estado = "Activo",
                     TipoID = eventoDto.TipoID,
-                    Categorias = eventoDto.Categorias
+                    Categorias = _mapper.Map<List<Categoria>>(eventoDto.Categorias)
 
 
                 };
-                //var evento = _mapper.Map<Evento>(eventoDto);
 
 
 
@@ -308,7 +306,6 @@ namespace BE.Controllers
 
                 }
 
-                //EVENTO CATEGORIA
 
 
 
