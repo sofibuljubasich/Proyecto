@@ -278,7 +278,6 @@ namespace BE.Controllers
                     Nombre = eventoDto.Nombre,
                     Lugar = eventoDto.Lugar,
                     Fecha = eventoDto.Fecha,
-                    Imagen = null,
                     Estado = "Activo",
                     TipoID = eventoDto.TipoID,
                     Categorias = categorias

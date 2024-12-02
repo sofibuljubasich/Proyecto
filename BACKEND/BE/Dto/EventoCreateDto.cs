@@ -15,10 +15,9 @@ namespace BE.Dto
         public string Lugar { get; set; }
         
 
-        public TimeSpan Hora { get; set; }
+        public TimeSpan? Hora { get; set; }
         //public string Estado { get; set; }
 
-        public IFormFile Imagen { get; set; }
 
         public ICollection<CategoriaDto> Categorias { get; set; }
 

@@ -6,8 +6,14 @@
       <!-- Imagen del evento -->
       <img *ngIf="selectedFileUrl; else defaultImage" [src]="selectedFileUrl" alt="Profile Picture" class="imagen">
       <ng-template #defaultImage>
-        <img [src]="eventForm.value.imagen" alt="Imagen del Evento" class="imagen">
+
+          <img *ngIf="eventForm.value.imagen !== null" [src]="eventForm.value.imagen" alt="Imagen del Evento" class="imagen">
+
+
+          <img *ngIf="eventForm.value.imagen === null" class="imagen" src="../../../../images/evento_empty.jpg" alt="Perfil">
+ 
       </ng-template>
+
         
       
       
@@ -23,6 +29,7 @@
           <label for="fecha">Fecha:</label>
           <input formControlName="fecha" id="fecha" type="date" [readonly]="!isEditing" (change)="onDateChange($event)" />
         </div>
+      
         <div class="dato">
           <label for="lugar">Localización:</label>
           <input formControlName="lugar" id="lugar" type="text" [readonly]="!isEditing" />
@@ -66,7 +73,6 @@
                   </td>
                   <td *ngIf="isEditing">
                     <mat-icon
-                      (click)="removeDistancia(i)"
                       class="boton-eliminar"
                       >delete</mat-icon
                     >
@@ -75,7 +81,7 @@
               </tbody>
             </table>
             <!-- Botón para agregar filas -->
-            <button class="add" *ngIf="isEditing" (click)="addDistancia()">+</button>
+            <button class="add" *ngIf="isEditing" >+</button>
           </div>
           
         </div>
@@ -98,11 +104,11 @@
 
                 </td>
                 <td *ngIf="isEditing">
-                  <mat-icon class="boton-eliminar" (click)="removeCategoria(i)">delete</mat-icon>
+                  <mat-icon class="boton-eliminar" >delete</mat-icon>
                 </td>
               </tr>
               <ng-container *ngIf="isEditing">
-                <tr *ngFor="let categoria of catEv; let i = index" >
+                <tr >
                   <td >
                     <select>
                       <option *ngFor="let cat of cat" [value]="cat.id">
@@ -117,7 +123,7 @@
               </ng-container>
             </tbody>
           </table>
-          <button class="add" *ngIf="isEditing" (click)="toggleAdd()">+</button>
+          <button class="add" *ngIf="isEditing" >+</button>
 
         </div>
       </div>
