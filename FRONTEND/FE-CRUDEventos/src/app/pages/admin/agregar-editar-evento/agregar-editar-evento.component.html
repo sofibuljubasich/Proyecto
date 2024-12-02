@@ -1,11 +1,12 @@
 <body>
 
-  <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="eventForm" >  
+    <!-- (ngSubmit)="onSubmit()" -->
     <div class="container">
       <!-- Imagen del evento -->
       <img *ngIf="selectedFileUrl; else defaultImage" [src]="selectedFileUrl" alt="Profile Picture" class="imagen">
       <ng-template #defaultImage>
-        <img [src]="eventoForm.value.imagen" alt="Imagen del Evento" class="imagen">
+        <img [src]="eventForm.value.imagen" alt="Imagen del Evento" class="imagen">
       </ng-template>
         
       
@@ -27,9 +28,9 @@
           <input formControlName="lugar" id="lugar" type="text" [readonly]="!isEditing" />
         </div>
         <div class="dato">          
-          <label for="tipo">Tipo de evento:</label>
+          <label for="tipoID">Tipo de evento:</label>
           <div class="custom-datepicker">
-            <select formControlName="tipo" id="tipo" [disabled]="!isEditing">
+            <select formControlName="tipoID" id="tipoID" [disabled]="!isEditing">
               <option style="color: black;" *ngFor="let tipo of tipos" [value]="tipo.id">{{ tipo.descripcion }}</option>
             </select>
           </div>
@@ -55,27 +56,13 @@
               <tbody>
                 <!-- Fila dinámica -->
                 <tr
-                  *ngFor="let distancia of eventoDistancias.controls; let i = index"
+                  *ngFor="let distancia of distancias; let i = index"
                 >
                   <td>
-                    <ng-container *ngIf="!distancia.get('km')?.value">
-                      <select (change)="updateDistancia(i, $event)">
-                        <option value="" disabled selected>Seleccionar...</option>
-                        <option *ngFor="let d of dist" [value]="d.id">
-                          {{ d.km }} Km
-                        </option>
-                      </select>
-                    </ng-container>
-                    <ng-container *ngIf="distancia.get('km')?.value">
-                      {{ distancia.get('km')?.value }} Km
-                    </ng-container>
+                    {{distancia.km}} km
                   </td>
                   <td >
-                    <!-- <span *ngIf="!isEditing">$ {{ distancia.precio }}</span> -->
-                    <input *ngIf="isEditing"
-                      type="number"
-                      formControlName="precio">
-                      {{ distancia.get('precio')?.value }}
+                    $ {{distancia.precio}}
                   </td>
                   <td *ngIf="isEditing">
                     <mat-icon
@@ -105,19 +92,36 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let categoria of categorias let i = index">
-                
-                <td>{{ categoria.edadInicio }} - {{ categoria.edadFin }}</td>
+              <tr *ngFor="let categoria of catEv; let i = index" >
+                <td>
+                      ({{ categoria.edadInicio }} - {{ categoria.edadFin }})
+
+                </td>
                 <td *ngIf="isEditing">
-                  <mat-icon (click)="removeCategoria(i)" class="boton-eliminar">delete</mat-icon>
+                  <mat-icon class="boton-eliminar" (click)="removeCategoria(i)">delete</mat-icon>
                 </td>
               </tr>
+              <ng-container *ngIf="isEditing">
+                <tr *ngFor="let categoria of catEv; let i = index" >
+                  <td >
+                    <select>
+                      <option *ngFor="let cat of cat" [value]="cat.id">
+                        ({{ cat.edadInicio }} - {{ cat.edadFin }})
+                      </option>
+                    </select>
+                  </td>
+                  <td >
+                    <mat-icon class="boton-eliminar" (click)="addCategoria()">add</mat-icon>
+                  </td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
-          <button class="add" *ngIf="isEditing" (click)="addDistancia()">+</button>
+          <button class="add" *ngIf="isEditing" (click)="toggleAdd()">+</button>
+
         </div>
       </div>
-
+      
       </div>
 
 
