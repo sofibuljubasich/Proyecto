@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgChartsModule } from 'ng2-charts';
 
 //Components
 import { PerfilComponent } from './pages/corredor/perfil/perfil.component';
@@ -61,6 +60,7 @@ import { DistanciaComponent } from './pages/admin/abm-distancia/abm-distancia.co
 //Modulos
 import { SharedModule } from './shared/shared.module';
 import { DatePipe } from '@angular/common';
+import { NgChartsModule } from 'ng2-charts';
 //import { FormsModule } from '@angular/forms';
 
 @NgModule({

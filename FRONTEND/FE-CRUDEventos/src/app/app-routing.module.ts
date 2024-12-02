@@ -88,7 +88,7 @@ const routes: Routes = [
   { path: 'vistaTareas', component: VistaTareasComponent },
   { path: 'tareas-creadas/:id', component: TareasComponent },
   { path: 'altaEventos/:id', component: AgregarEditarEventoComponent },
-  { path: 'altaEvento', component: AgregarEditarEventoComponent },
+  { path: 'altaEventos', component: AgregarEditarEventoComponent },
   { path: 'ayudaA', component: HelpAComponent },
   // { path: 'voluntarios/:id', component: VoluntariosComponent },
 

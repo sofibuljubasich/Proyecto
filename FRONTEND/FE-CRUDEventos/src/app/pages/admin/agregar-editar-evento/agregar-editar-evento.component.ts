@@ -51,7 +51,6 @@ export class AgregarEditarEventoComponent implements OnInit {
       lugar: ['', Validators.required],
       estado: ['', Validators.required],
       tipoID: ['', Validators.required],
-      eventoDistancias: this.fb.array([]), // Para manejar las distancias
       imagen: [null],
     });
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
@@ -62,6 +61,7 @@ export class AgregarEditarEventoComponent implements OnInit {
     this.obtenerEvento();
     this.getDist();
     this.obtenerTipo();
+    console.log(this.eventForm.value.imagen)
   }
   selectTipo(tipo: string) {
     this.eventForm.get('tipo')?.setValue(tipo); // Establece el valor seleccionado
@@ -71,12 +71,7 @@ export class AgregarEditarEventoComponent implements OnInit {
       this.cat = data;
     });
   }
-  toggleAdd() {
-    const categoriaControl = this.fb.group({
-      categoriaID: ['', Validators.required],
-    });
-    this.categoriasEv.push(categoriaControl);
-  }
+
   getDist() {
     this.distanciaService.getDistancias().subscribe((data) => {
       this.dist = data;
@@ -160,20 +155,8 @@ export class AgregarEditarEventoComponent implements OnInit {
     const distanciaFormArray = this.fb.array(distanciaFGs);
     this.eventForm.setControl('eventoDistancias', distanciaFormArray);
   }
-  get eventoDistancias(): FormArray {
-    return this.eventForm.get('eventoDistancias') as FormArray;
-  }
-  get categoriasEv(): FormArray {
-    return this.eventForm.get('categorias') as FormArray;
-  }
-  addDistancia(): void {
-    this.eventoDistancias.push(
-      this.fb.group({
-        km: [''],
-        precio: [''],
-      })
-    );
-  }
+
+
   addCategoria(): void {
     // Busca la categoría seleccionada en la lista `cat`
     const categoriaSeleccionada = this.cat.find(
@@ -187,28 +170,6 @@ export class AgregarEditarEventoComponent implements OnInit {
     } else {
       console.error('Categoría no encontrada.');
     }
-  }
-
-  updateDistancia(index: number, event: Event): void {
-    const target = event.target as HTMLSelectElement; // Cast del evento al elemento HTMLSelectElement
-    const value = target.value;
-
-    if (value) {
-      const distancia = this.dist.find((d) => d.id === +value);
-      if (distancia) {
-        this.eventoDistancias.at(index).patchValue({
-          km: distancia.km,
-        });
-      }
-    }
-  }
-
-  removeDistancia(index: number): void {
-    this.eventoDistancias.removeAt(index);
-  }
-
-  removeCategoria(index: number): void {
-    this.categoriasEv.removeAt(index);
   }
 
   onDateChange(event: any): void {
