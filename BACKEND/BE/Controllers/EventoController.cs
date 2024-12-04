@@ -396,19 +396,6 @@ namespace BE.Controllers
                     evento.TipoID = eventoDto.TipoID;   
                 }
 
-               
-
-                // Guardar los cambios del evento primero
-               // await _eventoRepository.Update(evento);
-/*
-                // Actualizar las relaciones de Evento-Distancia
-                if (eventoDto.EventoDistancias != null && eventoDto.EventoDistancias.Any())
-                {
-                    
-
-                    await _eventoDistanciaRepository.Update(eventoID, eventoDto.EventoDistancias);
-                }
-*/
                 // Actualizar Categorías del Evento
                 if (eventoDto.CategoriasID != null)
                 {
@@ -438,6 +425,55 @@ namespace BE.Controllers
                         {
                             evento.Categorias.Add(categoriaToAdd);
                         }
+                    }
+                }
+
+                // Manejo evento-distancia-precio
+                var distanciasExistentes = await _eventoDistanciaRepository.GetDistanciasByEvento(eventoID);
+
+           
+                if (distanciasExistentes == null)
+                {
+                    return NotFound("No se encontraron registros de EventoDistancia para el evento especificado.");
+                }
+
+                List<EventoDistancia> eventoDistanciasParaActualizar = new List<EventoDistancia>();
+
+
+                // Obtener los IDs de las distancias que se quieren mantener
+                var nuevasDistanciasIds = eventoDto.EventoDistancias.Select(d => d.DistanciaID).ToList();
+
+                // Eliminar las distancias que ya no están en la nueva lista
+                var distanciasAEliminar = distanciasExistentes
+                    .Where(ed => !nuevasDistanciasIds.Contains(ed.Distancia.ID))
+                    .ToList();
+
+
+                await _eventoDistanciaRepository.RemoveRange(distanciasAEliminar);
+
+                // Agregar o actualizar las distancias que están en la nueva lista
+                foreach (var nuevaDistancia in eventoDto.EventoDistancias)
+                {
+                    var distanciaExistente = distanciasExistentes
+                        .FirstOrDefault(ed => ed.Distancia.ID == nuevaDistancia.DistanciaID);
+
+                    if (distanciaExistente != null)
+                    {
+                        // Si la distancia ya existe, actualizamos el precio
+                        distanciaExistente.Precio = nuevaDistancia.Precio;
+                    }
+                    else
+                    {
+
+                        // Si la distancia no existe, la agregamos
+                        var nuevaRelacion = new EventoDistancia
+                        {
+                            EventoID = eventoID,
+                            Distancia = await _distanciaRepository.GetDistancia(nuevaDistancia.DistanciaID),
+                            Precio = nuevaDistancia.Precio
+                        };
+
+                        eventoDistanciasParaActualizar.Add(nuevaRelacion);
                     }
                 }
 

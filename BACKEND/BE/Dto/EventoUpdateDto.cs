@@ -30,7 +30,7 @@ namespace BE.Dto
 
 
 
-        //public List<EventoDistanciaUpdateDto> EventoDistancias { get; set; }
+        public List<EventoDistanciaUpdateDto> EventoDistancias { get; set; }
 
 
         public  List<int> CategoriasID { get; set; }
