@@ -47,14 +47,14 @@ export class EventoService {
     );
   }
 
-  createEvento(evento: Evento): Observable<Evento> {
+  createEvento(evento: any): Observable<Evento> {
     return this.http.post<Evento>(`${this.myAppUrl}${this.myApiUrl}`, evento);
   }
 
   // Actualizar un evento existente
-  updateEvento(id: number, evento: FormData) {
+  updateEvento(id: number, evento: any) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<Evento>(
+    return this.http.put<any>(
       `${this.myAppUrl}${this.myApiUrl}${id}`,
       evento,
       { headers, responseType: 'text' as 'json' }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventoService } from '../../../services/evento.service';
-import { Evento, EventoResponse, Tipo } from 'src/app/interfaces/evento';
+import { EventoData, EventoResponse, Tipo } from 'src/app/interfaces/evento';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
@@ -20,14 +20,27 @@ export class AgregarEditarEventoComponent implements OnInit {
   eventForm: FormGroup;
   isEditing: boolean = false;
   id: number;
+  imagenURL: string| null = null;
   currentEvent!: EventoResponse;
   selectedFile?: File;
   selectedFileUrl: string | null = null;
-  catEv: CategoriaResponse[] = [];
+  categorias: CategoriaResponse[] = [];
   tipos: Tipo[] = [];
   dist: DistanciaResponse[] = [];
   distancias: any[] = [];
   cat: any[] = [];
+  
+  eventoData: EventoData = {
+    userEmail: '',         // Correo electrónico vacío
+    password: '',          // Contraseña vacía
+    nombre: '',            // Nombre del evento vacío
+    fecha: '',             // Fecha vacía (puede ser un string vacío o null dependiendo de tu caso de uso)
+    lugar: '',             // Lugar vacío
+    hora: '',              // Hora vacía
+    eventoCategorias: [],
+    eventoDistancias: [],
+    tipoID: null          // tipoID vacío o null
+  };
   categoriaSeleccionada: { [key: number]: number } = {};
   selectedCategoryId: number = 0;
 
@@ -97,12 +110,12 @@ export class AgregarEditarEventoComponent implements OnInit {
             hora: data.evento.toString().slice(0, 5), // Extraemos solo la hora (hh:mm)
             lugar: data.evento.lugar,
             estado: data.evento.estado,
-            tipoID: data.evento.tipo.id,
-            imagen: 'https://localhost:7296' + data.evento.imagen,
-
+            tipoID: data.evento.tipo.id
             // Agrega otros campos según sea necesario
           });
-        this.catEv = data.categorias; // Cargamos las categorías del evento
+
+        this.imagenURL= 'https://localhost:7296' + data.evento.imagen;
+        this.categorias = data.categorias; // Cargamos las categorías del evento
 
         this.distancias = data.distancias;
         console.log(data.categorias.map((c: any) => c.id));
@@ -166,7 +179,7 @@ export class AgregarEditarEventoComponent implements OnInit {
       console.log('Categoría seleccionada:', categoriaSeleccionada);
 
       // Lógica para agregar la categoría
-      this.catEv.push(categoriaSeleccionada);
+      this.categorias.push(categoriaSeleccionada);
     } else {
       console.error('Categoría no encontrada.');
     }
@@ -181,31 +194,33 @@ export class AgregarEditarEventoComponent implements OnInit {
 
   onSubmit(): void {
     if (this.eventForm.valid) {
-      const formData = new FormData();
-
-      // Agregar los campos
-      formData.append('nombre', this.eventForm.value.nombre);
-      formData.append('fecha', this.eventForm.value.fecha);
-      formData.append('lugar', this.eventForm.value.lugar);
-      formData.append('hora', this.eventForm.value.hora); // Esto debe ser un string
-      formData.append('estado', this.eventForm.value.estado);
-
-      // Agregar el archivo (si existe)
-      if (this.eventForm.value.imagen) {
-        formData.append('imagen', this.eventForm.value.imagen);
+      this.eventoData = {
+        ...this.eventoData, // Mantiene los valores anteriores
+        nombre: this.eventForm.value.nombre,
+        fecha: this.eventForm.value.fecha,
+        lugar: this.eventForm.value.lugar,
+        hora: this.eventForm.value.hora,
+        tipoID: this.eventForm.value.tipoID,
+        // Asigna las categorías y distancias si es necesario
+        // Si las categorías son parte del formulario
+        eventoCategorias: this.categorias,
+        eventoDistancias: this.distancias // Si las distancias son parte del formulario
+      };
+      if(this.id){
+        
+        //actualizar imagen
+        console.log('Datos del evento:', this.eventoData);
+        this._eventoService.updateEvento(this.id, this.eventoData).subscribe(() => {
+          this.isEditing = false; // Volver a modo solo lectura
+          this.obtenerEvento();
+        });
+      } else{
+        this._eventoService.createEvento(this.eventoData).subscribe(() => {
+          this.isEditing = false; // Volver a modo solo lectura
+          this.obtenerEvento();
+        });
       }
-
-      // Agregar las distancias
-      const distancias = this.eventForm.value.eventoDistancias;
-      if (distancias && distancias.length > 0) {
-        formData.append('eventoDistancias', JSON.stringify(distancias));
-      }
-
-      console.log('Datos del evento:', this.eventForm);
-      this._eventoService.updateEvento(this.id, formData).subscribe(() => {
-        this.isEditing = false; // Volver a modo solo lectura
-        this.obtenerEvento();
-      });
+      
     } else {
       // revisar
       return;
