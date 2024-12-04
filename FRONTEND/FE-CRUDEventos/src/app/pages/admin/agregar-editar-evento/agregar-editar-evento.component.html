@@ -7,10 +7,10 @@
       <img *ngIf="selectedFileUrl; else defaultImage" [src]="selectedFileUrl" alt="Profile Picture" class="imagen">
       <ng-template #defaultImage>
 
-          <img *ngIf="eventForm.value.imagen !== null" [src]="eventForm.value.imagen" alt="Imagen del Evento" class="imagen">
+          <img *ngIf="imagenURL !== null" [src]="imagenURL" alt="Imagen del Evento" class="imagen">
 
 
-          <img *ngIf="eventForm.value.imagen === null" class="imagen" src="../../../../images/evento_empty.jpg" alt="Perfil">
+          <img *ngIf="imagenURL === null" class="imagen" src="../../../../images/evento_empty.jpg" alt="Perfil">
  
       </ng-template>
 
@@ -98,7 +98,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let categoria of catEv; let i = index" >
+              <tr *ngFor="let categoria of categorias; let i = index" >
                 <td>
                       ({{ categoria.edadInicio }} - {{ categoria.edadFin }})
 

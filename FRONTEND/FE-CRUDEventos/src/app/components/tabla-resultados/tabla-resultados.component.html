@@ -1,4 +1,4 @@
-<div class="tabla" >
+<div class="tabla" *ngIf="resultados[0]?.tiempo !== null">
     <div class="filtro">
         <mat-form-field *ngIf="resultados.length > 0">
             <mat-label >Filtro</mat-label>
@@ -6,7 +6,7 @@
         </mat-form-field>
     </div>
 
-<table *ngIf="resultados.length > 0" mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
+<table *ngIf=" resultados[0]?.tiempo !== null" mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
     <!-- Dorsal Column -->
     <ng-container matColumnDef="dorsal">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by dorsal">
@@ -77,5 +77,6 @@
   </table>
 
 <mat-paginator *ngIf="resultados.length > 0" class="paginator" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-<p class="texto" *ngIf="resultados.length === 0">No hay resultados disponibles, intente de nuevo más tarde</p>
-</div> 
+</div>
+
+<p class="texto" *ngIf="resultados.length === 0 || resultados[0]?.tiempo === null">No hay resultados disponibles, intente de nuevo más tarde</p>
