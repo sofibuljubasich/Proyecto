@@ -12,6 +12,7 @@ import { TipoEventoService } from 'src/app/services/tipo-evento.service';
 export class EventosActivosComponent {
   eventos: any[] = [];
   eventosActivos: any[] = [];
+  textoBusqueda: string = '';
 
   constructor(
     private _eventoService: EventoService,
@@ -27,7 +28,7 @@ export class EventosActivosComponent {
       .buscar(this.parametrosBusqueda)
       .subscribe((data: any[]) => {
         this.eventos = data;
-        this.filtrarEventos(this.eventos);
+        this.filtrarEventos();
       });
   }
 
@@ -40,11 +41,14 @@ export class EventosActivosComponent {
   };
 
   // ver que los eventos inactivos tengan resultados
-  filtrarEventos(ev: any[]): void {
-    this.eventosActivos = ev.filter(
+  filtrarEventos(): void {
+    let eventosFiltrados = this.eventos.filter((evento) =>
+      evento.nombre.toLowerCase().includes(this.textoBusqueda.toLowerCase())
+    );
+    this.eventosActivos = eventosFiltrados.filter(
       // fijarse q tengan resultados
       (evento) => evento.estado !== 'Inactivo'
     );
-    console.log(this.eventosActivos);
+    
   }
 }

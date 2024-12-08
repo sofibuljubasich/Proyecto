@@ -2,7 +2,7 @@
 
   <div class="comentarios-header">
     <h1>Comentarios:</h1>
-    <button [disabled]="!isAuthenticated" (click)="toggleFormulario()">+</button>
+    <button [disabled]="!isAuthenticated || !estaInscrita" (click)="toggleFormulario()">+</button>
   </div>
 
   <div *ngIf="mostrarFormulario" class="comentario-formulario">

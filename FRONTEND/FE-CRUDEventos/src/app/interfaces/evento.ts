@@ -3,35 +3,29 @@ export interface Evento {
   nombre: string;
   fecha: Date;
   lugar: string;
+  hora: string;
   estado: string;
   imagen?: string;
   tipo: Tipo;
 }
 
 
-
 // Definir el tipo de eventoData
 export interface EventoData {
-  userEmail: string;
-  password: string;
   nombre: string;
-  fecha: string;
+  fecha: Date | null;
   lugar: string;
   hora: string;
-  eventoCategorias: Categoria[];  // Definir eventoCategorias como un array de CategoriaResponse
   eventoDistancias: EventoDistancia[]; // Puedes definir un tipo específico si lo necesitas
   tipoID: number | null;
 }
 
 // Inicializar eventoData con los valores correctos
 let eventoData: EventoData = {
-  userEmail: '',
-  password: '',
   nombre: '',
-  fecha: '',
+  fecha: null,
   lugar: '',
   hora: '',
-  eventoCategorias: [], // Inicializado como un array vacío de CategoriaResponse
   eventoDistancias: [],
   tipoID: null
 };

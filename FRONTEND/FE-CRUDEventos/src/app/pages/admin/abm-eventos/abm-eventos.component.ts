@@ -1,9 +1,10 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation,OnChanges,
+  SimpleChanges, } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { EmailPopupComponent } from 'src/app/components/email-popup/email-popup.component';
 import { Busqueda } from 'src/app/interfaces/busqueda';
-import { EventoResponse } from 'src/app/interfaces/evento';
+import { Evento, EventoResponse } from 'src/app/interfaces/evento';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventoService } from 'src/app/services/evento.service';
 import { TipoEventoService } from 'src/app/services/tipo-evento.service';
@@ -14,8 +15,10 @@ import { Router } from '@angular/router';
   templateUrl: './abm-eventos.component.html',
   styleUrl: './abm-eventos.component.css',
 })
-export class ABMEventosComponent {
+export class ABMEventosComponent implements OnChanges{
   eventos: any = [];
+  eventoss: any = [];
+  textoBusqueda: string = '';
 
   onToggleChange(evento: any, event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -52,6 +55,9 @@ export class ABMEventosComponent {
   ngOnInit(): void {
     this.obtenerEventos();
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.obtenerEventos();
+  }
   verInscripciones(id: number, nombre: string): void {
     console.log('Evento seleccionado:', nombre);
     // Puedes redirigir o realizar otra acción con los datos.
@@ -65,9 +71,9 @@ export class ABMEventosComponent {
     this._eventoService
       .buscar(this.parametrosBusqueda)
       .subscribe((data: any[]) => {
-        this.eventos = data;
-        console.log(this.eventos);
-        //this.filtrarEventos(this.eventos);
+        this.eventoss = data;
+        console.log("llegadaa ",this.eventoss)
+        this.filtrarEventos();
       });
   }
   enviarMail(id: number) {
@@ -77,6 +83,24 @@ export class ABMEventosComponent {
     });
   }
 
+  filtrarEventos(): void {
+    let eventosFiltrados = this.eventoss
+    console.log("texto   ",this.textoBusqueda)
+
+    eventosFiltrados = this.eventoss.filter((evento: { nombre: string; }) =>
+      evento.nombre.toLowerCase().includes(this.textoBusqueda.toLowerCase())
+    );console.log("filtrado",eventosFiltrados)
+    this.eventos=eventosFiltrados
+    this.eventos.forEach((e:Evento) =>{
+      e.fecha=new Date(e.fecha);
+    })
+    this.eventos=this.eventos.sort((a: { fecha: { getTime: () => number; }; },b: { fecha: { getTime: () => number; }; })=> 
+    b.fecha.getTime() - a.fecha.getTime()
+    );
+    console.log("eventosss  ",this.eventos);
+
+
+  }
   parametrosBusqueda: Busqueda = {
     texto: '',
     fechaIni: '',
@@ -84,4 +108,9 @@ export class ABMEventosComponent {
     tipoEvento: '',
     lugar: '',
   };
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    // this.eventosActivos.filter = filterValue.trim().toLowerCase();
+    // this.eventosInactivos.filter = filterValue.trim().toLowerCase();
+  }
 }

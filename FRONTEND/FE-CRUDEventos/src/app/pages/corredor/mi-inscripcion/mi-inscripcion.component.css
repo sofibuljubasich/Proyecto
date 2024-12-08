@@ -1,0 +1,155 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background-color: #04364A;
+  }
+  
+  .container {
+    padding: 10% 3% 0px 3%;
+    display: grid;
+    grid-template-columns: 3fr 4fr; /* Imagen y opciones a la izquierda (3fr), contenido a la derecha (4fr) */
+    gap: 16px;
+    align-items: start;
+    justify-items: start;
+  }
+  
+  .imagen-y-opciones {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: flex-start; Asegura que tanto la imagen como los botones estén alineados a la izquierda */
+  }
+  
+  .imagen {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    background-color: white;
+  }
+  
+  .opciones {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  button {
+    height: auto;
+    width: 200px;
+    color: aliceblue;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: larger;
+    background-color: transparent;
+  }
+  
+  .content {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 0px;
+  }
+  
+  .titulo {
+    padding-left: 20%;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .datos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    padding: 20px 30px 0px 30px;
+  }
+  
+  .distancias {
+    margin-left: 2.5rem;
+    width: 100%;
+  }
+  
+  .distancias {
+    margin-top: 20px;
+  }
+  
+  .item {
+    margin-top: 0px;
+  }
+  
+  table {
+    width: 60%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-top: -20px;
+  }
+  
+  th, td {
+    border: 1px solid #0c0c0c;
+    text-align: center;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #858585;
+    color: black;
+  }
+  
+  .distancia-item {
+    background-color: #ffffff;
+  }
+  
+  .dato {
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .columna {
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-icon {
+      font-size: 3rem; /* Ajusta este valor para cambiar el tamaño del icono */
+      vertical-align: middle; /* Alinea el icono verticalmente con el texto */
+      margin-right: 10px; /* Espacio entre el icono y el texto */
+      color: white; /* Color del icono */
+      line-height: 1;
+      width: 50px;
+      height: auto;
+  }
+  
+  .label {
+    margin: 0;
+    font-weight: 500;
+    padding: 9px;
+    font-size: 20px;
+    text-decoration: underline;
+  }
+  
+  .date {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  button {
+    margin-left: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: larger;
+  }
+  

@@ -129,7 +129,9 @@ background: linear-gradient(to right, #20126e, #2b79a7);  */
 .error-message {
   color: red;
 font-size: 12px;
+font-size: large;
 position: absolute;
+
 }
 
 

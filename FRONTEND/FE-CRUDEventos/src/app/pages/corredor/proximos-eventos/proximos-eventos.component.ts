@@ -10,6 +10,8 @@ import { EventoService } from 'src/app/services/evento.service';
 })
 export class ProximosEventosComponent {
   eventosActivos: any[] = [];
+  eventos: any[] = [];
+  textoBusqueda: string = '';
   constructor(private _eventoService: EventoService) {}
 
   ngOnInit(): void {
@@ -18,7 +20,8 @@ export class ProximosEventosComponent {
   obtenerEventos(): void {
     this._eventoService.buscar(this.parametrosBusqueda).subscribe(
       (data: any[]) =>{
-      this.filtrarEventos(data);
+      this.eventos=data
+      this.filtrarEventos();
     });
   }
   parametrosBusqueda: Busqueda = {
@@ -31,8 +34,11 @@ export class ProximosEventosComponent {
 
 
   // ver que los eventos inactivos tengan resultados
-  filtrarEventos(ev:any[]): void {
-    this.eventosActivos= ev.filter(
+  filtrarEventos(): void {
+    let eventosFiltrados = this.eventos.filter((evento) =>
+      evento.nombre.toLowerCase().includes(this.textoBusqueda.toLowerCase())
+    );
+    this.eventosActivos= eventosFiltrados.filter(
       (evento) => evento.estado === 'Activo'
     );
   }

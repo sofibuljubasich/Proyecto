@@ -123,6 +123,7 @@ export class AbmTareasComponent implements OnInit {
 
     tareaID: this.tareaId; // El ID de la tarea que estás editando
     if (this.isEditMode && this.tareaId) {
+      console.log(tareaData)
       this._tareaService
         .updateTask(this.tareaId, tareaData)
         .subscribe(() => {});

@@ -10,6 +10,8 @@ import { EventoService } from 'src/app/services/evento.service';
 })
 export class ResultadosComponent {
   eventosInactivos: any[] = [];
+  eventos: any[] = [];
+  textoBusqueda: string = '';
   constructor(private _eventoService: EventoService) {}
 
   ngOnInit(): void {
@@ -19,7 +21,9 @@ export class ResultadosComponent {
     this._eventoService.buscar(this.parametrosBusqueda).subscribe(
       (data: any[]) =>{
         if(data){
-          this.filtrarEventos(data);
+          this.eventos = data;
+  
+          this.filtrarEventos();
         }
     
       
@@ -35,8 +39,11 @@ export class ResultadosComponent {
 
 
   // ver que los eventos inactivos tengan resultados
-  filtrarEventos(ev:any[]): void {
-    this.eventosInactivos= ev.filter(
+  filtrarEventos(): void {
+    let eventosFiltrados = this.eventos.filter((evento) =>
+      evento.nombre.toLowerCase().includes(this.textoBusqueda.toLowerCase())
+    );
+    this.eventosInactivos= eventosFiltrados.filter(
       (evento) => evento.estado === 'Inactivo'
     );
   }

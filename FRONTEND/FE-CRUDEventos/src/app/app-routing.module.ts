@@ -39,6 +39,7 @@ import { DistanciaComponent } from './pages/admin/abm-distancia/abm-distancia.co
 import { HelpAComponent } from './pages/admin/help/help.component';
 import { HelpIComponent } from './pages/inscriptor/help/help.component';
 import { HelpVComponent } from './pages/voluntario/help/help.component';
+import { MiInscripcionComponent } from './pages/corredor/mi-inscripcion/mi-inscripcion.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //, component: HomeComponent },
@@ -58,6 +59,7 @@ const routes: Routes = [
   { path: 'misEventos', component: MisEventosComponent },
   { path: 'ayuda', component: HelpComponent },
   { path: 'perfil', component: PerfilComponent },
+  { path: 'miInscripcion/:id', component: MiInscripcionComponent },
   // INSCRIPTOR
   { path: 'eventosActivos', component: EventosActivosComponent },
   { path: 'inscripcionManual/:id', component: InscripcionManualComponent },

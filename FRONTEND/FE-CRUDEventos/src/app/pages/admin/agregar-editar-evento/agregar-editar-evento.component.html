@@ -22,17 +22,34 @@
           <div style="padding: 0px 30px;" class="dato" >
             <label for="nombre">Nombre:</label>
             <input formControlName="nombre" id="nombre" type="text" [readonly]="!isEditing" />
+            <div *ngIf="isFieldInvalid(eventForm,'nombre')" class="error-message">
+              El nombre del evento es obligatorio.
+            </div>
           </div>
           
-        <div class="datos">
+        <div class="datos2">
         <div class="dato">
           <label for="fecha">Fecha:</label>
           <input formControlName="fecha" id="fecha" type="date" [readonly]="!isEditing" (change)="onDateChange($event)" />
+          <div *ngIf="isFieldInvalid(eventForm,'fecha')" class="error-message">
+            La fecha del evento es obligatorio.
+          </div>
         </div>
-      
+        <div class="dato">
+          <label for="hora">Hora:</label>
+          <input formControlName="hora" id="hora" type="time" [readonly]="!isEditing" (change)="onHoraChange($event)" />
+          <div *ngIf="isFieldInvalid(eventForm,'hora')" class="error-message">
+            La hora del evento es obligatorio.
+          </div>
+        </div>
+        </div>
+        <div class="datos2">
         <div class="dato">
           <label for="lugar">Localización:</label>
           <input formControlName="lugar" id="lugar" type="text" [readonly]="!isEditing" />
+          <div *ngIf="isFieldInvalid(eventForm,'lugar')" class="error-message">
+            El lugar del evento es obligatorio.
+          </div>
         </div>
         <div class="dato">          
           <label for="tipoID">Tipo de evento:</label>
@@ -41,13 +58,16 @@
               <option style="color: black;" *ngFor="let tipo of tipos" [value]="tipo.id">{{ tipo.descripcion }}</option>
             </select>
           </div>
+          <div *ngIf="isFieldInvalid(eventForm,'tipoID')" class="error-message">
+            El tipo de evento es obligatorio.
+          </div>
         </div>
       </div>
       
       
       
       <!-- Distancias asociadas -->
-      <div class="datos">
+      <div class="datos2">
         <div class="dato">
           <!-- <mat-icon class="custom-icon" aria-hidden="false" aria-label="Distances icon" fontIcon="flag"></mat-icon> -->
           <label for="distancias">Distancias asociadas:</label>
@@ -72,16 +92,46 @@
                     $ {{distancia.precio}}
                   </td>
                   <td *ngIf="isEditing">
-                    <mat-icon
+                    <mat-icon (click)="deleteDistancia(distancia.id)"
                       class="boton-eliminar"
                       >delete</mat-icon
                     >
                   </td>
                 </tr>
+                
+                <ng-container *ngIf="isEditing3">
+                  
+                  <tr >
+                    <td >
+                      <option style="color: aliceblue;text-wrap: auto;" *ngIf="dist.length === 0" disabled>No hay distancias adicionales</option>
+                      <select *ngIf="dist.length !== 0" [(ngModel)]="distanciaSeleccionada" [ngModelOptions]="{standalone: true}">
+                        <option style="color: black;" *ngFor="let d of dist" [value]="d.id">
+                          ({{ d.km }} km)
+                        </option>
+                      </select>
+                    </td>
+                    <td > <!-- CAMBIAR -->
+                      <div class="datoPrecio">
+                        <input id="precio" type="number" [(ngModel)]="price" [ngModelOptions]="{standalone: true}" />
+                      </div>
+                    </td>
+                    <td >
+                      <button mat-icon-button style="transform: scale(1);" (click)="aceptarDist()">
+                        <mat-icon  style="color: rgb(0, 255, 21); "class="boton-eliminar">check</mat-icon>
+                      </button>
+                      <button mat-icon-button style="transform: scale(1);" (click)="cancelarDist()">
+                        <mat-icon  style="color: rgb(189, 0, 0); "class="boton-eliminar">close</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
+            <div *ngIf="distancias.length === 0 && isEditing" class="error-message">
+              Las distancias asociadas no pueden estar vacías.
+            </div>
             <!-- Botón para agregar filas -->
-            <button class="add" *ngIf="isEditing" >+</button>
+            <button class="add" (click)="addDistancia()" *ngIf="isEditing" >+</button>
           </div>
           
         </div>
@@ -97,33 +147,45 @@
                 <th *ngIf="isEditing">Acciones</th>
               </tr>
             </thead>
-            <tbody>
-              <tr *ngFor="let categoria of categorias; let i = index" >
-                <td>
-                      ({{ categoria.edadInicio }} - {{ categoria.edadFin }})
+            
 
-                </td>
-                <td *ngIf="isEditing">
-                  <mat-icon class="boton-eliminar" >delete</mat-icon>
+              <tbody >
+                <tr *ngFor="let categoria of categorias; let i = index" >
+                  <td>
+                    ({{ categoria.edadInicio }} - {{ categoria.edadFin }})
+                    
+                  </td>
+                  <td *ngIf="isEditing">
+                  <mat-icon class="boton-eliminar" (click)="deleteCategoria(categoria.id)">delete</mat-icon>
                 </td>
               </tr>
-              <ng-container *ngIf="isEditing">
+              <ng-container *ngIf="isEditing2">
                 <tr >
                   <td >
-                    <select>
-                      <option *ngFor="let cat of cat" [value]="cat.id">
-                        ({{ cat.edadInicio }} - {{ cat.edadFin }})
+                    <option style="color: aliceblue;text-wrap: auto;" *ngIf="cat.length === 0" disabled>No hay categorías adicionales</option>
+                    <select *ngIf="cat.length !== 0" [(ngModel)]="categoriaSeleccionada" [ngModelOptions]="{standalone: true}">
+                      <option style="color: black;" *ngFor="let c of cat" [value]="c.id">
+                        ({{ c.edadInicio }} - {{ c.edadFin }})
                       </option>
                     </select>
                   </td>
                   <td >
-                    <mat-icon class="boton-eliminar" (click)="addCategoria()">add</mat-icon>
+                    <button mat-icon-button style="transform: scale(1);" (click)="aceptarCat()">
+                      <mat-icon  style="color: rgb(0, 255, 21); "class="boton-eliminar">check</mat-icon>
+                    </button>
+                    <button mat-icon-button style="transform: scale(1);" (click)="cancelarCat()">
+                      <mat-icon  style="color: rgb(189, 0, 0); "class="boton-eliminar">close</mat-icon>
+                    </button>
                   </td>
                 </tr>
               </ng-container>
             </tbody>
+          
           </table>
-          <button class="add" *ngIf="isEditing" >+</button>
+          <div *ngIf="categorias.length === 0 && isEditing" class="error-message">
+            Las categorias asociadas no pueden estar vacías.
+          </div>
+          <button class="add" (click)="addCategoria()" *ngIf="isEditing" >+</button>
 
         </div>
       </div>
@@ -144,7 +206,7 @@
             <!-- Botones de acción -->
             <div class="opciones">
               <button (click)="goBack()" style="border: none; text-decoration: underline;background:none;"> <- Regresar</button>
-              <button type="submit" mat-raised-button color="primary" [disabled]="!isEditing">Guardar</button>
+              <button  (click)="Guardar()" mat-raised-button color="primary" [disabled]="!isEditing">Guardar</button>
               <button style="background-color: rgb(36, 153, 173);" type="button" (click)="toggleEdit()">
                 {{ isEditing ? 'Cancelar' : 'Editar' }}
               </button>

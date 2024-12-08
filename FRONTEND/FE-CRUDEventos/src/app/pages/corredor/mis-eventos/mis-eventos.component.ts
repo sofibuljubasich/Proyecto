@@ -15,7 +15,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MisEventosComponent {
   eventos: any[] = [];
+  eventosNoFiltrados: any[] = [];
   currentUser!: any;
+  textoBusqueda: string = '';
   constructor(
     private _inscripcionService: InscripcionService,
     private _authService: AuthService,
@@ -41,9 +43,16 @@ export class MisEventosComponent {
     this._inscripcionService
       .getInscxUsuario(this.currentUser.id)
       .subscribe((data: any[]) => {
-        this.eventos = data;
-        console.log(this.eventos);
+        this.eventosNoFiltrados = data;
+        this.filtrarEventos();
       });
+  }
+  filtrarEventos(): void {
+    
+    this.eventos = this.eventosNoFiltrados.filter((evento) =>
+      evento.nombre.toLowerCase().includes(this.textoBusqueda.toLowerCase())
+    );
+
   }
   parametrosBusqueda: Busqueda = {
     texto: '',

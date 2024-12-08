@@ -56,6 +56,7 @@
                 {{ volunteer.nombre }} {{ volunteer.apellido }}
               </div>
             </div>
+            <div style="color: gray;" *ngIf="task.tarea.otrosVoluntarios.length===0">No hay otros voluntarios asignados</div>
           </td>
         </ng-container>
 
@@ -68,6 +69,7 @@
                 <mat-icon>forum</mat-icon>
               </button>
             </div>
+            <div style="color: gray;" *ngIf="task.tarea.otrosVoluntarios.length===0">-</div>
           </td>
         </ng-container>
 

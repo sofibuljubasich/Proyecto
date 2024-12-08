@@ -11,6 +11,7 @@ import { Comentario, ComentarioNuevo } from 'src/app/interfaces/comentario';
 import { AuthService } from 'src/app/services/auth.service';
 import { ComentarioService } from 'src/app/services/comentario.service';
 import { CorredorService } from 'src/app/services/corredor.service';
+import { InscripcionService } from 'src/app/services/inscripcion.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -28,18 +29,22 @@ export class ComentariosComponent implements OnInit {
   isAuthenticated: boolean = false;
   baseUrl: string = `https://localhost:7296`;
   errorMessage: string = '';
+  misEventos: any[] = [];
+  estaInscrita:boolean =false;
 
   constructor(
     private _comentarioService: ComentarioService,
     private fb: FormBuilder,
     private _authService: AuthService,
     private _corredorService: CorredorService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private _inscripcionService: InscripcionService,
   ) {}
 
   ngOnInit(): void {
     this.isAuthenticated = this._authService.isAuthenticated();
     this.loadComentarios();
+
     this.comentarioForm = this.fb.group({
       contenido: ['', Validators.required],
     });
@@ -48,6 +53,7 @@ export class ComentariosComponent implements OnInit {
         this._corredorService.getCorredor(userId).subscribe({
           next: (user) => {
             this.currentUser = user;
+            this.obtenerMisEventos();
           },
           error: (error) => {
             console.error('Failed to fetch user data:', error);
@@ -57,6 +63,17 @@ export class ComentariosComponent implements OnInit {
         this.currentUser = null;
       }
     });
+  }
+
+  obtenerMisEventos(): void {
+    this._inscripcionService
+      .getInscxUsuario(this.currentUser.id)
+      .subscribe((data: any[]) => {
+        this.misEventos = data;
+        this.estaInscrita = this.misEventos.some((e) => e.id === this.eventoId)
+        console.log(this.estaInscrita)
+      });
+    
   }
   toggleFormulario(): void {
     if (this.isAuthenticated) {

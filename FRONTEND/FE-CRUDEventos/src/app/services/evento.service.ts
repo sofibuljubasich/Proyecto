@@ -47,17 +47,25 @@ export class EventoService {
     );
   }
 
-  createEvento(evento: any): Observable<Evento> {
-    return this.http.post<Evento>(`${this.myAppUrl}${this.myApiUrl}`, evento);
+  createEvento(evento: any): Observable<any> {
+    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, evento);
   }
 
   // Actualizar un evento existente
   updateEvento(id: number, evento: any) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<any>(
-      `${this.myAppUrl}${this.myApiUrl}${id}`,
+    return this.http.put(
+      `${this.myAppUrl}${this.myApiUrl}Update/${id}`,
       evento,
-      { headers, responseType: 'text' as 'json' }
+    );
+  }
+  updateImagen(id: number, imagen: File) {
+    const formData = new FormData();
+    formData.append('imagen',imagen);
+    formData.append('eventoID', id.toString());
+    //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(
+      `${this.myAppUrl}${this.myApiUrl}UploadImage`,
+      formData
     );
   }
   descargar(eventoID: number): Observable<any> {

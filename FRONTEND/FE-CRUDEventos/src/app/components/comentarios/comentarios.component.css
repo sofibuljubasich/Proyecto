@@ -97,3 +97,9 @@ main{
     font-size: 0.8em;
     color: gray;
   }
+
+  .comentarios-header button:disabled {
+    background-color: gray; /* Color gris para el estado deshabilitado */
+    color: darkgray; /* Color del texto en gris */
+    cursor: not-allowed; 
+  }

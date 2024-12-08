@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Busqueda } from 'src/app/interfaces/busqueda';
-import { EventoResponse } from 'src/app/interfaces/evento';
+import { Evento, EventoResponse } from 'src/app/interfaces/evento';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventoService } from 'src/app/services/evento.service';
 import { TipoEventoService } from 'src/app/services/tipo-evento.service';
@@ -15,6 +15,8 @@ export class VistaTareasComponent {
   eventos: any = [];
   eventosActivos: any = [];
   userRole: number = 3;
+  eventoss: any = [];
+  textoBusqueda: string = '';
 
   constructor(
     private _eventoService: EventoService,
@@ -43,7 +45,7 @@ export class VistaTareasComponent {
     this._eventoService.buscar(this.parametrosBusqueda).subscribe(
       (data: any[]) =>{
       this.eventos = data;
-      this.filtrarEventos(this.eventos);
+      this.filtrarEventos();
     });
   }
 
@@ -56,10 +58,13 @@ export class VistaTareasComponent {
   };
 
   // ver que los eventos inactivos tengan resultados
-  filtrarEventos(ev:any[]): void {
-    this.eventosActivos = ev.filter(
+  filtrarEventos(): void {
+    let eventosFiltrados = this.eventos.filter((evento:Evento) =>
+      evento.nombre.toLowerCase().includes(this.textoBusqueda.toLowerCase())
+    );
+    this.eventosActivos = eventosFiltrados.filter(
       // fijarse q tengan resultados
-      (evento) => evento.estado !== 'Inactivo'
+      (evento:Evento) => evento.estado !== 'Inactivo'
     );
   }
 }

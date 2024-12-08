@@ -53,6 +53,11 @@ body {
     width: 50px;
     height: auto;
 }
+.error-message {
+  color: red;
+font-size: 12px;
+position: absolute;
+}
   .update-image input[type="file"] {
     margin-right: 10px;
   }
@@ -75,11 +80,18 @@ body {
     /* margin-top: -20px; */
   }
   
-  .datos {
+  .datos3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Dos columnas para los datos */
+    gap: 5px; /* Espacio entre las columnas */
+    padding: 10px 30px;
+    align-items: start;
+  }
+  .datos2 {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Dos columnas para los datos */
     gap: 5px; /* Espacio entre las columnas */
-    padding: 20px 30px;
+    padding: 10px 30px;
     align-items: start;
   }
   
@@ -290,6 +302,12 @@ body {
     /* display: flex; */
     align-items: center;
     height: 65px;
+  }
+  .datoPrecio {
+    color: white;
+    font-size: 14px;
+    /* display: flex; */
+    align-items: center;
   }
   label {
     display: block;

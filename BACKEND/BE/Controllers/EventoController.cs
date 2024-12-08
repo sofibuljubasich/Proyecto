@@ -309,7 +309,7 @@ namespace BE.Controllers
 
 
 
-                return Ok("Evento creado");
+                return Ok(newEvento.ID);
 
             }
             catch (Exception ex)
@@ -319,7 +319,7 @@ namespace BE.Controllers
         }
 
         [HttpPost("UploadImage")]
-         public async Task<IActionResult> GuardarImagen([FromForm] IFormFile imagen, int eventoID)
+         public async Task<IActionResult> GuardarImagen([FromForm] IFormFile? imagen, [FromForm] int eventoID)
         {
             try
             {

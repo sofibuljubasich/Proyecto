@@ -5,21 +5,21 @@
           <input type="text" placeholder="Buscar evento">
           <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
       </section> -->
-      <form #buscarForm="ngForm" (change)="obtenerEventos()">
+      <form >
         <section class="buscador">      
             <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
-            <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
+            <input type="text" name="texto" [(ngModel)]="textoBusqueda" (input)="filtrarEventos()" placeholder="Buscar evento..." autocomplete="off">
             <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
         </section>
         <section class="filtro">
           <div class="filtro-column fechas">
             <div class="field-filtro">
                 <mat-label for="fechaIni">Fecha Desde:</mat-label>
-                <input id="fechaIni" name="fechaIni" [(ngModel)]="parametrosBusqueda.fechaIni" type="date" class="filter">
+                <input id="fechaIni" name="fechaIni" [(ngModel)]="fechaDesde" (input)="filtrarEventos()" type="date" class="filter">
             </div>
             <div class="field-filtro">
                 <mat-label for="fechaFin">Fecha Hasta:</mat-label>
-                <input id="fechaFin" name="fechaFin" [(ngModel)]="parametrosBusqueda.fechaFin" type="date" class="filter">
+                <input id="fechaFin" name="fechaFin" [(ngModel)]="fechaHasta" (input)="filtrarEventos()" type="date" class="filter">
             </div>
         </div>
     
@@ -27,15 +27,15 @@
         <div class="filtro-column tipo-lugar">
             <div class="field-filtro">
                 <mat-label for="tipoEvento">Tipo evento:</mat-label>
-                <select id="tipoEvento" [(ngModel)]="parametrosBusqueda.tipoEvento" name="tipoEvento" class="filter">
+                <select id="tipoEvento" [(ngModel)]="tipoEvento" (change)="filtrarEventos()" name="tipoEvento" class="filter">
                     <option value=''>Tipo evento:</option>
-                    <option *ngFor="let tipo of tipos" [value]="tipo.descripcion">{{ tipo.descripcion }}</option>
+                    <option *ngFor="let tipo of tipos" [value]="tipo.id">{{ tipo.descripcion }}</option>
                 </select>
             </div>
             <div class="field-filtro">
                 <mat-label for="lugar">Seleccione lugar:</mat-label>
-                <select id="lugar" [(ngModel)]="parametrosBusqueda.lugar" name="lugar" class="filter">
-                    <option value="">Seleccione lugar</option>
+                <select id="lugar" [(ngModel)]="lugar" (change)="filtrarEventos()" name="lugar" class="filter">
+                    <option value=''>Seleccione lugar</option>
                     <option *ngFor="let lugar of lugares" [value]="lugar">{{ lugar }}</option>
                 </select>            
             </div>
@@ -46,42 +46,38 @@
   
       <section class="eventos">
         <h2> Próximos Eventos</h2>
-        <div class="event-list">
-          <div style="text-align: center;padding: 20px;font-size: 18px;" *ngIf="eventosActivos.length === 0">
-            No hay futuros eventos.
-            <!-- <mat-spinner></mat-spinner> -->
-          </div>
+        <div  *ngIf="eventosActivos.length !== 0" class="event-list">
           <app-listado-evento [eventos]="eventosActivos"></app-listado-evento>
-
+        </div>
+        <div class="event-list" style="text-align: center;padding: 20px;font-size: 18px;" *ngIf="eventosActivos.length === 0">
+          No se encuentran eventos 
+          <!-- <mat-spinner></mat-spinner> -->
         </div>
     </section>
    <section class="eventos">
         <h2>Eventos Finalizados</h2>
-        <div class="event-list">
-          <div style="text-align: center;padding: 20px;font-size: 18px;" *ngIf="eventosInactivos.length === 0">
-            No se encuentran eventos de esas características.
-          </div>
+        <div *ngIf="eventosInactivos.length !== 0" class="event-list">
           <app-listado-evento [eventos]="eventosInactivos"></app-listado-evento> 
+        </div>
+        <div class="event-list" style="text-align: center;padding: 20px;font-size: 18px;" *ngIf="eventosInactivos.length === 0">
+          No se encuentran eventos de esas características.
         </div>
       </section>
      <section>
-        <div class="sobre-nosotros" style="background-color: #04364A; height: 100px; justify-content: center; align-items: center;">
-          <div class="redes-sociales" style="width: 10%;">
+        <div class="sobre-nosotros" style="background-color: #04364A; height: 100px; display: flex; justify-content: center; align-items: center;">
+
             <button class="Btn">
               <span class="svgContainer">
                 <svg fill="white" class="svgIcon" viewBox="0 0 448 512" height="1.5em" ><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg>
               </span>
-              <span class="BG"></span>
              </button>
-          </div>
-          <div style="background-color: #419197; width: 70%;height: 100px; align-content: center; border-radius: 50% 80% 50% 80%;">
             <p style="color: white; margin: 5%;">
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
               the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
               of type and scrambled it to make a type specimen book.
             </p>
-          </div>
-            <div style="color: white; font-size: 30px; margin-left: 2%;">
+
+            <div style="color: white; font-size: 30px; gap: 30px">
               Sobre Nosotros
             </div>
           

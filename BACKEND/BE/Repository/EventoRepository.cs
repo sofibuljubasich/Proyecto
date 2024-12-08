@@ -63,7 +63,7 @@ namespace BE.Repository
         public async Task<Evento> GetEvento(int id)
         
         {
-            var evento =  await _context.Eventos.FirstOrDefaultAsync(e => e.ID == id);
+            var evento =  await _context.Eventos.Include(e => e.Categorias).FirstOrDefaultAsync(e => e.ID == id);
             return evento;
           
         }

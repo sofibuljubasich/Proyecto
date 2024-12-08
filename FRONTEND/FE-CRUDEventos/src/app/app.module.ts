@@ -56,6 +56,7 @@ import { ChatSelectorComponent } from './components/chat-selector/chat-selector.
 import { FilterByNamePipe } from './pipes/filter-by-name.pipe';
 import { CategoriaComponent } from './pages/admin/abm-categoria/abm-categoria.component';
 import { DistanciaComponent } from './pages/admin/abm-distancia/abm-distancia.component';
+import { MiInscripcionComponent } from './pages/corredor/mi-inscripcion/mi-inscripcion.component';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
@@ -116,6 +117,7 @@ import { NgChartsModule } from 'ng2-charts';
     HelpAComponent,
     HelpIComponent,
     HelpVComponent,
+    MiInscripcionComponent
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

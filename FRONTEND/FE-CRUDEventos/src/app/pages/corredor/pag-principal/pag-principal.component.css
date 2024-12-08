@@ -128,7 +128,7 @@ body {
   flex: 1;
   border: 0;
   outline: none;
-  padding: 12px 16px; /* Ajuste de padding para mejor visualización en móvil */
+  padding: 24px 20px; /* Ajuste de padding para mejor visualización en móvil */
   font-size: 16px; /* Reducido para pantallas más pequeñas */
   color: #1d1d1d;
 }

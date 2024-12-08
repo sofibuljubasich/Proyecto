@@ -1,12 +1,13 @@
 <div class="container">
     <main class="main">
-        <form #buscarForm="ngForm" (change)="obtenerEventos()">
+        <form >
             <section class="buscador">      
                 <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input> -->
-                <input type="text" name="texto" [(ngModel)]="parametrosBusqueda.texto" placeholder="Buscar evento" autocomplete="off">
+                <input type="text" name="texto" [(ngModel)]="textoBusqueda" (input)="filtrarEventos()" placeholder="Buscar evento" autocomplete="off">
                 <mat-icon class="icono" aria-hidden="false" aria-label="Example calendar icon" fontIcon="search"></mat-icon>
             </section>
-            <div style="justify-content: end; padding-right: 10%;display: flex; padding-bottom: 15px;">
+            <div style="justify-content: space-between;padding: 0% 10% 0%;display: flex; padding-bottom: 15px;">
+              <button routerLink="/reportes" class="agregar-button">Reportes Generales</button>
               <button routerLink="/altaEventos" class="agregar-button">+ Agregar Evento</button>
             </div>
         </form>
@@ -33,7 +34,7 @@
                       <button (click)="verInscripciones(eventoResp.id, eventoResp.nombre)" 
                       class="tareas-button">
                 Inscripciones</button>
-                      <button routerLink="/reportes/{{eventoResp.id}}" [queryParams]="{ nombre: eventoResp.nombre }" class="tareas-button">Reportes</button>
+                      <button routerLink="/reportes/{{eventoResp.id}}" [queryParams]="{ nombre: eventoResp.nombre }" class="tareas-button">Reporte</button>
                       <button routerLink="/alta-resultados/{{eventoResp.id}}" [queryParams]="{ nombre: eventoResp.nombre }"  class="tareas-button">Resultados</button>
                       <button (click)="enviarMail(eventoResp.id)" class="tareas-button">Enviar mail</button>
                     </div>

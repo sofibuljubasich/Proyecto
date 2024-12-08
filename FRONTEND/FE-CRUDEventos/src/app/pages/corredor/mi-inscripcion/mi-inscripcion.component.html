@@ -1,0 +1,94 @@
+<body>
+    <div *ngIf="eventoData" class="container">
+      <div class="imagen-y-opciones">
+        <img [src]="imagenURL" alt="Descripción de la imagen" class="imagen">
+        <div class="opciones">
+            <button *ngIf="currentUser.rolID==3" (click)="goBack()" style="border: none; color:aliceblue; background-color: rgb(83, 82, 82);justify-content: center;">← Regresar</button>
+            <button *ngIf="currentUser.rolID!=3" (click)="goBack()" style="border: none; text-decoration: underline;background:none;">← Regresar</button>
+            <button *ngIf="currentUser.rolID!=3" mat-raised-button (click)="onInscribirse()" color="primary">Inscribirse</button>
+        </div>
+    </div>
+
+      <div class="content">
+            <div class="titulo">{{eventoData.evento.nombre}}</div>
+          <div class="datos">
+            <div class="dato">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="calendar_month"></mat-icon>
+              <p class="label">Fecha:</p>
+              <p class="date">{{ getFormattedDate(eventoData.evento.fecha) }}</p>
+            </div>
+            <div class="dato">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="location_on"></mat-icon>
+              <p class="label">Localización:</p>
+              <p class="date">{{ eventoData.evento.lugar }}</p>
+            </div>
+            <div class="dato">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="directions_run"></mat-icon>
+              <p class="label">Tipo de evento:</p>
+              <p class="date">{{ eventoData.evento.tipo.descripcion }}</p>
+            </div>
+            <div class="dato">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="schedule"></mat-icon>
+              <p class="label">Hora:</p>
+              <p class="date">{{ getFormattedTime(eventoData.evento.fecha) }}</p>
+            </div>
+          </div>
+          <!--<div class="second">
+            <div class="tipo">
+              <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="directions_run"></mat-icon>
+              <p class="label">Tipo de evento:</p>
+              <p class="date">{{ eventoData.evento.tipo.descripcion }}</p>
+            </div>
+          </div>-->
+          <div class="datos">
+              <div class="item">
+                <div class="columna">
+                  <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="flag"></mat-icon>
+                  <p class="label">Distancias asociadas:</p>
+                </div>
+                <div class="distancias">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Kilometro</th>
+                        <th>Precio</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let distancia of eventoData.distancias" class="distancia-item">
+                        <td>{{ distancia.km }} Km</td>
+                        <td>$ {{ distancia.precio }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="columna">
+                  <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example calendar icon" fontIcon="local_offer"></mat-icon>
+                  <p class="label">Categorías asociadas:</p>
+                </div>
+                <div class="distancias">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Edad Inicio</th>
+                        <th>Edad final</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let categoria of eventoData.categorias" class="distancia-item">
+                        <td>{{ categoria.edadInicio }}</td>
+                        <td>{{ categoria.edadFin }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+</body>

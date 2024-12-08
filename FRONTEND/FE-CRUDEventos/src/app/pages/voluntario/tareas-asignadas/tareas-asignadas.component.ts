@@ -91,13 +91,13 @@ export class TareasAsignadasComponent {
     this._tvService.updateEstado(this.taskData2).subscribe();
   }
 
-  openCommentForm(task: Tarea): void {
+  openCommentForm(task: any): void {
     const bottomSheetRef = this.bottomSheet.open(CommentFormComponent);
-    console.log(task);
+    console.log("Tarea",task);
     bottomSheetRef.afterDismissed().subscribe((comment) => {
       if (comment) {
         console.log(comment);
-        this.taskData.tareaID = task.id;
+        this.taskData.tareaID = task.tarea.id;
         this.taskData.voluntarioID = parseInt(this.volId, 10);
         this.taskData.comentario = comment;
         this._tvService.addComentario(this.taskData).subscribe();
