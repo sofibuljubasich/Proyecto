@@ -25,6 +25,16 @@ export class CorredorService {
       `${this.myAppUrl}${this.myApiUrl}/existe/${dni}`
     );
   }
+  updateImagen(id: number, imagen: File) {
+    const formData = new FormData();
+    formData.append('imagen',imagen);
+    formData.append('corredorID', id.toString());
+    //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(
+      `${this.myAppUrl}${this.myApiUrl}UploadImage`,
+      formData
+    );
+  }
   getUserAge(currentUser: Usuario): number | null {
     console.log('fechaNac', currentUser.fechaNacimiento);
     if (currentUser && currentUser.fechaNacimiento) {

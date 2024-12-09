@@ -11,6 +11,7 @@ import { TipoEventoService } from 'src/app/services/tipo-evento.service';
 import { DistanciaResponse } from 'src/app/interfaces/distancia';
 import { DistanciaService } from 'src/app/services/distancia.service';
 import { filter } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-agregar-editar-evento',
@@ -78,6 +79,7 @@ export class AgregarEditarEventoComponent implements OnInit {
     private categoriaService: CategoriaService,
     private location: Location,
     private _tipoService: TipoEventoService,
+    private snackBar: MatSnackBar,
     private datePipe: DatePipe
   ) {
     this.eventForm = this.fb.group({
@@ -314,7 +316,9 @@ export class AgregarEditarEventoComponent implements OnInit {
         this._eventoService.createEvento(this.eventoDataCreate).subscribe((id) => {
           this.id=id;
           this.updateImagen(id);
+          
           this.isEditing = false; // Volver a modo solo lectura
+          
           this.obtenerEvento();
         });
       }
@@ -340,7 +344,9 @@ export class AgregarEditarEventoComponent implements OnInit {
   updateImagen(id:any){
     debugger;
     this._eventoService.updateImagen(id,this.eventForm.value.imagen).subscribe({
-      next:response => alert('Imagen actualizada'),
+      next:response => this.snackBar.open('Evento actualizado exitosamente', 'Cerrar', {
+        duration: 400,
+      }),
       error: err => console.error('error al subir la imagen',err)
     });
   }

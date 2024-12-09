@@ -16,6 +16,10 @@ export class PerfilComponent implements OnInit {
   corredor: Corredor | null = null; // Datos del usuario
   isEditing: boolean = false;
   idCorredor: number = 0;
+  imagenURL!: string;
+  selectedFile: File | null = null;
+  selectedFileUrl: string | null = null;
+  imageForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
@@ -38,6 +42,9 @@ export class PerfilComponent implements OnInit {
       genero: ['', Validators.required],
       obraSocial: [''],
     });
+    this.imageForm = this.fb.group({
+      imagen: [null],
+    });
     this.aRoute.queryParams.subscribe((params) => {
       this.idCorredor = params['id'] || 0; // Valor por defecto
     });
@@ -54,6 +61,8 @@ export class PerfilComponent implements OnInit {
     this._corredorService.getCorredor(idAsString).subscribe({
       next: (corredor) => {
         this.corredor = corredor;
+        console.log(corredor)
+        this.imagenURL = `https://localhost:7296${corredor.imagen}`;
         if (corredor.fechaNacimiento) {
           corredor.fechaNacimiento = corredor.fechaNacimiento.split('T')[0];
         }
@@ -62,7 +71,21 @@ export class PerfilComponent implements OnInit {
       error: (err) => console.error('Error al cargar el perfil', err),
     });
   }
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.imageForm.patchValue({
+        imagen: file,
+      });
 
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedFileUrl = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
   // Método para habilitar la edición del perfil
   habilitarEdicion(): void {
     this.isEditing = true;
@@ -78,11 +101,17 @@ export class PerfilComponent implements OnInit {
         .Update(this.idCorredor, datosActualizados)
         .subscribe({
           next: () => {
-            this.isEditing = false;
-            this.perfilForm.disable();
-            this.snackBar.open('Perfil actualizado exitosamente', 'Cerrar', {
-              duration: 400,
-            });
+            if(this.imageForm.value.imagen!==null){
+
+              this.updateImagen(this.idCorredor);
+            } else {
+              this.snackBar.open('Perfil actualizado exitosamente', 'Cerrar', {
+                duration: 400,
+              });
+            }
+              this.isEditing = false;
+              this.perfilForm.disable();
+              
             window.location.reload();
             // this.router.navigate(['/inicio']);
           },
@@ -90,7 +119,15 @@ export class PerfilComponent implements OnInit {
         });
     }
   }
+  updateImagen(id:any){
 
+    this._corredorService.updateImagen(id,this.imageForm.value.imagen).subscribe({
+      next:response =>this.snackBar.open('Evento actualizado exitosamente', 'Cerrar', {
+        duration: 400,
+      }),
+      error: err => console.error('error al subir la imagen',err)
+    });
+  }
   // Método para cancelar la edición
   cancelarEdicion(): void {
     this.isEditing = false;
