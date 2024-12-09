@@ -1,6 +1,7 @@
 ﻿using BE.Interfaces;
 using BE.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Net.WebSockets;
 
 namespace BE.Repository
@@ -58,6 +59,17 @@ namespace BE.Repository
         public Corredor? Validate(string userEmail, string password)
         {
             return _context.Corredores.SingleOrDefault(x => x.Email == userEmail && x.Password == password);
+        }
+
+        public async Task CargarImagen(string ImagenURL, int corredorID)
+        {
+            var c = await _context.Corredores.SingleOrDefaultAsync(c => c.ID == corredorID);
+
+            if (c != null)
+            {
+                c.Imagen = ImagenURL;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

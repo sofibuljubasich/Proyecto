@@ -1,5 +1,7 @@
-﻿using BE.Interfaces;
+﻿using BE.Dto;
+using BE.Interfaces;
 using BE.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -35,9 +37,11 @@ namespace BE.Repository
         public async Task<Inscripcion> CreateInscripcion(Inscripcion inscripcion)
         {
             _context.Add(inscripcion);
-
             await _context.SaveChangesAsync();
-            return inscripcion;
+
+            return await _context.Inscripciones
+      .Include(i => i.Evento) // Suponiendo que 'Evento' es la propiedad de navegación
+      .FirstOrDefaultAsync(i => i.ID == inscripcion.ID);
         }
 
         public Task DeleteInscripcion(Inscripcion inscripcion)
@@ -49,6 +53,45 @@ namespace BE.Repository
         {
             return await _context.Inscripciones.FindAsync(id);
         }
+
+        public async Task<InscRepository> Get(int eventoID, int corredorID) 
+        {
+            var inscripcion = await _context.Inscripciones
+                .Include(i => i.Evento)
+                .ThenInclude(e => e.EventoDistancias)
+                .Include(i => i.Distancia)
+                .Include(i => i.Corredor)
+                
+          .Where(i => i.EventoID == eventoID && i.UsuarioID == corredorID)
+          .Select(i => new InscRepository
+          {
+              NombreEvento = i.Evento.Nombre,
+              Imagen = i.Evento.Imagen,
+              Tipo = i.Evento.Tipo.Descripcion,
+              Fecha = i.Evento.Fecha,
+              Hora = i.Evento.Hora,
+              LugarEvento = i.Evento.Lugar,
+              Distancia = new EventoDistanciaDto
+              {
+                  ID = i.Evento.EventoDistancias
+                    .FirstOrDefault(ed => ed.Distancia.ID == i.DistanciaID).ID,
+
+
+                  DistanciaID = i.DistanciaID,
+                  KM= i.Distancia.KM,
+                  Precio = i.Evento.EventoDistancias
+                    .FirstOrDefault(ed => ed.Distancia.ID == i.DistanciaID).Precio
+              },
+              CategoriaID = i.CategoriaID,
+          })
+          .FirstOrDefaultAsync();
+
+         
+                return inscripcion;
+           
+        }
+
+    
 
       
 

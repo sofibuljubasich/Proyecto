@@ -5,6 +5,7 @@ namespace BE.Repository
     public interface ICorredorRepository
     {
 
+        Task CargarImagen(string ImagenURL, int corredorID);
         Task<Corredor> GetCorredor(int id);
         Task<bool> ExisteCorredorConDNI(string dni);
         Task<Corredor> GetCorredorByDni(string dni);

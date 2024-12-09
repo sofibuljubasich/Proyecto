@@ -3,6 +3,8 @@ using BE.Dto;
 using BE.Interfaces;
 using BE.Models;
 using BE.Repository;
+using BE.Services;
+using MercadoPago.Resource.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BE.Controllers
@@ -15,13 +17,15 @@ namespace BE.Controllers
         private readonly IInscripcionRepository _inscripcionRepository;
         private readonly ICategoriaRepository _categoriaRepository;
         private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IEmailService _emailService;
 
-        public InscripcionController(IMapper mapper, IInscripcionRepository inscripcionRepository, ICategoriaRepository categoriaRepository, IUsuarioRepository usuarioRepository)
+        public InscripcionController(IMapper mapper, IInscripcionRepository inscripcionRepository, ICategoriaRepository categoriaRepository, IUsuarioRepository usuarioRepository, IEmailService emailService)
         {
             _mapper = mapper;
             _inscripcionRepository = inscripcionRepository;
             _categoriaRepository = categoriaRepository;
             _usuarioRepository = usuarioRepository;
+            _emailService = emailService;
 
         }
 
@@ -61,6 +65,15 @@ namespace BE.Controllers
                 inscrip = await _inscripcionRepository.CreateInscripcion(inscrip);
 
                 inscrip.NroTransaccion = inscripcionDto.NroTransaccion;
+
+
+                //Confirmacion via email
+                string emailBody = GenerateEmailBody(inscrip, corredor, categoria);
+
+                await _emailService.SendEmailAsync(corredor.Email, "Confirmación de Inscripción", emailBody);
+
+
+
                 return CreatedAtAction("Get", new { id = inscrip.ID });
 
             }
@@ -69,6 +82,42 @@ namespace BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        private string GenerateEmailBody(Inscripcion inscripcion, Corredor corredor, Categoria categoria)
+        {
+            // Plantilla HTML del correo
+            string template = System.IO.File.ReadAllText("Services/confirminscrip.html");
+
+            // Reemplazar los valores dinámicos
+            template = template.Replace("[Nombre]", corredor.Nombre);
+
+            template = template.Replace("[Evento]", inscripcion.Evento.Nombre);
+            
+            string categoriaString = $"{categoria.EdadInicio}-{categoria.EdadFin} años";
+
+            template = template.Replace("[Categoria]", categoriaString);
+            template = template.Replace("[Dorsal]", inscripcion.Dorsal.ToString());
+            template = template.Replace("[Fecha]", inscripcion.Fecha.ToString("dd/MM/yyyy"));
+            if (!string.IsNullOrEmpty(inscripcion.NroTransaccion))
+            {
+                template = template.Replace(
+                    "[NroTransaccion]",
+                    $"<li><strong>Número de Transacción Mercado Pago:</strong> {inscripcion.NroTransaccion}</li>"
+                );
+            }
+            else
+            {
+                template = template.Replace("[NroTransaccion]", "");
+            }
+
+
+            template = template.Replace("[Remera]", inscripcion.Remera);
+            template = template.Replace("[Forma]", inscripcion.FormaPago);
+            template = template.Replace("[Estado]", inscripcion.EstadoPago);
+            template = template.Replace("[Precio]", inscripcion.Precio.ToString());
+            return template;
+        }
+
 
         [HttpGet("{corredorID}")]
         public async Task<IActionResult>GetEventosByUser(int corredorID)
@@ -92,6 +141,37 @@ namespace BE.Controllers
 
         }
 
+        [HttpGet("GetInscripcion/{eventoID}/{corredorID}")]
+        public async Task<IActionResult> GetInscripcion(int eventoID, int corredorID)
+        {
+            var inscripcion = await _inscripcionRepository.Get(eventoID, corredorID);
+
+            if (inscripcion is null){
+                return NotFound();  
+           
+            }
+            var categoria = await _categoriaRepository.GetCategoria(inscripcion.CategoriaID);
+
+            var inscDto = new InscripcionGetDto
+            {
+                NombreEvento = inscripcion.NombreEvento,
+                Imagen = inscripcion.Imagen,    
+                Fecha = inscripcion.Fecha,  
+                Hora = inscripcion.Hora,    
+                Tipo = inscripcion.Tipo,    
+                LugarEvento = inscripcion.LugarEvento,  
+                Distancia = inscripcion.Distancia,
+                Categoria = _mapper.Map<CategoriaDto>(categoria),   
+            };
+            return Ok(inscDto); 
+
+
+
+
+
+        }
+
+
         [HttpGet("inscripcionID")]
         public async Task<IActionResult> Get(int inscripcionID)
         {
@@ -102,13 +182,12 @@ namespace BE.Controllers
                 var inscripcionDto = _mapper.Map<InscripcionDto>(inscripcion);
                 return Ok(inscripcion);
             }
+          
+
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
-
-
 
         }
 

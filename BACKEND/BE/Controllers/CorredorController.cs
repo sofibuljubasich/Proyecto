@@ -34,7 +34,39 @@ public async Task<IActionResult> ExisteUsuarioConDNI(string dni)
     return Ok(existe);
 }
 
+        [HttpPost("UploadImage")]
+        public async Task<IActionResult> GuardarImagen([FromForm] IFormFile? imagen, [FromForm] int corredorID)
+        {
+            try
+            {
+                string ImagenURL;
 
+                if (imagen != null && imagen.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
+                    var path = Path.Combine("wwwroot/imagenes/profile", fileName);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await imagen.CopyToAsync(stream);
+                    }
+
+                    ImagenURL = "/Imagenes/profile/" + fileName;
+                }
+                else
+                {
+                    // Asignar una imagen por defecto
+                    ImagenURL = "/Imagenes/profile/user-empty.jpg";
+                }
+
+                await _corredorRepository.CargarImagen(ImagenURL, corredorID);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpGet("{Dni}")]
         public async Task<IActionResult> GetByDni(string Dni)

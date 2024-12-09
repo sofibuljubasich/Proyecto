@@ -1,10 +1,12 @@
-﻿using BE.Models;
+﻿using BE.Dto;
+using BE.Models;
 
 namespace BE.Interfaces
 {
     public interface IInscripcionRepository
     {
-       
+
+        Task<InscRepository> Get(int eventoID, int corredorID);
         Task<Inscripcion> GetInscripcion(int id);
       
         Task UpdatePayment(int inscID, string estadoPago);

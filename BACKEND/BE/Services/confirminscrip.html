@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Inscripción</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f4f4f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #000000;
+            color: #ffffff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .content {
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .details {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .details th, .details td {
+                text-align: left;
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .details th {
+                background-color: #f4f4f7;
+                color: #333;
+            }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Confirmación de Inscripción</h2>
+        </div>
+        <div class="content">
+            <p>Hola [Nombre],</p>
+            <p>Tu inscripción al evento <strong>[Evento]</strong> ha sido confirmada.</p>
+            <p><strong>Detalles de la inscripción:</strong></p>
+            <table class="details">
+                <tr>
+                    <th>Categoría</th>
+                    <td>[Categoria]</td>
+                </tr>
+                <tr>
+                    <th>Dorsal</th>
+                    <td>[Dorsal]</td>
+                </tr>
+                <tr>
+                    <th>Talle Remera</th>
+                    <td>[Remera]</td>
+                </tr>
+                <tr>
+                    <th>Fecha de Inscripción</th>
+                    <td>[Fecha]</td>
+                </tr>
+                <tr>
+                    <th>Forma de Pago</th>
+                    <td>[Forma]</td>
+                </tr>
+                [NroTransaccion]
+                <tr>
+                    <th>Estado del Pago</th>
+                    <td>[Estado]</td>
+                </tr>
+                <tr>
+                    <th>Valor Inscripción</th>
+                    <td>[Precio]</td>
+                </tr>
+            </table>
+            <p>Recordá que en tu perfil podés encontrar más información del evento.</p>
+            <p>¡Gracias por participar!</p>
+        </div>
+        <div class="footer">
+            <p>Saludos,<br>El equipo de FinishLineManagement</p>
+        </div>
+    </div>
+</body>
+</html>
