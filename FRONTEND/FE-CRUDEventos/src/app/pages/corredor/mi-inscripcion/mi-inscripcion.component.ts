@@ -5,6 +5,7 @@ import { EventoResponse } from 'src/app/interfaces/evento';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventoService } from 'src/app/services/evento.service';
+import { InscripcionService } from 'src/app/services/inscripcion.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,7 +14,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrl: './mi-inscripcion.component.css'
 })
 export class MiInscripcionComponent {
-  eventoData!: EventoResponse;
+  eventoData!: any;
+  userId!: string;
   id!: number;
   fecha!: string;
   imagenURL!: string;
@@ -22,6 +24,7 @@ export class MiInscripcionComponent {
 
   constructor(
     private _eventoService: EventoService,
+    private _inscripcionService: InscripcionService,
     private aRoute: ActivatedRoute,
     private router: Router,
     private _userService: UserService,
@@ -33,7 +36,7 @@ export class MiInscripcionComponent {
   }
 
   ngOnInit(): void {
-    this.obtenerEvento();
+
     this._authService.userId$.subscribe((userId) => {
       console.log('id', userId);
       // this.userID = userId;
@@ -41,25 +44,27 @@ export class MiInscripcionComponent {
         this.userID = userId;
         this._userService.getUsuario(userId).subscribe({
           next: (user) => {
+            this.userId= userId
             this.currentUser = user;
+            this.obtenerInsc();
           },
         });
       }
     });
-    this.obtenerEvento();
+    this.obtenerInsc();
   }
   capitalizeFirstLetter(text: string): string {
     if (!text) return '';
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   }
-  obtenerEvento(): void {
-    this._eventoService.getEvento(this.id).subscribe((data) => {
-      this.eventoData = data;
-      this.imagenURL = `https://localhost:7296${this.eventoData.evento.imagen}`;
+  obtenerInsc(): void {
+    this._inscripcionService.getInscripcion(this.id,this.userId).subscribe((insc) => {
+      this.eventoData = insc;
+      this.imagenURL = `https://localhost:7296${this.eventoData.imagen}`;
       this.eventoData.evento.nombre = this.capitalizeFirstLetter(
-        data.evento.nombre
+        insc.nombreEvento
       );
-    });
+    })
   }
   getFormattedDate(date: string | Date): string | null {
     return this.datePipe.transform(date, 'dd/MM/yyyy');
@@ -70,11 +75,5 @@ export class MiInscripcionComponent {
   goBack(): void {
     this.location.back();
   }
-  onInscribirse(): void {
-    if (this._authService.isAuthenticated()) {
-      this.router.navigate([`/inscribirse/${this.eventoData.evento.id}`]);
-    } else {
-      this.router.navigate(['/login']);
-    }
-  }
+
 }

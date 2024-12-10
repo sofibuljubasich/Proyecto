@@ -102,7 +102,7 @@ export class PerfilComponent implements OnInit {
         .subscribe({
           next: () => {
             if(this.imageForm.value.imagen!==null){
-
+              console.log(this.imageForm.value.imagen)
               this.updateImagen(this.idCorredor);
             } else {
               this.snackBar.open('Perfil actualizado exitosamente', 'Cerrar', {

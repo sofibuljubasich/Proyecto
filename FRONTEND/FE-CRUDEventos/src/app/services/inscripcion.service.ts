@@ -33,7 +33,11 @@ export class InscripcionService {
       `${this.myAppUrl}${this.myApiUrl}/${idUsuario}`
     );
   }
-
+  getInscripcion(idEvento:number, idCorredor:string):Observable<any>{
+    return this.http.get<any>(
+      `${this.myAppUrl}${this.myApiUrl}/GetInscripcion/${idEvento}/${idCorredor}`
+    );
+  }
   acreditar(id: number, estado: boolean): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.patch(

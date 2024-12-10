@@ -32,7 +32,7 @@
             <mat-icon  style="color: rgb(0, 0, 0); margin-inline-start: 0px;">info</mat-icon>
           </button>
           <button *ngIf="!estaInscrita(eventoResp)" (click)="onInscribirse()" class="signup-button" >Inscribirse</button>
-          <button style="background-color: rgb(0, 0, 0);"  *ngIf="estaInscrita(eventoResp)" (click)="ver(eventoResp)" class="signup-button" >Mi inscripcion</button>
+          <button style="background-color: rgb(0, 0, 0);"  *ngIf="estaInscrita(eventoResp)" routerLink="/miInscripcion/{{eventoResp.id}}" class="signup-button" >Mi inscripcion</button>
         </div>
       </ng-container>
       <ng-container *ngIf="eventoResp.estado === 'Inactivo'">

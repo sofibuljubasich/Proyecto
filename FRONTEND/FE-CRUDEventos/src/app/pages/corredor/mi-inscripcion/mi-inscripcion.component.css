@@ -9,7 +9,7 @@ html, body {
   }
   
   .container {
-    padding: 10% 3% 0px 3%;
+    padding: 140px 3% 0px 3%;
     display: grid;
     grid-template-columns: 3fr 4fr; /* Imagen y opciones a la izquierda (3fr), contenido a la derecha (4fr) */
     gap: 16px;
@@ -57,12 +57,31 @@ html, body {
     grid-template-rows: auto auto;
     gap: 0px;
   }
-  
-  .titulo {
-    padding-left: 20%;
+.titulo-container{
+  padding-right: 170px;
+}
+  .titulo2 {
     font-size: 40px;
     font-weight: bold;
     color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex
+    ;
+        justify-content: center;
+  }
+  .titulo {
+    font-size: 30px;
+    color: #226e8c;
+    display: flex
+    ;
+        justify-content: center;
+
+        text-shadow: 
+        -1px -1px 0 rgb(159, 215, 239), /* Sombra superior izquierda */
+         1px -1px 0  rgb(159, 215, 239), /* Sombra superior derecha */
+        -1px  1px 0  rgb(159, 215, 239), /* Sombra inferior izquierda */
+         1px  1px 0 rgb(159, 215, 239); /* Sombra inferior derecha */
   }
   
   .datos {

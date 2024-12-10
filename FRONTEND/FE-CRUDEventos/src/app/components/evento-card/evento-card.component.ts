@@ -41,10 +41,6 @@ export class EventoCardComponent implements OnInit {
     this.formattedDate = this.formatDate(this.eventoResp.fecha);
     this.formattedName = this.capitalizeFirstLetter(this.eventoResp.nombre);
   }
-  ver(evento:any): void {
-    console.log('Ver detalles del evento:', evento);
-    // Redirigir o mostrar detalles
-  }
   estaInscrita(evento: any): boolean {
     // console.log(evento);
     return this.misEventos.some((e) => e.id === evento.id);

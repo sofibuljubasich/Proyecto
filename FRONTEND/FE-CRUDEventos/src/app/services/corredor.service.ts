@@ -31,7 +31,7 @@ export class CorredorService {
     formData.append('corredorID', id.toString());
     //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(
-      `${this.myAppUrl}${this.myApiUrl}UploadImage`,
+      `${this.myAppUrl}${this.myApiUrl}/UploadImage`,
       formData
     );
   }
