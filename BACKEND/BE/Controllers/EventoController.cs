@@ -391,9 +391,9 @@ namespace BE.Controllers
                     evento.Estado = eventoDto.Estado;
                 }
 
-                if (eventoDto.TipoID != null) 
+                if (eventoDto.TipoID != null)
                 {
-                    evento.TipoID = eventoDto.TipoID;   
+                    evento.TipoID = eventoDto.TipoID;
                 }
 
                 // Actualizar Categorías del Evento
@@ -431,7 +431,7 @@ namespace BE.Controllers
                 // Manejo evento-distancia-precio
                 var distanciasExistentes = await _eventoDistanciaRepository.GetDistanciasByEvento(eventoID);
 
-           
+
                 if (distanciasExistentes == null)
                 {
                     return NotFound("No se encontraron registros de EventoDistancia para el evento especificado.");
@@ -476,6 +476,7 @@ namespace BE.Controllers
                         eventoDistanciasParaActualizar.Add(nuevaRelacion);
                     }
                 }
+                await _eventoDistanciaRepository.Actualizar(eventoDistanciasParaActualizar);
 
                 // Guardar los cambios finales del evento
                 await _eventoRepository.Update(evento);
