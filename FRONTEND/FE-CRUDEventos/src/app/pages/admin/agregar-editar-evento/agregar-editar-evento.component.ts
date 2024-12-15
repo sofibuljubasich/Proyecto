@@ -12,6 +12,7 @@ import { DistanciaResponse } from 'src/app/interfaces/distancia';
 import { DistanciaService } from 'src/app/services/distancia.service';
 import { filter } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EventoDistanciaService } from 'src/app/services/evento-distancia.service';
 
 @Component({
   selector: 'app-agregar-editar-evento',
@@ -29,8 +30,10 @@ export class AgregarEditarEventoComponent implements OnInit {
   selectedFile?: File;
   selectedFileUrl: string | null = null;
   categorias: CategoriaResponse[] = [];
+  categoriasGral: CategoriaResponse[] = [];
   tipos: Tipo[] = [];
   dist: DistanciaResponse[] = [];
+  distGral: DistanciaResponse[] = [];
   distancias: any[] = [];
   cat: any[] = [];
   evDist: EventoDistancia[]=[];
@@ -80,6 +83,7 @@ export class AgregarEditarEventoComponent implements OnInit {
     private location: Location,
     private _tipoService: TipoEventoService,
     private snackBar: MatSnackBar,
+    private _evDistService: EventoDistanciaService,
     private datePipe: DatePipe
   ) {
     this.eventForm = this.fb.group({
@@ -96,9 +100,10 @@ export class AgregarEditarEventoComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerCategorias();
+    this.getDist(); 
     this.obtenerEvento();
 
-    this.getDist();
+
     this.obtenerTipo();
     console.log(this.eventForm.value.imagen)
   }
@@ -107,10 +112,16 @@ export class AgregarEditarEventoComponent implements OnInit {
   }
   obtenerCategorias() {
     this.categoriaService.getCategorias().subscribe((data) => {
-      this.cat= data
+      this.categoriasGral= data
+      this.cat=data
+      console.log("categorias", this.categoriasGral)
       if (this.cat.length > 0) {
         this.categoriaSeleccionada = this.cat[0].id;
       }
+      //if (this.cat.length > 0) {
+      //  this.categoriaSeleccionada = this.cat[0].id;
+      //  console.log(this.categoriaSeleccionada)
+      //}
     });
   }
   aceptarCat() {
@@ -155,10 +166,11 @@ export class AgregarEditarEventoComponent implements OnInit {
       console.log('Distancia seleccionada:', distanciaSelect);
       // Lógica para agregar la categoría
       this.distancias.push({distanciaID:distanciaSelect.id,km:distanciaSelect.km,precio:this.price});
-      console.log(this.distancias)
+      console.log("distancias del evento",this.distancias)
       this.price=0;
       this.dist = this.dist.filter(c => c.id !== distanciaSelect.id);
       this.distanciaSeleccionada = this.dist[0].id;
+      console.log("dist predet", this.distanciaSeleccionada)
     } else {
       console.error('Distancia no encontrada.');
     }
@@ -171,8 +183,13 @@ export class AgregarEditarEventoComponent implements OnInit {
   }
   getDist() {
     this.distanciaService.getDistancias().subscribe((data) => {
-      this.dist = data;
+      this.distGral = data;
+      this.dist=data
+      if (this.dist.length > 0) {
+        this.distanciaSeleccionada = this.dist[0].id;
+      }
     });
+
   }
   obtenerTipo() {
     this._tipoService.getTipos().subscribe(
@@ -187,6 +204,7 @@ export class AgregarEditarEventoComponent implements OnInit {
   obtenerEvento() {
     if (this.id) {
       this._eventoService.getEvento(this.id).subscribe((data) => {
+        console.log(data)
         const fechaHora = new Date(data.evento.fecha);
         (this.currentEvent = data),
 
@@ -204,8 +222,9 @@ export class AgregarEditarEventoComponent implements OnInit {
         this.categorias = data.categorias; // Cargamos las categorías del evento
         this.filtrarCategorias();
         this.distancias = data.distancias;
- 
+        this.filtrarDistancias();
         console.log(this.eventForm);
+        console.log(this.distancias);
 
         // this.setDistancias(data.distancias);
         
@@ -213,10 +232,23 @@ export class AgregarEditarEventoComponent implements OnInit {
     }
   }
   filtrarCategorias(){
-    this.cat = this.categorias.filter(c => 
+    this.cat = this.categoriasGral.filter(c => 
       !this.categorias.some(categoriaEvento => categoriaEvento.id === c.id))
+    console.log("cat gral",this.categoriasGral)
+    console.log("cat a elegir ",this.cat)
+    console.log("cats evento",this.categorias)
     if (this.cat.length > 0) {
       this.categoriaSeleccionada = this.cat[0].id;
+    }
+  }
+  filtrarDistancias(){
+    this.dist = this.distGral.filter(d => 
+      !this.distancias.some(de => de.id === d.id))
+    console.log("dist gral",this.distGral)
+    console.log("dist a elegir ",this.dist)
+    console.log("dists evento",this.distancias)
+    if (this.dist.length > 0) {
+      this.distanciaSeleccionada = this.dist[0].id;
     }
   }
   onImageChange(event: any): void {
@@ -268,7 +300,7 @@ export class AgregarEditarEventoComponent implements OnInit {
   }
 
   Guardar(): void {
-    //debugger;
+
     if (this.eventForm.valid || this.distancias.length !== 0 || this.categorias.length !== 0) {
       this.evDist= this.distancias.map((d: Distancia) => ({
         distanciaID:d.distanciaID,
@@ -300,11 +332,13 @@ export class AgregarEditarEventoComponent implements OnInit {
         categorias: this.categorias,
         eventoDistancias: this.evDist 
       };
+      console.log("id del evento ",this.id)
       if(this.id){
         
         //actualizar imagen
         console.log('Datos del evento actualizado:', this.eventoDataUpdate);
         this._eventoService.updateEvento(this.id, this.eventoDataUpdate).subscribe(() => {
+
           if (this.eventForm.value.imagen!==null){
             this.updateImagen(this.id)
           }
