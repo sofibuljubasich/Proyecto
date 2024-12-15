@@ -15,6 +15,7 @@ export class HeaderComponent {
   isAuthenticated: boolean = false;
   currentUser: Usuario | null = null;
   imagenURL!: string;
+  userID: any;
 
   constructor(
     private _authService: AuthService,
@@ -26,9 +27,11 @@ export class HeaderComponent {
     this._authService.userId$.subscribe((userId) => {
       this.isAuthenticated = !!userId;
       if (userId) {
+        this.userID=userId;
         this._userService.getUsuario(userId).subscribe({
           next: (user) => {
             this.currentUser = user;
+
             console.log(userId);
             this.imagenURL = `https://localhost:7296${user.imagen}`;
           },
