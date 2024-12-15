@@ -338,7 +338,7 @@ export class AgregarEditarEventoComponent implements OnInit {
         //actualizar imagen
         console.log('Datos del evento actualizado:', this.eventoDataUpdate);
         this._eventoService.updateEvento(this.id, this.eventoDataUpdate).subscribe(() => {
-          this._evDistService.updateEvento(this.id, this.evDist)
+
           if (this.eventForm.value.imagen!==null){
             this.updateImagen(this.id)
           }
