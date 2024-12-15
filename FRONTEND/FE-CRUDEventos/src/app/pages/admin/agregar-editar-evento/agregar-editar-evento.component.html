@@ -165,7 +165,7 @@
                     <option style="color: aliceblue;text-wrap: auto;" *ngIf="cat.length === 0" disabled>No hay categorías adicionales</option>
                     <select *ngIf="cat.length !== 0" [(ngModel)]="categoriaSeleccionada" [ngModelOptions]="{standalone: true}">
                       <option style="color: black;" *ngFor="let c of cat" [value]="c.id">
-                        ({{ c.edadInicio }} - {{ c.edadFin }})
+                        {{ c.edadInicio }} - {{ c.edadFin }}
                       </option>
                     </select>
                   </td>

@@ -16,8 +16,9 @@
                 </div>
                 <!-- <img src="../../../../images/perfil-empty.jpg" alt="Event Image" class="imagen"> -->
                 <img [src]="imagenURL" [matMenuTriggerFor]="menu" alt="Event Image" class="imagen">
-                <mat-menu style="justify-content: center;" #menu="matMenu">
-                    <button routerLink="/perfil" [queryParams]="{ id: currentUser?.id}" mat-menu-item>
+                
+                <mat-menu style="justify-content: center;" #menu="matMenu" >
+                    <button  *ngIf="userID === 1" routerLink="/perfil" [queryParams]="{ id: currentUser?.id}" mat-menu-item>
                       <mat-icon style="justify-content: center;">person</mat-icon>
                       <span>Ver perfil</span>
                     </button>
@@ -30,6 +31,7 @@
                       <span>Cerrar sesión</span>
                     </button>
                   </mat-menu>
+                  
             </div>
         </div>
         <!-- <button (click)="logout()">Cerrar sesión</button> -->
