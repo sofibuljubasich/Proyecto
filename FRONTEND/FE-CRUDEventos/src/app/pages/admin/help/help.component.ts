@@ -27,7 +27,7 @@ export class HelpAComponent {
     },
     {
       question: '¿Cómo exporto la información de los kits de un evento?',
-      answer: '',
+      answer: 'Debes ingresar a la sección de inscriptos del evento deseado y clickear el botón "Descargar" para obtener la información de los kits para los inscriptos',
       expanded: false,
     },
   ];
