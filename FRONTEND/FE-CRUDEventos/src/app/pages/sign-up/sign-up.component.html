@@ -32,8 +32,8 @@
           <div class="custom-datepicker">
             <select id="genero" formControlName="genero" required matIconSuffix>
               <option style="color: black;" value="">Seleccione su género</option>
-              <option style="color: black;" value="masculino">Masculino</option>
-              <option style="color: black;" value="femenino">Femenino</option>
+              <option style="color: black;" value="Masculino">Masculino</option>
+              <option style="color: black;" value="Femenino">Femenino</option>
             </select>
           </div>
           <div *ngIf="isFieldInvalid(signupFormPart1,'genero')" class="error-message" style="margin-top: -5px;">
@@ -67,7 +67,7 @@
         <div class="dato">
           <label for="fechaNacimiento">Fecha de Nacimiento:</label>
           <div class="custom-datepicker">
-            <input matInput id="fechaNacimiento" formControlName="fechaNacimiento" [matDatepicker]="picker" placeholder="Seleccione su fecha de nacimiento" required>
+            <input matInput id="fechaNacimiento" formControlName="fechaNacimiento" [matDatepicker]="picker" placeholder="Seleccione su fecha de nacimiento" required  [max]="maxDate">
             <mat-datepicker-toggle style="color:rgb(50, 148, 187);" matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </div>

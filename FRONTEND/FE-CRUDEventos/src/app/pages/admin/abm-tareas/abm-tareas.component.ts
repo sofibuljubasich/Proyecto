@@ -7,6 +7,7 @@ import { TareaService } from 'src/app/services/tarea.service';
 import { CreateTarea, Tarea, Voluntario } from 'src/app/interfaces/tarea';
 import { ActivatedRoute } from '@angular/router';
 import { TareaVoluntarioService } from 'src/app/services/tarea-voluntario.service';
+import { EventoService } from 'src/app/services/evento.service';
 
 @Component({
   selector: 'app-abm-tareas',
@@ -20,15 +21,20 @@ export class AbmTareasComponent implements OnInit {
   eventoId!: number;
   isEditMode: boolean = false; // Saber si estamos editando o creando
   tareaId: number | null = null; // ID de la tarea a editar, si aplica
+  maxDate!: string;
+  minDate: string;
 
   constructor(
     private _volService: VoluntarioService,
     private _location: Location,
     private aRoute: ActivatedRoute,
     private fb: FormBuilder,
+    private evService: EventoService,
     private _vtService: TareaVoluntarioService,
     private _tareaService: TareaService
   ) {
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
     this.tareaId = Number(this.aRoute.snapshot.paramMap.get('id'));
     this.tareaForm = this.fb.group({
       descripcion: ['', Validators.required],
@@ -67,7 +73,14 @@ export class AbmTareasComponent implements OnInit {
   ngOnInit() {
     this.aRoute.queryParams.subscribe((params) => {
       this.eventoId = +params['id'];
+      this.evService.getEvento(this.eventoId).subscribe((evento)=>{
+        const fecha = new Date(evento.evento.fecha);
+        this.maxDate = fecha.toISOString().split('T')[0];
+        console.log('fechaaa  ',this.maxDate)
+      }
+      )
     });
+
     this.obtenerVoluntarios();
   }
   toggleVoluntario(volId: number, isChecked: boolean): void {

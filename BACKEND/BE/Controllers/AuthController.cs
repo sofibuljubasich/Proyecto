@@ -136,7 +136,7 @@ namespace BE.Controllers
             {
                 
                 await _userRepository.ConfirmEmailAsync(email, token);
-                var redirectUrl = "https://localhost:4200/confirmacionCuenta";
+                var redirectUrl = "http://localhost:4200/confirmacionCuenta";
                 return Redirect(redirectUrl);
                
             }

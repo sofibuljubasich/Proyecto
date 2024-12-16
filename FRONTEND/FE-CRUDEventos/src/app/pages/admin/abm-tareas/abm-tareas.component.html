@@ -13,7 +13,7 @@
             <div class="botones">
                 <div class="label">
                     <label for="fecha">Fecha</label>
-                    <input formControlName="fecha" id="fecha" type="date">
+                    <input formControlName="fecha" id="fecha" type="date" [min]="minDate" [max]="maxDate">
                 </div>
                 <div class="label">
                     <label for="hora">Hora</label>

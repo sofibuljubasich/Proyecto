@@ -151,7 +151,7 @@ export class InscripcionComponent {
     const distanciaS = this.eventoData.distancias.find(
       (evento) => evento.distanciaID === this.distanciaSelect
     );
-    const estado = 'Pendiente';
+    const estado = 'Pagado';
 
     const inscripcionData = {
       remera: this.talleSelect,

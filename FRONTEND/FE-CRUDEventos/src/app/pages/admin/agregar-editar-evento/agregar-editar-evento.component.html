@@ -30,7 +30,7 @@
         <div class="datos2">
         <div class="dato">
           <label for="fecha">Fecha:</label>
-          <input formControlName="fecha" id="fecha" type="date" [readonly]="!isEditing" (change)="onDateChange($event)" />
+          <input formControlName="fecha" id="fecha" type="date" [readonly]="!isEditing" (change)="onDateChange($event)"  [min]="minDate"/>
           <div *ngIf="isFieldInvalid(eventForm,'fecha')" class="error-message">
             La fecha del evento es obligatorio.
           </div>

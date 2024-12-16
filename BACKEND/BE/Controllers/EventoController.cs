@@ -18,6 +18,7 @@ using NPOI.HSSF.UserModel;
 using ClosedXML;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
+using CellType = NPOI.SS.UserModel.CellType;
 
 namespace BE.Controllers
 {
@@ -788,23 +789,42 @@ namespace BE.Controllers
                 int cantidadFilas = HojaExcel.LastRowNum;
                 List<ExcelDtoFileName> lista = new List<ExcelDtoFileName>();
 
-                for (int i = 1; i <= cantidadFilas; i++)
+                for (int i = 1; i < cantidadFilas; i++)
                 {
 
                     IRow fila = HojaExcel.GetRow(i);
 
-
-                    var corredor = fila.GetCell(0).ToString();
-                    var PosicionCategoria = fila.GetCell(8).ToString();
-                    var PosicionGeneral = fila.GetCell(9).ToString();
-                    var Tiempo = fila.GetCell(10).ToString();
-                   
-                    int corredorID = int.Parse(corredor);
-                    //TimeSpan tiempo = int.Parse(Tiempo);
+                    if (fila == null || fila.GetCell(0) == null || string.IsNullOrEmpty(fila.GetCell(0).ToString()))
+                    {
+                        continue; // Saltar esta fila si no contiene datos relevantes
+                    }
 
 
-                   
-                  await _eventoRepository.CargarResultado(eventoID, corredorID, PosicionCategoria, PosicionGeneral, Tiempo);
+                    var corredorCell = fila.GetCell(0);
+                    var PosicionCategoria = fila.GetCell(7).ToString();
+                    var PosicionGeneral = fila.GetCell(8).ToString();
+                    var Tiempo = fila.GetCell(9).ToString();
+
+                    int corredorID = 0;
+
+                    if (corredorCell != null)
+                    {
+                        if (corredorCell.CellType == CellType.Numeric)
+                        {
+                            // Si la celda es numérica, obtener el valor y convertirlo a int
+                            corredorID = (int)corredorCell.NumericCellValue;
+                        }
+                        else if (corredorCell.CellType == CellType.String)
+                        {
+                            // Si la celda es un string, intentar convertirlo a int
+                            string corredor = corredorCell.ToString().Trim();
+                            int.TryParse(corredor, out corredorID); // Usar TryParse para evitar excepciones
+                        }
+                    }
+
+
+
+                    await _eventoRepository.CargarResultado(eventoID, corredorID, PosicionCategoria, PosicionGeneral, Tiempo);
 
                 }
 

@@ -43,6 +43,8 @@ export class SignUpComponent implements OnInit {
   rol: number = 1;
   existingDnis: string[] = [];
   dniError: string | null = null;
+  maxDate: Date = new Date();
+  minDate: Date = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -51,7 +53,7 @@ export class SignUpComponent implements OnInit {
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private _corredorService: CorredorService
-  ) {}
+  ) { this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);}
 
   ngOnInit(): void {
     this.signupFormPart1 = this.fb.group({
@@ -83,6 +85,7 @@ export class SignUpComponent implements OnInit {
         validator: this.passwordsMatch('password', 'confirmPassword'),
       }
     );
+
   }
   nextSection(): void {
     this.showStep++;

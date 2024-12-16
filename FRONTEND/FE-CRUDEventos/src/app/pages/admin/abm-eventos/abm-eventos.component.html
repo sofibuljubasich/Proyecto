@@ -35,7 +35,7 @@
                       class="tareas-button">
                 Inscripciones</button>
                       <button routerLink="/reportes/{{eventoResp.id}}" [queryParams]="{ nombre: eventoResp.nombre }" class="tareas-button">Reporte</button>
-                      <button routerLink="/alta-resultados/{{eventoResp.id}}" [queryParams]="{ nombre: eventoResp.nombre }"  class="tareas-button">Resultados</button>
+                      <button *ngIf="eventoResp.estado==='Inactivo'" routerLink="/alta-resultados/{{eventoResp.id}}" [queryParams]="{ nombre: eventoResp.nombre }"  class="tareas-button">Subir resultados</button>
                       <button (click)="enviarMail(eventoResp.id)" class="tareas-button">Enviar mail</button>
                     </div>
                   </div>

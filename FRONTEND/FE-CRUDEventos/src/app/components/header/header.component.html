@@ -18,7 +18,7 @@
                 <img [src]="imagenURL" [matMenuTriggerFor]="menu" alt="Event Image" class="imagen">
                 
                 <mat-menu style="justify-content: center;" #menu="matMenu" >
-                    <button  *ngIf="userID === 1" routerLink="/perfil" [queryParams]="{ id: currentUser?.id}" mat-menu-item>
+                    <button  *ngIf="userRol ==1" routerLink="/perfil" [queryParams]="{ id: currentUser?.id}" mat-menu-item>
                       <mat-icon style="justify-content: center;">person</mat-icon>
                       <span>Ver perfil</span>
                     </button>
